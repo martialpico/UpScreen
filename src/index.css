@@ -280,6 +280,15 @@
     background: color-mix(in srgb, white 3%, transparent);
   }
 
+  /* Hero video in full screen: fill the screen on black, no rounded frame. */
+  .hero-video:fullscreen {
+    background: #000;
+  }
+
+  .hero-video:-webkit-full-screen {
+    background: #000;
+  }
+
   /* ---- Background lights (pure CSS, replaces the video loop) ---- */
   .bg-light,
   .bg-streak {

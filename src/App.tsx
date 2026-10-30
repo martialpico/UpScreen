@@ -419,15 +419,75 @@ const heroVideoId = "fp7irsnikd";
 const heroThumb = "https://embed-ssl.wistia.com/deliveries/fa13e1f1ce5630eeddd3b20283bc2adcbc2e4e9e.jpg";
 const heroThumbAt = (w: number, h: number) => `${heroThumb}?image_crop_resized=${w}x${h}`;
 
+// Wistia player options: brand colour, full controls, and full screen allowed
+// (button in the player bar, plus auto full screen when a phone rotates).
+const wistiaParams =
+  "autoPlay=true&playsinline=true&playerColor=E94445&fullscreenButton=true&playbar=true&fullscreenOnRotateToLandscape=true";
+
+type FullscreenDoc = Document & {
+  webkitFullscreenElement?: Element | null;
+  webkitFullscreenEnabled?: boolean;
+  webkitExitFullscreen?: () => void;
+};
+type FullscreenEl = HTMLElement & { webkitRequestFullscreen?: () => void };
+
 function HeroVideo() {
   const [playing, setPlaying] = useState(false);
   const [thumbFailed, setThumbFailed] = useState(false);
+  const [canFullscreen, setCanFullscreen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const frameRef = useRef<HTMLDivElement>(null);
+
+  // Our own full screen button for desktop and Android. On iPhone, where web
+  // pages cannot go full screen, the Wistia player's native button is used.
+  useEffect(() => {
+    const doc = document as FullscreenDoc;
+    setCanFullscreen(Boolean(doc.fullscreenEnabled || doc.webkitFullscreenEnabled));
+    const onChange = () =>
+      setIsFullscreen(Boolean(doc.fullscreenElement || doc.webkitFullscreenElement));
+    document.addEventListener("fullscreenchange", onChange);
+    document.addEventListener("webkitfullscreenchange", onChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onChange);
+      document.removeEventListener("webkitfullscreenchange", onChange);
+    };
+  }, []);
+
+  const toggleFullscreen = () => {
+    const doc = document as FullscreenDoc;
+    if (doc.fullscreenElement || doc.webkitFullscreenElement) {
+      (doc.exitFullscreen ?? doc.webkitExitFullscreen)?.call(doc);
+      return;
+    }
+    const el = frameRef.current as FullscreenEl | null;
+    if (!el) return;
+    setPlaying(true);
+    if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+    else el.webkitRequestFullscreen?.();
+  };
 
   return (
-    <div className="relative aspect-video">
+    <div ref={frameRef} className="hero-video relative aspect-video bg-onyx">
+      {canFullscreen && (
+        <button
+          type="button"
+          onClick={toggleFullscreen}
+          aria-label={isFullscreen ? "Exit full screen" : "Watch in full screen"}
+          title={isFullscreen ? "Exit full screen" : "Full screen"}
+          className="absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-onyx/55 text-off-white/85 backdrop-blur-md transition hover:bg-onyx/80 hover:text-white sm:right-4 sm:top-4"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {isFullscreen ? (
+              <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" />
+            ) : (
+              <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+            )}
+          </svg>
+        </button>
+      )}
       {playing ? (
         <iframe
-          src={`https://fast.wistia.net/embed/iframe/${heroVideoId}?videoFoam=true&autoPlay=true&playsinline=true&playerColor=E94445`}
+          src={`https://fast.wistia.net/embed/iframe/${heroVideoId}?${wistiaParams}`}
           title="UpScreen presentation video"
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen
@@ -1621,7 +1681,7 @@ function MotionVideoCard({
       <div className="group relative aspect-video overflow-hidden rounded-[22px] border border-[#2A2A2E] bg-graphite sm:rounded-[28px]">
         {playing ? (
           <iframe
-            src={`https://fast.wistia.net/embed/iframe/${mediaId}?videoFoam=true&autoPlay=true`}
+            src={`https://fast.wistia.net/embed/iframe/${mediaId}?${wistiaParams}`}
             title={title}
             allow="autoplay; fullscreen"
             allowFullScreen
