@@ -1673,32 +1673,11 @@ const motionVideos = [
 function WorkGallery() {
   return (
     <section id="work" className="scroll-reveal relative mx-auto w-full max-w-[1120px] scroll-mt-24 px-5 py-[60px] sm:px-8">
-      <Heading>Recent websites</Heading>
+      <Heading>Motion videos</Heading>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 sm:gap-7">
-        {[0, 1].map((item) => (
-          <article
-            key={item}
-            className="scroll-reveal"
-          >
-            <div className="group relative aspect-[1.45/1] overflow-hidden rounded-[22px] border border-[#2A2A2E] bg-graphite sm:rounded-[28px]">
-              <div className="absolute inset-[10%] rounded-[16px] border border-off-white/10 bg-onyx/50 transition-transform duration-500 group-hover:scale-[1.02]" />
-              <div className="absolute bottom-[16%] left-[16%] h-2 w-[30%] rounded-full bg-off-white/15" />
-              <div className="absolute bottom-[23%] left-[16%] h-1.5 w-[48%] rounded-full bg-off-white/10" />
-              <span className="absolute left-4 top-4 rounded-full border border-[#2A2A2E] bg-onyx/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-warm-gray">
-                Placeholder
-              </span>
-            </div>
-          </article>
+        {motionVideos.map((video) => (
+          <MotionVideoCard key={video.mediaId} {...video} />
         ))}
-      </div>
-
-      <div className="mt-[120px]">
-        <Heading>Motion videos</Heading>
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 sm:gap-7">
-          {motionVideos.map((video) => (
-            <MotionVideoCard key={video.mediaId} {...video} />
-          ))}
-        </div>
       </div>
     </section>
   );
@@ -1947,24 +1926,6 @@ function Footer() {
           ))}
         </nav>
           <div className="mt-6 flex flex-wrap items-center gap-4 md:justify-end">
-            <a
-              href="https://instagram.com"
-              aria-label="Instagram"
-              className="text-warm-gray hover:text-off-white"
-            >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.7"
-              >
-                <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
             <span className="text-xs font-normal text-warm-gray">
               hello@upscreen.com.au (placeholder)
             </span>

@@ -44,7 +44,7 @@ Content you will most often edit lives at the top of `src/App.tsx`: the pricing 
 
 - [ ] **Connect the contact form.** It shows a confirmation but does not send anything yet. Plug it into a form service (Formspree, Netlify Forms, etc.) or a booking tool.
 - [ ] **Allow Google indexing.** In `site.config.json`, set `"robots": { "index": true }`. It is set to `false` while the site is in progress.
-- [ ] **Replace placeholders:** the two "Recent websites" cards and the contact email in the footer.
+- [ ] **Replace placeholder:** the contact email in the footer. (Add a "Recent websites" section back once you have client sites to show.)
 - [x] **Real client reviews** are in `reviews` at the top of `src/App.tsx`. Only add quotes from real clients who agreed to be published. Invented reviews are illegal under Australian Consumer Law.
 
 ## Brand
