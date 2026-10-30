@@ -1,5 +1,5 @@
 import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
-import react from '@vitejs/plugin-react'
+import preact from '@preact/preset-vite'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'node:path'
 
@@ -18,7 +18,8 @@ export default defineConfig(({ mode }) => {
       minify: !emitSourcemaps,
     },
     plugins: [
-react(),
+      // Preact with React-compatible aliases: same code, ~40KB less JS than React.
+      preact(),
       tailwindcss(),
       figmaSiteConfiguration(siteConfiguration),
       figmaErrorOverlayReplay(),

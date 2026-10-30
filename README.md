@@ -2,7 +2,7 @@
 
 Landing page for **Upscreen**, an agency that builds landing pages, motion design videos and Instagram content for small businesses in Australia.
 
-Built with React 19, Vite and Tailwind CSS v4. It is a static site: no server or database needed.
+Built with Preact (React-compatible API, much lighter), Vite and Tailwind CSS v4. It is a static site: no server or database needed.
 
 ## Run it locally
 
@@ -31,6 +31,7 @@ Any static host works. Recommended: **Vercel** or **Netlify** (free for this kin
 | `src/App.tsx` | All page sections (header, hero, problem cards, pricing, timeline, work, FAQ, contact, footer) |
 | `src/index.css` | Brand colors, fonts, glass effects and animations |
 | `src/imports/` | Images, logo, video previews and icons (the animated red background is pure CSS, in `src/index.css`) |
+| `src/fonts/` | Self-hosted Open Sans and DM Serif Display (latin subset, SIL Open Font License) |
 | `public/` | Favicon and Apple touch icon |
 | `brand/logos/` | All UpScreen logo versions (horizontal, stacked, icon, mark, wordmark, reversed for dark backgrounds) |
 | `site.config.json` | Page title, description and indexing settings (read by `vite.config.ts`) |
@@ -44,7 +45,7 @@ Content you will most often edit lives at the top of `src/App.tsx`: the pricing 
 - [ ] **Connect the contact form.** It shows a confirmation but does not send anything yet. Plug it into a form service (Formspree, Netlify Forms, etc.) or a booking tool.
 - [ ] **Allow Google indexing.** In `site.config.json`, set `"robots": { "index": true }`. It is set to `false` while the site is in progress.
 - [ ] **Replace placeholders:** the two "Recent websites" cards and the contact email in the footer.
-- [x] **Real client reviews** are in `reviews` at the top of `src/App.tsx`. Only add quotes from real clients who agreed to be published, and keep any connection to the business disclosed (as on the Martial Production review). Invented or undisclosed reviews are illegal under Australian Consumer Law.
+- [x] **Real client reviews** are in `reviews` at the top of `src/App.tsx`. Only add quotes from real clients who agreed to be published. Invented reviews are illegal under Australian Consumer Law.
 
 ## Brand
 

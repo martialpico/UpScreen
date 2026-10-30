@@ -4,16 +4,16 @@ import motionWise from "./imports/motion-wise.mp4";
 import motionAirbnb from "./imports/motion-airbnb.mp4";
 import motionAnyStyle from "./imports/motion-anystyle.mp4";
 import motionNotion from "./imports/motion-notion.mp4";
-import motionWisePoster from "./imports/motion-wise-poster.jpg";
-import motionAirbnbPoster from "./imports/motion-airbnb-poster.jpg";
-import motionAnyStylePoster from "./imports/motion-anystyle-poster.jpg";
-import motionNotionPoster from "./imports/motion-notion-poster.jpg";
+import motionWisePoster from "./imports/motion-wise-poster.webp";
+import motionAirbnbPoster from "./imports/motion-airbnb-poster.webp";
+import motionAnyStylePoster from "./imports/motion-anystyle-poster.webp";
+import motionNotionPoster from "./imports/motion-notion-poster.webp";
 import processPhone from "./imports/process-phone.webp";
 import processMockup from "./imports/process-mockup.webp";
 import processBuild from "./imports/process-build.webp";
 import processLaunch from "./imports/process-launch.webp";
 import processGrowth from "./imports/process-growth.webp";
-import googleLogo from "./imports/google-logo.png";
+import googleLogo from "./imports/google-logo.webp";
 
 type Plan = {
   label: string;
@@ -139,8 +139,6 @@ const reviews: Review[] = [
     quote:
       "Quentin is always available and very attentive to our needs. He's responsive, easy to communicate with, and genuinely takes the time to understand and support us throughout the project.",
     business: "Martial Production",
-    // Martial is now an UpScreen co-founder: the connection must stay disclosed.
-    person: "Martial Pico · website client, now UpScreen co-founder",
   },
 ];
 
@@ -397,37 +395,39 @@ function Hero() {
           See our plans
         </a>
       </div>
-      <div
-        aria-label="Featured presentation video"
-        className="scroll-reveal group relative mt-10 overflow-hidden rounded-[24px] border border-[#2A2A2E] bg-graphite shadow-[0_28px_80px_rgba(0,0,0,0.45)]"
-      >
-        <div className="flex h-10 items-center gap-2 border-b border-[#2A2A2E] px-4">
-          <span className="h-2.5 w-2.5 rounded-full bg-off-white/15" />
-          <span className="h-2.5 w-2.5 rounded-full bg-off-white/15" />
-          <span className="h-2.5 w-2.5 rounded-full bg-off-white/15" />
-          <span className="ml-3 text-[10px] font-normal text-warm-gray">
-            upscreen.com
-          </span>
+      <div className="scroll-reveal relative mt-10">
+        {/* Soft red glow behind the video so it sits in the page, no frame. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-x-8 -inset-y-6 rounded-[48px] bg-[radial-gradient(ellipse_at_center,rgba(233,68,69,0.2),transparent_68%)] blur-2xl"
+        />
+        <div
+          aria-label="Featured presentation video"
+          className="group relative overflow-hidden rounded-[18px] bg-onyx shadow-[0_30px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10 sm:rounded-[28px]"
+        >
+          <HeroVideo />
         </div>
-        <HeroVideo />
       </div>
     </section>
   );
 }
 
-// Main VSL (Wistia). A light facade shows the blurred swatch and a play
-// button; the Wistia player only loads when the visitor clicks, so it adds
-// nothing to the first page load.
+// Main VSL (Wistia). A light facade shows the video's own thumbnail and a
+// play button; the Wistia player only loads on click, so it adds nothing to
+// the first page load.
 const heroVideoId = "fp7irsnikd";
+const heroThumb = "https://embed-ssl.wistia.com/deliveries/fa13e1f1ce5630eeddd3b20283bc2adcbc2e4e9e.jpg";
+const heroThumbAt = (w: number, h: number) => `${heroThumb}?image_crop_resized=${w}x${h}`;
 
 function HeroVideo() {
   const [playing, setPlaying] = useState(false);
+  const [thumbFailed, setThumbFailed] = useState(false);
 
   return (
-    <div className="relative aspect-video overflow-hidden bg-[radial-gradient(circle_at_50%_50%,rgba(233,68,69,0.08),transparent_45%)]">
+    <div className="relative aspect-video">
       {playing ? (
         <iframe
-          src={`https://fast.wistia.net/embed/iframe/${heroVideoId}?videoFoam=true&autoPlay=true&playsinline=true`}
+          src={`https://fast.wistia.net/embed/iframe/${heroVideoId}?videoFoam=true&autoPlay=true&playsinline=true&playerColor=E94445`}
           title="UpScreen presentation video"
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen
@@ -440,15 +440,31 @@ function HeroVideo() {
           aria-label="Play the UpScreen presentation video"
           className="absolute inset-0 h-full w-full"
         >
-          <img
-            src={`https://fast.wistia.com/embed/medias/${heroVideoId}/swatch`}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-[6px]"
-          />
-          <span className="absolute inset-0 bg-gradient-to-t from-onyx/60 via-onyx/10 to-onyx/30" />
-          <span className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-off-white/20 bg-off-white/8 text-white backdrop-blur-xl transition-transform duration-300 group-hover:scale-110 sm:h-20 sm:w-20">
-            <span className="ml-1 h-0 w-0 border-y-[8px] border-l-[13px] border-y-transparent border-l-brand sm:border-y-[10px] sm:border-l-[16px]" />
+          {thumbFailed ? (
+            <img
+              src={`https://fast.wistia.com/embed/medias/${heroVideoId}/swatch`}
+              alt=""
+              className="absolute inset-0 h-full w-full scale-110 object-cover blur-[6px]"
+            />
+          ) : (
+            <img
+              src={heroThumbAt(960, 540)}
+              srcSet={`${heroThumbAt(640, 360)} 640w, ${heroThumbAt(960, 540)} 960w, ${heroThumbAt(1280, 720)} 1280w, ${heroThumbAt(1920, 1080)} 1920w`}
+              sizes="(min-width: 1024px) 976px, 100vw"
+              alt=""
+              fetchPriority="high"
+              onError={() => setThumbFailed(true)}
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            />
+          )}
+          <span className="absolute inset-0 bg-gradient-to-t from-onyx/45 via-transparent to-transparent" />
+          <span className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3">
+            <span className="grid h-16 w-16 place-items-center rounded-full bg-brand shadow-[0_0_40px_rgba(233,68,69,0.55)] transition-transform duration-300 group-hover:scale-110 sm:h-20 sm:w-20">
+              <span className="ml-1 h-0 w-0 border-y-[8px] border-l-[13px] border-y-transparent border-l-white sm:border-y-[10px] sm:border-l-[16px]" />
+            </span>
+            <span className="rounded-full bg-onyx/55 px-3 py-1 text-xs font-semibold text-off-white/85 backdrop-blur-md">
+              Watch · 1:18
+            </span>
           </span>
         </button>
       )}
