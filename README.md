@@ -30,17 +30,21 @@ Any static host works. Recommended: **Vercel** or **Netlify** (free for this kin
 | --- | --- |
 | `src/App.tsx` | All page sections (header, hero, problem cards, pricing, timeline, work, FAQ, contact, footer) |
 | `src/index.css` | Brand colors, fonts, glass effects and animations |
-| `src/imports/` | Images, logo, background video loop and icons |
+| `src/imports/` | Images, logo, video previews and icons (the animated red background is pure CSS, in `src/index.css`) |
+| `public/` | Favicon and Apple touch icon |
+| `brand/logos/` | All UpScreen logo versions (horizontal, stacked, icon, mark, wordmark, reversed for dark backgrounds) |
 | `site.config.json` | Page title, description and indexing settings (read by `vite.config.ts`) |
 
-Content you will most often edit lives at the top of `src/App.tsx`: the pricing cards (`services`), the timeline steps (`processSteps`) and the FAQ (`faqs`).
+The main presentation video (VSL) is set by `heroVideoId` in `src/App.tsx` (a Wistia media ID).
+
+Content you will most often edit lives at the top of `src/App.tsx`: the pricing cards (`services`), the reviews (`reviews`), the timeline steps (`processSteps`) and the FAQ (`faqs`).
 
 ## Before launch
 
 - [ ] **Connect the contact form.** It shows a confirmation but does not send anything yet. Plug it into a form service (Formspree, Netlify Forms, etc.) or a booking tool.
 - [ ] **Allow Google indexing.** In `site.config.json`, set `"robots": { "index": true }`. It is set to `false` while the site is in progress.
-- [ ] **Replace placeholders:** hero video, the two "Recent websites" cards, contact email and ABN in the footer.
-- [ ] Optional: convert the two motion-video GIF thumbnails to MP4/WebP to speed up loading on mobile.
+- [ ] **Replace placeholders:** the two "Recent websites" cards and the contact email in the footer.
+- [x] **Real client reviews** are in `reviews` at the top of `src/App.tsx`. Only add quotes from real clients who agreed to be published, and keep any connection to the business disclosed (as on the Martial Production review). Invented or undisclosed reviews are illegal under Australian Consumer Law.
 
 ## Brand
 

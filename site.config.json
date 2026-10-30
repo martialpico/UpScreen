@@ -1,6 +1,6 @@
 {
-  "title": "Upscreen | Websites & motion videos for small businesses",
-  "description": "Upscreen builds custom landing pages, motion design videos and Instagram content that help small businesses in Australia get seen and chosen online.",
+  "title": "UpScreen | Websites & motion videos for small businesses",
+  "description": "UpScreen builds custom landing pages, motion design videos and Instagram content that help small businesses in Australia get seen and chosen online.",
   "language": "en",
   "robots": {
     "index": false
@@ -8,5 +8,11 @@
   "accessibility": {
     "addBypassLinks": false,
     "ignoreReducedMotion": false
+  },
+  "icons": {
+    "icon": "favicon.svg"
+  },
+  "customScripts": {
+    "headEnd": "<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\" />"
   }
 }

@@ -254,6 +254,145 @@
     background: color-mix(in srgb, white 3%, transparent);
   }
 
+  /* ---- Background lights (pure CSS, replaces the video loop) ---- */
+  .bg-light,
+  .bg-streak {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 9999px;
+    will-change: transform, opacity;
+  }
+
+  .bg-light-a {
+    width: 95vmax;
+    height: 26vmax;
+    margin: -13vmax 0 0 -47.5vmax;
+    background: radial-gradient(
+      closest-side,
+      rgba(233, 68, 69, 0.42),
+      rgba(233, 68, 69, 0.16) 48%,
+      transparent 72%
+    );
+    animation: bg-drift-a 19s ease-in-out infinite alternate;
+  }
+
+  .bg-light-b {
+    width: 62vmax;
+    height: 7vmax;
+    margin: -3.5vmax 0 0 -31vmax;
+    background: radial-gradient(
+      closest-side,
+      rgba(255, 196, 196, 0.38),
+      rgba(255, 122, 123, 0.22) 38%,
+      transparent 72%
+    );
+    animation: bg-drift-b 14s ease-in-out infinite alternate;
+  }
+
+  .bg-light-c {
+    width: 70vmax;
+    height: 48vmax;
+    margin: -24vmax 0 0 -35vmax;
+    background: radial-gradient(
+      closest-side,
+      rgba(168, 42, 43, 0.4),
+      rgba(168, 42, 43, 0.12) 55%,
+      transparent 75%
+    );
+    animation: bg-drift-c 23s ease-in-out infinite alternate;
+  }
+
+  .bg-light-d {
+    width: 58vmax;
+    height: 18vmax;
+    margin: -9vmax 0 0 -29vmax;
+    background: radial-gradient(
+      closest-side,
+      rgba(233, 68, 69, 0.3),
+      rgba(233, 68, 69, 0.1) 50%,
+      transparent 72%
+    );
+    animation: bg-drift-d 17s ease-in-out infinite alternate;
+  }
+
+  .bg-streak {
+    width: 46vmax;
+    height: 2px;
+    margin: -1px 0 0 -23vmax;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 150, 150, 0.75) 55%,
+      rgba(255, 235, 235, 0.9) 82%,
+      transparent
+    );
+    box-shadow: 0 0 18px rgba(233, 68, 69, 0.6);
+    opacity: 0;
+  }
+
+  .bg-streak-a {
+    animation: bg-streak-a 9s ease-in-out infinite;
+  }
+
+  .bg-streak-b {
+    width: 30vmax;
+    margin-left: -15vmax;
+    animation: bg-streak-b 13s ease-in-out 4s infinite;
+  }
+
+  @keyframes bg-drift-a {
+    0% { transform: translate(-14vw, -10vh) rotate(-34deg) scale(1); }
+    100% { transform: translate(16vw, 12vh) rotate(-24deg) scale(1.15); }
+  }
+
+  @keyframes bg-drift-b {
+    0% { transform: translate(18vw, -18vh) rotate(-30deg); opacity: 0.55; }
+    50% { opacity: 1; }
+    100% { transform: translate(-12vw, 6vh) rotate(-38deg); opacity: 0.7; }
+  }
+
+  @keyframes bg-drift-c {
+    0% { transform: translate(-30vw, 28vh) rotate(20deg) scale(1); }
+    100% { transform: translate(-8vw, 18vh) rotate(-10deg) scale(1.2); }
+  }
+
+  @keyframes bg-drift-d {
+    0% { transform: translate(28vw, 26vh) rotate(-18deg); opacity: 0.6; }
+    100% { transform: translate(10vw, -6vh) rotate(-32deg); opacity: 1; }
+  }
+
+  @keyframes bg-streak-a {
+    0% { transform: translate(-70vw, 30vh) rotate(-28deg); opacity: 0; }
+    15% { opacity: 1; }
+    55% { opacity: 0.9; }
+    70%, 100% { transform: translate(60vw, -38vh) rotate(-28deg); opacity: 0; }
+  }
+
+  @keyframes bg-streak-b {
+    0% { transform: translate(55vw, 40vh) rotate(-38deg); opacity: 0; }
+    12% { opacity: 0.8; }
+    45%, 100% { transform: translate(-25vw, -30vh) rotate(-38deg); opacity: 0; }
+  }
+
+  .reviews-viewport {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .reviews-track {
+    animation: reviews-marquee 48s linear infinite;
+  }
+
+  .reviews-viewport:hover .reviews-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes reviews-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
   .scroll-reveal {
     opacity: 0;
     filter: blur(14px);
@@ -325,6 +464,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reviews-viewport {
+    overflow-x: auto;
+  }
+
   *,
   *::before,
   *::after {

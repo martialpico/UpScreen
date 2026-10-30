@@ -1,56 +1,146 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
-import upscreenLogo from "./imports/upscreen-logo.svg";
-import motionThumbnailOne from "./imports/motion-thumbnail-1.gif";
-import motionThumbnailTwo from "./imports/motion-thumbnail-2.gif";
-import processPhone from "./imports/process-phone-transparent.png";
-import processMockup from "./imports/process-mockup-transparent.png";
-import processBuild from "./imports/process-build-transparent.png";
-import processLaunch from "./imports/process-launch-transparent.png";
-import processGrowth from "./imports/process-growth-transparent.png";
+import upscreenLogo from "./imports/upscreen-logo-reversed.svg";
+import motionWise from "./imports/motion-wise.mp4";
+import motionAirbnb from "./imports/motion-airbnb.mp4";
+import motionAnyStyle from "./imports/motion-anystyle.mp4";
+import motionNotion from "./imports/motion-notion.mp4";
+import motionWisePoster from "./imports/motion-wise-poster.jpg";
+import motionAirbnbPoster from "./imports/motion-airbnb-poster.jpg";
+import motionAnyStylePoster from "./imports/motion-anystyle-poster.jpg";
+import motionNotionPoster from "./imports/motion-notion-poster.jpg";
+import processPhone from "./imports/process-phone.webp";
+import processMockup from "./imports/process-mockup.webp";
+import processBuild from "./imports/process-build.webp";
+import processLaunch from "./imports/process-launch.webp";
+import processGrowth from "./imports/process-growth.webp";
 import googleLogo from "./imports/google-logo.png";
-import backgroundMp4 from "./imports/background.mp4";
-import backgroundWebm from "./imports/background.webm";
-import backgroundPoster from "./imports/background-poster.jpg";
 
-const services = [
+type Plan = {
+  label: string;
+  price: string;
+  features: string[];
+};
+
+type Service = {
+  title: string;
+  subtitle: string;
+  billing: "One-off" | "Monthly";
+  featured?: boolean;
+  compareAt?: string;
+  note: string;
+  plans: Plan[];
+};
+
+const services: Service[] = [
   {
     title: "Landing page",
     subtitle: "SAY HELLO TO FINALLY SELLING.",
-    features: [
-      "Custom one-page website",
-      "Mobile-first & fast-loading",
-      "Call, booking or contact form",
-      "Basic local SEO",
-      "Connected to your Instagram and Facebook",
+    billing: "One-off",
+    note: "+ A$99/month hosting, care & local SEO",
+    plans: [
+      {
+        label: "Landing page",
+        price: "A$1,500",
+        features: [
+          "Custom one-page website",
+          "Mobile-first & fast-loading",
+          "Call, booking or contact form",
+          "Google Business Profile + monthly local SEO",
+          "Connected to your Instagram and Facebook",
+        ],
+      },
     ],
-    price: "A$1,200",
-    note: "A$99/month hosting & care",
   },
   {
     title: "Landing page + Video presentation",
     subtitle: "STAND OUT FROM THE FIRST SECOND.",
-    features: [
-      "Everything in Landing page",
-      "Custom 30–45s presentation video in motion design",
-      "We write the script for you",
-      "Short vertical version for Instagram",
-      "Music & sound design",
+    billing: "One-off",
+    featured: true,
+    compareAt: "A$3,000",
+    note: "+ A$99/month hosting, care & local SEO · First month free",
+    plans: [
+      {
+        label: "Landing page + Video",
+        price: "A$2,500",
+        features: [
+          "Everything in Landing page",
+          "Custom 30–45s presentation video in motion design",
+          "We write the script for you",
+          "Short vertical version for Instagram",
+          "Music & sound design",
+        ],
+      },
     ],
-    price: "A$2,300",
-    note: "A$99/month hosting & care — First month free",
   },
   {
     title: "Instagram content",
     subtitle: "STAY VISIBLE, EVERY WEEK.",
-    features: [
-      "8 custom posts per month",
-      "Monthly content calendar",
-      "Designed & ready-to-post feed",
-      "Captions written for you",
-      "Reels ideas & content prompts",
+    billing: "Monthly",
+    note: "3-month minimum",
+    plans: [
+      {
+        label: "8 posts",
+        price: "A$890",
+        features: [
+          "8 custom posts per month",
+          "Monthly content calendar",
+          "Designed & ready-to-post feed",
+          "Captions written for you",
+          "Reels ideas & content prompts",
+        ],
+      },
+      {
+        label: "12 posts + 2 reels",
+        price: "A$1,400",
+        features: [
+          "12 custom posts per month",
+          "2 motion design reels per month",
+          "Monthly content calendar",
+          "Designed & ready-to-post feed",
+          "Captions written for you",
+        ],
+      },
     ],
-    price: "A$890",
-    note: "Extra posts available · 3-month minimum",
+  },
+];
+
+// Real client quotes, published with their agreement. Keep the wording as the
+// client wrote it. "person" is optional (first name and role). Add
+// placeholder: true to show a "Placeholder" badge on a draft review.
+type Review = {
+  lang: "EN" | "FR";
+  quote: string;
+  business: string;
+  person?: string;
+  placeholder?: boolean;
+};
+
+const reviews: Review[] = [
+  {
+    lang: "FR",
+    quote:
+      "Depuis qu'on travaille avec eux, on a vraiment vu une différence. On reçoit beaucoup plus de demandes de clients et notre visibilité sur les réseaux sociaux a complètement changé.",
+    business: "Maison Laurent",
+  },
+  {
+    lang: "EN",
+    quote:
+      "We struggled to grow our online presence before. Now we're reaching a much wider audience and seeing real results for our business.",
+    business: "The Modern Studio",
+  },
+  {
+    lang: "FR",
+    quote:
+      "Une équipe très professionnelle, à l'écoute et surtout réactive. Ils ont rapidement compris nos besoins et mis en place une stratégie adaptée à notre activité.",
+    business: "Le Bistrot du Marché",
+  },
+  {
+    lang: "EN",
+    quote:
+      "Quentin is always available and very attentive to our needs. He's responsive, easy to communicate with, and genuinely takes the time to understand and support us throughout the project.",
+    business: "Martial Production",
+    // Martial is now an UpScreen co-founder: the connection must stay disclosed.
+    person: "Martial Pico · website client, now UpScreen co-founder",
   },
 ];
 
@@ -117,7 +207,7 @@ const faqs = [
   {
     question: "What does Hosting & Care include?",
     answer:
-      "Fast and secure hosting, backups, updates, Google Business Profile upkeep and small edits every month, for A$99/month. No lock-in, cancel anytime.",
+      "Fast and secure hosting, backups, updates, monthly local SEO, Google Business Profile upkeep and small edits, for A$99/month. No lock-in, cancel anytime.",
   },
   {
     question: "How do I contact you?",
@@ -183,12 +273,12 @@ function Header() {
           href="#home"
           aria-label="UpScreen home"
           onClick={() => setMenuOpen(false)}
-          className="relative z-10 block w-[124px] shrink-0 sm:w-[138px]"
+          className="relative z-10 block w-[132px] shrink-0 sm:w-[148px]"
         >
           <img
             src={upscreenLogo}
             alt="UpScreen"
-            className="block h-auto w-full drop-shadow-[0_0_14px_rgba(233,68,69,0.5)]"
+            className="block h-auto w-full drop-shadow-[0_0_14px_rgba(233,68,69,0.35)]"
           />
         </a>
 
@@ -319,13 +409,50 @@ function Hero() {
             upscreen.com
           </span>
         </div>
-        <div className="relative aspect-video bg-[radial-gradient(circle_at_50%_50%,rgba(233,68,69,0.08),transparent_45%)]">
-          <span className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-off-white/20 bg-off-white/8 text-white backdrop-blur-xl transition-transform duration-300 group-hover:scale-110 sm:h-20 sm:w-20">
-          <span className="ml-1 h-0 w-0 border-y-[8px] border-l-[13px] border-y-transparent border-l-brand sm:border-y-[10px] sm:border-l-[16px]" />
-          </span>
-        </div>
+        <HeroVideo />
       </div>
     </section>
+  );
+}
+
+// Main VSL (Wistia). A light facade shows the blurred swatch and a play
+// button; the Wistia player only loads when the visitor clicks, so it adds
+// nothing to the first page load.
+const heroVideoId = "fp7irsnikd";
+
+function HeroVideo() {
+  const [playing, setPlaying] = useState(false);
+
+  return (
+    <div className="relative aspect-video overflow-hidden bg-[radial-gradient(circle_at_50%_50%,rgba(233,68,69,0.08),transparent_45%)]">
+      {playing ? (
+        <iframe
+          src={`https://fast.wistia.net/embed/iframe/${heroVideoId}?videoFoam=true&autoPlay=true&playsinline=true`}
+          title="UpScreen presentation video"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full border-0"
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          aria-label="Play the UpScreen presentation video"
+          className="absolute inset-0 h-full w-full"
+        >
+          <img
+            src={`https://fast.wistia.com/embed/medias/${heroVideoId}/swatch`}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full scale-110 object-cover opacity-70 blur-[6px]"
+          />
+          <span className="absolute inset-0 bg-gradient-to-t from-onyx/60 via-onyx/10 to-onyx/30" />
+          <span className="absolute left-1/2 top-1/2 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-off-white/20 bg-off-white/8 text-white backdrop-blur-xl transition-transform duration-300 group-hover:scale-110 sm:h-20 sm:w-20">
+            <span className="ml-1 h-0 w-0 border-y-[8px] border-l-[13px] border-y-transparent border-l-brand sm:border-y-[10px] sm:border-l-[16px]" />
+          </span>
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -575,6 +702,126 @@ function ProblemSection() {
   );
 }
 
+function PricingCard({ service }: { service: Service }) {
+  const [planIndex, setPlanIndex] = useState(0);
+  const plan = service.plans[planIndex];
+  const featured = Boolean(service.featured);
+
+  return (
+    <article
+      className={`scroll-reveal group relative flex min-h-[590px] flex-col rounded-[28px] border bg-graphite/85 p-7 text-off-white backdrop-blur-2xl transition duration-300 hover:-translate-y-1 sm:p-8 ${
+        featured
+          ? "border-[1.5px] border-brand shadow-[0_28px_80px_rgba(0,0,0,0.48),0_0_32px_rgba(233,68,69,0.12)] md:-my-3 md:min-h-[614px]"
+          : "border-[#2A2A2E] hover:border-off-white/20"
+      }`}
+    >
+      {featured && (
+        <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-brand px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-onyx sm:text-xs">
+          Most popular
+        </span>
+      )}
+      <h3 className="relative text-2xl font-semibold leading-[1.05] tracking-[-0.02em] md:min-h-[52px]">
+        {service.title}
+      </h3>
+      <p
+        className={`mt-3 text-xs font-semibold uppercase tracking-[0.08em] ${
+          featured ? "text-brand-light" : "text-warm-gray"
+        }`}
+      >
+        {service.subtitle}
+      </p>
+      {service.plans.length > 1 && (
+        <div
+          role="tablist"
+          aria-label={`${service.title} plans`}
+          className="mt-6 grid grid-cols-2 gap-1 rounded-full border border-[#2A2A2E] bg-onyx/60 p-1"
+        >
+          {service.plans.map((option, index) => (
+            <button
+              key={option.label}
+              type="button"
+              role="tab"
+              aria-selected={index === planIndex}
+              onClick={() => setPlanIndex(index)}
+              className={`rounded-full px-3 py-2 text-xs font-semibold transition ${
+                index === planIndex
+                  ? "bg-off-white text-onyx"
+                  : "text-warm-gray hover:text-off-white"
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      )}
+      <ul
+        className={`space-y-3.5 pb-10 text-[15px] font-normal leading-[1.5] text-[#CFCCC7] ${
+          service.plans.length > 1 ? "mt-6" : "mt-8"
+        }`}
+      >
+        {plan.features.map((feature) => (
+          <li key={feature} className="flex gap-3">
+            <span
+              className={`mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full ${
+                featured ? "bg-brand" : "bg-warm-gray/55"
+              }`}
+            />
+            {feature}
+          </li>
+        ))}
+      </ul>
+      <div className="mt-auto border-t border-off-white/10 pt-7">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-warm-gray">
+          {service.billing}
+          {service.compareAt && (
+            <>
+              {" · "}
+              <span className="line-through decoration-warm-gray/70">
+                {service.compareAt}
+              </span>{" "}
+              <span className="text-brand-light">
+                Save A$
+                {(
+                  Number(service.compareAt.replace(/\D/g, "")) -
+                  Number(plan.price.replace(/\D/g, ""))
+                ).toLocaleString("en-AU")}
+              </span>
+            </>
+          )}
+        </p>
+        <p className="mt-3 flex items-baseline whitespace-nowrap">
+          <span className="mr-1 text-base font-normal text-warm-gray">A$</span>
+          <span
+            className={`font-display text-[52px] font-normal leading-none tracking-[-0.025em] sm:text-[58px] ${
+              featured ? "text-brand" : "text-off-white"
+            }`}
+          >
+            {plan.price.replace("A$", "")}
+          </span>
+          {service.billing === "Monthly" && (
+            <span className="ml-1 text-sm font-normal text-warm-gray">
+              /month
+            </span>
+          )}
+        </p>
+        <p className="mt-4 min-h-4 text-[11px] font-normal text-warm-gray">
+          {service.note}
+        </p>
+        <a
+          href="#contact"
+          className={`mt-7 flex w-full items-center justify-center rounded-2xl border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${
+            featured
+              ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
+              : "border-[#2A2A2E] bg-transparent text-off-white hover:border-off-white/25"
+          }`}
+        >
+          Get started
+        </a>
+      </div>
+    </article>
+  );
+}
+
 function Services() {
   return (
     <section
@@ -583,83 +830,77 @@ function Services() {
     >
       <Heading>Clear pricing. No hidden fees.</Heading>
       <div className="mt-14 grid gap-5 md:grid-cols-3 lg:gap-6">
-        {services.map((service, index) => (
-          <article
-            key={service.title}
-            className={`scroll-reveal group relative flex min-h-[590px] flex-col rounded-[28px] border bg-graphite/85 p-7 text-off-white backdrop-blur-2xl transition duration-300 hover:-translate-y-1 sm:p-8 ${
-              index === 1
-                ? "border-[1.5px] border-brand shadow-[0_28px_80px_rgba(0,0,0,0.48),0_0_32px_rgba(233,68,69,0.12)] md:-my-3 md:min-h-[614px]"
-                : "border-[#2A2A2E] hover:border-off-white/20"
-            }`}
-          >
-            {index === 1 && (
-              <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-brand px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-onyx sm:text-xs">
-                Most popular
-              </span>
-            )}
-            <h3 className="relative text-2xl font-semibold leading-[1.05] tracking-[-0.02em] md:min-h-[52px]">
-              {service.title}
-            </h3>
-            <p
-              className={`mt-3 text-xs font-semibold uppercase tracking-[0.08em] ${
-                index === 1 ? "text-brand-light" : "text-warm-gray"
-              }`}
-            >
-              {service.subtitle}
-            </p>
-            <ul className="mt-8 space-y-3.5 pb-10 text-[15px] font-normal leading-[1.5] text-[#CFCCC7]">
-              {service.features.map((feature) => (
-                <li key={feature} className="flex gap-3">
-                  <span
-                    className={`mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full ${
-                      index === 1 ? "bg-brand" : "bg-warm-gray/55"
-                    }`}
-                  />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-auto border-t border-off-white/10 pt-7">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-warm-gray">
-                {index === 2 ? "Monthly" : "One-off"}
-              </p>
-              <p className="mt-3 flex items-baseline whitespace-nowrap">
-                <span className="mr-1 text-base font-normal text-warm-gray">
-                  A$
-                </span>
-                <span
-                  className={`font-display text-[52px] font-normal leading-none tracking-[-0.025em] sm:text-[58px] ${
-                    index === 1 ? "text-brand" : "text-off-white"
-                  }`}
-                >
-                  {service.price.replace("A$", "")}
-                </span>
-                {index === 2 && (
-                  <span className="ml-1 text-sm font-normal text-warm-gray">
-                    /month
-                  </span>
-                )}
-              </p>
-              <p className="mt-4 min-h-4 text-[11px] font-normal text-warm-gray">
-                {service.note}
-              </p>
-              <a
-                href="#contact"
-                className={`mt-7 flex w-full items-center justify-center rounded-2xl border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${
-                  index === 1
-                    ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
-                    : "border-[#2A2A2E] bg-transparent text-off-white hover:border-off-white/25"
-                }`}
-              >
-                Get started
-              </a>
-            </div>
-          </article>
+        {services.map((service) => (
+          <PricingCard key={service.title} service={service} />
         ))}
       </div>
       <p className="mt-8 text-center text-xs font-normal text-warm-gray">
         AUD, excl. GST · Free mockup
       </p>
+    </section>
+  );
+}
+
+function Reviews() {
+  // Repeat short lists so one set is wider than large screens, then duplicate
+  // the set for a seamless marquee loop.
+  let set = reviews;
+  while (set.length < 6) set = [...set, ...reviews];
+  const loop = [...set, ...set];
+
+  return (
+    <section
+      id="reviews"
+      className="scroll-reveal relative w-full scroll-mt-24 py-[60px]"
+    >
+      <div className="px-5 sm:px-8">
+        <Heading>What our clients say.</Heading>
+      </div>
+      <div className="reviews-viewport relative mt-12 overflow-hidden">
+        <div
+          className="reviews-track flex w-max gap-5 px-5"
+          style={{ animationDuration: `${set.length * 10}s` }}
+        >
+          {loop.map((review, index) => (
+            <figure
+              key={index}
+              aria-hidden={index >= reviews.length}
+              className="glass-panel relative flex w-[300px] shrink-0 flex-col rounded-[24px] p-6 sm:w-[360px] sm:p-7"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <span
+                  aria-hidden="true"
+                  className="font-display -mt-1 text-[44px] leading-none text-brand"
+                >
+                  &ldquo;
+                </span>
+                <span className="flex items-center gap-2">
+                  {review.placeholder && (
+                    <span className="rounded-full border border-[#2A2A2E] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-warm-gray">
+                      Placeholder
+                    </span>
+                  )}
+                  <span className="rounded-full bg-off-white/8 px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] text-off-white/70">
+                    {review.lang}
+                  </span>
+                </span>
+              </div>
+              <blockquote
+                lang={review.lang.toLowerCase()}
+                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-[#CFCCC7]"
+              >
+                {review.quote}
+              </blockquote>
+              <figcaption className="mt-6 border-t border-off-white/10 pt-4">
+                <p className="text-sm font-semibold text-off-white">{review.business}</p>
+                {review.person && (
+                  <p className="mt-0.5 text-xs font-normal text-warm-gray">{review.person}</p>
+                )}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -1323,12 +1564,41 @@ function MotionVideoCard({
   mediaId,
   title,
   thumbnail,
+  poster,
+  concept = false,
 }: {
   mediaId: string;
   title: string;
   thumbnail: string;
+  poster: string;
+  concept?: boolean;
 }) {
   const [playing, setPlaying] = useState(false);
+  const [nearView, setNearView] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [reduceMotion] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+
+  // Only download and play the preview loop when the card is close to the
+  // viewport, and pause it when it scrolls away. The poster shows until then.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || playing) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNearView(true);
+          if (!reduceMotion) video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { rootMargin: "200px 0px" },
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [playing, reduceMotion]);
 
   return (
     <article className="scroll-reveal">
@@ -1348,13 +1618,24 @@ function MotionVideoCard({
             aria-label={`Play ${title}`}
             className="absolute inset-0 h-full w-full overflow-hidden text-left"
           >
-            <img
-              src={thumbnail}
-              alt=""
+            <video
+              ref={videoRef}
+              src={nearView ? thumbnail : undefined}
+              poster={poster}
+              autoPlay={nearView && !reduceMotion}
+              muted
+              loop
+              playsInline
+              preload="none"
               aria-hidden="true"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <span className="absolute inset-0 bg-gradient-to-t from-onyx/55 via-transparent to-onyx/10" />
+            {concept && (
+              <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-onyx/60 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-off-white/75 backdrop-blur-md">
+                Personal concept
+              </span>
+            )}
             <span className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-onyx/45 text-white backdrop-blur-md transition-transform group-hover:scale-110">
               <span className="ml-1 h-0 w-0 border-y-[7px] border-l-[12px] border-y-transparent border-l-white" />
             </span>
@@ -1364,6 +1645,14 @@ function MotionVideoCard({
     </article>
   );
 }
+
+// Wistia media IDs. Wise and Airbnb are personal concept ads, not commissioned work.
+const motionVideos = [
+  { mediaId: "iwoeziqb0u", title: "Wise concept ad", thumbnail: motionWise, poster: motionWisePoster, concept: true },
+  { mediaId: "a5t1hj78uk", title: "Airbnb concept ad", thumbnail: motionAirbnb, poster: motionAirbnbPoster, concept: true },
+  { mediaId: "tm4p5wf5de", title: "Any style motion design video", thumbnail: motionAnyStyle, poster: motionAnyStylePoster },
+  { mediaId: "cn1y5pm9o1", title: "Notion presentation video", thumbnail: motionNotion, poster: motionNotionPoster },
+];
 
 function WorkGallery() {
   return (
@@ -1390,16 +1679,9 @@ function WorkGallery() {
       <div className="mt-[120px]">
         <Heading>Motion videos</Heading>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 sm:gap-7">
-          <MotionVideoCard
-            mediaId="tm4p5wf5de"
-            title="UpScreen motion design video"
-            thumbnail={motionThumbnailOne}
-          />
-          <MotionVideoCard
-            mediaId="cn1y5pm9o1"
-            title="UpScreen presentation video"
-            thumbnail={motionThumbnailTwo}
-          />
+          {motionVideos.map((video) => (
+            <MotionVideoCard key={video.mediaId} {...video} />
+          ))}
         </div>
       </div>
     </section>
@@ -1618,7 +1900,7 @@ function Footer() {
         <a
           href="#home"
           aria-label="UpScreen home"
-            className="block w-[170px]"
+            className="block w-[180px]"
         >
           <img
             src={upscreenLogo}
@@ -1671,7 +1953,7 @@ function Footer() {
               hello@upscreen.com.au (placeholder)
             </span>
             <span className="text-xs font-normal text-warm-gray">
-              ABN 00 000 000 000 (placeholder)
+              ABN 28 900 392 176
             </span>
           </div>
           <p className="mt-6 text-xs font-normal text-off-white/35">
@@ -1683,37 +1965,18 @@ function Footer() {
   );
 }
 
-function BackgroundVideo() {
-  const [reducedMotion, setReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReducedMotion(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-
+// Animated red light streaks drawn in pure CSS (see .bg-light-* in index.css).
+// Replaces the former video loop: no media download, GPU-friendly transforms only.
+function BackgroundLights() {
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-onyx">
-      {reducedMotion ? (
-        <img src={backgroundPoster} alt="" className="h-full w-full object-cover" />
-      ) : (
-        <video
-          className="h-full w-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          poster={backgroundPoster}
-        >
-          <source src={backgroundWebm} type="video/webm" />
-          <source src={backgroundMp4} type="video/mp4" />
-        </video>
-      )}
-      <div className="absolute inset-0 bg-onyx/55" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,10,11,0.45)_80%)]" />
+    <div aria-hidden="true" className="bg-lights pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-onyx">
+      <span className="bg-light bg-light-a" />
+      <span className="bg-light bg-light-b" />
+      <span className="bg-light bg-light-c" />
+      <span className="bg-light bg-light-d" />
+      <span className="bg-streak bg-streak-a" />
+      <span className="bg-streak bg-streak-b" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,10,11,0.5)_80%)]" />
     </div>
   );
 }
@@ -1749,13 +2012,14 @@ export default function App() {
 
   return (
     <main className="relative isolate min-h-screen overflow-hidden bg-onyx font-ui">
-      <BackgroundVideo />
+      <BackgroundLights />
       <Header />
       <Hero />
       <ProblemSection />
       <Services />
       <Process />
       <WorkGallery />
+      <Reviews />
       <FAQ />
       <ContactSection />
       <Footer />
