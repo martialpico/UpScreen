@@ -1774,9 +1774,10 @@ function MotionVideoCard({
 }
 
 // Wistia media IDs. Wise and Airbnb are personal concept ads, not commissioned work.
+// Add concept: true to an entry to show a "Personal concept" badge on it.
 const motionVideos = [
-  { mediaId: "iwoeziqb0u", title: "Wise concept ad", thumbnail: motionWise, poster: motionWisePoster, concept: true },
-  { mediaId: "a5t1hj78uk", title: "Airbnb concept ad", thumbnail: motionAirbnb, poster: motionAirbnbPoster, concept: true },
+  { mediaId: "iwoeziqb0u", title: "Wise concept ad", thumbnail: motionWise, poster: motionWisePoster },
+  { mediaId: "a5t1hj78uk", title: "Airbnb concept ad", thumbnail: motionAirbnb, poster: motionAirbnbPoster },
   { mediaId: "tm4p5wf5de", title: "Any style motion design video", thumbnail: motionAnyStyle, poster: motionAnyStylePoster },
   { mediaId: "cn1y5pm9o1", title: "Notion presentation video", thumbnail: motionNotion, poster: motionNotionPoster },
 ];
