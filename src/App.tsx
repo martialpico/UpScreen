@@ -23,7 +23,6 @@ type Service = {
   subtitle: string;
   billing: "One-off" | "Monthly";
   featured?: boolean;
-  compareAt?: string;
   note: string;
   plans: Plan[];
 };
@@ -53,7 +52,6 @@ const services: Service[] = [
     subtitle: "STAND OUT FROM THE FIRST SECOND.",
     billing: "One-off",
     featured: true,
-    compareAt: "A$3,000",
     note: "+ A$99/month hosting, care & local SEO · First month free",
     plans: [
       {
@@ -905,21 +903,6 @@ function PricingCard({ service }: { service: Service }) {
       <div className="mt-auto border-t border-off-white/10 pt-7">
         <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-warm-gray">
           {service.billing}
-          {service.compareAt && (
-            <>
-              {" · "}
-              <span className="line-through decoration-warm-gray/70">
-                {service.compareAt}
-              </span>{" "}
-              <span className="text-brand-light">
-                Save A$
-                {(
-                  Number(service.compareAt.replace(/\D/g, "")) -
-                  Number(plan.price.replace(/\D/g, ""))
-                ).toLocaleString("en-AU")}
-              </span>
-            </>
-          )}
         </p>
         <p className="mt-3 flex items-baseline whitespace-nowrap">
           <span className="mr-1 text-base font-normal text-warm-gray">A$</span>
