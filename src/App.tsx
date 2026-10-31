@@ -138,6 +138,7 @@ const reviews: Review[] = [
   },
 ];
 
+// The website journey, from first message to launch.
 const processSteps = [
   {
     title: "Contact us",
@@ -147,21 +148,27 @@ const processSteps = [
   },
   {
     title: "Free mockup",
-    body: "We show you what your new page could look like. You only go ahead if you love it. If you choose the motion video, we also write the script of your video.",
-    highlights: ["script of your video"],
+    body: "We design a mockup of your new website for free. You only go ahead if you love it.",
+    highlights: ["for free"],
     side: "right",
   },
   {
     title: "We build",
-    body: "We design your page and write all the copy. We finalise your script, then create your custom motion design video.",
-    highlights: ["custom motion design video"],
+    body: "We build your website and write all the copy: mobile-first, fast, with your contact or booking form.",
+    highlights: ["write all the copy"],
     side: "left",
   },
   {
-    title: "You launch",
-    body: "Your page goes live in 14 days with your motion video front and centre.",
-    highlights: ["motion video"],
+    title: "Google & SEO",
+    body: "We set up your Google Business Profile and optimise your site for local search, so nearby customers find you on Google and Maps.",
+    highlights: ["Google Business Profile"],
     side: "right",
+  },
+  {
+    title: "You launch",
+    body: "Your website goes live in 14 days, ready to bring in calls, bookings and messages.",
+    highlights: ["14 days"],
+    side: "left",
   },
 ];
 
@@ -169,6 +176,7 @@ const processIcons: Record<string, BrandIconName> = {
   "Contact us": "chat",
   "Free mockup": "mockup",
   "We build": "build",
+  "Google & SEO": "seo",
   "You launch": "launch",
 };
 
@@ -1222,6 +1230,64 @@ function StepVisualPanel({
     );
   }
 
+  if (title === "Google & SEO") {
+    // After: the business shows up first in Google's local results and Maps.
+    return (
+      <div className={panelClass}>
+        <div className="flex items-center gap-2.5">
+          <img src={googleLogo} alt="" className="h-[15px] shrink-0" />
+          <div className="flex h-7 flex-1 items-center rounded-full border border-onyx/10 bg-white px-3 text-[10px] font-semibold text-onyx/75 shadow-[0_3px_10px_rgba(0,0,0,0.06)]">
+            best café near me
+            <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="#4285F4" strokeWidth="1.9" className="ml-auto h-3 w-3">
+              <circle cx="7" cy="7" r="4.5" />
+              <path d="m10.5 10.5 3 3" strokeLinecap="round" />
+            </svg>
+          </div>
+        </div>
+        <div className="relative mt-3 h-[58px] overflow-hidden rounded-xl bg-[#E9EEF1]">
+          <span className="absolute -left-4 top-[18px] h-[7px] w-[120%] -rotate-6 bg-white" />
+          <span className="absolute left-[38%] -top-4 h-[140%] w-[6px] rotate-12 bg-white" />
+          <span className="absolute -left-2 bottom-2 h-[5px] w-[70%] rotate-3 bg-white/80" />
+          <span className="absolute right-3 top-2 h-8 w-16 rounded-[40%] bg-[#CFE7D3]" />
+          <span className="absolute left-[18%] top-[34px] h-2 w-2 rounded-full border border-white bg-onyx/25" />
+          <span className="absolute right-[24%] top-[30px] h-2 w-2 rounded-full border border-white bg-onyx/25" />
+          <span className="absolute left-[72%] top-[10px] h-2 w-2 rounded-full border border-white bg-onyx/25" />
+          <span className="absolute left-[46%] top-[6px] grid h-6 w-6 -translate-x-1/2 place-items-center rounded-full rounded-br-none bg-brand text-[10px] font-bold text-white shadow-[0_4px_10px_rgba(233,68,69,0.45)] [transform:translateX(-50%)_rotate(45deg)]">
+            <span className="-rotate-45">1</span>
+          </span>
+        </div>
+        <div className="mt-2.5 rounded-xl border border-onyx/8 bg-white p-2.5 shadow-sm">
+          <div className="flex items-start justify-between gap-2">
+            <div className="min-w-0">
+              <p className="text-[12px] font-semibold leading-tight text-[#1A0DAB]">Your Business</p>
+              <p className="mt-0.5 flex items-center gap-1 text-[9px] text-onyx/50">
+                <b className="font-semibold text-onyx/75">4.9</b>
+                <span className="tracking-[-0.05em] text-[#FBBC04]">★★★★★</span>
+                (48) · Café
+              </p>
+              <p className="text-[9px] text-onyx/50">
+                <span className="font-semibold text-[#188038]">Open</span> · Closes 4 pm
+              </p>
+            </div>
+            <span className="shrink-0 rounded-full bg-brand px-2 py-1 text-[8px] font-bold text-white">
+              #1 near you
+            </span>
+          </div>
+          <div className="mt-2 flex gap-1.5">
+            {["Website", "Directions", "Call"].map((action) => (
+              <span
+                key={action}
+                className="rounded-full border border-[#DADCE0] px-2 py-0.5 text-[8px] font-semibold text-[#1A73E8]"
+              >
+                {action}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (title === "You launch") {
     return (
       <div className={panelClass}>
@@ -1231,29 +1297,29 @@ function StepVisualPanel({
             <span className="h-2 w-2 rounded-full bg-onyx/10" />
           </div>
           <div className="flex-1 rounded-md bg-[#f1f3f8] px-2 py-1 text-[8px] font-bold text-onyx/55">
-            upscreen.com
+            yourbusiness.com.au
           </div>
         </div>
         <div className="relative mt-3 h-[72%] overflow-hidden rounded-xl border border-onyx/8 bg-white p-3 shadow-sm">
           <div className="flex items-center">
-            <p className="text-[7px] font-semibold">upscreen</p>
+            <p className="text-[7px] font-semibold">yourbusiness</p>
             <div className="ml-auto flex items-center gap-1.5">
               <span className="h-1 w-4 rounded-full bg-onyx/15" />
               <span className="h-1 w-3 rounded-full bg-onyx/10" />
               <span className="rounded-full bg-onyx px-1.5 py-1 text-[5px] font-bold text-white">
-                Contact us
+                Book a table
               </span>
             </div>
           </div>
           <p className="mt-3 text-base font-semibold leading-[0.9]">
-            Grow online,
+            Great coffee,
             <br />
-            <span className="text-brand">with clarity.</span>
+            <span className="text-brand">right in Bondi.</span>
           </p>
           <div className="mt-2 h-1 w-[40%] rounded-full bg-onyx/12" />
           <div className="mt-1 h-1 w-[32%] rounded-full bg-onyx/8" />
           <span className="relative z-10 mt-3 inline-block rounded-full bg-onyx px-2 py-1 text-[6px] font-bold text-white">
-            Start your project
+            See the menu
           </span>
           <div className="absolute bottom-2 left-3 h-[17%] w-[42%] rounded-lg bg-gradient-to-r from-brand/20 via-rose-100 to-indigo-100">
             <div className="absolute bottom-2 left-2 h-1 w-[45%] rounded-full bg-brand/55" />
@@ -1266,7 +1332,7 @@ function StepVisualPanel({
               </span>
             </div>
             <div className="mt-2 space-y-1.5">
-              {["Production build", "Domain & SSL", "Analytics"].map((item) => (
+              {["Domain & SSL", "Google Business", "Analytics"].map((item) => (
                 <div key={item} className="flex items-center gap-1.5">
                   <span className="grid h-3 w-3 place-items-center rounded-full bg-emerald-500 text-[7px] font-bold text-white">
                     ✓
@@ -1310,7 +1376,7 @@ function StepVisualPanel({
         {[
           ["Page structure", "100%", true],
           ["Copywriting", "82%", true],
-          ["Motion design", "46%", false],
+          ["Mobile version", "46%", false],
         ].map(([label, progress, complete]) => (
           <div
             key={String(label)}
@@ -1334,7 +1400,7 @@ function StepVisualPanel({
 
 // Process icons in the brand style: the same red rounded square and white
 // line glyph as the UpScreen app icon (corner radius 23%, like the logo).
-type BrandIconName = "chat" | "mockup" | "build" | "launch" | "growth";
+type BrandIconName = "chat" | "mockup" | "build" | "seo" | "launch" | "growth";
 
 const brandIconGlyphs: Record<BrandIconName, ReactNode> = {
   chat: (
@@ -1358,6 +1424,13 @@ const brandIconGlyphs: Record<BrandIconName, ReactNode> = {
       <path d="M12 3.8 3.8 8.1 12 12.4l8.2-4.3Z" />
       <path d="m3.8 12 8.2 4.3 8.2-4.3" />
       <path d="m3.8 15.9 8.2 4.3 8.2-4.3" />
+    </>
+  ),
+  seo: (
+    <>
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="m15.4 15.4 4.6 4.6" />
+      <path d="m7.6 12.4 2-2 1.6 1.6 2.4-2.6" />
     </>
   ),
   launch: (
@@ -1609,7 +1682,7 @@ function Process() {
         >
           <div className="flex items-center justify-center gap-3">
             <span className="text-xs font-semibold tracking-[0.12em] text-warm-gray">
-              05
+              06
             </span>
             <span className="inline-block text-xl font-semibold tracking-[-0.02em] text-off-white sm:text-3xl">
               We keep you growing
@@ -1617,7 +1690,7 @@ function Process() {
             <BrandIcon name="growth" className="h-10 w-10 sm:h-11 sm:w-11" />
           </div>
           <p className="mt-3 text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
-            Hosting, updates and Instagram content, handled every month.
+            Hosting, updates and monthly local SEO, handled every month.
           </p>
         </div>
       </div>
