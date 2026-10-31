@@ -562,176 +562,299 @@ function ProblemVisual({ index }: { index: number }) {
   );
 }
 
-function WidgetLabel({ children }: { children: ReactNode }) {
-  return (
-    <p className="font-semibold leading-none" style={{ fontSize: u(11) }}>
-      {children}
-    </p>
-  );
-}
+const mockSerif = '"Times New Roman", Times, serif';
 
-function SearchWidget() {
+function Stars({ size }: { size: number }) {
   return (
-    <div className="flex h-full flex-col">
-      <img src={googleLogo} alt="" className="mx-auto block" style={{ height: u(24), marginBottom: u(9) }} />
-      <div
-        className="flex items-center border border-onyx/10 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.06)]"
-        style={{ height: u(26), borderRadius: u(13), padding: `0 ${u(10)}`, gap: u(7) }}
-      >
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-onyx/45" style={{ width: u(11), height: u(11) }}>
-          <circle cx="7" cy="7" r="4.5" />
-          <path d="m10.5 10.5 3 3" strokeLinecap="round" />
+    <span className="flex" style={{ gap: u(0.6) }}>
+      {[0, 1, 2, 3, 4].map((star) => (
+        <svg key={star} viewBox="0 0 20 20" fill="#FBBC04" style={{ width: u(size), height: u(size) }}>
+          <path d="M10 1.8l2.47 5.01 5.53.8-4 3.9.94 5.5L10 14.4l-4.94 2.6.94-5.5-4-3.9 5.53-.8L10 1.8z" />
         </svg>
-        <span className="font-semibold text-onyx/75" style={{ fontSize: u(10) }}>
-          best café near me
-        </span>
-      </div>
-      <div className="flex flex-1 flex-col justify-center" style={{ gap: u(8), marginTop: u(8) }}>
-        {[70, 56].map((width, row) => (
-          <div key={row} style={{ display: "grid", gap: u(4) }}>
-            <span className="block rounded-full bg-[#5B6FD8]/55" style={{ height: u(6), width: `${width}%` }} />
-            <span className="block rounded-full bg-onyx/10" style={{ height: u(4), width: `${width + 20}%` }} />
-          </div>
-        ))}
-      </div>
-      <div className="flex items-center justify-between border-t border-onyx/8" style={{ paddingTop: u(8) }}>
-        <div className="flex items-center" style={{ gap: u(4) }}>
-          {["1", "2", "3"].map((page) => (
-            <span
-              key={page}
-              className={`grid place-items-center rounded-full font-semibold ${
-                page === "3" ? "border border-brand bg-brand/10 text-brand" : "bg-onyx/5 text-onyx/45"
-              }`}
-              style={{ width: u(18), height: u(18), fontSize: u(9) }}
-            >
-              {page}
-            </span>
-          ))}
-        </div>
-        <span className="flex items-center font-semibold text-brand" style={{ fontSize: u(10), gap: u(4) }}>
-          <span className="rounded-full bg-brand" style={{ width: u(6), height: u(6) }} />
-          You're here
-        </span>
-      </div>
-    </div>
+      ))}
+    </span>
   );
 }
 
-function SlowSiteWidget() {
+// Page 1 of Google is all competitors; "you" only show up on page 3.
+function SearchWidget() {
+  const results = [
+    { name: "Bean There Café", url: "beanthere.com.au", rating: "4.8", reviews: "312", hours: "Closes 4 pm", tone: "#B9733F" },
+    { name: "The Daily Grind", url: "dailygrind.com.au", rating: "4.7", reviews: "208", hours: "Closes 5 pm", tone: "#3F7A63" },
+  ];
+
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center border-b border-onyx/8" style={{ gap: u(4), paddingBottom: u(8) }}>
-        {[0, 1, 2].map((dot) => (
-          <span key={dot} className="rounded-full bg-onyx/15" style={{ width: u(6), height: u(6) }} />
-        ))}
-        <span className="ml-auto rounded-full bg-onyx/5 font-semibold text-onyx/40" style={{ fontSize: u(8), padding: `${u(3)} ${u(8)}` }}>
-          yourbusiness.com.au
-        </span>
-      </div>
-      <div className="flex flex-1 items-center justify-center" style={{ padding: `${u(10)} 0` }}>
+      <div className="flex items-center" style={{ gap: u(8) }}>
+        <img src={googleLogo} alt="" className="block shrink-0" style={{ height: u(14) }} />
         <div
-          className="grid h-full place-items-center border-2 border-dashed border-onyx/20 bg-onyx/5"
-          style={{ width: "78%", borderRadius: u(10), transform: "rotate(-3deg)" }}
+          className="flex min-w-0 flex-1 items-center border border-onyx/10 bg-white shadow-[0_3px_10px_rgba(0,0,0,0.06)]"
+          style={{ height: u(22), borderRadius: u(11), padding: `0 ${u(8)}`, gap: u(5) }}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-onyx/35" style={{ width: u(52), height: u(52) }}>
-            <rect x="3" y="4.5" width="18" height="15" rx="2.5" />
-            <circle cx="9" cy="9.5" r="1.6" />
-            <path d="m3 16.5 5-5 4 4 3-3 6 6" strokeLinejoin="round" />
-            <path d="M3.5 3.5 20.5 20.5" stroke="#E94445" strokeWidth="2" strokeLinecap="round" />
+          <span className="truncate font-semibold text-onyx/75" style={{ fontSize: u(8.5) }}>
+            best café near me
+          </span>
+          <span className="mock-caret shrink-0 bg-onyx/60" style={{ width: u(0.8), height: u(10) }} />
+          <svg viewBox="0 0 16 16" fill="none" stroke="#4285F4" strokeWidth="1.9" className="ml-auto shrink-0" style={{ width: u(10), height: u(10) }}>
+            <circle cx="7" cy="7" r="4.5" />
+            <path d="m10.5 10.5 3 3" strokeLinecap="round" />
           </svg>
         </div>
       </div>
-      <div>
-        <div className="flex items-center justify-between font-semibold" style={{ fontSize: u(10), marginBottom: u(5) }}>
-          <span className="flex items-center text-onyx/55" style={{ gap: u(4) }}>
-            <span className="problem-spinner rounded-full border-onyx/15 border-t-brand" style={{ width: u(10), height: u(10), borderWidth: u(1.8) }} />
-            Loading…
+
+      <div className="flex flex-1 flex-col justify-center" style={{ gap: u(10) }}>
+        {results.map((result) => (
+          <div key={result.name}>
+            <div className="flex items-center" style={{ gap: u(5) }}>
+              <span
+                className="grid shrink-0 place-items-center rounded-full font-bold text-white"
+                style={{ width: u(12), height: u(12), fontSize: u(6.5), background: result.tone }}
+              >
+                {result.name.replace("The ", "")[0]}
+              </span>
+              <span className="truncate text-onyx/45" style={{ fontSize: u(7) }}>
+                {result.url}
+              </span>
+            </div>
+            <p className="truncate font-semibold text-[#1A0DAB]" style={{ fontSize: u(10.5), lineHeight: 1.25, marginTop: u(3) }}>
+              {result.name}, best coffee nearby
+            </p>
+            <div className="flex items-center text-onyx/50" style={{ gap: u(3), fontSize: u(7.5), marginTop: u(2.5) }}>
+              <span className="font-semibold text-onyx/70">{result.rating}</span>
+              <Stars size={7} />
+              <span>({result.reviews})</span>
+              <span className="font-semibold text-[#188038]">Open</span>
+              <span className="truncate">{result.hours}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between border-t border-onyx/8" style={{ paddingTop: u(7) }}>
+        <div className="flex items-center font-semibold" style={{ gap: u(7), fontSize: u(8.5) }}>
+          <span className="text-onyx/80 underline decoration-[#4285F4] underline-offset-2">1</span>
+          <span className="text-[#1A0DAB]">2</span>
+          <span
+            className="grid place-items-center rounded-full border border-brand bg-brand/10 text-brand"
+            style={{ width: u(16), height: u(16) }}
+          >
+            3
           </span>
+        </div>
+        <span className="flex items-center font-semibold text-brand" style={{ fontSize: u(8.5), gap: u(4) }}>
+          <span className="rounded-full bg-brand" style={{ width: u(5), height: u(5) }} />
+          You're on page 3
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// An old-looking site that is still loading, and a visitor heading for "Back".
+function SlowSiteWidget() {
+  return (
+    <div className="flex h-full flex-col">
+      <div className="relative flex items-center border-b border-onyx/8" style={{ gap: u(5), paddingBottom: u(7) }}>
+        <span className="relative grid shrink-0 place-items-center rounded-full bg-brand/12 text-brand" style={{ width: u(16), height: u(16) }}>
+          <span className="mock-tap absolute inset-0 rounded-full border border-brand" />
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: u(9), height: u(9) }}>
+            <path d="M10 3 5 8l5 5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 text-onyx/20" style={{ width: u(9), height: u(9) }}>
+          <path d="m6 3 5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        <span
+          className="flex min-w-0 flex-1 items-center rounded-full bg-onyx/[0.05] text-onyx/45"
+          style={{ height: u(16), padding: `0 ${u(7)}`, gap: u(4), fontSize: u(7.5) }}
+        >
+          <span className="problem-spinner shrink-0 rounded-full border-onyx/15 border-t-brand" style={{ width: u(8), height: u(8), borderWidth: u(1.5) }} />
+          <span className="truncate font-semibold">yourbusiness.com.au</span>
+        </span>
+        <svg viewBox="0 0 24 24" className="absolute drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)]" style={{ width: u(13), height: u(13), left: u(9), top: u(9) }}>
+          <path d="M5 3l14 8-6.2 1.6L10 19z" fill="#0A0A0B" stroke="#fff" strokeWidth="1.6" strokeLinejoin="round" />
+        </svg>
+      </div>
+
+      <div className="flex items-baseline justify-between" style={{ marginTop: u(8), fontFamily: mockSerif }}>
+        <span className="font-bold text-onyx/70" style={{ fontSize: u(12) }}>
+          Your Business
+        </span>
+        <span className="text-[#1A0DAB] underline" style={{ fontSize: u(7.5) }}>
+          Home | Menu | Contact
+        </span>
+      </div>
+
+      <div
+        className="flex flex-1 flex-col items-center justify-center border border-dashed border-onyx/20 bg-onyx/[0.04]"
+        style={{ margin: `${u(7)} 0`, borderRadius: u(6), gap: u(4) }}
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-onyx/30" style={{ width: u(30), height: u(30) }}>
+          <rect x="3" y="4.5" width="18" height="15" rx="2.5" />
+          <circle cx="9" cy="9.5" r="1.6" />
+          <path d="m3 16.5 5-5 4 4 3-3 6 6" strokeLinejoin="round" />
+          <path d="M3.5 3.5 20.5 20.5" stroke="#E94445" strokeWidth="2" strokeLinecap="round" />
+        </svg>
+        <span className="text-onyx/35" style={{ fontSize: u(7), fontFamily: mockSerif }}>
+          Welcome to our website!
+        </span>
+      </div>
+
+      <div>
+        <div className="flex items-center justify-between font-semibold" style={{ fontSize: u(8.5), marginBottom: u(4) }}>
+          <span className="text-onyx/50">Still loading…</span>
           <span className="text-brand">8.4s</span>
         </div>
-        <div className="overflow-hidden rounded-full bg-onyx/8" style={{ height: u(5) }}>
-          <span className="block h-full rounded-full bg-brand" style={{ width: "34%" }} />
+        <div className="overflow-hidden rounded-full bg-onyx/8" style={{ height: u(4) }}>
+          <span className="mock-load block h-full w-full origin-left rounded-full bg-brand" />
         </div>
       </div>
     </div>
   );
 }
 
+// A sleeping Instagram profile and a customer question nobody answered.
 function DeadFeedWidget() {
+  const tiles = ["#CBB8A4", "#B9C2B4", "#D2C3B5", "#C4BCB3", "#BDB6AE", "#CFC6BC"];
+
   return (
     <div className="relative flex h-full flex-col">
-      <div className="flex items-center" style={{ gap: u(8) }}>
+      <div className="flex items-center" style={{ gap: u(9) }}>
         <span
-          className="grid shrink-0 place-items-center rounded-full bg-onyx/10 font-semibold text-onyx/45"
-          style={{ width: u(28), height: u(28), fontSize: u(9) }}
+          className="grid shrink-0 place-items-center rounded-full border border-onyx/15 bg-onyx/[0.07] font-bold text-onyx/40"
+          style={{ width: u(28), height: u(28), fontSize: u(8.5) }}
         >
           YB
         </span>
-        <div className="min-w-0">
-          <WidgetLabel>yourbusiness</WidgetLabel>
-          <p className="font-semibold text-onyx/40" style={{ fontSize: u(8), marginTop: u(4) }}>
-            12 posts · 87 followers
+        <div className="min-w-0 flex-1">
+          <p className="font-semibold leading-none text-onyx/85" style={{ fontSize: u(9.5) }}>
+            yourbusiness
           </p>
+          <div className="flex justify-between leading-none" style={{ marginTop: u(5) }}>
+            {[
+              ["12", "posts"],
+              ["87", "followers"],
+              ["64", "following"],
+            ].map(([value, label]) => (
+              <span key={label} style={{ fontSize: u(7) }}>
+                <b className="font-bold text-onyx/80">{value}</b> <span className="text-onyx/45">{label}</span>
+              </span>
+            ))}
+          </div>
         </div>
       </div>
-      <div className="grid flex-1 grid-cols-3" style={{ gap: u(4), marginTop: u(10) }}>
-        {[0, 1, 2, 3, 4, 5].map((tile) => (
-          <span key={tile} className={tile < 3 ? "bg-onyx/10" : "bg-onyx/5"} style={{ borderRadius: u(5) }} />
+
+      <div className="grid flex-1 grid-cols-3" style={{ gap: u(3), marginTop: u(9) }}>
+        {tiles.map((tone, tile) => (
+          <span
+            key={tone}
+            className="relative overflow-hidden"
+            style={{
+              borderRadius: u(4),
+              background: `linear-gradient(150deg, ${tone}, color-mix(in srgb, ${tone} 70%, #8C8A87))`,
+              opacity: 0.55,
+            }}
+          >
+            {tile === 0 && (
+              <span
+                className="absolute rounded-full bg-white font-bold text-onyx/70"
+                style={{ left: u(4), top: u(4), fontSize: u(6.5), padding: `${u(1.5)} ${u(4)}` }}
+              >
+                Mar 2023
+              </span>
+            )}
+          </span>
         ))}
       </div>
+
       <div
-        className="absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-2xl border border-brand/25 bg-white text-center shadow-[0_12px_28px_rgba(0,0,0,0.16)]"
-        style={{ padding: `${u(8)} ${u(16)}` }}
+        className="absolute flex items-center border border-onyx/8 bg-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
+        style={{ left: u(10), right: u(10), bottom: u(6), borderRadius: u(10), padding: `${u(6)} ${u(8)}`, gap: u(6) }}
       >
-        <p className="font-semibold uppercase text-onyx/45" style={{ fontSize: u(8), letterSpacing: "0.12em" }}>
-          Last post
-        </p>
-        <p className="font-display text-brand" style={{ fontSize: u(24), lineHeight: 1.05, marginTop: u(2) }}>
-          Mar 2023
-        </p>
+        <span
+          className="grid shrink-0 place-items-center rounded-full font-bold text-white"
+          style={{ width: u(15), height: u(15), fontSize: u(7), background: "linear-gradient(135deg,#F58529,#DD2A7B)" }}
+        >
+          S
+        </span>
+        <div className="min-w-0">
+          <p className="truncate text-onyx/80" style={{ fontSize: u(8.5) }}>
+            <b className="font-semibold">sarah.m</b> Are you still open?
+          </p>
+          <p className="font-semibold text-brand" style={{ fontSize: u(6.5), marginTop: u(1.5) }}>
+            3 weeks ago · No reply
+          </p>
+        </div>
       </div>
     </div>
   );
 }
 
+// A vague hero headline, a 5-second countdown, and a confused visitor.
 function FiveSecondsWidget() {
   const radius = 15;
   const circumference = 2 * Math.PI * radius;
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex flex-1 items-center justify-center" style={{ gap: u(12) }}>
-        <div className="relative shrink-0" style={{ width: u(104), height: u(104) }}>
-          <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
-            <circle cx="18" cy="18" r={radius} fill="none" stroke="rgba(10,10,11,0.08)" strokeWidth="3" />
-            <circle
-              cx="18"
-              cy="18"
-              r={radius}
-              fill="none"
-              stroke="#E94445"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeDasharray={circumference}
-              strokeDashoffset={circumference * 0.82}
-            />
-          </svg>
-          <span className="absolute inset-0 grid place-items-center font-display text-brand" style={{ fontSize: u(36) }}>
-            5s
-          </span>
-        </div>
-        <span className="flex items-center font-semibold text-brand" style={{ fontSize: u(14), gap: u(5) }}>
-          Visitor left
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" style={{ width: u(13), height: u(13) }}>
-            <path d="M4 2h6v6M10 2 3 9" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+    <div className="relative flex h-full flex-col">
+      <div className="flex items-center justify-between">
+        <span className="flex items-center" style={{ gap: u(4) }}>
+          <span className="rounded-[2px] bg-onyx/70" style={{ width: u(9), height: u(9) }} />
+          <span className="rounded-full bg-onyx/15" style={{ width: u(26), height: u(4) }} />
         </span>
       </div>
-      <div
-        className="bg-onyx/[0.06] text-center font-semibold text-onyx/80"
-        style={{ fontSize: u(12.5), lineHeight: 1.3, padding: `${u(8)} ${u(12)}`, borderRadius: `${u(12)} ${u(12)} ${u(12)} ${u(3)}` }}
+
+      <p className="font-bold text-onyx/85" style={{ fontSize: u(14), lineHeight: 1.12, marginTop: u(12), maxWidth: "64%", letterSpacing: "-0.01em" }}>
+        Innovative solutions for a better tomorrow.
+      </p>
+      <span className="block rounded-full bg-onyx/10" style={{ height: u(4), width: "56%", marginTop: u(7) }} />
+      <span className="block rounded-full bg-onyx/10" style={{ height: u(4), width: "40%", marginTop: u(3) }} />
+      <span
+        className="w-fit rounded-full border border-onyx/20 font-semibold text-onyx/55"
+        style={{ fontSize: u(7.5), padding: `${u(3)} ${u(9)}`, marginTop: u(8) }}
       >
-        "So… what do you actually do?"
+        Learn more
+      </span>
+
+      <div className="absolute right-0 top-0" style={{ width: u(54), height: u(54), marginTop: u(14) }}>
+        <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
+          <circle cx="18" cy="18" r={radius} fill="none" stroke="rgba(10,10,11,0.08)" strokeWidth="3" />
+          <circle
+            className="mock-countdown"
+            cx="18"
+            cy="18"
+            r={radius}
+            fill="none"
+            stroke="#E94445"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            style={{ ["--circ" as string]: `${circumference}` }}
+          />
+        </svg>
+        <span className="absolute inset-0 grid place-items-center">
+          <span className="block overflow-hidden font-display text-brand" style={{ fontSize: u(17), height: "1em", lineHeight: 1 }}>
+            <span className="mock-digits block">
+              {[5, 4, 3, 2, 1].map((second) => (
+                <span key={second} className="block" style={{ height: "1em" }}>
+                  {second}s
+                </span>
+              ))}
+            </span>
+          </span>
+        </span>
+      </div>
+
+      <div className="mt-auto flex items-end" style={{ gap: u(5) }}>
+        <span className="grid shrink-0 place-items-center rounded-full bg-onyx/15 font-bold text-onyx/50" style={{ width: u(15), height: u(15), fontSize: u(7) }}>
+          ?
+        </span>
+        <span
+          className="bg-onyx/[0.07] font-semibold text-onyx/80"
+          style={{ fontSize: u(10), lineHeight: 1.25, padding: `${u(6)} ${u(9)}`, borderRadius: `${u(10)} ${u(10)} ${u(10)} ${u(2)}` }}
+        >
+          “So… what do you actually do?”
+        </span>
       </div>
     </div>
   );
