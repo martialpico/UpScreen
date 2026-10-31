@@ -1399,9 +1399,9 @@ const brandIconGlyphs: Record<BrandIconName, ReactNode> = {
   chat: (
     <>
       <path d="M6.2 4.8h11.6a2.7 2.7 0 0 1 2.7 2.7v7.4a2.7 2.7 0 0 1-2.7 2.7h-6.1l-4.4 3.3v-3.3H6.2a2.7 2.7 0 0 1-2.7-2.7V7.5a2.7 2.7 0 0 1 2.7-2.7Z" />
-      <circle cx="8.3" cy="11.2" r="1.15" fill="currentColor" stroke="none" />
-      <circle cx="12" cy="11.2" r="1.15" fill="currentColor" stroke="none" />
-      <circle cx="15.7" cy="11.2" r="1.15" fill="currentColor" stroke="none" />
+      <circle cx="8.3" cy="11.2" r="1" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="11.2" r="1" fill="currentColor" stroke="none" />
+      <circle cx="15.7" cy="11.2" r="1" fill="currentColor" stroke="none" />
     </>
   ),
   mockup: (
@@ -1450,10 +1450,10 @@ function BrandIcon({ name, className = "" }: { name: BrandIconName; className?: 
     >
       <svg
         viewBox="0 0 24 24"
-        className="h-[70%] w-[70%]"
+        className="h-[68%] w-[68%]"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2.5"
+        strokeWidth="1.8"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
