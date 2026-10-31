@@ -248,29 +248,6 @@
     }
   }
 
-  .mock-countdown {
-    animation: mock-countdown 5s linear infinite;
-  }
-
-  @keyframes mock-countdown {
-    from {
-      stroke-dashoffset: 0;
-    }
-    to {
-      stroke-dashoffset: var(--circ);
-    }
-  }
-
-  .mock-digits {
-    animation: mock-digits 5s steps(5, end) infinite;
-  }
-
-  @keyframes mock-digits {
-    to {
-      transform: translateY(-5em);
-    }
-  }
-
   @keyframes problem-spin {
     to {
       transform: rotate(360deg);

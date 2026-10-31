@@ -556,7 +556,6 @@ function ProblemVisual({ index }: { index: number }) {
         {index === 0 && <SearchWidget />}
         {index === 1 && <SlowSiteWidget />}
         {index === 2 && <DeadFeedWidget />}
-        {index === 3 && <FiveSecondsWidget />}
       </div>
     </div>
   );
@@ -790,82 +789,11 @@ function DeadFeedWidget() {
   );
 }
 
-// A vague hero headline, a 5-second countdown, and a confused visitor.
-function FiveSecondsWidget() {
-  const radius = 15;
-  const circumference = 2 * Math.PI * radius;
-
-  return (
-    <div className="relative flex h-full flex-col">
-      <div className="flex items-center justify-between">
-        <span className="flex items-center" style={{ gap: u(4) }}>
-          <span className="rounded-[2px] bg-onyx/70" style={{ width: u(9), height: u(9) }} />
-          <span className="rounded-full bg-onyx/15" style={{ width: u(26), height: u(4) }} />
-        </span>
-      </div>
-
-      <p className="font-bold text-onyx/85" style={{ fontSize: u(14), lineHeight: 1.12, marginTop: u(12), maxWidth: "64%", letterSpacing: "-0.01em" }}>
-        Innovative solutions for a better tomorrow.
-      </p>
-      <span className="block rounded-full bg-onyx/10" style={{ height: u(4), width: "56%", marginTop: u(7) }} />
-      <span className="block rounded-full bg-onyx/10" style={{ height: u(4), width: "40%", marginTop: u(3) }} />
-      <span
-        className="w-fit rounded-full border border-onyx/20 font-semibold text-onyx/55"
-        style={{ fontSize: u(7.5), padding: `${u(3)} ${u(9)}`, marginTop: u(8) }}
-      >
-        Learn more
-      </span>
-
-      <div className="absolute right-0 top-0" style={{ width: u(54), height: u(54), marginTop: u(14) }}>
-        <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
-          <circle cx="18" cy="18" r={radius} fill="none" stroke="rgba(10,10,11,0.08)" strokeWidth="3" />
-          <circle
-            className="mock-countdown"
-            cx="18"
-            cy="18"
-            r={radius}
-            fill="none"
-            stroke="#E94445"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            style={{ ["--circ" as string]: `${circumference}` }}
-          />
-        </svg>
-        <span className="absolute inset-0 grid place-items-center">
-          <span className="block overflow-hidden font-display text-brand" style={{ fontSize: u(17), height: "1em", lineHeight: 1 }}>
-            <span className="mock-digits block">
-              {[5, 4, 3, 2, 1].map((second) => (
-                <span key={second} className="block" style={{ height: "1em" }}>
-                  {second}s
-                </span>
-              ))}
-            </span>
-          </span>
-        </span>
-      </div>
-
-      <div className="mt-auto flex items-end" style={{ gap: u(5) }}>
-        <span className="grid shrink-0 place-items-center rounded-full bg-onyx/15 font-bold text-onyx/50" style={{ width: u(15), height: u(15), fontSize: u(7) }}>
-          ?
-        </span>
-        <span
-          className="bg-onyx/[0.07] font-semibold text-onyx/80"
-          style={{ fontSize: u(10), lineHeight: 1.25, padding: `${u(6)} ${u(9)}`, borderRadius: `${u(10)} ${u(10)} ${u(10)} ${u(2)}` }}
-        >
-          “So… what do you actually do?”
-        </span>
-      </div>
-    </div>
-  );
-}
-
 function ProblemSection() {
   const problems = [
     ["Page 3 of Google", "Nobody finds you."],
     ["Slow, outdated site", "They leave in seconds."],
     ["Last post: 2023", "They wonder if you're still open."],
-    ["5 seconds to explain", "And they still don't get what you do."],
   ];
 
   return (
@@ -876,7 +804,7 @@ function ProblemSection() {
       <Heading emphasize={5} breakBeforeEmphasis>
         Most businesses lose customers before they even say hello.
       </Heading>
-      <div className="mx-auto mt-12 grid max-w-[420px] grid-cols-1 gap-8 sm:max-w-none sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+      <div className="mx-auto mt-12 grid max-w-[420px] grid-cols-1 gap-8 md:max-w-[1040px] md:grid-cols-3 md:gap-5 lg:gap-7">
         {problems.map(([title, description], index) => (
           <div key={title} className="relative flex flex-col">
             <ProblemVisual index={index} />
