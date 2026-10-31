@@ -1398,45 +1398,46 @@ type BrandIconName = "chat" | "mockup" | "build" | "seo" | "launch" | "growth";
 const brandIconGlyphs: Record<BrandIconName, ReactNode> = {
   chat: (
     <>
-      <path d="M20 11.5a7.5 7.5 0 0 1-11.1 6.6L4 19.5l1.4-4.5A7.5 7.5 0 1 1 20 11.5Z" />
-      <circle cx="8.6" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
-      <circle cx="12.1" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
-      <circle cx="15.6" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
+      <path d="M6.2 4.8h11.6a2.7 2.7 0 0 1 2.7 2.7v7.4a2.7 2.7 0 0 1-2.7 2.7h-6.1l-4.4 3.3v-3.3H6.2a2.7 2.7 0 0 1-2.7-2.7V7.5a2.7 2.7 0 0 1 2.7-2.7Z" />
+      <circle cx="8.3" cy="11.2" r="1.15" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="11.2" r="1.15" fill="currentColor" stroke="none" />
+      <circle cx="15.7" cy="11.2" r="1.15" fill="currentColor" stroke="none" />
     </>
   ),
   mockup: (
     <>
-      <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" />
-      <path d="M3.5 8.5h17" />
-      <rect x="6.5" y="11.2" width="5" height="5.3" rx="1" />
-      <path d="M14.2 12h3.3M14.2 15.3h2.3" />
+      <rect x="3.5" y="4.5" width="17" height="15" rx="2.7" />
+      <path d="M3.5 9h17" />
+      <rect x="6.8" y="12" width="4.6" height="4.4" rx="0.8" />
+      <path d="M14.4 12.6h2.8M14.4 15.8h1.8" />
     </>
   ),
   build: (
     <>
-      <path d="M12 3.8 3.8 8.1 12 12.4l8.2-4.3Z" />
-      <path d="m3.8 12 8.2 4.3 8.2-4.3" />
-      <path d="m3.8 15.9 8.2 4.3 8.2-4.3" />
+      <path d="M12 3.6 3.6 8 12 12.4 20.4 8Z" />
+      <path d="m3.6 12 8.4 4.4 8.4-4.4" />
+      <path d="m3.6 16 8.4 4.4 8.4-4.4" />
     </>
   ),
   seo: (
     <>
-      <circle cx="10.5" cy="10.5" r="6.5" />
-      <path d="m15.4 15.4 4.6 4.6" />
-      <path d="m7.6 12.4 2-2 1.6 1.6 2.4-2.6" />
+      <circle cx="10.5" cy="10.5" r="6.6" />
+      <path d="m15.5 15.5 4.7 4.7" />
+      <path d="m7.7 12.3 1.9-1.9 1.6 1.6 2.3-2.4" />
     </>
   ),
   launch: (
     <>
-      <path d="M5 16.4c-1.3 1.1-1.8 4.4-1.8 4.4s3.3-.5 4.4-1.8c.6-.7.6-1.9-.1-2.6a1.9 1.9 0 0 0-2.5 0Z" />
-      <path d="m12 14.6-2.6-2.6a19 19 0 0 1 1.8-3.5A11.5 11.5 0 0 1 20.8 3.2c0 2.4-.7 6.6-5.3 9.6a19.5 19.5 0 0 1-3.5 1.8Z" />
-      <path d="M9.4 12H5.1s.5-2.6 1.8-3.5c1.4-.9 4.3 0 4.3 0M12 14.6v4.3s2.6-.5 3.5-1.8c.9-1.4 0-4.3 0-4.3" />
+      <path d="M12 2.9c2.7 2 4.1 5.1 4.1 8.6v4.4H7.9v-4.4c0-3.5 1.4-6.6 4.1-8.6Z" />
+      <circle cx="12" cy="9.8" r="1.5" />
+      <path d="M7.9 12.6 5 15.4v2.8h2.9M16.1 12.6l2.9 2.8v2.8h-2.9" />
+      <path d="M10.4 18.9 12 21.2l1.6-2.3" />
     </>
   ),
   growth: (
     <>
-      <path d="m3.8 16.8 5.7-5.7 3.8 3.8 6.9-7.3" />
-      <path d="M15.3 7.6h4.9v4.9" />
+      <path d="m3.6 17 5.9-5.9 3.9 3.9 7-7.4" />
+      <path d="M15.2 7.6h5.2v5.2" />
     </>
   ),
 };
@@ -1449,10 +1450,10 @@ function BrandIcon({ name, className = "" }: { name: BrandIconName; className?: 
     >
       <svg
         viewBox="0 0 24 24"
-        className="h-[58%] w-[58%]"
+        className="h-[70%] w-[70%]"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       >
