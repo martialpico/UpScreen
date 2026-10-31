@@ -1,5 +1,6 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import upscreenLogo from "./imports/upscreen-logo-reversed.svg";
+import upscreenIcon from "./imports/upscreen-icon.svg";
 import motionWise from "./imports/motion-wise.mp4";
 import motionAirbnb from "./imports/motion-airbnb.mp4";
 import motionAnyStyle from "./imports/motion-anystyle.mp4";
@@ -8,11 +9,6 @@ import motionWisePoster from "./imports/motion-wise-poster.webp";
 import motionAirbnbPoster from "./imports/motion-airbnb-poster.webp";
 import motionAnyStylePoster from "./imports/motion-anystyle-poster.webp";
 import motionNotionPoster from "./imports/motion-notion-poster.webp";
-import processPhone from "./imports/process-phone.webp";
-import processMockup from "./imports/process-mockup.webp";
-import processBuild from "./imports/process-build.webp";
-import processLaunch from "./imports/process-launch.webp";
-import processGrowth from "./imports/process-growth.webp";
 import googleLogo from "./imports/google-logo.webp";
 
 type Plan = {
@@ -144,9 +140,9 @@ const reviews: Review[] = [
 
 const processSteps = [
   {
-    title: "Free call",
-    body: "20 minutes to understand your business, your customers and your goals.",
-    highlights: [],
+    title: "Contact us",
+    body: "Send us a message on WhatsApp. We get to know your business, your customers and your goals.",
+    highlights: ["WhatsApp"],
     side: "left",
   },
   {
@@ -169,11 +165,11 @@ const processSteps = [
   },
 ];
 
-const processIcons: Record<string, string> = {
-  "Free call": processPhone,
-  "Free mockup": processMockup,
-  "We build": processBuild,
-  "You launch": processLaunch,
+const processIcons: Record<string, BrandIconName> = {
+  "Contact us": "chat",
+  "Free mockup": "mockup",
+  "We build": "build",
+  "You launch": "launch",
 };
 
 const faqs = [
@@ -210,7 +206,7 @@ const faqs = [
   {
     question: "How do I contact you?",
     answer:
-      "Book a free 20-minute call with the button below, or send us a message through the contact form.",
+      "Send us a message on WhatsApp, or leave your details in the contact form below.",
   },
 ];
 
@@ -299,7 +295,7 @@ function Header() {
           href="#contact"
           className="hidden rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] md:inline-flex"
         >
-          Book a free call
+          Contact us
         </a>
 
         <button
@@ -355,7 +351,7 @@ function Header() {
             tabIndex={menuOpen ? 0 : -1}
             className="mt-2 flex w-full items-center justify-center rounded-2xl bg-brand px-4 py-3.5 text-sm font-semibold text-onyx hover:bg-[#FF7A7B]"
           >
-            Book a free call
+            Contact us
           </a>
         </div>
       </div>
@@ -386,7 +382,7 @@ function Hero() {
           href="#contact"
           className="rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
         >
-          Book your free call
+          Contact us
         </a>
         <a
           href="#pricing"
@@ -1084,129 +1080,56 @@ function StepVisualPanel({
       : "step-panel-float-right"
   }`;
 
-  if (title === "Free call") {
+  if (title === "Contact us") {
+    // A WhatsApp-style conversation: a café owner asks, UpScreen answers.
     return (
-      <div className={`${panelClass} whatsapp-panel`}>
-        <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-emerald-300/25 blur-3xl" />
-        <div className="absolute -left-12 top-1/2 h-28 w-28 rounded-full bg-emerald-100/60 blur-3xl" />
-        <div className="relative z-10 flex items-center gap-2.5 border-b border-onyx/8 pb-3">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500 text-white shadow-[0_6px_16px_rgba(16,185,129,0.25)]">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="h-5 w-5"
-              fill="none"
-            >
-              <path
-                d="M12 3.25a8.25 8.25 0 0 0-7.08 12.48L4 20l4.38-1.14A8.25 8.25 0 1 0 12 3.25Z"
-                stroke="currentColor"
-                strokeWidth="1.7"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M8.4 8.1c.2-.45.42-.46.72-.47h.37c.12 0 .3.05.46.4.15.36.54 1.3.59 1.4.05.09.08.2.01.32-.06.13-.1.2-.2.3-.1.12-.21.25-.3.34-.1.1-.2.21-.08.42.12.2.52.86 1.13 1.39.77.69 1.43.9 1.63 1 .2.1.32.08.44-.05.12-.14.5-.59.64-.79.13-.2.26-.16.45-.1.18.07 1.16.55 1.36.65.2.1.33.15.38.23.05.08.05.48-.11.94-.17.46-.97.88-1.34.93-.35.06-.8.08-1.3-.08-.3-.1-.7-.23-1.2-.45-.53-.23-2.31-.85-3.94-2.97-.46-.6-.97-1.34-.97-2.16 0-.82.43-1.22.58-1.39Z"
-                fill="currentColor"
-              />
+      <div className={panelClass.replace(" p-5 ", " p-0 ")}>
+        <div className="flex items-center gap-2.5 border-b border-onyx/8 bg-white px-4 py-2.5">
+          <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3.5 w-3.5 text-onyx/45" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M10 3 5 8l5 5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <img src={upscreenIcon} alt="" className="h-8 w-8 rounded-full" />
+          <div className="min-w-0 leading-tight">
+            <p className="text-xs font-semibold text-onyx/90">UpScreen</p>
+            <p className="text-[9px] font-semibold text-[#1DAA61]">online</p>
+          </div>
+          <div className="ml-auto flex items-center gap-3 text-onyx/45">
+            <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7">
+              <rect x="2.5" y="5" width="10.5" height="10" rx="2" />
+              <path d="m13 8.3 4.5-2.3v8l-4.5-2.3" strokeLinejoin="round" />
             </svg>
+            <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round">
+              <path d="M5 3.5 7.6 3l1.5 3.6-1.8 1.3a9 9 0 0 0 4.8 4.8l1.3-1.8 3.6 1.5-.5 2.6c-.2.8-.9 1.3-1.7 1.3C8.6 16.3 3.7 11.4 3.7 5.2c0-.8.5-1.5 1.3-1.7Z" />
+            </svg>
+          </div>
+        </div>
+        <div className="flex h-full flex-col gap-2 bg-[#EFEAE2] bg-[radial-gradient(rgba(10,10,11,0.045)_1px,transparent_1.2px)] bg-[length:14px_14px] px-4 pt-3">
+          <span className="mx-auto rounded-md bg-white/85 px-2 py-0.5 text-[8px] font-semibold text-onyx/50 shadow-[0_1px_1px_rgba(0,0,0,0.06)]">
+            Today
           </span>
-          <div className="min-w-0">
-            <p className="truncate text-[11px] font-semibold sm:text-xs">
-              WhatsApp call
+          <div className="ml-auto max-w-[78%] rounded-xl rounded-tr-sm bg-[#D9FDD3] px-2.5 py-1.5 shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
+            <p className="text-[10.5px] leading-[1.35] text-onyx/85">
+              Hi! I run a café in Bondi. Can you help us get more customers?
             </p>
-            <p className="mt-0.5 flex items-center gap-1 text-[8px] font-bold text-onyx/40">
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 16 16"
-                className="h-2.5 w-2.5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              >
-                <rect x="3.5" y="7" width="9" height="6.5" rx="2" />
-                <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" />
+            <p className="mt-0.5 flex items-center justify-end gap-0.5 text-[8px] text-onyx/45">
+              9:41
+              <svg aria-hidden="true" viewBox="0 0 18 12" className="h-2.5 w-3.5" fill="none" stroke="#53BDEB" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m1.5 6.5 3 3 6-7M7.5 9.5l6-7" />
               </svg>
-              End-to-end encrypted
             </p>
           </div>
-          <span className="ml-auto flex items-center gap-1.5 rounded-full border border-emerald-500/15 bg-emerald-50 px-2.5 py-1 text-[9px] font-semibold text-emerald-700">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            02:14
-          </span>
-        </div>
-        <div className="relative z-10 mt-3 flex h-[44%] flex-col items-center justify-center overflow-hidden rounded-2xl border border-emerald-500/10 bg-[radial-gradient(circle_at_50%_40%,rgba(52,211,153,0.16),transparent_32%),linear-gradient(135deg,#ffffff_0%,#f6fdf9_55%,#ecfbdc_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),inset_0_0_24px_rgba(16,185,129,0.04)]">
-          <span className="absolute left-1/2 top-[40%] h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-400/8" />
-          <span className="absolute left-1/2 top-[40%] h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-400/12" />
-          <span className="absolute left-1/2 top-[40%] h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-400/18" />
-          <span className="absolute left-1/2 top-[40%] z-10 grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-xs font-semibold text-white shadow-[0_8px_24px_rgba(16,185,129,0.28)] sm:h-11 sm:w-11">
-            UP
-            <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-400" />
-          </span>
-          <p className="absolute left-1/2 top-[66%] z-10 -translate-x-1/2 whitespace-nowrap text-[10px] font-semibold text-onyx/75">
-            UpScreen consultant
-          </p>
-          <div className="voice-spectrum absolute left-1/2 top-[83%] z-10 flex h-3 -translate-x-1/2 items-center justify-center gap-0.75">
-            {[4, 8, 11, 7, 12, 6, 9, 4, 7].map((height, index) => (
-              <span
-                key={`${height}-${index}`}
-                className="w-0.5 rounded-full bg-emerald-500/55"
-                style={{ height }}
-              />
-            ))}
+          <div className="mr-auto max-w-[80%] rounded-xl rounded-tl-sm bg-white px-2.5 py-1.5 shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
+            <p className="text-[10.5px] leading-[1.35] text-onyx/85">
+              Hi Sarah! Of course. Tell us about your café and we'll send you a{" "}
+              <span className="font-semibold text-brand">free mockup</span>.
+            </p>
+            <p className="mt-0.5 text-right text-[8px] text-onyx/45">9:42</p>
           </div>
-        </div>
-        <div className="absolute inset-x-4 bottom-12 z-40 flex items-center justify-center gap-3">
-          <span className="grid h-9 w-9 place-items-center rounded-full border border-onyx/8 bg-white text-onyx/60 shadow-md">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 20 20"
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-            >
-              <rect x="7" y="2.5" width="6" height="9" rx="3" />
-              <path d="M4.5 9.5a5.5 5.5 0 0 0 11 0M10 15v2.5" />
-            </svg>
-          </span>
-          <span className="grid h-9 w-9 place-items-center rounded-full border border-onyx/8 bg-white text-onyx/60 shadow-md">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 20 20"
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-            >
-              <rect x="3" y="5" width="10" height="10" rx="2" />
-              <path d="m13 8 4-2v8l-4-2" />
-            </svg>
-          </span>
-          <span className="grid h-9 w-9 place-items-center rounded-full border border-onyx/8 bg-white text-onyx/60 shadow-md">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 20 20"
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-            >
-              <path d="M5 8v4h3l4 3V5L8 8H5Z" />
-              <path d="M14 8a3 3 0 0 1 0 4" />
-            </svg>
-          </span>
-          <span className="grid h-9 w-12 place-items-center rounded-full bg-brand text-white shadow-[0_7px_18px_rgba(233,68,69,0.35)]">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 20 20"
-              className="h-4 w-4 rotate-[135deg]"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            >
-              <path d="M5 4.5c3 6 5.5 8.5 10.5 10.5l1.5-3.5-4-2-1.5 2c-1.5-.8-2.7-2-3.5-3.5l2-1.5-2-4L5 4.5Z" />
-            </svg>
-          </span>
+          <div className="mock-typing mr-auto flex items-center gap-1 rounded-xl rounded-tl-sm bg-white px-3 py-2 shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-onyx/35" />
+            <span className="h-1.5 w-1.5 rounded-full bg-onyx/35" />
+            <span className="h-1.5 w-1.5 rounded-full bg-onyx/35" />
+          </div>
         </div>
       </div>
     );
@@ -1318,7 +1241,7 @@ function StepVisualPanel({
               <span className="h-1 w-4 rounded-full bg-onyx/15" />
               <span className="h-1 w-3 rounded-full bg-onyx/10" />
               <span className="rounded-full bg-onyx px-1.5 py-1 text-[5px] font-bold text-white">
-                Book a call
+                Contact us
               </span>
             </div>
           </div>
@@ -1409,26 +1332,66 @@ function StepVisualPanel({
   );
 }
 
-function ProcessIcon({
-  src,
-  alt,
-  className = "",
-  imageClassName = "",
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  imageClassName?: string;
-}) {
+// Process icons in the brand style: the same red rounded square and white
+// line glyph as the UpScreen app icon (corner radius 23%, like the logo).
+type BrandIconName = "chat" | "mockup" | "build" | "launch" | "growth";
+
+const brandIconGlyphs: Record<BrandIconName, ReactNode> = {
+  chat: (
+    <>
+      <path d="M20 11.5a7.5 7.5 0 0 1-11.1 6.6L4 19.5l1.4-4.5A7.5 7.5 0 1 1 20 11.5Z" />
+      <circle cx="8.6" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="12.1" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
+      <circle cx="15.6" cy="11.5" r="0.9" fill="currentColor" stroke="none" />
+    </>
+  ),
+  mockup: (
+    <>
+      <rect x="3.5" y="4.5" width="17" height="15" rx="2.5" />
+      <path d="M3.5 8.5h17" />
+      <rect x="6.5" y="11.2" width="5" height="5.3" rx="1" />
+      <path d="M14.2 12h3.3M14.2 15.3h2.3" />
+    </>
+  ),
+  build: (
+    <>
+      <path d="M12 3.8 3.8 8.1 12 12.4l8.2-4.3Z" />
+      <path d="m3.8 12 8.2 4.3 8.2-4.3" />
+      <path d="m3.8 15.9 8.2 4.3 8.2-4.3" />
+    </>
+  ),
+  launch: (
+    <>
+      <path d="M5 16.4c-1.3 1.1-1.8 4.4-1.8 4.4s3.3-.5 4.4-1.8c.6-.7.6-1.9-.1-2.6a1.9 1.9 0 0 0-2.5 0Z" />
+      <path d="m12 14.6-2.6-2.6a19 19 0 0 1 1.8-3.5A11.5 11.5 0 0 1 20.8 3.2c0 2.4-.7 6.6-5.3 9.6a19.5 19.5 0 0 1-3.5 1.8Z" />
+      <path d="M9.4 12H5.1s.5-2.6 1.8-3.5c1.4-.9 4.3 0 4.3 0M12 14.6v4.3s2.6-.5 3.5-1.8c.9-1.4 0-4.3 0-4.3" />
+    </>
+  ),
+  growth: (
+    <>
+      <path d="m3.8 16.8 5.7-5.7 3.8 3.8 6.9-7.3" />
+      <path d="M15.3 7.6h4.9v4.9" />
+    </>
+  ),
+};
+
+function BrandIcon({ name, className = "" }: { name: BrandIconName; className?: string }) {
   return (
     <span
-      className={`grid shrink-0 place-items-center ${className}`}
+      aria-hidden="true"
+      className={`grid shrink-0 place-items-center rounded-[23%] bg-brand text-white shadow-[0_8px_22px_rgba(233,68,69,0.32),inset_0_1px_0_rgba(255,255,255,0.22)] ${className}`}
     >
-      <img
-        src={src}
-        alt={alt}
-        className={`h-full w-full object-contain drop-shadow-[0_0_10px_rgba(233,68,69,0.75)] ${imageClassName}`}
-      />
+      <svg
+        viewBox="0 0 24 24"
+        className="h-[58%] w-[58%]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {brandIconGlyphs[name]}
+      </svg>
     </span>
   );
 }
@@ -1596,10 +1559,6 @@ function Process() {
                   >
                     <StepVisual title={step.title} isLeft={isLeft} />
                   </div>
-                  <span
-                    aria-hidden="true"
-                    className="absolute bottom-3 left-[8%] z-0 h-32 w-[84%] rounded-[40%] bg-[radial-gradient(circle_at_28%_55%,rgba(233,68,69,0.38),transparent_30%),radial-gradient(circle_at_72%_40%,rgba(239,122,123,0.24),transparent_28%)] opacity-80"
-                  />
                   <article
                     className={`glass-panel process-glass relative z-10 -mt-8 overflow-hidden rounded-[24px] p-5 transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-7 ${
                       isRevealed
@@ -1614,28 +1573,14 @@ function Process() {
                         0{index + 1}
                       </span>
                       <h3
-                        className={`inline-block whitespace-nowrap rounded-full border border-[#2A2A2E] bg-off-white/5 px-4 py-2 text-lg font-semibold leading-none tracking-[-0.02em] text-off-white transition-[filter] duration-700 sm:px-5 sm:text-2xl ${
-                          isRevealed ? "[filter:none]" : "blur-[6px]"
-                        }`}
+                        className="inline-block whitespace-nowrap rounded-full border border-[#2A2A2E] bg-off-white/5 px-4 py-2 text-lg font-semibold leading-none tracking-[-0.02em] text-off-white sm:px-5 sm:text-2xl"
                       >
                         {step.title}
                       </h3>
-                      <ProcessIcon
-                        src={processIcons[step.title]}
-                        alt={`${step.title} icon`}
-                        className="h-12 w-12"
-                        imageClassName={
-                          step.title === "Free call" ||
-                          step.title === "You launch"
-                            ? "scale-[0.84]"
-                            : ""
-                        }
-                      />
+                      <BrandIcon name={processIcons[step.title]} className="h-10 w-10 sm:h-11 sm:w-11" />
                     </div>
                     <p
-                      className={`mt-5 text-[17px] font-normal leading-[1.6] text-[#CFCCC7] transition-[filter] duration-700 ${
-                        isRevealed ? "[filter:none]" : "blur-[6px]"
-                      } ${
+                      className={`mt-5 text-[17px] font-normal leading-[1.6] text-[#CFCCC7] ${
                         isLeft ? "sm:text-left" : ""
                       }`}
                     >
@@ -1658,10 +1603,8 @@ function Process() {
           })}
         </div>
         <div
-          className={`glass-panel relative z-10 mx-auto mt-12 flex max-w-[700px] flex-col items-center rounded-[26px] border-[#2A2A2E] px-6 py-7 text-center transition-[opacity,transform,filter] duration-700 sm:px-10 ${
-            showFinalStep
-              ? "translate-y-0 opacity-100 blur-0"
-              : "translate-y-10 opacity-0 blur-[3px]"
+          className={`glass-panel relative z-10 mx-auto mt-12 flex max-w-[700px] flex-col items-center rounded-[26px] border-[#2A2A2E] px-6 py-7 text-center transition-[opacity,transform] duration-700 sm:px-10 ${
+            showFinalStep ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
           <div className="flex items-center justify-center gap-3">
@@ -1671,12 +1614,7 @@ function Process() {
             <span className="inline-block text-xl font-semibold tracking-[-0.02em] text-off-white sm:text-3xl">
               We keep you growing
             </span>
-            <ProcessIcon
-              src={processGrowth}
-              alt="Growing results icon"
-              className="h-12 w-12"
-              imageClassName="scale-[0.84]"
-            />
+            <BrandIcon name="growth" className="h-10 w-10 sm:h-11 sm:w-11" />
           </div>
           <p className="mt-3 text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
             Hosting, updates and Instagram content, handled every month.
@@ -1871,14 +1809,14 @@ function ContactSection() {
             online.
           </h2>
           <p className="mt-6 max-w-[480px] text-[17px] font-normal leading-[1.6] text-warm-gray">
-            Start with a free 20-minute call and a free mockup. Move forward
-            only when you love what you see.
+            Message us on WhatsApp or fill in the form. You get a free mockup
+            and only move forward when you love what you see.
           </p>
           <a
             href="#contact-form"
             className="mt-8 inline-flex w-fit rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
           >
-            Book your free call
+            Contact us
           </a>
         </div>
 

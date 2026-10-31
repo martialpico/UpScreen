@@ -169,28 +169,6 @@
     animation: panel-float-right 4s ease-in-out -1s infinite;
   }
 
-  .voice-spectrum span {
-    transform-origin: center;
-    animation: voice-pulse 1.15s ease-in-out infinite alternate;
-  }
-
-  .voice-spectrum span:nth-child(2n) {
-    animation-delay: -0.35s;
-  }
-
-  .voice-spectrum span:nth-child(3n) {
-    animation-delay: -0.7s;
-  }
-
-  .whatsapp-panel::after {
-    height: 16%;
-    background: linear-gradient(
-      to bottom,
-      transparent,
-      color-mix(in srgb, var(--color-onyx) 12%, transparent)
-    );
-  }
-
   .problem-panel::after {
     height: 18%;
     background: linear-gradient(
@@ -245,6 +223,31 @@
     100% {
       transform: scale(1.9);
       opacity: 0;
+    }
+  }
+
+  .mock-typing span {
+    animation: mock-typing 1.2s ease-in-out infinite;
+  }
+
+  .mock-typing span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .mock-typing span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  @keyframes mock-typing {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.45;
+    }
+    30% {
+      transform: translateY(-2px);
+      opacity: 1;
     }
   }
 
@@ -352,6 +355,7 @@
       rgba(233, 68, 69, 0.16) 48%,
       transparent 72%
     );
+    transform: translate(-14vw, -10vh) rotate(-34deg);
     animation: bg-drift-a 19s ease-in-out infinite alternate;
   }
 
@@ -365,6 +369,7 @@
       rgba(255, 122, 123, 0.22) 38%,
       transparent 72%
     );
+    transform: translate(18vw, -18vh) rotate(-30deg);
     animation: bg-drift-b 14s ease-in-out infinite alternate;
   }
 
@@ -378,6 +383,7 @@
       rgba(168, 42, 43, 0.12) 55%,
       transparent 75%
     );
+    transform: translate(-30vw, 28vh) rotate(20deg);
     animation: bg-drift-c 23s ease-in-out infinite alternate;
   }
 
@@ -391,6 +397,7 @@
       rgba(233, 68, 69, 0.1) 50%,
       transparent 72%
     );
+    transform: translate(28vw, 26vh) rotate(-18deg);
     animation: bg-drift-d 17s ease-in-out infinite alternate;
   }
 
@@ -471,19 +478,18 @@
     }
   }
 
+  /* Sections fade in gently as they scroll into view (no blur). */
   .scroll-reveal {
     opacity: 0;
-    filter: blur(14px);
+    transform: translateY(18px);
     transition:
-      opacity 850ms cubic-bezier(0.22, 1, 0.36, 1),
-      filter 1000ms cubic-bezier(0.22, 1, 0.36, 1);
-    will-change: opacity, filter;
+      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .scroll-reveal.is-visible {
     opacity: 1;
-    filter: none;
-    will-change: auto;
+    transform: none;
   }
 
   @keyframes panel-float-left {
@@ -526,17 +532,6 @@
     100% {
       left: 140%;
       opacity: 0;
-    }
-  }
-
-  @keyframes voice-pulse {
-    from {
-      transform: scaleY(0.55);
-      opacity: 0.45;
-    }
-    to {
-      transform: scaleY(1.15);
-      opacity: 0.9;
     }
   }
 }
