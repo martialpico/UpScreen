@@ -1,6 +1,7 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import upscreenLogo from "./imports/upscreen-logo-reversed.svg";
 import upscreenIcon from "./imports/upscreen-icon.svg";
+import cafePhoto from "./imports/cafe-espresso.webp";
 import motionWise from "./imports/motion-wise.mp4";
 import motionAirbnb from "./imports/motion-airbnb.mp4";
 import motionAnyStyle from "./imports/motion-anystyle.mp4";
@@ -1117,7 +1118,7 @@ function StepVisualPanel({
           </span>
           <div className="ml-auto max-w-[78%] rounded-xl rounded-tr-sm bg-[#D9FDD3] px-2.5 py-1.5 shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
             <p className="text-[10.5px] leading-[1.35] text-onyx/85">
-              Hi! I run a café in Bondi. Can you help us get more customers?
+              Hi! I run Little Wave, a café in Bondi. Can you help us get more customers?
             </p>
             <p className="mt-0.5 flex items-center justify-end gap-0.5 text-[8px] text-onyx/45">
               9:41
@@ -1144,6 +1145,7 @@ function StepVisualPanel({
   }
 
   if (title === "Free mockup") {
+    // The client's café homepage being designed, with the client's comment.
     return (
       <div className={panelClass}>
         <div className="flex items-center border-b border-onyx/10 pb-2">
@@ -1152,40 +1154,22 @@ function StepVisualPanel({
             <span className="h-2 w-2 rounded-full bg-onyx/10" />
             <span className="h-2 w-2 rounded-full bg-onyx/10" />
           </div>
-          <p className="mx-auto pr-6 text-[9px] font-semibold">
-            UpScreen / Site v2
+          <p className="mx-auto pr-6 text-[9px] font-semibold text-onyx/70">
+            Little Wave · Homepage
           </p>
           <span className="rounded-md bg-brand px-2 py-1 text-[7px] font-semibold text-white">
             Share
           </span>
         </div>
-        <div className="mt-2 flex items-center gap-2 rounded-md bg-[#f1f3f8] px-2 py-1">
-          <span className="text-[8px] font-semibold text-onyx/55">↖</span>
-          <span className="h-3 w-px bg-onyx/10" />
-          <span className="text-[8px] font-semibold text-onyx/55">□</span>
-          <span className="text-[9px] font-semibold text-onyx/55">+</span>
-          <span className="ml-auto text-[7px] font-bold text-onyx/40">
-            Desktop · 1440
-          </span>
-        </div>
-        <div className="mt-2 grid h-[65%] grid-cols-[24%_1fr] overflow-hidden rounded-xl border border-onyx/8 bg-[#f1f3f8]">
-          <div className="border-r border-onyx/8 bg-white/80 p-2">
-            <p className="text-[7px] font-semibold uppercase tracking-wider text-onyx/50">
-              Layers
-            </p>
-            <div className="mt-1.5 space-y-1">
-              {[
-                "Navigation",
-                "Hero",
-                "Title",
-                "Button",
-                "Visual",
-                "Benefits",
-              ].map((layer, index) => (
+        <div className="mt-2 grid h-[74%] grid-cols-[22%_1fr] overflow-hidden rounded-xl border border-onyx/8 bg-[#EEF0F4]">
+          <div className="border-r border-onyx/8 bg-white/85 p-2">
+            <p className="text-[7px] font-semibold text-onyx/45">Layers</p>
+            <div className="mt-1.5 space-y-0.5">
+              {["Header", "Hero", "Photo", "Menu", "Opening hours", "Book a table"].map((layer) => (
                 <p
                   key={layer}
-                  className={`rounded px-1.5 py-1 text-[7px] font-bold ${
-                    index === 3 ? "bg-brand/10 text-brand" : "text-onyx/45"
+                  className={`truncate rounded px-1.5 py-[3px] text-[7px] font-semibold ${
+                    layer === "Photo" ? "bg-[#0D99FF]/12 text-[#0B7FD6]" : "text-onyx/50"
                   }`}
                 >
                   {layer}
@@ -1193,37 +1177,46 @@ function StepVisualPanel({
               ))}
             </div>
           </div>
-          <div className="relative m-3 overflow-hidden rounded-lg bg-white p-3 shadow-sm">
-            <div className="flex items-center">
-              <p className="text-[7px] font-semibold">upscreen</p>
-              <div className="ml-auto flex gap-1.5">
-                <span className="h-1 w-4 rounded-full bg-onyx/12" />
-                <span className="h-1 w-3 rounded-full bg-onyx/10" />
-                <span className="h-1 w-3 rounded-full bg-onyx/10" />
+          <div className="relative p-2.5">
+            <div className="h-full overflow-hidden rounded-md bg-[#F7F1E8] px-3 py-2.5 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+              <div className="flex items-center">
+                <p className="font-display text-[9px] leading-none text-[#3B2A20]">Little Wave</p>
+                <div className="ml-auto flex items-center gap-2 text-[5.5px] font-semibold text-[#3B2A20]/60">
+                  <span>Menu</span>
+                  <span>Visit</span>
+                  <span className="rounded-full bg-[#3B2A20] px-1.5 py-[3px] text-[#F7F1E8]">Book a table</span>
+                </div>
+              </div>
+              <div className="mt-3 grid grid-cols-[1fr_42%] items-center gap-2.5">
+                <div>
+                  <p className="font-display text-[14px] leading-[1.02] text-[#3B2A20]">
+                    Coffee worth waking up for.
+                  </p>
+                  <p className="mt-1.5 text-[5.5px] leading-[1.4] text-[#3B2A20]/60">
+                    Specialty coffee and brunch, two minutes from Bondi Beach.
+                  </p>
+                  <span className="mt-2 inline-block rounded-full bg-[#B5482F] px-2 py-[3px] text-[5.5px] font-bold text-white">
+                    See the menu
+                  </span>
+                </div>
+                <div className="relative">
+                  <img src={cafePhoto} alt="" className="block aspect-[1/1.08] w-full rounded-[5px] object-cover object-[55%_50%]" />
+                  <span className="pointer-events-none absolute -inset-[2px] border border-[#0D99FF]" />
+                  {["-left-[4px] -top-[4px]", "-right-[4px] -top-[4px]", "-bottom-[4px] -left-[4px]", "-bottom-[4px] -right-[4px]"].map((pos) => (
+                    <span key={pos} className={`absolute h-[5px] w-[5px] border border-[#0D99FF] bg-white ${pos}`} />
+                  ))}
+                  <span className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[3px] bg-[#0D99FF] px-1 py-px text-[5px] font-bold text-white">
+                    240 × 260
+                  </span>
+                  <div className="absolute -left-9 bottom-5 flex items-center gap-1 rounded-full rounded-bl-sm bg-white py-1 pl-1 pr-2 shadow-[0_4px_12px_rgba(0,0,0,0.16)]">
+                    <span className="grid h-3.5 w-3.5 place-items-center rounded-full bg-gradient-to-br from-[#F58529] to-[#DD2A7B] text-[6px] font-bold text-white">
+                      S
+                    </span>
+                    <span className="whitespace-nowrap text-[7px] font-semibold text-onyx/75">Love this photo!</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <p className="mt-3 text-sm font-semibold leading-[0.9]">
-              Sell more,
-              <br />
-              <span className="text-brand">faster.</span>
-            </p>
-            <div className="mt-2 h-1 w-[55%] rounded-full bg-onyx/10" />
-            <div className="mt-1 h-1 w-[42%] rounded-full bg-onyx/8" />
-            <span className="mt-3 inline-block rounded-full bg-onyx px-2 py-1 text-[6px] font-bold text-white">
-              Request a demo
-            </span>
-            <div className="absolute bottom-2 right-2 h-[55%] w-[42%] rounded-lg bg-gradient-to-br from-brand/20 to-indigo-200/70">
-              <div className="absolute left-2 top-2 w-[72%] rounded bg-white/85 p-1.5 shadow-sm">
-                <div className="h-1 w-[55%] rounded-full bg-onyx/20" />
-                <div className="mt-1 h-1 w-[35%] rounded-full bg-brand/45" />
-              </div>
-              <span className="absolute bottom-2 left-1.5 rounded-full bg-brand px-1.5 py-0.5 text-[5px] font-bold text-white">
-                Design review
-              </span>
-            </div>
-            <span className="absolute bottom-1 left-[42%] rounded bg-blue-600 px-1.5 py-0.5 text-[5px] font-bold text-white">
-              168 × 44
-            </span>
           </div>
         </div>
       </div>
@@ -1259,7 +1252,7 @@ function StepVisualPanel({
         <div className="mt-2.5 rounded-xl border border-onyx/8 bg-white p-2.5 shadow-sm">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
-              <p className="text-[12px] font-semibold leading-tight text-[#1A0DAB]">Your Business</p>
+              <p className="text-[12px] font-semibold leading-tight text-[#1A0DAB]">Little Wave Café</p>
               <p className="mt-0.5 flex items-center gap-1 text-[9px] text-onyx/50">
                 <b className="font-semibold text-onyx/75">4.9</b>
                 <span className="tracking-[-0.05em] text-[#FBBC04]">★★★★★</span>
@@ -1289,6 +1282,7 @@ function StepVisualPanel({
   }
 
   if (title === "You launch") {
+    // The finished café site, live, already bringing in a booking.
     return (
       <div className={panelClass}>
         <div className="flex items-center gap-2 border-b border-onyx/10 pb-2">
@@ -1296,62 +1290,61 @@ function StepVisualPanel({
             <span className="h-2 w-2 rounded-full bg-onyx/10" />
             <span className="h-2 w-2 rounded-full bg-onyx/10" />
           </div>
-          <div className="flex-1 rounded-md bg-[#f1f3f8] px-2 py-1 text-[8px] font-bold text-onyx/55">
-            yourbusiness.com.au
+          <div className="flex flex-1 items-center gap-1 rounded-md bg-[#f1f3f8] px-2 py-1 text-[8px] font-semibold text-onyx/55">
+            <svg aria-hidden="true" viewBox="0 0 16 16" className="h-2.5 w-2.5" fill="none" stroke="currentColor" strokeWidth="1.6">
+              <rect x="3.5" y="7" width="9" height="6.5" rx="1.5" />
+              <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" />
+            </svg>
+            littlewavecafe.com.au
+          </div>
+          <span className="flex items-center gap-1 text-[8px] font-semibold text-[#188038]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#1DAA61]" />
+            Live
+          </span>
+        </div>
+        <div className="relative mt-2.5 overflow-hidden rounded-xl shadow-sm">
+          <div className="relative h-[136px]">
+            <img src={cafePhoto} alt="" className="absolute inset-0 h-full w-full object-cover object-[60%_45%]" />
+            <span className="absolute inset-0 bg-gradient-to-r from-[#24170F]/90 via-[#24170F]/55 to-transparent" />
+            <div className="relative flex items-center px-3 pt-2.5">
+              <p className="font-display text-[10px] leading-none text-[#F7F1E8]">Little Wave</p>
+              <div className="ml-auto flex items-center gap-2 text-[6px] font-semibold text-[#F7F1E8]/75">
+                <span>Menu</span>
+                <span>About</span>
+                <span className="rounded-full bg-[#F7F1E8] px-1.5 py-[3px] text-[#3B2A20]">Book a table</span>
+              </div>
+            </div>
+            <div className="relative mt-4 max-w-[58%] px-3">
+              <p className="font-display text-[17px] leading-[1.02] text-[#F7F1E8]">Coffee worth waking up for.</p>
+              <p className="mt-1.5 text-[6.5px] leading-[1.4] text-[#F7F1E8]/75">
+                Specialty coffee and brunch, two minutes from Bondi Beach.
+              </p>
+              <div className="mt-2 flex gap-1.5">
+                <span className="rounded-full bg-[#B5482F] px-2 py-[3px] text-[6px] font-bold text-white">See the menu</span>
+                <span className="rounded-full border border-[#F7F1E8]/50 px-2 py-[3px] text-[6px] font-bold text-[#F7F1E8]">Directions</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-between bg-[#F7F1E8] px-3 py-1.5 text-[6.5px] font-semibold text-[#3B2A20]/70">
+            <span className="flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#1DAA61]" />
+              Open today · 6:30 am to 3 pm
+            </span>
+            <span>
+              <span className="text-[#FBBC04]">★</span> 4.9 on Google
+            </span>
           </div>
         </div>
-        <div className="relative mt-3 h-[72%] overflow-hidden rounded-xl border border-onyx/8 bg-white p-3 shadow-sm">
-          <div className="flex items-center">
-            <p className="text-[7px] font-semibold">yourbusiness</p>
-            <div className="ml-auto flex items-center gap-1.5">
-              <span className="h-1 w-4 rounded-full bg-onyx/15" />
-              <span className="h-1 w-3 rounded-full bg-onyx/10" />
-              <span className="rounded-full bg-onyx px-1.5 py-1 text-[5px] font-bold text-white">
-                Book a table
-              </span>
-            </div>
-          </div>
-          <p className="mt-3 text-base font-semibold leading-[0.9]">
-            Great coffee,
-            <br />
-            <span className="text-brand">right in Bondi.</span>
-          </p>
-          <div className="mt-2 h-1 w-[40%] rounded-full bg-onyx/12" />
-          <div className="mt-1 h-1 w-[32%] rounded-full bg-onyx/8" />
-          <span className="relative z-10 mt-3 inline-block rounded-full bg-onyx px-2 py-1 text-[6px] font-bold text-white">
-            See the menu
+        <div className="absolute bottom-[86px] right-3 flex w-[44%] items-center gap-2 rounded-xl border border-onyx/8 bg-white p-2 shadow-[0_10px_24px_rgba(0,0,0,0.18)]">
+          <span className="grid h-6 w-6 shrink-0 place-items-center rounded-lg bg-brand text-white">
+            <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+              <rect x="2.5" y="3.5" width="11" height="10" rx="2" />
+              <path d="M2.5 6.5h11M5.5 2v3M10.5 2v3" />
+            </svg>
           </span>
-          <div className="absolute bottom-2 left-3 h-[17%] w-[42%] rounded-lg bg-gradient-to-r from-brand/20 via-rose-100 to-indigo-100">
-            <div className="absolute bottom-2 left-2 h-1 w-[45%] rounded-full bg-brand/55" />
-          </div>
-          <div className="absolute bottom-3 right-3 w-[56%] rounded-xl border border-onyx/8 bg-white p-2.5 shadow-xl">
-            <div className="flex items-center justify-between">
-              <p className="text-[8px] font-semibold">Deployment</p>
-              <span className="text-[7px] font-bold text-emerald-600">
-                Live
-              </span>
-            </div>
-            <div className="mt-2 space-y-1.5">
-              {["Domain & SSL", "Google Business", "Analytics"].map((item) => (
-                <div key={item} className="flex items-center gap-1.5">
-                  <span className="grid h-3 w-3 place-items-center rounded-full bg-emerald-500 text-[7px] font-bold text-white">
-                    ✓
-                  </span>
-                  <span className="text-[7px] font-bold text-onyx/65">
-                    {item}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <div className="mt-2 flex items-center justify-between border-t border-onyx/8 pt-2">
-              <span className="text-[7px] font-semibold text-onyx/45">
-                Site status
-              </span>
-              <span className="flex items-center gap-1 text-[7px] font-semibold text-emerald-600">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                Live
-              </span>
-            </div>
+          <div className="min-w-0 leading-tight">
+            <p className="text-[8px] font-semibold text-onyx/85">New booking</p>
+            <p className="truncate text-[7px] text-onyx/50">Table for 2 · Sat 9:30 am</p>
           </div>
         </div>
       </div>
