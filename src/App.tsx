@@ -1814,13 +1814,23 @@ function FAQ() {
   );
 }
 
+// Enquiries are emailed to the agency inbox through FormSubmit (formsubmit.co:
+// free, no account). The very first submission from the live site makes
+// FormSubmit send an "Activate Form" email to this address: click it once.
+const contactEmail = "upscreenweb@gmail.com";
+const formEndpoint = `https://formsubmit.co/ajax/${contactEmail}`;
+
+type FormStatus = "idle" | "sending" | "sent" | "activate" | "error";
+
 function ContactSection() {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<FormStatus>("idle");
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const value = (field: string) => String(data.get(field) || "").trim();
     const nextErrors: Record<string, string> = {};
 
     ["name", "business", "industry", "email", "phone", "message"].forEach(
@@ -1837,7 +1847,58 @@ function ContactSection() {
     }
 
     setErrors(nextErrors);
-    setSubmitted(Object.keys(nextErrors).length === 0);
+    if (Object.keys(nextErrors).length > 0) {
+      setStatus("idle");
+      return;
+    }
+
+    const clearForm = () => {
+      form.reset();
+      const industry = form.elements.namedItem("industry") as HTMLSelectElement | null;
+      if (industry) industry.value = "";
+    };
+
+    // Hidden field only bots fill in: pretend it worked, send nothing.
+    if (value("_honey")) {
+      clearForm();
+      setStatus("sent");
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const response = await fetch(formEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `New enquiry from ${value("business")}`,
+          _template: "table",
+          _replyto: value("email"),
+          _captcha: "false",
+          Name: value("name"),
+          Business: value("business"),
+          Industry: value("industry"),
+          Email: value("email"),
+          Phone: value("phone"),
+          Message: value("message"),
+        }),
+      });
+      const result = (await response.json().catch(() => null)) as
+        | { success?: boolean | string; message?: string }
+        | null;
+      const succeeded = response.ok && (result?.success === true || result?.success === "true");
+
+      if (succeeded) {
+        clearForm();
+        setStatus("sent");
+      } else if (/activat/i.test(result?.message ?? "")) {
+        setStatus("activate");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   const fieldClass =
@@ -1960,18 +2021,44 @@ function ContactSection() {
               </span>
             )}
           </label>
+          <input
+            type="text"
+            name="_honey"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
           <div className="sm:col-span-2">
             <button
               type="submit"
-              className="w-full rounded-xl bg-brand px-6 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
+              disabled={status === "sending"}
+              className="w-full rounded-xl bg-brand px-6 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] disabled:cursor-wait disabled:opacity-70"
             >
-              Send
+              {status === "sending" ? "Sending…" : "Send"}
             </button>
-            {submitted && (
-              <p className="mt-3 text-sm font-normal text-off-white">
-                Thanks — your project details are ready to send.
-              </p>
-            )}
+            <div aria-live="polite">
+              {status === "sent" && (
+                <p className="mt-3 text-sm font-normal text-off-white">
+                  Thanks! Your message is on its way. We'll get back to you soon.
+                </p>
+              )}
+              {status === "activate" && (
+                <p className="mt-3 text-sm font-normal text-amber-400">
+                  Almost there: open the "Activate Form" email sent to {contactEmail}, click the
+                  link, then send the form again.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="mt-3 text-sm font-normal text-amber-400">
+                  Your message didn't go through. Please try again, or email us at{" "}
+                  <a href={`mailto:${contactEmail}`} className="underline underline-offset-2">
+                    {contactEmail}
+                  </a>
+                  .
+                </p>
+              )}
+            </div>
           </div>
         </form>
       </div>
@@ -2026,9 +2113,12 @@ function Footer() {
           ))}
         </nav>
           <div className="mt-6 flex flex-wrap items-center gap-4 md:justify-end">
-            <span className="text-xs font-normal text-warm-gray">
-              hello@upscreen.com.au (placeholder)
-            </span>
+            <a
+              href={`mailto:${contactEmail}`}
+              className="text-xs font-normal text-warm-gray transition-colors hover:text-off-white"
+            >
+              {contactEmail}
+            </a>
             <span className="text-xs font-normal text-warm-gray">
               ABN 28 900 392 176
             </span>
