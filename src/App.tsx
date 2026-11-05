@@ -294,7 +294,7 @@ function Header() {
 
         <nav
           aria-label="Navigation principale"
-          className="hidden items-center gap-1 md:flex"
+          className="hidden items-center gap-1 lg:flex"
         >
           {links.map(([label, href]) => (
             <a
@@ -309,9 +309,9 @@ function Header() {
 
         <a
           href="#contact"
-          className="hidden rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] md:inline-flex"
+          className="hidden whitespace-nowrap rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] lg:inline-flex"
         >
-          Nous contacter
+          Prendre rendez-vous
         </a>
 
         <button
@@ -319,7 +319,7 @@ function Header() {
           aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((current) => !current)}
-          className="relative z-10 grid h-10 w-10 place-items-center rounded-full border border-off-white/12 bg-off-white/5 text-off-white md:hidden"
+          className="relative z-10 grid h-10 w-10 place-items-center rounded-full border border-off-white/12 bg-off-white/5 text-off-white lg:hidden"
         >
           <span className="relative h-4 w-5" aria-hidden="true">
             <span
@@ -341,7 +341,7 @@ function Header() {
         </button>
 
         <div
-          className={`absolute left-4 right-4 top-[72px] overflow-hidden rounded-[22px] border border-[#2A2A2E] bg-onyx/95 p-2 shadow-2xl backdrop-blur-2xl transition-all duration-300 md:hidden ${
+          className={`absolute left-4 right-4 top-[72px] overflow-hidden rounded-[22px] border border-[#2A2A2E] bg-onyx/95 p-2 shadow-2xl backdrop-blur-2xl transition-all duration-300 lg:hidden ${
             menuOpen
               ? "visible translate-y-0 opacity-100"
               : "invisible -translate-y-2 opacity-0"
@@ -367,7 +367,7 @@ function Header() {
             tabIndex={menuOpen ? 0 : -1}
             className="mt-2 flex w-full items-center justify-center rounded-2xl bg-brand px-4 py-3.5 text-sm font-semibold text-onyx hover:bg-[#FF7A7B]"
           >
-            Nous contacter
+            Prendre rendez-vous
           </a>
         </div>
       </div>
@@ -398,7 +398,7 @@ function Hero() {
           href="#contact"
           className="rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
         >
-          Nous contacter
+          Prendre rendez-vous
         </a>
         <a
           href="#pricing"
@@ -724,55 +724,105 @@ function SlowSiteWidget() {
   );
 }
 
-// A sleeping Instagram profile and a customer question nobody answered.
+// Un vrai profil Instagram d'entreprise, endormi depuis mars 2023, et une
+// question de client restée sans réponse.
 function DeadFeedWidget() {
-  const tiles = ["#CBB8A4", "#B9C2B4", "#D2C3B5", "#C4BCB3", "#BDB6AE", "#CFC6BC"];
+  // Vignettes : la plus récente en haut à gauche (« Fermé jusqu'au 15 mars »),
+  // puis des photos du café recadrées, un peu passées.
+  const photoTiles = [
+    { position: "35% 35%", zoom: 1.7, badge: "reel" },
+    { position: "70% 75%", zoom: 2.1, badge: "multi" },
+    { position: "50% 50%", zoom: 1, badge: null },
+    { position: "15% 80%", zoom: 1.9, badge: null },
+    { position: "55% 20%", zoom: 2.4, badge: "reel" },
+  ] as const;
+  const igBlue = "#0095F6";
 
   return (
     <div className="relative flex h-full flex-col">
-      <div className="flex items-center" style={{ gap: u(9) }}>
+      <div className="flex items-center" style={{ gap: u(10) }}>
         <span
-          className="grid shrink-0 place-items-center rounded-full border border-onyx/15 bg-onyx/[0.07] font-bold text-onyx/40"
-          style={{ width: u(28), height: u(28), fontSize: u(8.5) }}
+          className="grid shrink-0 place-items-center rounded-full bg-[#3B2A20] font-display text-[#F7F1E8]"
+          style={{ width: u(32), height: u(32), fontSize: u(11), boxShadow: "0 0 0 1px rgba(10,10,11,0.1)" }}
         >
           VE
         </span>
-        <div className="min-w-0 flex-1">
-          <p className="font-semibold leading-none text-onyx/85" style={{ fontSize: u(9.5) }}>
-            votre.entreprise
-          </p>
-          <div className="flex justify-between leading-none" style={{ marginTop: u(5) }}>
-            {[
-              ["12", "publications"],
-              ["87", "followers"],
-              ["64", "suivis"],
-            ].map(([value, label]) => (
-              <span key={label} style={{ fontSize: u(7) }}>
-                <b className="font-bold text-onyx/80">{value}</b> <span className="text-onyx/45">{label}</span>
+        <div className="grid flex-1 grid-cols-3 text-center leading-none">
+          {[
+            ["12", "publications"],
+            ["87", "followers"],
+            ["64", "suivi(e)s"],
+          ].map(([value, label]) => (
+            <span key={label}>
+              <b className="block font-bold text-onyx/85" style={{ fontSize: u(9.5) }}>
+                {value}
+              </b>
+              <span className="mt-[0.35em] block text-onyx/55" style={{ fontSize: u(6.5) }}>
+                {label}
               </span>
-            ))}
-          </div>
+            </span>
+          ))}
         </div>
       </div>
 
-      <div className="grid flex-1 grid-cols-3" style={{ gap: u(3), marginTop: u(9) }}>
-        {tiles.map((tone, tile) => (
+      <div style={{ marginTop: u(6) }}>
+        <p className="font-bold leading-tight text-onyx/85" style={{ fontSize: u(7.5) }}>
+          Votre Entreprise
+        </p>
+        <p className="leading-tight text-onyx/55" style={{ fontSize: u(6.5), marginTop: u(1) }}>
+          Café · Brunch · Toulouse
+        </p>
+      </div>
+
+      <div className="grid grid-cols-2 font-semibold" style={{ gap: u(4), marginTop: u(6), fontSize: u(7) }}>
+        <span className="grid place-items-center text-white" style={{ height: u(15), borderRadius: u(4), background: igBlue }}>
+          Suivre
+        </span>
+        <span className="grid place-items-center bg-[#EFEFEF] text-onyx/85" style={{ height: u(15), borderRadius: u(4) }}>
+          Message
+        </span>
+      </div>
+
+      <div
+        className="grid grid-cols-3 overflow-hidden"
+        style={{ gap: u(1.5), marginTop: u(8), filter: "saturate(0.55) brightness(1.06) contrast(0.92)" }}
+      >
+        <span
+          className="relative flex aspect-square flex-col items-center justify-center bg-[#EADFD2] text-center font-display leading-[1.05] text-[#3B2A20]"
+          style={{ fontSize: u(8.5) }}
+        >
+          Fermé jusqu'au
+          <br />
+          15 mars
+          <span className="font-ui text-[#3B2A20]/60" style={{ fontSize: u(5.5), marginTop: u(3) }}>
+            À très vite !
+          </span>
           <span
-            key={tone}
-            className="relative overflow-hidden"
-            style={{
-              borderRadius: u(4),
-              background: `linear-gradient(150deg, ${tone}, color-mix(in srgb, ${tone} 70%, #8C8A87))`,
-              opacity: 0.55,
-            }}
+            className="absolute rounded-full bg-white font-ui font-bold text-onyx/70"
+            style={{ left: u(3), top: u(3), fontSize: u(5.5), padding: `${u(1.2)} ${u(3.5)}` }}
           >
-            {tile === 0 && (
-              <span
-                className="absolute rounded-full bg-white font-bold text-onyx/70"
-                style={{ left: u(4), top: u(4), fontSize: u(6.5), padding: `${u(1.5)} ${u(4)}` }}
-              >
-                mars 2023
-              </span>
+            mars 2023
+          </span>
+        </span>
+        {photoTiles.map((tile) => (
+          <span key={tile.position} className="relative aspect-square overflow-hidden bg-[#D8CFC5]">
+            <img
+              src={cafePhoto}
+              alt=""
+              className="h-full w-full object-cover"
+              style={{ objectPosition: tile.position, transform: `scale(${tile.zoom})`, transformOrigin: tile.position }}
+            />
+            {tile.badge === "reel" && (
+              <svg viewBox="0 0 16 16" className="absolute drop-shadow" style={{ right: u(3), top: u(3), width: u(7), height: u(7) }} fill="none" stroke="#fff" strokeWidth="1.6">
+                <rect x="2" y="2" width="12" height="12" rx="3.5" />
+                <path d="m6.6 5.6 4 2.4-4 2.4Z" fill="#fff" stroke="none" />
+              </svg>
+            )}
+            {tile.badge === "multi" && (
+              <svg viewBox="0 0 16 16" className="absolute drop-shadow" style={{ right: u(3), top: u(3), width: u(7), height: u(7) }} fill="none" stroke="#fff" strokeWidth="1.6">
+                <rect x="5" y="2" width="9" height="9" rx="2" />
+                <path d="M3 5.5v7.5h7.5" />
+              </svg>
             )}
           </span>
         ))}
@@ -780,7 +830,7 @@ function DeadFeedWidget() {
 
       <div
         className="absolute flex items-center border border-onyx/8 bg-white shadow-[0_10px_24px_rgba(0,0,0,0.16)]"
-        style={{ left: u(10), right: u(10), bottom: u(6), borderRadius: u(10), padding: `${u(6)} ${u(8)}`, gap: u(6) }}
+        style={{ left: u(12), right: u(12), bottom: u(-14), borderRadius: u(9), padding: `${u(5)} ${u(7)}`, gap: u(6) }}
       >
         <span
           className="grid shrink-0 place-items-center rounded-full font-bold text-white"
@@ -1937,7 +1987,7 @@ function ContactSection() {
             href="#contact-form"
             className="mt-8 inline-flex w-fit rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
           >
-            Nous contacter
+            Prendre rendez-vous
           </a>
         </div>
 
