@@ -1,6 +1,6 @@
 # Upscreen website
 
-Landing page for **Upscreen**, an agency that builds landing pages, motion design videos and Instagram content for small businesses in Australia.
+Landing page for **Upscreen**, an agency that builds landing pages, motion design videos and Instagram content for small businesses. The site is in French, with prices in euros (excl. VAT), set in `prices` at the top of `src/App.tsx`.
 
 Built with Preact (React-compatible API, much lighter), Vite and Tailwind CSS v4. It is a static site: no server or database needed.
 

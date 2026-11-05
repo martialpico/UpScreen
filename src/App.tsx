@@ -21,87 +21,98 @@ type Plan = {
 type Service = {
   title: string;
   subtitle: string;
-  billing: "One-off" | "Monthly";
+  billing: "Paiement unique" | "Mensuel";
   featured?: boolean;
   note: string;
   plans: Plan[];
 };
 
+// Prix en euros HT, au format français (espace insécable pour les milliers).
+const prices = {
+  landing: "1\u00a0500",
+  landingVideo: "2\u00a0500",
+  instagram8: "890",
+  instagram12: "1\u00a0400",
+  care: "99",
+};
+
+const careNote = `+ ${prices.care}\u00a0€/mois : hébergement, maintenance et SEO local`;
+
 const services: Service[] = [
   {
     title: "Landing page",
-    subtitle: "SAY HELLO TO FINALLY SELLING.",
-    billing: "One-off",
-    note: "+ A$99/month hosting, care & local SEO",
+    subtitle: "Enfin un site qui vend.",
+    billing: "Paiement unique",
+    note: careNote,
     plans: [
       {
         label: "Landing page",
-        price: "A$1,500",
+        price: prices.landing,
         features: [
-          "Custom one-page website",
-          "Mobile-first & fast-loading",
-          "Call, booking or contact form",
-          "Google Business Profile + monthly local SEO",
-          "Connected to your Instagram and Facebook",
+          "Site sur-mesure d'une seule page",
+          "Pensé pour le mobile et rapide à charger",
+          "Appel, réservation ou formulaire de contact",
+          "Fiche Google Business + SEO local chaque mois",
+          "Relié à votre Instagram et à votre Facebook",
         ],
       },
     ],
   },
   {
-    title: "Landing page + Video presentation",
-    subtitle: "STAND OUT FROM THE FIRST SECOND.",
-    billing: "One-off",
+    title: "Landing page + Vidéo de présentation",
+    subtitle: "Démarquez-vous dès la première seconde.",
+    billing: "Paiement unique",
     featured: true,
-    note: "+ A$99/month hosting, care & local SEO · First month free",
+    note: `${careNote} · 1er mois offert`,
     plans: [
       {
-        label: "Landing page + Video",
-        price: "A$2,500",
+        label: "Landing page + Vidéo",
+        price: prices.landingVideo,
         features: [
-          "Everything in Landing page",
-          "Custom 30–45s presentation video in motion design",
-          "We write the script for you",
-          "Short vertical version for Instagram",
-          "Music & sound design",
+          "Tout ce que comprend la Landing page",
+          "Vidéo de présentation en motion design de 30 à 45\u00a0s, sur-mesure",
+          "Nous écrivons le script pour vous",
+          "Version verticale courte pour Instagram",
+          "Musique et sound design",
         ],
       },
     ],
   },
   {
-    title: "Instagram content",
-    subtitle: "STAY VISIBLE, EVERY WEEK.",
-    billing: "Monthly",
-    note: "3-month minimum",
+    title: "Contenu Instagram",
+    subtitle: "Restez visible, chaque semaine.",
+    billing: "Mensuel",
+    note: "Engagement de 3 mois minimum",
     plans: [
       {
         label: "8 posts",
-        price: "A$890",
+        price: prices.instagram8,
         features: [
-          "8 custom posts per month",
-          "Monthly content calendar",
-          "Designed & ready-to-post feed",
-          "Captions written for you",
-          "Reels ideas & content prompts",
+          "8 posts sur-mesure par mois",
+          "Calendrier éditorial mensuel",
+          "Feed designé, prêt à publier",
+          "Légendes rédigées pour vous",
+          "Idées de réels et de contenus",
         ],
       },
       {
-        label: "12 posts + 2 reels",
-        price: "A$1,400",
+        label: "12 posts + 2 réels",
+        price: prices.instagram12,
         features: [
-          "12 custom posts per month",
-          "2 motion design reels per month",
-          "Monthly content calendar",
-          "Designed & ready-to-post feed",
-          "Captions written for you",
+          "12 posts sur-mesure par mois",
+          "2 réels en motion design par mois",
+          "Calendrier éditorial mensuel",
+          "Feed designé, prêt à publier",
+          "Légendes rédigées pour vous",
         ],
       },
     ],
   },
 ];
 
-// Real client quotes, published with their agreement. Keep the wording as the
-// client wrote it. "person" is optional (first name and role). Add
-// placeholder: true to show a "Placeholder" badge on a draft review.
+// Vrais avis clients, publiés avec leur accord, dans la langue où le client les
+// a écrits. "person" est facultatif (prénom et rôle). Ajouter placeholder: true
+// affiche un badge « Exemple » sur un avis en attente.
 type Review = {
   lang: "EN" | "FR";
   quote: string;
@@ -137,83 +148,82 @@ const reviews: Review[] = [
   },
 ];
 
-// The website journey, from first message to launch.
+// Le parcours du site, du premier message à la mise en ligne.
 const processSteps = [
   {
-    title: "Contact us",
-    body: "Send us a message on WhatsApp. We get to know your business, your customers and your goals.",
+    title: "Contactez-nous",
+    body: "Envoyez-nous un message sur WhatsApp. Nous apprenons à connaître votre entreprise, vos clients et vos objectifs.",
     highlights: ["WhatsApp"],
     side: "left",
   },
   {
-    title: "Free mockup",
-    body: "We design a mockup of your new website for free. You only go ahead if you love it.",
-    highlights: ["for free"],
+    title: "Maquette offerte",
+    body: "Nous concevons gratuitement une maquette de votre futur site. Vous ne continuez que si elle vous plaît.",
+    highlights: ["gratuitement"],
     side: "right",
   },
   {
-    title: "We build",
-    body: "We build your website and write all the copy: mobile-first, fast, with your contact or booking form.",
-    highlights: ["write all the copy"],
+    title: "On construit",
+    body: "Nous créons votre site et rédigeons tous les textes : pensé pour le mobile, rapide, avec votre formulaire de contact ou de réservation.",
+    highlights: ["rédigeons tous les textes"],
     side: "left",
   },
   {
     title: "Google & SEO",
-    body: "We set up your Google Business Profile and optimise your site for local search, so nearby customers find you on Google and Maps.",
-    highlights: ["Google Business Profile"],
+    body: "Nous créons votre fiche Google Business et optimisons votre site pour la recherche locale, pour que les clients du quartier vous trouvent sur Google et Maps.",
+    highlights: ["fiche Google Business"],
     side: "right",
   },
   {
-    title: "You launch",
-    body: "Your website goes live in 14 days, ready to bring in calls, bookings and messages.",
-    highlights: ["14 days"],
+    title: "Mise en ligne",
+    body: "Votre site est en ligne en 14 jours, prêt à vous apporter des appels, des réservations et des messages.",
+    highlights: ["14 jours"],
     side: "left",
   },
 ];
 
 const processIcons: Record<string, BrandIconName> = {
-  "Contact us": "chat",
-  "Free mockup": "mockup",
-  "We build": "build",
+  "Contactez-nous": "chat",
+  "Maquette offerte": "mockup",
+  "On construit": "build",
   "Google & SEO": "seo",
-  "You launch": "launch",
+  "Mise en ligne": "launch",
 };
 
 const faqs = [
   {
-    question: "What exactly do you offer?",
+    question: "Que proposez-vous exactement\u00a0?",
     answer:
-      "We help small businesses get seen and chosen online. We build custom landing pages, create motion design presentation videos, and run your Instagram every month. Pick one service or combine them.",
+      "Nous aidons les petites entreprises à être vues et choisies en ligne. Nous créons des landing pages sur-mesure, des vidéos de présentation en motion design, et nous gérons votre Instagram chaque mois. Choisissez un service ou combinez-les.",
   },
   {
-    question: "Who are your services for?",
+    question: "À qui s'adressent vos services\u00a0?",
     answer:
-      "Local businesses that want to look as good online as they are in real life: restaurants, cafés, salons, gyms, tradies, clinics and shops.",
+      "Aux entreprises locales qui veulent être aussi convaincantes en ligne qu'en vrai : restaurants, cafés, salons, salles de sport, artisans, cabinets et commerces.",
   },
   {
-    question: "How long does it take?",
+    question: "Combien de temps faut-il\u00a0?",
     answer:
-      "Your landing page and video are ready in about 14 days, from the moment we receive your logo, photos and key info.",
+      "Votre landing page et votre vidéo sont prêtes en 14 jours environ, à partir du moment où nous recevons votre logo, vos photos et vos informations clés.",
   },
   {
-    question: "Can I customise my project?",
+    question: "Puis-je personnaliser mon projet\u00a0?",
     answer:
-      "Absolutely. Every page and video is designed from scratch for your business. You see a free mockup first, and two rounds of changes are included.",
+      "Bien sûr. Chaque page et chaque vidéo est conçue sur-mesure pour votre entreprise. Vous voyez d'abord une maquette gratuite, et deux séries de modifications sont incluses.",
   },
   {
-    question: "Can you connect my social media to my website?",
+    question: "Pouvez-vous relier mes réseaux sociaux à mon site\u00a0?",
     answer:
-      "Yes. We add links to your Instagram and Facebook, and can display your latest posts directly on your page.",
+      "Oui. Nous ajoutons les liens vers votre Instagram et votre Facebook, et nous pouvons afficher vos derniers posts directement sur votre page.",
   },
   {
-    question: "What does Hosting & Care include?",
-    answer:
-      "Fast and secure hosting, backups, updates, monthly local SEO, Google Business Profile upkeep and small edits, for A$99/month. No lock-in, cancel anytime.",
+    question: "Que comprend l'offre hébergement et maintenance\u00a0?",
+    answer: `Un hébergement rapide et sécurisé, les sauvegardes, les mises à jour, le SEO local chaque mois, le suivi de votre fiche Google Business et les petites modifications, pour ${prices.care}\u00a0€/mois. Sans engagement, résiliable à tout moment.`,
   },
   {
-    question: "How do I contact you?",
+    question: "Comment vous contacter\u00a0?",
     answer:
-      "Send us a message on WhatsApp, or leave your details in the contact form below.",
+      "Envoyez-nous un message sur WhatsApp, ou laissez vos coordonnées dans le formulaire ci-dessous.",
   },
 ];
 
@@ -248,9 +258,9 @@ function Header() {
   const [scrolled, setScrolled] = useState(false);
   const links = [
     ["Services", "#services"],
-    ["How it works", "#process"],
-    ["Work", "#work"],
-    ["Pricing", "#pricing"],
+    ["Méthode", "#process"],
+    ["Réalisations", "#work"],
+    ["Tarifs", "#pricing"],
     ["FAQ", "#faq"],
   ];
 
@@ -272,7 +282,7 @@ function Header() {
       <div className="relative mx-auto flex h-20 max-w-[1160px] items-center justify-between px-5 sm:px-8">
         <a
           href="#home"
-          aria-label="UpScreen home"
+          aria-label="Accueil UpScreen"
           onClick={() => setMenuOpen(false)}
           className="relative z-10 block w-[132px] shrink-0 sm:w-[148px]"
         >
@@ -284,7 +294,7 @@ function Header() {
         </a>
 
         <nav
-          aria-label="Primary navigation"
+          aria-label="Navigation principale"
           className="hidden items-center gap-1 md:flex"
         >
           {links.map(([label, href]) => (
@@ -302,12 +312,12 @@ function Header() {
           href="#contact"
           className="hidden rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] md:inline-flex"
         >
-          Contact us
+          Nous contacter
         </a>
 
         <button
           type="button"
-          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((current) => !current)}
           className="relative z-10 grid h-10 w-10 place-items-center rounded-full border border-off-white/12 bg-off-white/5 text-off-white md:hidden"
@@ -358,7 +368,7 @@ function Header() {
             tabIndex={menuOpen ? 0 : -1}
             className="mt-2 flex w-full items-center justify-center rounded-2xl bg-brand px-4 py-3.5 text-sm font-semibold text-onyx hover:bg-[#FF7A7B]"
           >
-            Contact us
+            Nous contacter
           </a>
         </div>
       </div>
@@ -371,31 +381,31 @@ function Hero() {
     <section id="home" className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-[60px] pt-36 sm:px-8 md:pt-44">
       <h1 className="mx-auto max-w-[900px] text-center shadow-none">
         <span className="font-ui block text-base font-normal leading-none tracking-[0.01em] text-warm-gray lg:text-[22px]">
-          Your customers are searching.
+          Vos clients vous cherchent.
         </span>
         <span className="font-ui mt-[10px] flex flex-wrap items-baseline justify-center gap-x-[0.2em] text-[40px] font-semibold leading-none tracking-[-0.025em] text-off-white lg:text-[64px]">
-          <span>Can they</span>
+          <span>Mais vous</span>
           <em className="font-display shrink-0 text-[46px] font-normal italic tracking-[-0.01em] text-brand lg:text-[74px]">
-            find you?
+            trouvent-ils ?
           </em>
         </span>
       </h1>
       <p className="mx-auto mt-7 max-w-[560px] text-center text-[17px] font-normal leading-[1.6] text-warm-gray sm:text-lg">
-        Websites, Instagram content and motion videos that make small businesses
-        impossible to ignore.
+        Sites web, contenus Instagram et vidéos en motion design qui rendent les
+        petites entreprises impossibles à ignorer.
       </p>
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a
           href="#contact"
           className="rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
         >
-          Contact us
+          Nous contacter
         </a>
         <a
           href="#pricing"
           className="rounded-full border border-[#2A2A2E] bg-graphite/70 px-7 py-3.5 text-sm font-semibold text-off-white transition-colors hover:border-off-white/25 hover:bg-graphite"
         >
-          See our plans
+          Voir nos offres
         </a>
       </div>
       <div className="scroll-reveal relative mt-10">
@@ -405,7 +415,7 @@ function Hero() {
           className="pointer-events-none absolute -inset-x-8 -inset-y-6 rounded-[48px] bg-[radial-gradient(ellipse_at_center,rgba(233,68,69,0.2),transparent_68%)] blur-2xl"
         />
         <div
-          aria-label="Featured presentation video"
+          aria-label="Vidéo de présentation"
           className="group relative overflow-hidden rounded-[18px] bg-onyx shadow-[0_30px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10 sm:rounded-[28px]"
         >
           <HeroVideo />
@@ -475,8 +485,8 @@ function HeroVideo() {
         <button
           type="button"
           onClick={toggleFullscreen}
-          aria-label={isFullscreen ? "Exit full screen" : "Watch in full screen"}
-          title={isFullscreen ? "Exit full screen" : "Full screen"}
+          aria-label={isFullscreen ? "Quitter le plein écran" : "Regarder en plein écran"}
+          title={isFullscreen ? "Quitter le plein écran" : "Plein écran"}
           className="absolute right-3 top-3 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-onyx/55 text-off-white/85 backdrop-blur-md transition hover:bg-onyx/80 hover:text-white sm:right-4 sm:top-4"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -491,7 +501,7 @@ function HeroVideo() {
       {playing ? (
         <iframe
           src={`https://fast.wistia.net/embed/iframe/${heroVideoId}?${wistiaParams}`}
-          title="UpScreen presentation video"
+          title="Vidéo de présentation UpScreen"
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen
           className="absolute inset-0 h-full w-full border-0"
@@ -500,7 +510,7 @@ function HeroVideo() {
         <button
           type="button"
           onClick={() => setPlaying(true)}
-          aria-label="Play the UpScreen presentation video"
+          aria-label="Lire la vidéo de présentation UpScreen"
           className="absolute inset-0 h-full w-full"
         >
           {thumbFailed ? (
@@ -526,7 +536,7 @@ function HeroVideo() {
               <span className="ml-1 h-0 w-0 border-y-[8px] border-l-[13px] border-y-transparent border-l-white sm:border-y-[10px] sm:border-l-[16px]" />
             </span>
             <span className="rounded-full bg-onyx/55 px-3 py-1 text-xs font-semibold text-off-white/85 backdrop-blur-md">
-              Watch · 1:18
+              Regarder · 1:18
             </span>
           </span>
         </button>
@@ -581,8 +591,8 @@ function Stars({ size }: { size: number }) {
 // Page 1 of Google is all competitors; "you" only show up on page 3.
 function SearchWidget() {
   const results = [
-    { name: "Bean There Café", url: "beanthere.com.au", rating: "4.8", reviews: "312", hours: "Closes 4 pm", tone: "#B9733F" },
-    { name: "The Daily Grind", url: "dailygrind.com.au", rating: "4.7", reviews: "208", hours: "Closes 5 pm", tone: "#3F7A63" },
+    { name: "Le Grain Torréfié", url: "legraintorrefie.fr", rating: "4,8", reviews: "312", hours: "Ferme à 16 h", tone: "#B9733F" },
+    { name: "Café des Halles", url: "cafedeshalles.fr", rating: "4,7", reviews: "208", hours: "Ferme à 17 h", tone: "#3F7A63" },
   ];
 
   return (
@@ -594,7 +604,7 @@ function SearchWidget() {
           style={{ height: u(22), borderRadius: u(11), padding: `0 ${u(8)}`, gap: u(5) }}
         >
           <span className="truncate font-semibold text-onyx/75" style={{ fontSize: u(8.5) }}>
-            best café near me
+            meilleur café près de moi
           </span>
           <span className="mock-caret shrink-0 bg-onyx/60" style={{ width: u(0.8), height: u(10) }} />
           <svg viewBox="0 0 16 16" fill="none" stroke="#4285F4" strokeWidth="1.9" className="ml-auto shrink-0" style={{ width: u(10), height: u(10) }}>
@@ -612,20 +622,20 @@ function SearchWidget() {
                 className="grid shrink-0 place-items-center rounded-full font-bold text-white"
                 style={{ width: u(12), height: u(12), fontSize: u(6.5), background: result.tone }}
               >
-                {result.name.replace("The ", "")[0]}
+                {result.name.replace(/^(Le|La|Les|Café) /, "")[0]}
               </span>
               <span className="truncate text-onyx/45" style={{ fontSize: u(7) }}>
                 {result.url}
               </span>
             </div>
             <p className="truncate font-semibold text-[#1A0DAB]" style={{ fontSize: u(10.5), lineHeight: 1.25, marginTop: u(3) }}>
-              {result.name}, best coffee nearby
+              {result.name}, le café du quartier
             </p>
             <div className="flex items-center text-onyx/50" style={{ gap: u(3), fontSize: u(7.5), marginTop: u(2.5) }}>
               <span className="font-semibold text-onyx/70">{result.rating}</span>
               <Stars size={7} />
               <span>({result.reviews})</span>
-              <span className="font-semibold text-[#188038]">Open</span>
+              <span className="font-semibold text-[#188038]">Ouvert</span>
               <span className="truncate">{result.hours}</span>
             </div>
           </div>
@@ -645,7 +655,7 @@ function SearchWidget() {
         </div>
         <span className="flex items-center font-semibold text-brand" style={{ fontSize: u(8.5), gap: u(4) }}>
           <span className="rounded-full bg-brand" style={{ width: u(5), height: u(5) }} />
-          You're on page 3
+          Vous êtes en page 3
         </span>
       </div>
     </div>
@@ -671,7 +681,7 @@ function SlowSiteWidget() {
           style={{ height: u(16), padding: `0 ${u(7)}`, gap: u(4), fontSize: u(7.5) }}
         >
           <span className="problem-spinner shrink-0 rounded-full border-onyx/15 border-t-brand" style={{ width: u(8), height: u(8), borderWidth: u(1.5) }} />
-          <span className="truncate font-semibold">yourbusiness.com.au</span>
+          <span className="truncate font-semibold">votre-entreprise.fr</span>
         </span>
         <svg viewBox="0 0 24 24" className="absolute drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)]" style={{ width: u(13), height: u(13), left: u(9), top: u(9) }}>
           <path d="M5 3l14 8-6.2 1.6L10 19z" fill="#0A0A0B" stroke="#fff" strokeWidth="1.6" strokeLinejoin="round" />
@@ -680,10 +690,10 @@ function SlowSiteWidget() {
 
       <div className="flex items-baseline justify-between" style={{ marginTop: u(8), fontFamily: mockSerif }}>
         <span className="font-bold text-onyx/70" style={{ fontSize: u(12) }}>
-          Your Business
+          Votre Entreprise
         </span>
         <span className="text-[#1A0DAB] underline" style={{ fontSize: u(7.5) }}>
-          Home | Menu | Contact
+          Accueil | Carte | Contact
         </span>
       </div>
 
@@ -698,14 +708,14 @@ function SlowSiteWidget() {
           <path d="M3.5 3.5 20.5 20.5" stroke="#E94445" strokeWidth="2" strokeLinecap="round" />
         </svg>
         <span className="text-onyx/35" style={{ fontSize: u(7), fontFamily: mockSerif }}>
-          Welcome to our website!
+          Bienvenue sur notre site !
         </span>
       </div>
 
       <div>
         <div className="flex items-center justify-between font-semibold" style={{ fontSize: u(8.5), marginBottom: u(4) }}>
-          <span className="text-onyx/50">Still loading…</span>
-          <span className="text-brand">8.4s</span>
+          <span className="text-onyx/50">Chargement…</span>
+          <span className="text-brand">8,4 s</span>
         </div>
         <div className="overflow-hidden rounded-full bg-onyx/8" style={{ height: u(4) }}>
           <span className="mock-load block h-full w-full origin-left rounded-full bg-brand" />
@@ -726,17 +736,17 @@ function DeadFeedWidget() {
           className="grid shrink-0 place-items-center rounded-full border border-onyx/15 bg-onyx/[0.07] font-bold text-onyx/40"
           style={{ width: u(28), height: u(28), fontSize: u(8.5) }}
         >
-          YB
+          VE
         </span>
         <div className="min-w-0 flex-1">
           <p className="font-semibold leading-none text-onyx/85" style={{ fontSize: u(9.5) }}>
-            yourbusiness
+            votre.entreprise
           </p>
           <div className="flex justify-between leading-none" style={{ marginTop: u(5) }}>
             {[
-              ["12", "posts"],
+              ["12", "publications"],
               ["87", "followers"],
-              ["64", "following"],
+              ["64", "suivis"],
             ].map(([value, label]) => (
               <span key={label} style={{ fontSize: u(7) }}>
                 <b className="font-bold text-onyx/80">{value}</b> <span className="text-onyx/45">{label}</span>
@@ -762,7 +772,7 @@ function DeadFeedWidget() {
                 className="absolute rounded-full bg-white font-bold text-onyx/70"
                 style={{ left: u(4), top: u(4), fontSize: u(6.5), padding: `${u(1.5)} ${u(4)}` }}
               >
-                Mar 2023
+                mars 2023
               </span>
             )}
           </span>
@@ -777,14 +787,14 @@ function DeadFeedWidget() {
           className="grid shrink-0 place-items-center rounded-full font-bold text-white"
           style={{ width: u(15), height: u(15), fontSize: u(7), background: "linear-gradient(135deg,#F58529,#DD2A7B)" }}
         >
-          S
+          J
         </span>
         <div className="min-w-0">
           <p className="truncate text-onyx/80" style={{ fontSize: u(8.5) }}>
-            <b className="font-semibold">sarah.m</b> Are you still open?
+            <b className="font-semibold">julie.m</b> Vous êtes toujours ouverts ?
           </p>
           <p className="font-semibold text-brand" style={{ fontSize: u(6.5), marginTop: u(1.5) }}>
-            3 weeks ago · No reply
+            Il y a 3 semaines · Sans réponse
           </p>
         </div>
       </div>
@@ -794,9 +804,9 @@ function DeadFeedWidget() {
 
 function ProblemSection() {
   const problems = [
-    ["Page 3 of Google", "Nobody finds you."],
-    ["Slow, outdated site", "They leave in seconds."],
-    ["Last post: 2023", "They wonder if you're still open."],
+    ["Page 3 de Google", "Personne ne vous trouve."],
+    ["Site lent et dépassé", "Ils repartent en quelques secondes."],
+    ["Dernier post : 2023", "Ils se demandent si vous êtes encore ouvert."],
   ];
 
   return (
@@ -805,7 +815,7 @@ function ProblemSection() {
       className="scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-[60px] sm:px-8"
     >
       <Heading emphasize={5} breakBeforeEmphasis>
-        Most businesses lose customers before they even say hello.
+        La plupart des entreprises perdent des clients avant même de dire bonjour.
       </Heading>
       <div className="mx-auto mt-12 grid max-w-[420px] grid-cols-1 gap-8 md:max-w-[1040px] md:grid-cols-3 md:gap-5 lg:gap-7">
         {problems.map(([title, description], index) => (
@@ -823,9 +833,9 @@ function ProblemSection() {
         ))}
       </div>
       <p className="mx-auto mt-10 max-w-[760px] text-center text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
-        So they choose your competitor. Not because they're better. Because they{" "}
+        Alors ils choisissent votre concurrent. Pas parce qu'il est meilleur. Parce qu'il{" "}
         <em className="font-display text-[1.15em] font-normal italic text-brand">
-          look better.
+          présente mieux.
         </em>
       </p>
     </section>
@@ -847,7 +857,7 @@ function PricingCard({ service }: { service: Service }) {
     >
       {featured && (
         <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-brand px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-onyx sm:text-xs">
-          Most popular
+          Recommandé
         </span>
       )}
       <h3 className="relative text-2xl font-semibold leading-[1.05] tracking-[-0.02em] md:min-h-[52px]">
@@ -863,7 +873,7 @@ function PricingCard({ service }: { service: Service }) {
       {service.plans.length > 1 && (
         <div
           role="tablist"
-          aria-label={`${service.title} plans`}
+          aria-label={`Formules ${service.title}`}
           className="mt-6 grid grid-cols-2 gap-1 rounded-full border border-[#2A2A2E] bg-onyx/60 p-1"
         >
           {service.plans.map((option, index) => (
@@ -905,17 +915,17 @@ function PricingCard({ service }: { service: Service }) {
           {service.billing}
         </p>
         <p className="mt-3 flex items-baseline whitespace-nowrap">
-          <span className="mr-1 text-base font-normal text-warm-gray">A$</span>
           <span
             className={`font-display text-[52px] font-normal leading-none tracking-[-0.025em] sm:text-[58px] ${
               featured ? "text-brand" : "text-off-white"
             }`}
           >
-            {plan.price.replace("A$", "")}
+            {plan.price}
           </span>
-          {service.billing === "Monthly" && (
+          <span className="ml-1.5 text-xl font-normal text-warm-gray">€</span>
+          {service.billing === "Mensuel" && (
             <span className="ml-1 text-sm font-normal text-warm-gray">
-              /month
+              /mois
             </span>
           )}
         </p>
@@ -930,7 +940,7 @@ function PricingCard({ service }: { service: Service }) {
               : "border-[#2A2A2E] bg-transparent text-off-white hover:border-off-white/25"
           }`}
         >
-          Get started
+          Commencer
         </a>
       </div>
     </article>
@@ -943,14 +953,14 @@ function Services() {
       id="pricing"
       className="scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-[60px] sm:px-8"
     >
-      <Heading>Clear pricing. No hidden fees.</Heading>
+      <Heading emphasize={2}>Des prix clairs. Aucun frais caché.</Heading>
       <div className="mt-14 grid gap-5 md:grid-cols-3 lg:gap-6">
         {services.map((service) => (
           <PricingCard key={service.title} service={service} />
         ))}
       </div>
       <p className="mt-8 text-center text-xs font-normal text-warm-gray">
-        AUD, excl. GST · Free mockup
+        Prix HT · Maquette offerte
       </p>
     </section>
   );
@@ -969,7 +979,7 @@ function Reviews() {
       className="scroll-reveal relative w-full scroll-mt-24 py-[60px]"
     >
       <div className="px-5 sm:px-8">
-        <Heading>What our clients say.</Heading>
+        <Heading>Ce que disent nos clients.</Heading>
       </div>
       <div className="reviews-viewport relative mt-12 overflow-hidden">
         <div
@@ -992,7 +1002,7 @@ function Reviews() {
                 <span className="flex items-center gap-2">
                   {review.placeholder && (
                     <span className="rounded-full border border-[#2A2A2E] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-warm-gray">
-                      Placeholder
+                      Exemple
                     </span>
                   )}
                   <span className="rounded-full bg-off-white/8 px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] text-off-white/70">
@@ -1072,8 +1082,8 @@ function StepVisualPanel({
       : "step-panel-float-right"
   }`;
 
-  if (title === "Contact us") {
-    // A WhatsApp-style conversation: a café owner asks, UpScreen answers.
+  if (title === "Contactez-nous") {
+    // Une conversation façon WhatsApp : une gérante de café écrit, UpScreen répond.
     return (
       <div className={panelClass.replace(" p-5 ", " p-0 ")}>
         <div className="flex items-center gap-2.5 border-b border-onyx/8 bg-white px-4 py-2.5">
@@ -1083,7 +1093,7 @@ function StepVisualPanel({
           <img src={upscreenIcon} alt="" className="h-8 w-8 rounded-full" />
           <div className="min-w-0 leading-tight">
             <p className="text-xs font-semibold text-onyx/90">UpScreen</p>
-            <p className="text-[9px] font-semibold text-[#1DAA61]">online</p>
+            <p className="text-[9px] font-semibold text-[#1DAA61]">en ligne</p>
           </div>
           <div className="ml-auto flex items-center gap-3 text-onyx/45">
             <svg aria-hidden="true" viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -1097,14 +1107,14 @@ function StepVisualPanel({
         </div>
         <div className="flex h-full flex-col gap-2 bg-[#EFEAE2] bg-[radial-gradient(rgba(10,10,11,0.045)_1px,transparent_1.2px)] bg-[length:14px_14px] px-4 pt-3">
           <span className="mx-auto rounded-md bg-white/85 px-2 py-0.5 text-[8px] font-semibold text-onyx/50 shadow-[0_1px_1px_rgba(0,0,0,0.06)]">
-            Today
+            Aujourd'hui
           </span>
           <div className="ml-auto max-w-[78%] rounded-xl rounded-tr-sm bg-[#D9FDD3] px-2.5 py-1.5 shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
             <p className="text-[10.5px] leading-[1.35] text-onyx/85">
-              Hi! I run Little Wave, a café in Bondi. Can you help us get more customers?
+              Bonjour ! J'ai un café à Toulouse, Le Comptoir Rose. Vous pouvez nous aider à avoir plus de clients ?
             </p>
             <p className="mt-0.5 flex items-center justify-end gap-0.5 text-[8px] text-onyx/45">
-              9:41
+              09:41
               <svg aria-hidden="true" viewBox="0 0 18 12" className="h-2.5 w-3.5" fill="none" stroke="#53BDEB" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 <path d="m1.5 6.5 3 3 6-7M7.5 9.5l6-7" />
               </svg>
@@ -1112,10 +1122,10 @@ function StepVisualPanel({
           </div>
           <div className="mr-auto max-w-[80%] rounded-xl rounded-tl-sm bg-white px-2.5 py-1.5 shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
             <p className="text-[10.5px] leading-[1.35] text-onyx/85">
-              Hi Sarah! Of course. Tell us about your café and we'll send you a{" "}
-              <span className="font-semibold text-brand">free mockup</span>.
+              Bonjour Julie ! Bien sûr. Parlez-nous de votre café et on vous envoie une{" "}
+              <span className="font-semibold text-brand">maquette gratuite</span>.
             </p>
-            <p className="mt-0.5 text-right text-[8px] text-onyx/45">9:42</p>
+            <p className="mt-0.5 text-right text-[8px] text-onyx/45">09:42</p>
           </div>
           <div className="mock-typing mr-auto flex items-center gap-1 rounded-xl rounded-tl-sm bg-white px-3 py-2 shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
             <span className="h-1.5 w-1.5 rounded-full bg-onyx/35" />
@@ -1127,8 +1137,8 @@ function StepVisualPanel({
     );
   }
 
-  if (title === "Free mockup") {
-    // The client's café homepage being designed, with the client's comment.
+  if (title === "Maquette offerte") {
+    // La page d'accueil du café en cours de design, avec le commentaire de la cliente.
     return (
       <div className={panelClass}>
         <div className="flex items-center border-b border-onyx/10 pb-2">
@@ -1138,17 +1148,17 @@ function StepVisualPanel({
             <span className="h-2 w-2 rounded-full bg-onyx/10" />
           </div>
           <p className="mx-auto pr-6 text-[9px] font-semibold text-onyx/70">
-            Little Wave · Homepage
+            Le Comptoir Rose · Accueil
           </p>
           <span className="rounded-md bg-brand px-2 py-1 text-[7px] font-semibold text-white">
-            Share
+            Partager
           </span>
         </div>
         <div className="mt-2 grid h-[74%] grid-cols-[22%_1fr] overflow-hidden rounded-xl border border-onyx/8 bg-[#EEF0F4]">
           <div className="border-r border-onyx/8 bg-white/85 p-2">
-            <p className="text-[7px] font-semibold text-onyx/45">Layers</p>
+            <p className="text-[7px] font-semibold text-onyx/45">Calques</p>
             <div className="mt-1.5 space-y-0.5">
-              {["Header", "Hero", "Photo", "Menu", "Opening hours", "Book a table"].map((layer) => (
+              {["En-tête", "Hero", "Photo", "Carte", "Horaires", "Réserver"].map((layer) => (
                 <p
                   key={layer}
                   className={`truncate rounded px-1.5 py-[3px] text-[7px] font-semibold ${
@@ -1163,23 +1173,23 @@ function StepVisualPanel({
           <div className="relative p-2.5">
             <div className="h-full overflow-hidden rounded-md bg-[#F7F1E8] px-3 py-2.5 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
               <div className="flex items-center">
-                <p className="font-display text-[9px] leading-none text-[#3B2A20]">Little Wave</p>
+                <p className="font-display text-[9px] leading-none text-[#3B2A20]">Le Comptoir Rose</p>
                 <div className="ml-auto flex items-center gap-2 text-[5.5px] font-semibold text-[#3B2A20]/60">
-                  <span>Menu</span>
-                  <span>Visit</span>
-                  <span className="rounded-full bg-[#3B2A20] px-1.5 py-[3px] text-[#F7F1E8]">Book a table</span>
+                  <span>Carte</span>
+                  <span>Infos</span>
+                  <span className="rounded-full bg-[#3B2A20] px-1.5 py-[3px] text-[#F7F1E8]">Réserver</span>
                 </div>
               </div>
               <div className="mt-3 grid grid-cols-[1fr_42%] items-center gap-2.5">
                 <div>
                   <p className="font-display text-[14px] leading-[1.02] text-[#3B2A20]">
-                    Coffee worth waking up for.
+                    Le café qui donne envie de se lever.
                   </p>
                   <p className="mt-1.5 text-[5.5px] leading-[1.4] text-[#3B2A20]/60">
-                    Specialty coffee and brunch, two minutes from Bondi Beach.
+                    Café de spécialité et brunch, au cœur de Toulouse.
                   </p>
                   <span className="mt-2 inline-block rounded-full bg-[#B5482F] px-2 py-[3px] text-[5.5px] font-bold text-white">
-                    See the menu
+                    Voir la carte
                   </span>
                 </div>
                 <div className="relative">
@@ -1191,11 +1201,11 @@ function StepVisualPanel({
                   <span className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-[3px] bg-[#0D99FF] px-1 py-px text-[5px] font-bold text-white">
                     240 × 260
                   </span>
-                  <div className="absolute -left-9 bottom-5 flex items-center gap-1 rounded-full rounded-bl-sm bg-white py-1 pl-1 pr-2 shadow-[0_4px_12px_rgba(0,0,0,0.16)]">
+                  <div className="absolute -left-3 bottom-2 flex items-center gap-1 rounded-full rounded-bl-sm bg-white py-1 pl-1 pr-2 shadow-[0_4px_12px_rgba(0,0,0,0.16)]">
                     <span className="grid h-3.5 w-3.5 place-items-center rounded-full bg-gradient-to-br from-[#F58529] to-[#DD2A7B] text-[6px] font-bold text-white">
-                      S
+                      J
                     </span>
-                    <span className="whitespace-nowrap text-[7px] font-semibold text-onyx/75">Love this photo!</span>
+                    <span className="whitespace-nowrap text-[7px] font-semibold text-onyx/75">J'adore cette photo !</span>
                   </div>
                 </div>
               </div>
@@ -1207,13 +1217,13 @@ function StepVisualPanel({
   }
 
   if (title === "Google & SEO") {
-    // After: the business shows up first in Google's local results and Maps.
+    // Après : l'entreprise apparaît en premier dans les résultats locaux de Google et Maps.
     return (
       <div className={panelClass}>
         <div className="flex items-center gap-2.5">
           <img src={googleLogo} alt="" className="h-[15px] shrink-0" />
           <div className="flex h-7 flex-1 items-center rounded-full border border-onyx/10 bg-white px-3 text-[10px] font-semibold text-onyx/75 shadow-[0_3px_10px_rgba(0,0,0,0.06)]">
-            best café near me
+            meilleur café près de moi
             <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="#4285F4" strokeWidth="1.9" className="ml-auto h-3 w-3">
               <circle cx="7" cy="7" r="4.5" />
               <path d="m10.5 10.5 3 3" strokeLinecap="round" />
@@ -1235,22 +1245,22 @@ function StepVisualPanel({
         <div className="mt-2.5 rounded-xl border border-onyx/8 bg-white p-2.5 shadow-sm">
           <div className="flex items-start justify-between gap-2">
             <div className="min-w-0">
-              <p className="text-[12px] font-semibold leading-tight text-[#1A0DAB]">Little Wave Café</p>
+              <p className="text-[12px] font-semibold leading-tight text-[#1A0DAB]">Le Comptoir Rose</p>
               <p className="mt-0.5 flex items-center gap-1 text-[9px] text-onyx/50">
-                <b className="font-semibold text-onyx/75">4.9</b>
+                <b className="font-semibold text-onyx/75">4,9</b>
                 <span className="tracking-[-0.05em] text-[#FBBC04]">★★★★★</span>
                 (48) · Café
               </p>
               <p className="text-[9px] text-onyx/50">
-                <span className="font-semibold text-[#188038]">Open</span> · Closes 4 pm
+                <span className="font-semibold text-[#188038]">Ouvert</span> · Ferme à 16 h
               </p>
             </div>
             <span className="shrink-0 rounded-full bg-brand px-2 py-1 text-[8px] font-bold text-white">
-              #1 near you
+              N°1 près de vous
             </span>
           </div>
           <div className="mt-2 flex gap-1.5">
-            {["Website", "Directions", "Call"].map((action) => (
+            {["Site Web", "Itinéraire", "Appeler"].map((action) => (
               <span
                 key={action}
                 className="rounded-full border border-[#DADCE0] px-2 py-0.5 text-[8px] font-semibold text-[#1A73E8]"
@@ -1264,8 +1274,8 @@ function StepVisualPanel({
     );
   }
 
-  if (title === "You launch") {
-    // The finished café site, live, already bringing in a booking.
+  if (title === "Mise en ligne") {
+    // Le site du café terminé, en ligne, qui apporte déjà une réservation.
     return (
       <div className={panelClass}>
         <div className="flex items-center gap-2 border-b border-onyx/10 pb-2">
@@ -1278,11 +1288,11 @@ function StepVisualPanel({
               <rect x="3.5" y="7" width="9" height="6.5" rx="1.5" />
               <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" />
             </svg>
-            littlewavecafe.com.au
+            lecomptoirrose.fr
           </div>
           <span className="flex items-center gap-1 text-[8px] font-semibold text-[#188038]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#1DAA61]" />
-            Live
+            En ligne
           </span>
         </div>
         <div className="relative mt-2.5 overflow-hidden rounded-xl shadow-sm">
@@ -1290,31 +1300,31 @@ function StepVisualPanel({
             <img src={cafePhoto} alt="" className="absolute inset-0 h-full w-full object-cover object-[60%_45%]" />
             <span className="absolute inset-0 bg-gradient-to-r from-[#24170F]/90 via-[#24170F]/55 to-transparent" />
             <div className="relative flex items-center px-3 pt-2.5">
-              <p className="font-display text-[10px] leading-none text-[#F7F1E8]">Little Wave</p>
+              <p className="font-display text-[10px] leading-none text-[#F7F1E8]">Le Comptoir Rose</p>
               <div className="ml-auto flex items-center gap-2 text-[6px] font-semibold text-[#F7F1E8]/75">
-                <span>Menu</span>
-                <span>About</span>
-                <span className="rounded-full bg-[#F7F1E8] px-1.5 py-[3px] text-[#3B2A20]">Book a table</span>
+                <span>Carte</span>
+                <span>À propos</span>
+                <span className="rounded-full bg-[#F7F1E8] px-1.5 py-[3px] text-[#3B2A20]">Réserver</span>
               </div>
             </div>
             <div className="relative mt-4 max-w-[58%] px-3">
-              <p className="font-display text-[17px] leading-[1.02] text-[#F7F1E8]">Coffee worth waking up for.</p>
+              <p className="font-display text-[17px] leading-[1.02] text-[#F7F1E8]">Le café qui donne envie de se lever.</p>
               <p className="mt-1.5 text-[6.5px] leading-[1.4] text-[#F7F1E8]/75">
-                Specialty coffee and brunch, two minutes from Bondi Beach.
+                Café de spécialité et brunch, au cœur de Toulouse.
               </p>
               <div className="mt-2 flex gap-1.5">
-                <span className="rounded-full bg-[#B5482F] px-2 py-[3px] text-[6px] font-bold text-white">See the menu</span>
-                <span className="rounded-full border border-[#F7F1E8]/50 px-2 py-[3px] text-[6px] font-bold text-[#F7F1E8]">Directions</span>
+                <span className="rounded-full bg-[#B5482F] px-2 py-[3px] text-[6px] font-bold text-white">Voir la carte</span>
+                <span className="rounded-full border border-[#F7F1E8]/50 px-2 py-[3px] text-[6px] font-bold text-[#F7F1E8]">Itinéraire</span>
               </div>
             </div>
           </div>
           <div className="flex items-center justify-between bg-[#F7F1E8] px-3 py-1.5 text-[6.5px] font-semibold text-[#3B2A20]/70">
             <span className="flex items-center gap-1">
               <span className="h-1.5 w-1.5 rounded-full bg-[#1DAA61]" />
-              Open today · 6:30 am to 3 pm
+              Ouvert aujourd'hui · 7 h 30 – 16 h
             </span>
             <span>
-              <span className="text-[#FBBC04]">★</span> 4.9 on Google
+              <span className="text-[#FBBC04]">★</span> 4,9 sur Google
             </span>
           </div>
         </div>
@@ -1326,8 +1336,8 @@ function StepVisualPanel({
             </svg>
           </span>
           <div className="min-w-0 leading-tight">
-            <p className="text-[8px] font-semibold text-onyx/85">New booking</p>
-            <p className="truncate text-[7px] text-onyx/50">Table for 2 · Sat 9:30 am</p>
+            <p className="text-[8px] font-semibold text-onyx/85">Nouvelle réservation</p>
+            <p className="truncate text-[7px] text-onyx/50">Table pour 2 · sam. 9 h 30</p>
           </div>
         </div>
       </div>
@@ -1338,21 +1348,21 @@ function StepVisualPanel({
     <div className={panelClass}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[11px] font-semibold">Production in progress</p>
+          <p className="text-[11px] font-semibold">Production en cours</p>
           <p className="mt-1 text-[9px] font-semibold text-onyx/45">
-            UpScreen project workspace
+            Espace projet UpScreen
           </p>
         </div>
-        <span className="font-display text-2xl italic text-brand">68%</span>
+        <span className="font-display text-2xl italic text-brand">68 %</span>
       </div>
       <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-onyx/8">
         <div className="h-full w-[68%] rounded-full bg-brand" />
       </div>
       <div className="mt-4 space-y-2">
         {[
-          ["Page structure", "100%", true],
-          ["Copywriting", "82%", true],
-          ["Mobile version", "46%", false],
+          ["Structure de la page", "100 %", true],
+          ["Rédaction des textes", "82 %", true],
+          ["Version mobile", "46 %", false],
         ].map(([label, progress, complete]) => (
           <div
             key={String(label)}
@@ -1569,7 +1579,7 @@ function Process() {
 
   return (
     <section id="process" className="relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 py-[60px] sm:px-8">
-      <Heading>How it works</Heading>
+      <Heading>Comment ça marche</Heading>
       <div ref={timelineRef} className="relative mt-16">
         <div className="absolute bottom-8 left-4 top-8 w-px bg-off-white/10 sm:left-1/2 sm:-translate-x-1/2">
           <div
@@ -1662,12 +1672,12 @@ function Process() {
               06
             </span>
             <span className="inline-block text-xl font-semibold tracking-[-0.02em] text-off-white sm:text-3xl">
-              We keep you growing
+              On vous accompagne ensuite
             </span>
             <BrandIcon name="growth" className="h-10 w-10 sm:h-11 sm:w-11" />
           </div>
           <p className="mt-3 text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
-            Hosting, updates and monthly local SEO, handled every month.
+            Hébergement, mises à jour et SEO local, gérés pour vous chaque mois.
           </p>
         </div>
       </div>
@@ -1730,7 +1740,7 @@ function MotionVideoCard({
           <button
             type="button"
             onClick={() => setPlaying(true)}
-            aria-label={`Play ${title}`}
+            aria-label={`Lire : ${title}`}
             className="absolute inset-0 h-full w-full overflow-hidden text-left"
           >
             <video
@@ -1748,7 +1758,7 @@ function MotionVideoCard({
             <span className="absolute inset-0 bg-gradient-to-t from-onyx/55 via-transparent to-onyx/10" />
             {concept && (
               <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-onyx/60 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-off-white/75 backdrop-blur-md">
-                Personal concept
+                Concept personnel
               </span>
             )}
             <span className="absolute left-1/2 top-1/2 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-onyx/45 text-white backdrop-blur-md transition-transform group-hover:scale-110">
@@ -1764,16 +1774,16 @@ function MotionVideoCard({
 // Wistia media IDs. Wise and Airbnb are personal concept ads, not commissioned work.
 // Add concept: true to an entry to show a "Personal concept" badge on it.
 const motionVideos = [
-  { mediaId: "iwoeziqb0u", title: "Wise concept ad", thumbnail: motionWise, poster: motionWisePoster },
-  { mediaId: "a5t1hj78uk", title: "Airbnb concept ad", thumbnail: motionAirbnb, poster: motionAirbnbPoster },
-  { mediaId: "tm4p5wf5de", title: "Any style motion design video", thumbnail: motionAnyStyle, poster: motionAnyStylePoster },
-  { mediaId: "cn1y5pm9o1", title: "Notion presentation video", thumbnail: motionNotion, poster: motionNotionPoster },
+  { mediaId: "iwoeziqb0u", title: "Pub concept pour Wise", thumbnail: motionWise, poster: motionWisePoster },
+  { mediaId: "a5t1hj78uk", title: "Pub concept pour Airbnb", thumbnail: motionAirbnb, poster: motionAirbnbPoster },
+  { mediaId: "tm4p5wf5de", title: "Vidéo motion design Any Style", thumbnail: motionAnyStyle, poster: motionAnyStylePoster },
+  { mediaId: "cn1y5pm9o1", title: "Vidéo de présentation Notion", thumbnail: motionNotion, poster: motionNotionPoster },
 ];
 
 function WorkGallery() {
   return (
     <section id="work" className="scroll-reveal relative mx-auto w-full max-w-[1120px] scroll-mt-24 px-5 py-[60px] sm:px-8">
-      <Heading>Motion videos</Heading>
+      <Heading emphasize={2}>Vidéos en motion design</Heading>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 sm:gap-7">
         {motionVideos.map((video) => (
           <MotionVideoCard key={video.mediaId} {...video} />
@@ -1786,7 +1796,7 @@ function WorkGallery() {
 function FAQ() {
   return (
     <section id="faq" className="scroll-reveal relative mx-auto w-full max-w-[1000px] scroll-mt-24 px-5 py-[60px] sm:px-8">
-      <Heading>FAQ</Heading>
+      <Heading>Questions fréquentes</Heading>
       <div className="mt-12 space-y-3">
         {faqs.map((faq, index) => (
           <details
@@ -1836,14 +1846,14 @@ function ContactSection() {
     ["name", "business", "industry", "email", "phone", "message"].forEach(
       (field) => {
         if (!String(data.get(field) || "").trim()) {
-          nextErrors[field] = "This field is required.";
+          nextErrors[field] = "Ce champ est obligatoire.";
         }
       },
     );
 
     const email = String(data.get("email") || "");
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      nextErrors.email = "Enter a valid email address.";
+      nextErrors.email = "Entrez une adresse email valide.";
     }
 
     setErrors(nextErrors);
@@ -1871,15 +1881,15 @@ function ContactSection() {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `New enquiry from ${value("business")}`,
+          _subject: `Nouvelle demande de ${value("business")}`,
           _template: "table",
           _replyto: value("email"),
           _captcha: "false",
-          Name: value("name"),
-          Business: value("business"),
-          Industry: value("industry"),
+          Nom: value("name"),
+          Entreprise: value("business"),
+          Secteur: value("industry"),
           Email: value("email"),
-          Phone: value("phone"),
+          Téléphone: value("phone"),
           Message: value("message"),
         }),
       });
@@ -1913,21 +1923,21 @@ function ContactSection() {
       <div className="relative z-10 grid gap-10 rounded-[30px] border border-[#2A2A2E] bg-graphite/90 p-6 backdrop-blur-2xl md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
         <div className="flex flex-col justify-center">
           <h2 className="text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-off-white md:text-[48px]">
-            Stop losing customers to businesses that just{" "}
+            Arrêtez de perdre des clients face à des concurrents qui{" "}
             <em className="font-display text-[1.15em] font-normal italic text-brand">
-              look better
+              présentent mieux
             </em>{" "}
-            online.
+            en ligne.
           </h2>
           <p className="mt-6 max-w-[480px] text-[17px] font-normal leading-[1.6] text-warm-gray">
-            Message us on WhatsApp or fill in the form. You get a free mockup
-            and only move forward when you love what you see.
+            Écrivez-nous sur WhatsApp ou remplissez le formulaire. Vous recevez
+            une maquette gratuite et vous ne continuez que si elle vous plaît.
           </p>
           <a
             href="#contact-form"
             className="mt-8 inline-flex w-fit rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
           >
-            Contact us
+            Nous contacter
           </a>
         </div>
 
@@ -1938,8 +1948,8 @@ function ContactSection() {
           className="grid gap-4 rounded-[24px] border border-[#2A2A2E] bg-onyx/55 p-5 sm:grid-cols-2 sm:p-6"
         >
           <label className="text-sm font-semibold text-off-white">
-            Name
-            <input name="name" placeholder="Your name" className={fieldClass} />
+            Nom
+            <input name="name" placeholder="Votre nom" className={fieldClass} />
             {errors.name && (
               <span className="mt-1 block text-xs font-normal text-amber-400">
                 {errors.name}
@@ -1947,10 +1957,10 @@ function ContactSection() {
             )}
           </label>
           <label className="text-sm font-semibold text-off-white">
-            Business name
+            Entreprise
             <input
               name="business"
-              placeholder="Business name"
+              placeholder="Nom de votre entreprise"
               className={fieldClass}
             />
             {errors.business && (
@@ -1960,18 +1970,18 @@ function ContactSection() {
             )}
           </label>
           <label className="text-sm font-semibold text-off-white">
-            Industry
+            Secteur
             <select name="industry" defaultValue="" className={fieldClass}>
               <option value="" disabled>
-                Select your industry
+                Votre secteur
               </option>
-              <option>Restaurant/Café</option>
-              <option>Salon/Beauty</option>
-              <option>Gym/Fitness</option>
-              <option>Trades</option>
-              <option>Clinic/Health</option>
-              <option>Retail</option>
-              <option>Other</option>
+              <option>Restaurant / Café</option>
+              <option>Coiffure / Beauté</option>
+              <option>Sport / Fitness</option>
+              <option>Artisan / BTP</option>
+              <option>Santé / Cabinet</option>
+              <option>Commerce</option>
+              <option>Autre</option>
             </select>
             {errors.industry && (
               <span className="mt-1 block text-xs font-normal text-amber-400">
@@ -1984,7 +1994,7 @@ function ContactSection() {
             <input
               name="email"
               type="email"
-              placeholder="you@business.com"
+              placeholder="vous@entreprise.fr"
               className={fieldClass}
             />
             {errors.email && (
@@ -1994,11 +2004,11 @@ function ContactSection() {
             )}
           </label>
           <label className="text-sm font-semibold text-off-white sm:col-span-2">
-            Phone
+            Téléphone
             <input
               name="phone"
               type="tel"
-              placeholder="Your phone number"
+              placeholder="Votre numéro de téléphone"
               className={fieldClass}
             />
             {errors.phone && (
@@ -2012,7 +2022,7 @@ function ContactSection() {
             <textarea
               name="message"
               rows={4}
-              placeholder="Tell us about your project"
+              placeholder="Parlez-nous de votre projet"
               className={fieldClass}
             />
             {errors.message && (
@@ -2035,23 +2045,23 @@ function ContactSection() {
               disabled={status === "sending"}
               className="w-full rounded-xl bg-brand px-6 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] disabled:cursor-wait disabled:opacity-70"
             >
-              {status === "sending" ? "Sending…" : "Send"}
+              {status === "sending" ? "Envoi…" : "Envoyer"}
             </button>
             <div aria-live="polite">
               {status === "sent" && (
                 <p className="mt-3 text-sm font-normal text-off-white">
-                  Thanks! Your message is on its way. We'll get back to you soon.
+                  Merci ! Votre message est bien parti. Nous revenons vers vous très vite.
                 </p>
               )}
               {status === "activate" && (
                 <p className="mt-3 text-sm font-normal text-amber-400">
-                  Almost there: open the "Activate Form" email sent to {contactEmail}, click the
-                  link, then send the form again.
+                  Presque fini : ouvrez l'email « Activate Form » envoyé à {contactEmail}, cliquez
+                  sur le lien, puis renvoyez le formulaire.
                 </p>
               )}
               {status === "error" && (
                 <p className="mt-3 text-sm font-normal text-amber-400">
-                  Your message didn't go through. Please try again, or email us at{" "}
+                  Votre message n'est pas parti. Réessayez, ou écrivez-nous à{" "}
                   <a href={`mailto:${contactEmail}`} className="underline underline-offset-2">
                     {contactEmail}
                   </a>
@@ -2069,9 +2079,9 @@ function ContactSection() {
 function Footer() {
   const navLinks = [
     ["Services", "#services"],
-    ["How it works", "#process"],
-    ["Work", "#work"],
-    ["Pricing", "#pricing"],
+    ["Méthode", "#process"],
+    ["Réalisations", "#work"],
+    ["Tarifs", "#pricing"],
     ["FAQ", "#faq"],
   ];
 
@@ -2081,7 +2091,7 @@ function Footer() {
         <div>
         <a
           href="#home"
-          aria-label="UpScreen home"
+          aria-label="Accueil UpScreen"
             className="block w-[180px]"
         >
           <img
@@ -2091,7 +2101,8 @@ function Footer() {
           />
         </a>
           <p className="mt-5 max-w-[440px] text-[15px] font-normal leading-[1.6] text-warm-gray">
-            Websites, content and motion videos for small businesses.
+            Sites web, contenus Instagram et vidéos en motion design pour les
+            petites entreprises.
           </p>
           <p className="mt-6 text-sm font-semibold text-off-white">
             Be seen. Be chosen.
@@ -2099,7 +2110,7 @@ function Footer() {
         </div>
         <div className="md:text-right">
         <nav
-            aria-label="Footer navigation"
+            aria-label="Navigation du pied de page"
             className="flex flex-wrap gap-x-5 gap-y-3 md:justify-end"
         >
             {navLinks.map(([label, href]) => (
@@ -2119,9 +2130,6 @@ function Footer() {
             >
               {contactEmail}
             </a>
-            <span className="text-xs font-normal text-warm-gray">
-              ABN 28 900 392 176
-            </span>
           </div>
           <p className="mt-6 text-xs font-normal text-off-white/35">
             © UpScreen
