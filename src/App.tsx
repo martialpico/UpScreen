@@ -252,6 +252,33 @@ function Heading({
   );
 }
 
+// Numéro WhatsApp au format international, sans « + » ni espaces
+// (ex. 33612345678 pour le 06 12 34 56 78). Tant qu'il est vide, les boutons
+// WhatsApp n'apparaissent pas.
+const whatsappNumber = "";
+const whatsappLink = whatsappNumber
+  ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      "Bonjour UpScreen ! J'aimerais prendre rendez-vous pour un appel découverte.",
+    )}`
+  : "";
+
+function WhatsAppIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className={className} fill="none">
+      <path
+        d="M12 3.25a8.25 8.25 0 0 0-7.08 12.48L4 20l4.38-1.14A8.25 8.25 0 1 0 12 3.25Z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.4 8.1c.2-.45.42-.46.72-.47h.37c.12 0 .3.05.46.4.15.36.54 1.3.59 1.4.05.09.08.2.01.32-.06.13-.1.2-.2.3-.1.12-.21.25-.3.34-.1.1-.2.21-.08.42.12.2.52.86 1.13 1.39.77.69 1.43.9 1.63 1 .2.1.32.08.44-.05.12-.14.5-.59.64-.79.13-.2.26-.16.45-.1.18.07 1.16.55 1.36.65.2.1.33.15.38.23.05.08.05.48-.11.94-.17.46-.97.88-1.34.93-.35.06-.8.08-1.3-.08-.3-.1-.7-.23-1.2-.45-.53-.23-2.31-.85-3.94-2.97-.46-.6-.97-1.34-.97-2.16 0-.82.43-1.22.58-1.39Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -307,19 +334,45 @@ function Header() {
           ))}
         </nav>
 
-        <a
-          href="#contact"
-          className="hidden whitespace-nowrap rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] lg:inline-flex"
-        >
-          Prendre rendez-vous
-        </a>
+        <div className="hidden items-center gap-2 lg:flex">
+          {whatsappLink && (
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Écrire sur WhatsApp"
+              className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-full border border-off-white/15 bg-off-white/5 px-3 text-sm font-semibold text-off-white transition-colors hover:border-off-white/30 hover:bg-off-white/10 xl:px-4"
+            >
+              <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
+              <span className="hidden xl:inline">WhatsApp</span>
+            </a>
+          )}
+          <a
+            href="#contact"
+            className="inline-flex whitespace-nowrap rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
+          >
+            Prendre rendez-vous
+          </a>
+        </div>
 
+        <div className="relative z-10 flex items-center gap-2 lg:hidden">
+          {whatsappLink && (
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Écrire sur WhatsApp"
+              className="grid h-10 w-10 place-items-center rounded-full border border-off-white/12 bg-off-white/5 text-[#25D366]"
+            >
+              <WhatsAppIcon className="h-5 w-5" />
+            </a>
+          )}
         <button
           type="button"
           aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((current) => !current)}
-          className="relative z-10 grid h-10 w-10 place-items-center rounded-full border border-off-white/12 bg-off-white/5 text-off-white lg:hidden"
+          className="grid h-10 w-10 place-items-center rounded-full border border-off-white/12 bg-off-white/5 text-off-white"
         >
           <span className="relative h-4 w-5" aria-hidden="true">
             <span
@@ -339,6 +392,7 @@ function Header() {
             />
           </span>
         </button>
+        </div>
 
         <div
           className={`absolute left-4 right-4 top-[72px] overflow-hidden rounded-[22px] border border-[#2A2A2E] bg-onyx/95 p-2 shadow-2xl backdrop-blur-2xl transition-all duration-300 lg:hidden ${
