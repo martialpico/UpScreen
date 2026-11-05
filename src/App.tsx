@@ -29,11 +29,11 @@ type Service = {
 
 // Prix en euros HT, au format français (espace insécable pour les milliers).
 const prices = {
-  landing: "1\u00a0500",
-  landingVideo: "2\u00a0500",
-  instagram8: "890",
-  instagram12: "1\u00a0400",
-  care: "99",
+  landing: "890",
+  landingVideo: "1\u00a0490",
+  instagramEssentiel: "490",
+  instagramCroissance: "790",
+  care: "49",
 };
 
 const careNote = `+ ${prices.care}\u00a0€/mois : hébergement, maintenance et SEO local`;
@@ -85,25 +85,24 @@ const services: Service[] = [
     note: "Engagement de 3 mois minimum",
     plans: [
       {
-        label: "8 posts",
-        price: prices.instagram8,
+        label: "Essentiel",
+        price: prices.instagramEssentiel,
         features: [
-          "8 posts sur-mesure par mois",
+          "8 posts par mois, dont 1 reel en motion design",
           "Calendrier éditorial mensuel",
-          "Feed designé, prêt à publier",
           "Légendes rédigées pour vous",
-          "Idées de réels et de contenus",
+          "Programmation des posts",
         ],
       },
       {
-        label: "12 posts + 2 réels",
-        price: prices.instagram12,
+        label: "Croissance",
+        price: prices.instagramCroissance,
         features: [
-          "12 posts sur-mesure par mois",
-          "2 réels en motion design par mois",
+          "12 posts par mois",
+          "2 reels en motion design par mois",
           "Calendrier éditorial mensuel",
-          "Feed designé, prêt à publier",
           "Légendes rédigées pour vous",
+          "Programmation des posts",
         ],
       },
     ],
@@ -857,7 +856,7 @@ function PricingCard({ service }: { service: Service }) {
     >
       {featured && (
         <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-brand px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-onyx sm:text-xs">
-          Recommandé
+          Le plus populaire
         </span>
       )}
       <h3 className="relative text-2xl font-semibold leading-[1.05] tracking-[-0.02em] md:min-h-[52px]">
