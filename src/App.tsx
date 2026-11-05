@@ -151,9 +151,9 @@ const reviews: Review[] = [
 // Le parcours du site, du premier message à la mise en ligne.
 const processSteps = [
   {
-    title: "Contactez-nous",
-    body: "Envoyez-nous un message sur WhatsApp. Nous apprenons à connaître votre entreprise, vos clients et vos objectifs.",
-    highlights: ["WhatsApp"],
+    title: "Appel découverte",
+    body: "Un appel gratuit de 20 minutes, sur WhatsApp ou par téléphone, pour comprendre votre entreprise, vos clients et vos objectifs.",
+    highlights: ["appel gratuit"],
     side: "left",
   },
   {
@@ -183,7 +183,7 @@ const processSteps = [
 ];
 
 const processIcons: Record<string, BrandIconName> = {
-  "Contactez-nous": "chat",
+  "Appel découverte": "chat",
   "Maquette offerte": "mockup",
   "On construit": "build",
   "Google & SEO": "seo",
@@ -223,7 +223,7 @@ const faqs = [
   {
     question: "Comment vous contacter\u00a0?",
     answer:
-      "Envoyez-nous un message sur WhatsApp, ou laissez vos coordonnées dans le formulaire ci-dessous.",
+      "Réservez un appel découverte gratuit sur WhatsApp, ou laissez vos coordonnées dans le formulaire ci-dessous.",
   },
 ];
 
@@ -384,9 +384,9 @@ function Hero() {
           Vos clients vous cherchent.
         </span>
         <span className="font-ui mt-[10px] flex flex-wrap items-baseline justify-center gap-x-[0.2em] text-[40px] font-semibold leading-none tracking-[-0.025em] text-off-white lg:text-[64px]">
-          <span>Mais vous</span>
-          <em className="font-display shrink-0 text-[46px] font-normal italic tracking-[-0.01em] text-brand lg:text-[74px]">
-            trouvent-ils ?
+          <span>Encore faut-il</span>
+          <em className="font-display text-[46px] font-normal italic tracking-[-0.01em] text-brand lg:text-[74px]">
+            qu’ils vous trouvent.
           </em>
         </span>
       </h1>
@@ -953,7 +953,7 @@ function Services() {
       id="pricing"
       className="scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-[60px] sm:px-8"
     >
-      <Heading emphasize={2}>Des prix clairs. Aucun frais caché.</Heading>
+      <Heading emphasize={3}>Des prix transparents, sans frais cachés.</Heading>
       <div className="mt-14 grid gap-5 md:grid-cols-3 lg:gap-6">
         {services.map((service) => (
           <PricingCard key={service.title} service={service} />
@@ -1082,7 +1082,7 @@ function StepVisualPanel({
       : "step-panel-float-right"
   }`;
 
-  if (title === "Contactez-nous") {
+  if (title === "Appel découverte") {
     // Une conversation façon WhatsApp : une gérante de café écrit, UpScreen répond.
     return (
       <div className={panelClass.replace(" p-5 ", " p-0 ")}>
@@ -1122,8 +1122,8 @@ function StepVisualPanel({
           </div>
           <div className="mr-auto max-w-[80%] rounded-xl rounded-tl-sm bg-white px-2.5 py-1.5 shadow-[0_1px_1px_rgba(0,0,0,0.08)]">
             <p className="text-[10.5px] leading-[1.35] text-onyx/85">
-              Bonjour Julie ! Bien sûr. Parlez-nous de votre café et on vous envoie une{" "}
-              <span className="font-semibold text-brand">maquette gratuite</span>.
+              Bonjour Julie ! Avec plaisir. On s'appelle demain à 10 h pour un{" "}
+              <span className="font-semibold text-brand">appel découverte gratuit</span> ?
             </p>
             <p className="mt-0.5 text-right text-[8px] text-onyx/45">09:42</p>
           </div>
@@ -1930,8 +1930,9 @@ function ContactSection() {
             en ligne.
           </h2>
           <p className="mt-6 max-w-[480px] text-[17px] font-normal leading-[1.6] text-warm-gray">
-            Écrivez-nous sur WhatsApp ou remplissez le formulaire. Vous recevez
-            une maquette gratuite et vous ne continuez que si elle vous plaît.
+            Réservez votre appel découverte gratuit sur WhatsApp ou via le
+            formulaire. Vous recevez ensuite une maquette gratuite, et vous ne
+            continuez que si elle vous plaît.
           </p>
           <a
             href="#contact-form"
