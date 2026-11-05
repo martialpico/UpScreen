@@ -96,6 +96,16 @@
   .step-panel .bg-brand {
     box-shadow: none;
   }
+
+  /* Sections claires : pas de halo rouge sur fond clair (sauf carte sombre). */
+  .light-section .text-brand,
+  .light-section .text-brand-light {
+    text-shadow: none;
+  }
+
+  .light-section .bg-brand {
+    box-shadow: none;
+  }
 }
 
 @layer utilities {

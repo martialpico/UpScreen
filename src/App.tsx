@@ -30,13 +30,13 @@ type Service = {
 // Prix en euros HT, au format français (espace insécable pour les milliers).
 const prices = {
   landing: "890",
-  landingVideo: "1\u00a0490",
+  landingVideo: "1 490",
   instagramEssentiel: "490",
   instagramCroissance: "790",
   care: "49",
 };
 
-const careNote = `+ ${prices.care}\u00a0€/mois : hébergement, maintenance et SEO local`;
+const careNote = `+ ${prices.care} €/mois : hébergement, maintenance et SEO local`;
 
 const services: Service[] = [
   {
@@ -70,7 +70,7 @@ const services: Service[] = [
         price: prices.landingVideo,
         features: [
           "Tout ce que comprend la Landing page",
-          "Vidéo de présentation en motion design de 30 à 45\u00a0s, sur-mesure",
+          "Vidéo de présentation en motion design de 30 à 45 s, sur-mesure",
           "Nous écrivons le script pour vous",
           "Version verticale courte pour Instagram",
           "Musique et sound design",
@@ -191,58 +191,63 @@ const processIcons: Record<string, BrandIconName> = {
 
 const faqs = [
   {
-    question: "Que proposez-vous exactement\u00a0?",
+    question: "Que proposez-vous exactement ?",
     answer:
       "Nous aidons les petites entreprises à être vues et choisies en ligne. Nous créons des landing pages sur-mesure, des vidéos de présentation en motion design, et nous gérons votre Instagram chaque mois. Choisissez un service ou combinez-les.",
   },
   {
-    question: "À qui s'adressent vos services\u00a0?",
+    question: "À qui s'adressent vos services ?",
     answer:
       "Aux entreprises locales qui veulent être aussi convaincantes en ligne qu'en vrai : restaurants, cafés, salons, salles de sport, artisans, cabinets et commerces.",
   },
   {
-    question: "Combien de temps faut-il\u00a0?",
+    question: "Combien de temps faut-il ?",
     answer:
       "Votre landing page et votre vidéo sont prêtes en 14 jours environ, à partir du moment où nous recevons votre logo, vos photos et vos informations clés.",
   },
   {
-    question: "Puis-je personnaliser mon projet\u00a0?",
+    question: "Puis-je personnaliser mon projet ?",
     answer:
       "Bien sûr. Chaque page et chaque vidéo est conçue sur-mesure pour votre entreprise. Vous voyez d'abord une maquette gratuite, et deux séries de modifications sont incluses.",
   },
   {
-    question: "Pouvez-vous relier mes réseaux sociaux à mon site\u00a0?",
+    question: "Pouvez-vous relier mes réseaux sociaux à mon site ?",
     answer:
       "Oui. Nous ajoutons les liens vers votre Instagram et votre Facebook, et nous pouvons afficher vos derniers posts directement sur votre page.",
   },
   {
-    question: "Que comprend l'offre hébergement et maintenance\u00a0?",
-    answer: `Un hébergement rapide et sécurisé, les sauvegardes, les mises à jour, le SEO local chaque mois, le suivi de votre fiche Google Business et les petites modifications, pour ${prices.care}\u00a0€/mois. Sans engagement, résiliable à tout moment.`,
+    question: "Que comprend l'offre hébergement et maintenance ?",
+    answer: `Un hébergement rapide et sécurisé, les sauvegardes, les mises à jour, le SEO local chaque mois, le suivi de votre fiche Google Business et les petites modifications, pour ${prices.care} €/mois. Sans engagement, résiliable à tout moment.`,
   },
   {
-    question: "Comment vous contacter\u00a0?",
+    question: "Comment vous contacter ?",
     answer:
       "Réservez un appel découverte gratuit sur WhatsApp, ou laissez vos coordonnées dans le formulaire ci-dessous.",
   },
 ];
 
+// Titres de section. L'italique rouge est réservé au hero et au titre de
+// contact : ici, il ne s'applique que si on le demande (emphasize > 0).
 function Heading({
   children,
-  emphasize = 1,
-  breakBeforeEmphasis = false,
+  emphasize = 0,
+  tone = "dark",
 }: {
   children: string;
   emphasize?: number;
-  breakBeforeEmphasis?: boolean;
+  tone?: "dark" | "light";
 }) {
   const words = children.trim().split(" ");
   const emphasizedWords =
-    words.length > 1 ? words.splice(-emphasize).join(" ") : null;
+    emphasize > 0 && words.length > 1 ? words.splice(-emphasize).join(" ") : null;
 
   return (
-    <h2 className="font-ui text-center text-[32px] font-semibold leading-tight tracking-[-0.02em] text-off-white md:text-[48px]">
+    <h2
+      className={`font-ui text-center text-[32px] font-semibold leading-tight tracking-[-0.02em] md:text-[46px] ${
+        tone === "light" ? "text-onyx" : "text-off-white"
+      }`}
+    >
       {emphasizedWords ? `${words.join(" ")} ` : children}
-      {emphasizedWords && breakBeforeEmphasis && <br />}
       {emphasizedWords && (
         <em className="font-display text-[1.15em] font-normal italic text-brand">
           {emphasizedWords}
@@ -429,50 +434,222 @@ function Header() {
   );
 }
 
+// Rend une maquette à sa taille de design, puis la met à l'échelle de son
+// conteneur d'un seul bloc : rien ne se tasse ni ne passe à la ligne.
+function ScaledFrame({
+  width,
+  height,
+  children,
+  className = "",
+}: {
+  width: number;
+  height: number;
+  children: ReactNode;
+  className?: string;
+}) {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+    const update = () => setScale(frame.clientWidth / width);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(frame);
+    return () => observer.disconnect();
+  }, [width]);
+
+  return (
+    <div ref={frameRef} className={`relative w-full ${className}`} style={{ height: height * scale }}>
+      <div
+        className="absolute left-0 top-0"
+        style={{ width, height, transform: `scale(${scale})`, transformOrigin: "top left" }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function BrowserBar({ url, className = "" }: { url: string; className?: string }) {
+  return (
+    <div className={`flex h-[26px] items-center gap-1.5 border-b border-black/5 px-3 ${className}`}>
+      <span className="h-[7px] w-[7px] rounded-full bg-black/15" />
+      <span className="h-[7px] w-[7px] rounded-full bg-black/15" />
+      <span className="h-[7px] w-[7px] rounded-full bg-black/15" />
+      <span className="ml-3 flex items-center gap-1 rounded-md bg-white/80 px-2 py-[3px] text-[8px] font-semibold text-black/50">
+        <svg aria-hidden="true" viewBox="0 0 16 16" className="h-2 w-2" fill="none" stroke="currentColor" strokeWidth="1.8">
+          <rect x="3.5" y="7" width="9" height="6.5" rx="1.5" />
+          <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" />
+        </svg>
+        {url}
+      </span>
+    </div>
+  );
+}
+
+// Le site du café Le Comptoir Rose, sur ordinateur et sur téléphone : ce que
+// le visiteur achète, montré dès le premier écran.
+function CafeShowcase() {
+  const brown = "#3B2A20";
+  const cream = "#F7F1E8";
+  const rust = "#B5482F";
+  const menu = [
+    ["Espresso", "Pure origine Colombie", "2,20 €"],
+    ["Flat white", "Lait entier ou avoine", "4,50 €"],
+    ["Brunch du dimanche", "Sur réservation", "19 €"],
+  ];
+
+  return (
+    <div aria-hidden="true" className="relative">
+      <div className="pointer-events-none absolute -inset-6 rounded-[48px] bg-[radial-gradient(ellipse_at_center,rgba(233,68,69,0.18),transparent_70%)] blur-2xl" />
+      <ScaledFrame width={620} height={450}>
+        <div
+          className="absolute left-0 top-2 w-[540px] overflow-hidden rounded-[16px] shadow-[0_40px_90px_rgba(0,0,0,0.55)] ring-1 ring-white/10"
+          style={{ background: cream, color: brown }}
+        >
+          <BrowserBar url="lecomptoirrose.fr" className="bg-[#EDE5DA]" />
+          <div className="relative h-[214px]">
+            <img src={cafePhoto} alt="" className="absolute inset-0 h-full w-full object-cover object-[60%_45%]" />
+            <span className="absolute inset-0 bg-gradient-to-r from-[#24170F]/90 via-[#24170F]/55 to-transparent" />
+            <div className="relative flex items-center px-6 pt-4">
+              <p className="font-display text-[15px] leading-none" style={{ color: cream }}>
+                Le Comptoir Rose
+              </p>
+              <div className="ml-auto flex items-center gap-3 text-[9.5px] font-semibold" style={{ color: `${cream}cc` }}>
+                <span>Carte</span>
+                <span>À propos</span>
+                <span className="rounded-full px-2.5 py-1" style={{ background: cream, color: brown }}>
+                  Réserver
+                </span>
+              </div>
+            </div>
+            <div className="relative mt-6 max-w-[300px] px-6">
+              <p className="font-display text-[30px] leading-[1.02]" style={{ color: cream }}>
+                Le café qui donne envie de se lever.
+              </p>
+              <p className="mt-2 text-[10.5px] leading-[1.45]" style={{ color: `${cream}cc` }}>
+                Café de spécialité et brunch, au cœur de Toulouse.
+              </p>
+              <div className="mt-3 flex gap-2 text-[9.5px] font-bold">
+                <span className="rounded-full px-3 py-1.5 text-white" style={{ background: rust }}>
+                  Voir la carte
+                </span>
+                <span className="rounded-full border px-3 py-1.5" style={{ borderColor: `${cream}80`, color: cream }}>
+                  Itinéraire
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-between px-6 py-2.5 text-[9.5px] font-semibold" style={{ color: `${brown}b3` }}>
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#1DAA61]" />
+              Ouvert aujourd'hui · 7 h 30 – 16 h
+            </span>
+            <span>
+              <span className="text-[#FBBC04]">★</span> 4,9 sur Google · 48 avis
+            </span>
+          </div>
+          <div className="px-6 pb-5">
+            <p className="font-display text-[15px]">Nos incontournables</p>
+            <div className="mt-2 grid grid-cols-3 gap-2.5">
+              {menu.map(([name, detail, price]) => (
+                <div key={name} className="rounded-lg bg-white p-2.5 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
+                  <p className="text-[10px] font-bold">{name}</p>
+                  <p className="mt-0.5 text-[8px]" style={{ color: `${brown}99` }}>
+                    {detail}
+                  </p>
+                  <p className="mt-1.5 text-[10px] font-bold" style={{ color: rust }}>
+                    {price}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute right-0 top-[112px] h-[326px] w-[176px] rounded-[30px] bg-[#0A0A0B] p-[7px] shadow-[0_30px_70px_rgba(0,0,0,0.6)] ring-1 ring-white/15">
+          <div className="relative h-full overflow-hidden rounded-[24px]" style={{ background: cream, color: brown }}>
+            <div className="relative h-[128px]">
+              <img src={cafePhoto} alt="" className="absolute inset-0 h-full w-full object-cover object-[40%_45%]" />
+              <span className="absolute inset-0 bg-gradient-to-b from-[#24170F]/60 to-transparent" />
+              <p className="relative px-3 pt-3 font-display text-[11px]" style={{ color: cream }}>
+                Le Comptoir Rose
+              </p>
+            </div>
+            <div className="px-3 pt-3">
+              <p className="font-display text-[17px] leading-[1.05]">Le café qui donne envie de se lever.</p>
+              <p className="mt-1.5 text-[8px] leading-[1.4]" style={{ color: `${brown}99` }}>
+                Café de spécialité et brunch, au cœur de Toulouse.
+              </p>
+              <span className="mt-3 block rounded-full py-2 text-center text-[9.5px] font-bold text-white" style={{ background: rust }}>
+                Réserver une table
+              </span>
+              <p className="mt-2 text-center text-[8px] font-semibold" style={{ color: `${brown}99` }}>
+                <span className="text-[#FBBC04]">★</span> 4,9 · Ouvert jusqu'à 16 h
+              </p>
+            </div>
+            <div className="absolute inset-x-0 bottom-0 grid grid-cols-2 border-t border-black/5 bg-white text-center text-[8.5px] font-bold">
+              <span className="py-2.5">Appeler</span>
+              <span className="border-l border-black/5 py-2.5">Itinéraire</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute bottom-0 left-6 flex items-center gap-2.5 rounded-xl bg-white px-3 py-2.5 text-onyx shadow-[0_18px_40px_rgba(0,0,0,0.35)]">
+          <img src={googleLogo} alt="" className="h-3.5" />
+          <span className="leading-tight">
+            <span className="block text-[11px] font-bold">N°1 près de vous</span>
+            <span className="block text-[9px] text-onyx/55">
+              <span className="text-[#FBBC04]">★★★★★</span> 4,9 · 48 avis
+            </span>
+          </span>
+        </div>
+      </ScaledFrame>
+    </div>
+  );
+}
+
 function Hero() {
   return (
-    <section id="home" className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-[60px] pt-36 sm:px-8 md:pt-44">
-      <h1 className="mx-auto max-w-[900px] text-center shadow-none">
-        <span className="font-ui block text-base font-normal leading-none tracking-[0.01em] text-warm-gray lg:text-[22px]">
-          Vos clients vous cherchent.
-        </span>
-        <span className="font-ui mt-[10px] flex flex-wrap items-baseline justify-center gap-x-[0.2em] text-[40px] font-semibold leading-none tracking-[-0.025em] text-off-white lg:text-[64px]">
-          <span>Encore faut-il</span>
-          <em className="font-display text-[46px] font-normal italic tracking-[-0.01em] text-brand lg:text-[74px]">
-            qu’ils vous trouvent.
-          </em>
-        </span>
-      </h1>
-      <p className="mx-auto mt-7 max-w-[560px] text-center text-[17px] font-normal leading-[1.6] text-warm-gray sm:text-lg">
-        Sites web, contenus Instagram et vidéos en motion design qui rendent les
-        petites entreprises impossibles à ignorer.
-      </p>
-      <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-        <a
-          href="#contact"
-          className="rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
-        >
-          Prendre rendez-vous
-        </a>
-        <a
-          href="#pricing"
-          className="rounded-full border border-[#2A2A2E] bg-graphite/70 px-7 py-3.5 text-sm font-semibold text-off-white transition-colors hover:border-off-white/25 hover:bg-graphite"
-        >
-          Voir nos offres
-        </a>
-      </div>
-      <div className="scroll-reveal relative mt-10">
-        {/* Soft red glow behind the video so it sits in the page, no frame. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -inset-x-8 -inset-y-6 rounded-[48px] bg-[radial-gradient(ellipse_at_center,rgba(233,68,69,0.2),transparent_68%)] blur-2xl"
-        />
-        <div
-          aria-label="Vidéo de présentation"
-          className="group relative overflow-hidden rounded-[18px] bg-onyx shadow-[0_30px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10 sm:rounded-[28px]"
-        >
-          <HeroVideo />
+    <section
+      id="home"
+      className="scroll-reveal relative mx-auto grid w-full max-w-[1160px] scroll-mt-24 items-center gap-12 px-5 pb-16 pt-32 sm:px-8 md:pt-40 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:pb-24"
+    >
+      <div className="text-center lg:text-left">
+        <h1 className="shadow-none">
+          <span className="font-ui block text-base font-normal leading-none text-warm-gray lg:text-xl">
+            Vos clients vous cherchent.
+          </span>
+          <span className="font-ui mt-4 block text-[40px] font-semibold leading-[1.04] tracking-[-0.025em] text-off-white sm:text-[52px] lg:text-[58px]">
+            Encore faut-il{" "}
+            <em className="font-display text-[1.12em] font-normal italic tracking-[-0.01em] text-brand">
+              qu’ils vous trouvent.
+            </em>
+          </span>
+        </h1>
+        <p className="mx-auto mt-6 max-w-[520px] text-[17px] font-normal leading-[1.6] text-warm-gray sm:text-lg lg:mx-0">
+          Sites web, contenus Instagram et vidéos en motion design qui rendent les
+          petites entreprises impossibles à ignorer.
+        </p>
+        <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
+          <a
+            href="#contact"
+            className="rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
+          >
+            Prendre rendez-vous
+          </a>
+          <a
+            href="#pricing"
+            className="rounded-full border border-[#2A2A2E] bg-graphite/70 px-7 py-3.5 text-sm font-semibold text-off-white transition-colors hover:border-off-white/25 hover:bg-graphite"
+          >
+            Voir nos offres
+          </a>
         </div>
+      </div>
+      <div className="mx-auto w-full max-w-[620px]">
+        <CafeShowcase />
       </div>
     </section>
   );
@@ -917,7 +1094,7 @@ function ProblemSection() {
       id="services"
       className="scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-[60px] sm:px-8"
     >
-      <Heading emphasize={5} breakBeforeEmphasis>
+      <Heading>
         La plupart des entreprises perdent des clients avant même de dire bonjour.
       </Heading>
       <div className="mx-auto mt-12 grid max-w-[420px] grid-cols-1 gap-8 md:max-w-[1040px] md:grid-cols-3 md:gap-5 lg:gap-7">
@@ -937,9 +1114,7 @@ function ProblemSection() {
       </div>
       <p className="mx-auto mt-10 max-w-[760px] text-center text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
         Alors ils choisissent votre concurrent. Pas parce qu'il est meilleur. Parce qu'il{" "}
-        <em className="font-display text-[1.15em] font-normal italic text-brand">
-          présente mieux.
-        </em>
+        <span className="font-semibold text-off-white">présente mieux.</span>
       </p>
     </section>
   );
@@ -949,35 +1124,53 @@ function PricingCard({ service }: { service: Service }) {
   const [planIndex, setPlanIndex] = useState(0);
   const plan = service.plans[planIndex];
   const featured = Boolean(service.featured);
+  // Section claire : cartes blanches, la formule mise en avant reste sombre.
+  const t = featured
+    ? {
+        card: "border-[1.5px] border-brand bg-onyx text-off-white shadow-[0_30px_70px_rgba(10,10,11,0.28)] lg:-my-3 lg:min-h-[614px]",
+        subtitle: "text-brand-light",
+        toggle: "border-[#2A2A2E] bg-graphite",
+        toggleOff: "text-warm-gray hover:text-off-white",
+        toggleOn: "bg-off-white text-onyx",
+        list: "text-[#CFCCC7]",
+        bullet: "bg-brand",
+        divider: "border-off-white/10",
+        muted: "text-warm-gray",
+        price: "text-brand",
+        button: "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]",
+      }
+    : {
+        card: "border-onyx/10 bg-white text-onyx shadow-[0_18px_50px_rgba(10,10,11,0.07)] hover:border-onyx/20",
+        subtitle: "text-onyx/50",
+        toggle: "border-onyx/10 bg-onyx/[0.04]",
+        toggleOff: "text-onyx/55 hover:text-onyx",
+        toggleOn: "bg-onyx text-off-white",
+        list: "text-onyx/75",
+        bullet: "bg-onyx/30",
+        divider: "border-onyx/10",
+        muted: "text-onyx/50",
+        price: "text-onyx",
+        button: "border-onyx/15 bg-transparent text-onyx hover:border-onyx/40",
+      };
 
   return (
     <article
-      className={`scroll-reveal group relative flex min-h-[590px] flex-col rounded-[28px] border bg-graphite/85 p-7 text-off-white backdrop-blur-2xl transition duration-300 hover:-translate-y-1 sm:p-8 ${
-        featured
-          ? "border-[1.5px] border-brand shadow-[0_28px_80px_rgba(0,0,0,0.48),0_0_32px_rgba(233,68,69,0.12)] md:-my-3 md:min-h-[614px]"
-          : "border-[#2A2A2E] hover:border-off-white/20"
-      }`}
+      className={`scroll-reveal group relative flex min-h-[590px] flex-col rounded-[28px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${t.card}`}
     >
       {featured && (
-        <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-brand px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-onyx sm:text-xs">
+        <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-brand px-5 py-2 text-xs font-semibold text-onyx">
           Le plus populaire
         </span>
       )}
       <h3 className="relative text-2xl font-semibold leading-[1.05] tracking-[-0.02em] md:min-h-[52px]">
         {service.title}
       </h3>
-      <p
-        className={`mt-3 text-xs font-semibold uppercase tracking-[0.08em] ${
-          featured ? "text-brand-light" : "text-warm-gray"
-        }`}
-      >
-        {service.subtitle}
-      </p>
+      <p className={`mt-3 text-sm font-semibold ${t.subtitle}`}>{service.subtitle}</p>
       {service.plans.length > 1 && (
         <div
           role="tablist"
           aria-label={`Formules ${service.title}`}
-          className="mt-6 grid grid-cols-2 gap-1 rounded-full border border-[#2A2A2E] bg-onyx/60 p-1"
+          className={`mt-6 grid grid-cols-2 gap-1 rounded-full border p-1 ${t.toggle}`}
         >
           {service.plans.map((option, index) => (
             <button
@@ -987,9 +1180,7 @@ function PricingCard({ service }: { service: Service }) {
               aria-selected={index === planIndex}
               onClick={() => setPlanIndex(index)}
               className={`rounded-full px-3 py-2 text-xs font-semibold transition ${
-                index === planIndex
-                  ? "bg-off-white text-onyx"
-                  : "text-warm-gray hover:text-off-white"
+                index === planIndex ? t.toggleOn : t.toggleOff
               }`}
             >
               {option.label}
@@ -998,50 +1189,34 @@ function PricingCard({ service }: { service: Service }) {
         </div>
       )}
       <ul
-        className={`space-y-3.5 pb-10 text-[15px] font-normal leading-[1.5] text-[#CFCCC7] ${
+        className={`space-y-3.5 pb-10 text-[15px] font-normal leading-[1.5] ${t.list} ${
           service.plans.length > 1 ? "mt-6" : "mt-8"
         }`}
       >
         {plan.features.map((feature) => (
           <li key={feature} className="flex gap-3">
-            <span
-              className={`mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full ${
-                featured ? "bg-brand" : "bg-warm-gray/55"
-              }`}
-            />
+            <span className={`mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full ${t.bullet}`} />
             {feature}
           </li>
         ))}
       </ul>
-      <div className="mt-auto border-t border-off-white/10 pt-7">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-warm-gray">
-          {service.billing}
-        </p>
+      <div className={`mt-auto border-t pt-7 ${t.divider}`}>
+        <p className={`text-xs font-semibold ${t.muted}`}>{service.billing}</p>
         <p className="mt-3 flex items-baseline whitespace-nowrap">
           <span
-            className={`font-display text-[52px] font-normal leading-none tracking-[-0.025em] sm:text-[58px] ${
-              featured ? "text-brand" : "text-off-white"
-            }`}
+            className={`font-display text-[52px] font-normal leading-none tracking-[-0.025em] sm:text-[58px] ${t.price}`}
           >
             {plan.price}
           </span>
-          <span className="ml-1.5 text-xl font-normal text-warm-gray">€</span>
+          <span className={`ml-1.5 text-xl font-normal ${t.muted}`}>€</span>
           {service.billing === "Mensuel" && (
-            <span className="ml-1 text-sm font-normal text-warm-gray">
-              /mois
-            </span>
+            <span className={`ml-1 text-sm font-normal ${t.muted}`}>/mois</span>
           )}
         </p>
-        <p className="mt-4 min-h-4 text-[11px] font-normal text-warm-gray">
-          {service.note}
-        </p>
+        <p className={`mt-4 min-h-4 text-[11px] font-normal ${t.muted}`}>{service.note}</p>
         <a
           href="#contact"
-          className={`mt-7 flex w-full items-center justify-center rounded-2xl border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${
-            featured
-              ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
-              : "border-[#2A2A2E] bg-transparent text-off-white hover:border-off-white/25"
-          }`}
+          className={`mt-7 flex w-full items-center justify-center rounded-2xl border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${t.button}`}
         >
           Commencer
         </a>
@@ -1054,15 +1229,15 @@ function Services() {
   return (
     <section
       id="pricing"
-      className="scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-[60px] sm:px-8"
+      className="scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-20 sm:px-8 md:py-24"
     >
-      <Heading emphasize={3}>Des prix transparents, sans frais cachés.</Heading>
-      <div className="mt-14 grid gap-5 md:grid-cols-3 lg:gap-6">
+      <Heading tone="light">Des prix transparents, sans frais cachés.</Heading>
+      <div className="mx-auto mt-14 grid max-w-[480px] gap-6 lg:max-w-none lg:grid-cols-3">
         {services.map((service) => (
           <PricingCard key={service.title} service={service} />
         ))}
       </div>
-      <p className="mt-8 text-center text-xs font-normal text-warm-gray">
+      <p className="mt-8 text-center text-xs font-normal text-onyx/50">
         Prix HT · Maquette offerte
       </p>
     </section>
@@ -1079,10 +1254,10 @@ function Reviews() {
   return (
     <section
       id="reviews"
-      className="scroll-reveal relative w-full scroll-mt-24 py-[60px]"
+      className="scroll-reveal relative w-full scroll-mt-24 pb-10 pt-20 md:pt-24"
     >
       <div className="px-5 sm:px-8">
-        <Heading>Ce que disent nos clients.</Heading>
+        <Heading tone="light">Ce que disent nos clients.</Heading>
       </div>
       <div className="reviews-viewport relative mt-12 overflow-hidden">
         <div
@@ -1093,7 +1268,7 @@ function Reviews() {
             <figure
               key={index}
               aria-hidden={index >= reviews.length}
-              className="glass-panel relative flex w-[300px] shrink-0 flex-col rounded-[24px] p-6 sm:w-[360px] sm:p-7"
+              className="relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-onyx/8 bg-white p-6 shadow-[0_14px_40px_rgba(10,10,11,0.06)] sm:w-[360px] sm:p-7"
             >
               <div className="flex items-start justify-between gap-3">
                 <span
@@ -1104,25 +1279,25 @@ function Reviews() {
                 </span>
                 <span className="flex items-center gap-2">
                   {review.placeholder && (
-                    <span className="rounded-full border border-[#2A2A2E] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-warm-gray">
+                    <span className="rounded-full border border-onyx/15 px-2.5 py-1 text-[10px] font-semibold text-onyx/50">
                       Exemple
                     </span>
                   )}
-                  <span className="rounded-full bg-off-white/8 px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] text-off-white/70">
+                  <span className="rounded-full bg-onyx/[0.06] px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] text-onyx/55">
                     {review.lang}
                   </span>
                 </span>
               </div>
               <blockquote
                 lang={review.lang.toLowerCase()}
-                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-[#CFCCC7]"
+                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-onyx/75"
               >
                 {review.quote}
               </blockquote>
-              <figcaption className="mt-6 border-t border-off-white/10 pt-4">
-                <p className="text-sm font-semibold text-off-white">{review.business}</p>
+              <figcaption className="mt-6 border-t border-onyx/10 pt-4">
+                <p className="text-sm font-semibold text-onyx">{review.business}</p>
                 {review.person && (
-                  <p className="mt-0.5 text-xs font-normal text-warm-gray">{review.person}</p>
+                  <p className="mt-0.5 text-xs font-normal text-onyx/50">{review.person}</p>
                 )}
               </figcaption>
             </figure>
@@ -1691,7 +1866,7 @@ function Process() {
             style={{ transform: `scaleY(${scrollProgress})` }}
           />
         </div>
-        <div className="space-y-10 sm:space-y-12">
+        <div className="space-y-10 sm:space-y-0">
           {processSteps.map((step, index) => {
             const isLeft = step.side === "left";
             const isRevealed = revealedSteps[index];
@@ -1702,7 +1877,9 @@ function Process() {
                   stepRefs.current[index] = element;
                 }}
                 data-step-index={index}
-                className="relative grid min-h-[170px] grid-cols-[32px_1fr] gap-4 sm:grid-cols-[1fr_56px_1fr] sm:gap-3"
+                className={`relative grid min-h-[170px] grid-cols-[32px_1fr] gap-4 sm:grid-cols-[1fr_56px_1fr] sm:gap-3 ${
+                  index > 0 ? "sm:-mt-40" : ""
+                }`}
               >
                 <div
                   className={`${
@@ -1883,11 +2060,235 @@ const motionVideos = [
   { mediaId: "cn1y5pm9o1", title: "Vidéo de présentation Notion", thumbnail: motionNotion, poster: motionNotionPoster },
 ];
 
+function DemoSiteCard({ name, trade, children }: { name: string; trade: string; children: ReactNode }) {
+  return (
+    <figure className="scroll-reveal">
+      <div aria-hidden="true" className="overflow-hidden rounded-[18px] shadow-[0_24px_60px_rgba(0,0,0,0.45)] ring-1 ring-white/10">
+        <ScaledFrame width={400} height={300}>
+          {children}
+        </ScaledFrame>
+      </div>
+      <figcaption className="mt-4 flex items-start justify-between gap-3">
+        <span>
+          <span className="block text-base font-semibold text-off-white">{name}</span>
+          <span className="block text-sm text-warm-gray">{trade}</span>
+        </span>
+        <span className="shrink-0 rounded-full border border-off-white/15 px-2.5 py-1 text-[11px] font-semibold text-off-white/70">
+          Démo
+        </span>
+      </figcaption>
+    </figure>
+  );
+}
+
+// Salon de coiffure : tons poudrés, serif élégante, réservation en ligne.
+function DemoSalon() {
+  const plum = "#4A2C3A";
+  const rose = "#C8746A";
+  return (
+    <div className="h-[300px] w-[400px] bg-[#F6E9E3]" style={{ color: plum }}>
+      <BrowserBar url="atelier-lumiere.fr" className="bg-[#EFDDD5]" />
+      <div className="px-5 pt-3">
+        <div className="flex items-center">
+          <p className="font-display text-[14px] italic">Atelier Lumière</p>
+          <div className="ml-auto flex items-center gap-2.5 text-[7.5px] font-semibold opacity-80">
+            <span>Prestations</span>
+            <span>Tarifs</span>
+            <span className="rounded-full px-2 py-1 text-[#F6E9E3]" style={{ background: plum }}>
+              Prendre RDV
+            </span>
+          </div>
+        </div>
+        <div className="mt-3 grid grid-cols-[1fr_130px] items-end gap-4">
+          <div className="pb-2">
+            <p className="font-display text-[26px] leading-[1]">Révélez votre lumière.</p>
+            <p className="mt-2 text-[8.5px] leading-[1.45] opacity-75">
+              Salon de coiffure à Lyon 6e. Coupe, couleur et soins, sur rendez-vous.
+            </p>
+            <span className="mt-3 inline-block rounded-full px-3 py-1.5 text-[8.5px] font-bold text-white" style={{ background: rose }}>
+              Réserver en ligne
+            </span>
+            <p className="mt-2 flex items-center gap-1 text-[7.5px] font-semibold opacity-70">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#1DAA61]" />
+              Prochain créneau : demain 10 h 30
+            </p>
+          </div>
+          <div className="relative h-[150px]">
+            <span className="absolute inset-x-0 bottom-0 top-0 rounded-t-full" style={{ background: "linear-gradient(170deg,#EDC3B3,#C8746A)" }} />
+            <span className="absolute inset-x-3 bottom-3 top-3 rounded-t-full border border-white/60" />
+            <span className="absolute -left-3 top-6 h-7 w-7 rounded-full bg-[#F6E9E3] ring-1" style={{ boxShadow: `inset 0 0 0 1px ${rose}` }} />
+          </div>
+        </div>
+        <div className="mt-4 grid grid-cols-3 gap-2 text-[8px] font-semibold">
+          {[
+            ["Coupe femme", "45 €"],
+            ["Couleur", "dès 65 €"],
+            ["Balayage", "120 €"],
+          ].map(([label, price]) => (
+            <span key={label} className="flex justify-between rounded-lg bg-white/80 px-2 py-2">
+              {label}
+              <span style={{ color: rose }}>{price}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Plombier : bleu nuit et jaune, urgence et réassurance avant tout.
+function DemoPlumber() {
+  const navy = "#12324A";
+  const yellow = "#F5B700";
+  return (
+    <div className="h-[300px] w-[400px] bg-white" style={{ color: navy }}>
+      <BrowserBar url="dupuy-plomberie.fr" className="bg-[#EEF1F4]" />
+      <div className="px-5 py-1 text-[7px] font-semibold text-white" style={{ background: navy }}>
+        Dépannage 7j/7 · Toulouse et alentours
+      </div>
+      <div className="flex items-center px-5 py-2.5">
+        <p className="text-[13px] font-extrabold tracking-[-0.02em]">
+          DUPUY <span className="font-normal">plomberie</span>
+        </p>
+        <div className="ml-auto flex items-center gap-2.5 text-[7.5px] font-semibold opacity-75">
+          <span>Services</span>
+          <span>Zone</span>
+          <span className="rounded-md px-2 py-1 font-bold" style={{ background: yellow, color: navy }}>
+            Devis gratuit
+          </span>
+        </div>
+      </div>
+      <div className="mx-5 grid grid-cols-[1fr_120px] gap-4 rounded-xl p-4 text-white" style={{ background: navy }}>
+        <div>
+          <p className="text-[21px] font-extrabold leading-[1.05] tracking-[-0.02em]">
+            Fuite, panne ? On arrive en 1 h.
+          </p>
+          <p className="mt-2 text-[8px] leading-[1.45] text-white/75">
+            Plombier chauffagiste à Toulouse. Intervention rapide, prix annoncé avant les travaux.
+          </p>
+          <div className="mt-3 flex gap-1.5 text-[8px] font-bold">
+            <span className="rounded-md px-2.5 py-1.5" style={{ background: yellow, color: navy }}>
+              Appeler maintenant
+            </span>
+            <span className="rounded-md border border-white/40 px-2.5 py-1.5">Devis en ligne</span>
+          </div>
+        </div>
+        <div className="space-y-1.5 self-center rounded-lg bg-white p-2.5 text-[8px] font-semibold" style={{ color: navy }}>
+          {["Devis gratuit", "Garantie 2 ans", "Paiement après travaux"].map((item) => (
+            <p key={item} className="flex items-center gap-1.5">
+              <span className="grid h-3 w-3 place-items-center rounded-full text-[7px] font-bold" style={{ background: yellow }}>
+                ✓
+              </span>
+              {item}
+            </p>
+          ))}
+          <p className="border-t border-black/5 pt-1.5">
+            <span className="text-[#FBBC04]">★</span> 4,9 · 126 avis Google
+          </p>
+        </div>
+      </div>
+      <div className="mt-3 grid grid-cols-3 gap-2 px-5 text-center text-[8px] font-semibold">
+        {["Fuite d'eau", "Chauffe-eau", "Débouchage"].map((service) => (
+          <span key={service} className="rounded-lg bg-[#EEF1F4] py-2">
+            {service}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Studio de yoga : vert sauge, planning du jour et premier cours offert.
+function DemoYoga() {
+  const green = "#2F4A3A";
+  const sage = "#7C9A7E";
+  return (
+    <div className="h-[300px] w-[400px] bg-[#E9EEE5]" style={{ color: green }}>
+      <BrowserBar url="studio-ananda.fr" className="bg-[#DFE6DA]" />
+      <div className="px-5 pt-3">
+        <div className="flex items-center">
+          <p className="font-display text-[14px]">Studio Ananda</p>
+          <div className="ml-auto flex items-center gap-2.5 text-[7.5px] font-semibold opacity-80">
+            <span>Cours</span>
+            <span>Planning</span>
+            <span className="rounded-full px-2 py-1 text-white" style={{ background: green }}>
+              Réserver un cours
+            </span>
+          </div>
+        </div>
+        <div className="relative mt-4 grid grid-cols-[1fr_150px] gap-4">
+          <span className="absolute -right-6 -top-6 h-28 w-28 rounded-full" style={{ background: "radial-gradient(circle,#F3D9A4 0%,rgba(243,217,164,0) 70%)" }} />
+          <div className="relative">
+            <p className="font-display text-[25px] leading-[1.02]">Respirez. Bougez. Revenez à vous.</p>
+            <p className="mt-2 text-[8.5px] leading-[1.45] opacity-75">
+              Studio de yoga à Bordeaux, tous niveaux. Petits groupes de 12 personnes maximum.
+            </p>
+            <span className="mt-3 inline-block rounded-full px-3 py-1.5 text-[8.5px] font-bold text-white" style={{ background: sage }}>
+              1er cours offert
+            </span>
+          </div>
+          <div className="relative rounded-xl bg-white p-2.5 shadow-[0_6px_18px_rgba(47,74,58,0.12)]">
+            <p className="text-[9px] font-bold">Aujourd'hui</p>
+            {[
+              ["07:30", "Vinyasa", "2 places"],
+              ["12:15", "Yin", "Complet"],
+              ["18:30", "Hatha", "5 places"],
+            ].map(([time, course, seats]) => (
+              <div key={time} className="mt-1.5 flex items-center gap-1.5 border-t border-black/5 pt-1.5 text-[8px]">
+                <span className="font-bold">{time}</span>
+                <span className="flex-1">{course}</span>
+                <span className={seats === "Complet" ? "opacity-40" : "font-semibold"} style={seats === "Complet" ? undefined : { color: sage }}>
+                  {seats}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mt-4 flex gap-2 text-[8px] font-semibold">
+          {["Vinyasa", "Yin", "Hatha", "Prénatal"].map((tag) => (
+            <span key={tag} className="rounded-full border px-2.5 py-1" style={{ borderColor: `${green}33` }}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function WorkGallery() {
   return (
-    <section id="work" className="scroll-reveal relative mx-auto w-full max-w-[1120px] scroll-mt-24 px-5 py-[60px] sm:px-8">
-      <Heading emphasize={2}>Vidéos en motion design</Heading>
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 sm:gap-7">
+    <section id="work" className="scroll-reveal relative mx-auto w-full max-w-[1120px] scroll-mt-24 px-5 py-20 sm:px-8 md:py-24">
+      <Heading>Réalisations</Heading>
+      <p className="mx-auto mt-4 max-w-[560px] text-center text-[17px] font-normal leading-[1.6] text-warm-gray">
+        Des sites pensés pour les commerces de quartier, et des vidéos qui arrêtent le scroll.
+      </p>
+
+      <h3 className="mt-14 text-xl font-semibold text-off-white">Sites de démonstration</h3>
+      <div className="mt-6 grid gap-8 md:grid-cols-3 md:gap-6">
+        <DemoSiteCard name="Atelier Lumière" trade="Salon de coiffure · Lyon">
+          <DemoSalon />
+        </DemoSiteCard>
+        <DemoSiteCard name="Dupuy Plomberie" trade="Plombier chauffagiste · Toulouse">
+          <DemoPlumber />
+        </DemoSiteCard>
+        <DemoSiteCard name="Studio Ananda" trade="Studio de yoga · Bordeaux">
+          <DemoYoga />
+        </DemoSiteCard>
+      </div>
+      <p className="mt-6 text-sm text-warm-gray">
+        Des commerces fictifs, créés pour montrer notre style. La maquette du vôtre est offerte.
+      </p>
+
+      <h3 className="mt-16 text-xl font-semibold text-off-white">Vidéos en motion design</h3>
+      <div
+        aria-label="Vidéo de présentation"
+        className="group relative mt-6 overflow-hidden rounded-[18px] bg-onyx shadow-[0_30px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10 sm:rounded-[24px]"
+      >
+        <HeroVideo />
+      </div>
+      <p className="mt-3 text-sm text-warm-gray">Notre vidéo de présentation (en anglais).</p>
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 sm:gap-7">
         {motionVideos.map((video) => (
           <MotionVideoCard key={video.mediaId} {...video} />
         ))}
@@ -1898,24 +2299,24 @@ function WorkGallery() {
 
 function FAQ() {
   return (
-    <section id="faq" className="scroll-reveal relative mx-auto w-full max-w-[1000px] scroll-mt-24 px-5 py-[60px] sm:px-8">
-      <Heading>Questions fréquentes</Heading>
+    <section id="faq" className="scroll-reveal relative mx-auto w-full max-w-[1000px] scroll-mt-24 px-5 pb-24 pt-10 sm:px-8">
+      <Heading tone="light">Questions fréquentes</Heading>
       <div className="mt-12 space-y-3">
         {faqs.map((faq, index) => (
           <details
             key={`${faq.question}-${index}`}
-            className="scroll-reveal group overflow-hidden rounded-[20px] border border-[#2A2A2E] bg-graphite transition-colors open:border-off-white/20 hover:border-off-white/20"
+            className="scroll-reveal group overflow-hidden rounded-[20px] border border-onyx/10 bg-white transition-colors open:border-onyx/25 hover:border-onyx/25"
           >
-            <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-semibold text-off-white transition-colors hover:text-white sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-semibold text-onyx sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
               <span className="flex-1">{faq.question}</span>
-              <span className="relative h-5 w-5 shrink-0 text-off-white">
+              <span className="relative h-5 w-5 shrink-0 text-brand">
                 <span className="absolute left-1/2 top-1/2 h-0.5 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-current" />
                 <span className="absolute left-1/2 top-1/2 h-4 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-current transition-transform duration-300 group-open:rotate-90" />
               </span>
             </summary>
             <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 group-open:grid-rows-[1fr]">
               <div className="overflow-hidden">
-                <p className="border-t border-[#2A2A2E] px-5 pb-6 pt-4 text-[17px] font-normal leading-[1.6] text-warm-gray sm:px-7">
+                <p className="border-t border-onyx/10 px-5 pb-6 pt-4 text-[17px] font-normal leading-[1.6] text-onyx/65 sm:px-7">
                   {faq.answer}
                 </p>
               </div>
@@ -2020,7 +2421,7 @@ function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-[60px] sm:px-8"
+      className="relative mx-auto w-full max-w-[1160px] scroll-mt-24 overflow-hidden px-5 py-[60px] sm:px-8"
     >
       <div className="absolute left-1/2 top-1/2 -z-0 h-[60%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/8 blur-[120px]" />
       <div className="relative z-10 grid gap-10 rounded-[30px] border border-[#2A2A2E] bg-graphite/90 p-6 backdrop-blur-2xl md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
@@ -2295,11 +2696,15 @@ export default function App() {
       <Header />
       <Hero />
       <ProblemSection />
-      <Services />
+      <div className="light-section relative bg-off-white">
+        <Services />
+      </div>
       <Process />
       <WorkGallery />
-      <Reviews />
-      <FAQ />
+      <div className="light-section relative bg-off-white">
+        <Reviews />
+        <FAQ />
+      </div>
       <ContactSection />
       <Footer />
     </main>

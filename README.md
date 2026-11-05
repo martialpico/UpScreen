@@ -28,7 +28,7 @@ Any static host works. Recommended: **Vercel** or **Netlify** (free for this kin
 
 | Path | What it is |
 | --- | --- |
-| `src/App.tsx` | All page sections (header, hero, problem cards, pricing, timeline, work, FAQ, contact, footer) |
+| `src/App.tsx` | All page sections (header, hero with the café site showcase, problem cards, pricing, timeline, demo sites and videos, reviews, FAQ, contact, footer) |
 | `src/index.css` | Brand colors, fonts, glass effects and animations |
 | `src/imports/` | Images, logo, video previews and icons (the animated red background is pure CSS, in `src/index.css`) |
 | `src/fonts/` | Self-hosted Open Sans and DM Serif Display (latin subset, SIL Open Font License) |
