@@ -74,17 +74,15 @@
   }
 }
 
-/* Soft red glow on every brand-red element (explicit shadow utilities still win). */
+/* Halo rouge discret : seulement sur les boutons rouges et sur les deux
+   grands titres en italique (classe glow-text), pas sur chaque texte rouge. */
 @layer base {
-  .text-brand,
-  .text-brand-light {
-    text-shadow: 0 0 18px color-mix(in srgb, var(--color-brand) 45%, transparent);
+  .glow-text {
+    text-shadow: 0 0 22px color-mix(in srgb, var(--color-brand) 40%, transparent);
   }
 
   .bg-brand {
-    box-shadow:
-      0 0 22px color-mix(in srgb, var(--color-brand) 38%, transparent),
-      0 0 2px color-mix(in srgb, var(--color-brand) 50%, transparent);
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--color-brand) 28%, transparent);
   }
 
   /* No glow inside the light UI mockups, it would look blurry on white. */
@@ -177,6 +175,17 @@
 
   .step-panel-float-right {
     animation: panel-float-right 4s ease-in-out -1s infinite;
+  }
+
+  /* Sur fond clair, le bas des maquettes se fond dans le blanc au lieu de
+     s'assombrir. */
+  .light-section .step-panel::after {
+    height: 18%;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      color-mix(in srgb, white 85%, transparent)
+    );
   }
 
   .problem-panel::after {

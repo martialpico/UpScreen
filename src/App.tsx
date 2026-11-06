@@ -226,6 +226,25 @@ const faqs = [
   },
 ];
 
+// Système visuel commun : cartes arrondies à 20 px, médias à 24 px, boutons en
+// pilule, mêmes marges verticales pour toutes les sections.
+const sectionY = "py-20 md:py-28";
+const darkCard = "rounded-[20px] border border-white/[0.08] bg-graphite";
+const lightCard =
+  "rounded-[20px] border border-onyx/[0.08] bg-white shadow-[0_14px_40px_rgba(10,10,11,0.06)]";
+
+function SectionLead({ children, tone = "dark" }: { children: ReactNode; tone?: "dark" | "light" }) {
+  return (
+    <p
+      className={`mx-auto mt-4 max-w-[600px] text-center text-[17px] font-normal leading-[1.6] ${
+        tone === "light" ? "text-onyx/60" : "text-warm-gray"
+      }`}
+    >
+      {children}
+    </p>
+  );
+}
+
 // Titres de section. L'italique rouge est réservé au hero et au titre de
 // contact : ici, il ne s'applique que si on le demande (emphasize > 0).
 function Heading({
@@ -400,7 +419,7 @@ function Header() {
         </div>
 
         <div
-          className={`absolute left-4 right-4 top-[72px] overflow-hidden rounded-[22px] border border-[#2A2A2E] bg-onyx/95 p-2 shadow-2xl backdrop-blur-2xl transition-all duration-300 lg:hidden ${
+          className={`absolute left-4 right-4 top-[72px] overflow-hidden rounded-[20px] border border-[#2A2A2E] bg-onyx/95 p-2 shadow-2xl backdrop-blur-2xl transition-all duration-300 lg:hidden ${
             menuOpen
               ? "visible translate-y-0 opacity-100"
               : "invisible -translate-y-2 opacity-0"
@@ -412,7 +431,7 @@ function Header() {
               href={href}
               onClick={() => setMenuOpen(false)}
               tabIndex={menuOpen ? 0 : -1}
-              className="flex items-center justify-between rounded-2xl px-4 py-3.5 text-sm font-semibold text-off-white/80 transition-colors hover:bg-off-white/5 hover:text-off-white"
+              className="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-semibold text-off-white/80 transition-colors hover:bg-off-white/5 hover:text-off-white"
             >
               {label}
               <span aria-hidden="true" className="text-brand">
@@ -424,7 +443,7 @@ function Header() {
             href="#contact"
             onClick={() => setMenuOpen(false)}
             tabIndex={menuOpen ? 0 : -1}
-            className="mt-2 flex w-full items-center justify-center rounded-2xl bg-brand px-4 py-3.5 text-sm font-semibold text-onyx hover:bg-[#FF7A7B]"
+            className="mt-2 flex w-full items-center justify-center rounded-full bg-brand px-4 py-3.5 text-sm font-semibold text-onyx hover:bg-[#FF7A7B]"
           >
             Prendre rendez-vous
           </a>
@@ -615,7 +634,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="scroll-reveal relative mx-auto grid w-full max-w-[1160px] scroll-mt-24 items-center gap-12 px-5 pb-16 pt-32 sm:px-8 md:pt-40 lg:grid-cols-[0.92fr_1.08fr] lg:gap-10 lg:pb-24"
+      className="scroll-reveal relative mx-auto grid w-full max-w-[1160px] scroll-mt-24 items-center gap-12 px-5 pb-20 pt-32 sm:px-8 md:pt-40 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:pb-28"
     >
       <div className="text-center lg:text-left">
         <h1 className="shadow-none">
@@ -624,7 +643,7 @@ function Hero() {
           </span>
           <span className="font-ui mt-4 block text-[40px] font-semibold leading-[1.04] tracking-[-0.025em] text-off-white sm:text-[52px] lg:text-[58px]">
             Encore faut-il{" "}
-            <em className="font-display text-[1.12em] font-normal italic tracking-[-0.01em] text-brand">
+            <em className="glow-text font-display text-[1.12em] font-normal italic tracking-[-0.01em] text-brand">
               qu’ils vous trouvent.
             </em>
           </span>
@@ -648,8 +667,17 @@ function Hero() {
           </a>
         </div>
       </div>
-      <div className="mx-auto w-full max-w-[620px]">
-        <CafeShowcase />
+      <div className="relative mx-auto w-full max-w-[640px]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-6 rounded-[48px] bg-[radial-gradient(ellipse_at_center,rgba(233,68,69,0.18),transparent_70%)] blur-2xl"
+        />
+        <div
+          aria-label="Vidéo de présentation"
+          className="group relative overflow-hidden rounded-[24px] bg-onyx shadow-[0_30px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10"
+        >
+          <HeroVideo />
+        </div>
       </div>
     </section>
   );
@@ -1092,7 +1120,7 @@ function ProblemSection() {
   return (
     <section
       id="services"
-      className="scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-[60px] sm:px-8"
+      className={`scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
     >
       <Heading>
         La plupart des entreprises perdent des clients avant même de dire bonjour.
@@ -1101,7 +1129,7 @@ function ProblemSection() {
         {problems.map(([title, description], index) => (
           <div key={title} className="relative flex flex-col">
             <ProblemVisual index={index} />
-            <article className="glass-panel process-glass problem-glass relative z-10 -mt-8 flex-1 overflow-hidden rounded-[22px] p-5 sm:p-6">
+            <article className={`${darkCard} relative z-10 -mt-8 flex-1 overflow-hidden p-5 sm:p-6`}>
               <p className="inline-block whitespace-nowrap rounded-full border border-brand/35 bg-brand/12 px-3.5 py-1.5 text-[15px] font-semibold leading-none tracking-[-0.01em] text-brand-light">
                 {title}
               </p>
@@ -1124,38 +1152,33 @@ function PricingCard({ service }: { service: Service }) {
   const [planIndex, setPlanIndex] = useState(0);
   const plan = service.plans[planIndex];
   const featured = Boolean(service.featured);
-  // Section claire : cartes blanches, la formule mise en avant reste sombre.
   const t = featured
     ? {
-        card: "border-[1.5px] border-brand bg-onyx text-off-white shadow-[0_30px_70px_rgba(10,10,11,0.28)] lg:-my-3 lg:min-h-[614px]",
+        card: "border-[1.5px] border-brand bg-graphite text-off-white shadow-[0_30px_70px_rgba(0,0,0,0.45)] lg:-my-3 lg:min-h-[614px]",
         subtitle: "text-brand-light",
-        toggle: "border-[#2A2A2E] bg-graphite",
-        toggleOff: "text-warm-gray hover:text-off-white",
-        toggleOn: "bg-off-white text-onyx",
-        list: "text-[#CFCCC7]",
         bullet: "bg-brand",
-        divider: "border-off-white/10",
-        muted: "text-warm-gray",
         price: "text-brand",
         button: "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]",
       }
     : {
-        card: "border-onyx/10 bg-white text-onyx shadow-[0_18px_50px_rgba(10,10,11,0.07)] hover:border-onyx/20",
-        subtitle: "text-onyx/50",
-        toggle: "border-onyx/10 bg-onyx/[0.04]",
-        toggleOff: "text-onyx/55 hover:text-onyx",
-        toggleOn: "bg-onyx text-off-white",
-        list: "text-onyx/75",
-        bullet: "bg-onyx/30",
-        divider: "border-onyx/10",
-        muted: "text-onyx/50",
-        price: "text-onyx",
-        button: "border-onyx/15 bg-transparent text-onyx hover:border-onyx/40",
+        card: "border-white/[0.08] bg-graphite text-off-white hover:border-white/20",
+        subtitle: "text-warm-gray",
+        bullet: "bg-warm-gray/60",
+        price: "text-off-white",
+        button: "border-white/15 bg-transparent text-off-white hover:border-white/35",
       };
+  const shared = {
+    toggle: "border-white/[0.08] bg-onyx",
+    toggleOff: "text-warm-gray hover:text-off-white",
+    toggleOn: "bg-off-white text-onyx",
+    list: "text-[#CFCCC7]",
+    divider: "border-white/10",
+    muted: "text-warm-gray",
+  };
 
   return (
     <article
-      className={`scroll-reveal group relative flex min-h-[590px] flex-col rounded-[28px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${t.card}`}
+      className={`scroll-reveal group relative flex min-h-[590px] flex-col rounded-[20px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${t.card}`}
     >
       {featured && (
         <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-brand px-5 py-2 text-xs font-semibold text-onyx">
@@ -1170,7 +1193,7 @@ function PricingCard({ service }: { service: Service }) {
         <div
           role="tablist"
           aria-label={`Formules ${service.title}`}
-          className={`mt-6 grid grid-cols-2 gap-1 rounded-full border p-1 ${t.toggle}`}
+          className={`mt-6 grid grid-cols-2 gap-1 rounded-full border p-1 ${shared.toggle}`}
         >
           {service.plans.map((option, index) => (
             <button
@@ -1180,7 +1203,7 @@ function PricingCard({ service }: { service: Service }) {
               aria-selected={index === planIndex}
               onClick={() => setPlanIndex(index)}
               className={`rounded-full px-3 py-2 text-xs font-semibold transition ${
-                index === planIndex ? t.toggleOn : t.toggleOff
+                index === planIndex ? shared.toggleOn : shared.toggleOff
               }`}
             >
               {option.label}
@@ -1189,7 +1212,7 @@ function PricingCard({ service }: { service: Service }) {
         </div>
       )}
       <ul
-        className={`space-y-3.5 pb-10 text-[15px] font-normal leading-[1.5] ${t.list} ${
+        className={`space-y-3.5 pb-10 text-[15px] font-normal leading-[1.5] ${shared.list} ${
           service.plans.length > 1 ? "mt-6" : "mt-8"
         }`}
       >
@@ -1200,23 +1223,23 @@ function PricingCard({ service }: { service: Service }) {
           </li>
         ))}
       </ul>
-      <div className={`mt-auto border-t pt-7 ${t.divider}`}>
-        <p className={`text-xs font-semibold ${t.muted}`}>{service.billing}</p>
+      <div className={`mt-auto border-t pt-7 ${shared.divider}`}>
+        <p className={`text-xs font-semibold ${shared.muted}`}>{service.billing}</p>
         <p className="mt-3 flex items-baseline whitespace-nowrap">
           <span
             className={`font-display text-[52px] font-normal leading-none tracking-[-0.025em] sm:text-[58px] ${t.price}`}
           >
             {plan.price}
           </span>
-          <span className={`ml-1.5 text-xl font-normal ${t.muted}`}>€</span>
+          <span className={`ml-1.5 text-xl font-normal ${shared.muted}`}>€</span>
           {service.billing === "Mensuel" && (
-            <span className={`ml-1 text-sm font-normal ${t.muted}`}>/mois</span>
+            <span className={`ml-1 text-sm font-normal ${shared.muted}`}>/mois</span>
           )}
         </p>
-        <p className={`mt-4 min-h-4 text-[11px] font-normal ${t.muted}`}>{service.note}</p>
+        <p className={`mt-4 min-h-4 text-[11px] font-normal ${shared.muted}`}>{service.note}</p>
         <a
           href="#contact"
-          className={`mt-7 flex w-full items-center justify-center rounded-2xl border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${t.button}`}
+          className={`mt-7 flex w-full items-center justify-center rounded-full border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${t.button}`}
         >
           Commencer
         </a>
@@ -1229,15 +1252,16 @@ function Services() {
   return (
     <section
       id="pricing"
-      className="scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-20 sm:px-8 md:py-24"
+      className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
     >
-      <Heading tone="light">Des prix transparents, sans frais cachés.</Heading>
+      <Heading>Des prix transparents, sans frais cachés.</Heading>
+      <SectionLead>Le site se paie une seule fois. Le reste se règle au mois, sans surprise.</SectionLead>
       <div className="mx-auto mt-14 grid max-w-[480px] gap-6 lg:max-w-none lg:grid-cols-3">
         {services.map((service) => (
           <PricingCard key={service.title} service={service} />
         ))}
       </div>
-      <p className="mt-8 text-center text-xs font-normal text-onyx/50">
+      <p className="mt-8 text-center text-xs font-normal text-warm-gray">
         Prix HT · Maquette offerte
       </p>
     </section>
@@ -1254,7 +1278,7 @@ function Reviews() {
   return (
     <section
       id="reviews"
-      className="scroll-reveal relative w-full scroll-mt-24 pb-10 pt-20 md:pt-24"
+      className={`scroll-reveal relative w-full scroll-mt-24 ${sectionY}`}
     >
       <div className="px-5 sm:px-8">
         <Heading tone="light">Ce que disent nos clients.</Heading>
@@ -1268,7 +1292,7 @@ function Reviews() {
             <figure
               key={index}
               aria-hidden={index >= reviews.length}
-              className="relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-onyx/8 bg-white p-6 shadow-[0_14px_40px_rgba(10,10,11,0.06)] sm:w-[360px] sm:p-7"
+              className={`${lightCard} relative flex w-[300px] shrink-0 flex-col p-6 sm:w-[360px] sm:p-7`}
             >
               <div className="flex items-start justify-between gap-3">
                 <span
@@ -1354,7 +1378,7 @@ function StepVisualPanel({
   title: string;
   isLeft: boolean;
 }) {
-  const panelClass = `step-panel relative z-0 aspect-[1.28/1] w-full origin-bottom overflow-hidden rounded-[24px] border border-white/80 bg-off-white p-5 text-onyx shadow-[0_25px_60px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.9)] transition-transform duration-700 ${
+  const panelClass = `step-panel relative z-0 aspect-[1.28/1] w-full origin-bottom overflow-hidden rounded-[20px] border border-onyx/[0.06] bg-white p-5 text-onyx shadow-[0_24px_50px_rgba(10,10,11,0.12)] transition-transform duration-700 ${
     isLeft
       ? "step-panel-float-left"
       : "step-panel-float-right"
@@ -1856,13 +1880,14 @@ function Process() {
   }, []);
 
   return (
-    <section id="process" className="relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 py-[60px] sm:px-8">
-      <Heading>Comment ça marche</Heading>
+    <section id="process" className={`relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
+      <Heading tone="light">Comment ça marche</Heading>
+      <SectionLead tone="light">Du premier appel à la mise en ligne, en 14 jours.</SectionLead>
       <div ref={timelineRef} className="relative mt-16">
-        <div className="absolute bottom-8 left-4 top-8 w-px bg-off-white/10 sm:left-1/2 sm:-translate-x-1/2">
+        <div className="absolute bottom-8 left-4 top-8 w-px bg-onyx/10 sm:left-1/2 sm:-translate-x-1/2">
           <div
             aria-hidden="true"
-            className="absolute inset-0 origin-top bg-gradient-to-b from-brand-light via-brand to-brand-deep shadow-[0_0_18px_rgba(233,68,69,0.65)] will-change-transform"
+            className="absolute inset-0 origin-top bg-gradient-to-b from-brand-light via-brand to-brand-deep will-change-transform"
             style={{ transform: `scaleY(${scrollProgress})` }}
           />
         </div>
@@ -1900,7 +1925,7 @@ function Process() {
                     <StepVisual title={step.title} isLeft={isLeft} />
                   </div>
                   <article
-                    className={`glass-panel process-glass relative z-10 -mt-8 overflow-hidden rounded-[24px] p-5 transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-7 ${
+                    className={`${lightCard} relative z-10 -mt-8 overflow-hidden p-5 transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-7 ${
                       isRevealed
                         ? "translate-y-0 opacity-100 sm:translate-x-0"
                         : isLeft
@@ -1909,18 +1934,18 @@ function Process() {
                     }`}
                   >
                     <div className="flex items-center justify-start gap-3">
-                      <span className="text-xs font-semibold tracking-[0.12em] text-warm-gray">
+                      <span className="text-xs font-semibold tracking-[0.12em] text-onyx/40">
                         0{index + 1}
                       </span>
                       <h3
-                        className="inline-block whitespace-nowrap rounded-full border border-[#2A2A2E] bg-off-white/5 px-4 py-2 text-lg font-semibold leading-none tracking-[-0.02em] text-off-white sm:px-5 sm:text-2xl"
+                        className="inline-block whitespace-nowrap rounded-full border border-onyx/10 bg-onyx/[0.04] px-4 py-2 text-lg font-semibold leading-none tracking-[-0.02em] text-onyx sm:px-5 sm:text-2xl"
                       >
                         {step.title}
                       </h3>
                       <BrandIcon name={processIcons[step.title]} className="h-10 w-10 sm:h-11 sm:w-11" />
                     </div>
                     <p
-                      className={`mt-5 text-[17px] font-normal leading-[1.6] text-[#CFCCC7] ${
+                      className={`mt-5 text-[17px] font-normal leading-[1.6] text-onyx/70 ${
                         isLeft ? "sm:text-left" : ""
                       }`}
                     >
@@ -1932,10 +1957,10 @@ function Process() {
                   </article>
                 </div>
                 <span
-                  className={`col-start-1 row-start-1 mt-7 h-5 w-5 justify-self-center rounded-full border-4 border-onyx transition-all duration-500 sm:col-start-2 sm:h-6 sm:w-6 ${
+                  className={`col-start-1 row-start-1 mt-7 h-5 w-5 justify-self-center rounded-full border-4 border-off-white transition-all duration-500 sm:col-start-2 sm:h-6 sm:w-6 ${
                     isRevealed
-                      ? "scale-100 bg-brand shadow-[0_0_22px_rgba(233,68,69,0.9)] ring-1 ring-brand"
-                      : "scale-75 bg-graphite ring-1 ring-off-white/15"
+                      ? "scale-100 bg-brand shadow-[0_4px_14px_rgba(233,68,69,0.45)] ring-1 ring-brand"
+                      : "scale-75 bg-white ring-1 ring-onyx/15"
                   }`}
                 />
               </div>
@@ -1943,20 +1968,20 @@ function Process() {
           })}
         </div>
         <div
-          className={`glass-panel relative z-10 mx-auto mt-12 flex max-w-[700px] flex-col items-center rounded-[26px] border-[#2A2A2E] px-6 py-7 text-center transition-[opacity,transform] duration-700 sm:px-10 ${
+          className={`${lightCard} relative z-10 mx-auto mt-12 flex max-w-[700px] flex-col items-center px-6 py-7 text-center transition-[opacity,transform] duration-700 sm:px-10 ${
             showFinalStep ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
           <div className="flex items-center justify-center gap-3">
-            <span className="text-xs font-semibold tracking-[0.12em] text-warm-gray">
+            <span className="text-xs font-semibold tracking-[0.12em] text-onyx/40">
               06
             </span>
-            <span className="inline-block text-xl font-semibold tracking-[-0.02em] text-off-white sm:text-3xl">
+            <span className="inline-block text-xl font-semibold tracking-[-0.02em] text-onyx sm:text-3xl">
               On vous accompagne ensuite
             </span>
             <BrandIcon name="growth" className="h-10 w-10 sm:h-11 sm:w-11" />
           </div>
-          <p className="mt-3 text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
+          <p className="mt-3 text-[17px] font-normal leading-[1.6] text-onyx/70">
             Hébergement, mises à jour et SEO local, gérés pour vous chaque mois.
           </p>
         </div>
@@ -2007,7 +2032,7 @@ function MotionVideoCard({
 
   return (
     <article className="scroll-reveal">
-      <div className="group relative aspect-video overflow-hidden rounded-[22px] border border-[#2A2A2E] bg-graphite sm:rounded-[28px]">
+      <div className="group relative aspect-video overflow-hidden rounded-[20px] border border-white/[0.08] bg-graphite">
         {playing ? (
           <iframe
             src={`https://fast.wistia.net/embed/iframe/${mediaId}?${wistiaParams}`}
@@ -2063,7 +2088,7 @@ const motionVideos = [
 function DemoSiteCard({ name, trade, children }: { name: string; trade: string; children: ReactNode }) {
   return (
     <figure className="scroll-reveal">
-      <div aria-hidden="true" className="overflow-hidden rounded-[18px] shadow-[0_24px_60px_rgba(0,0,0,0.45)] ring-1 ring-white/10">
+      <div aria-hidden="true" className="overflow-hidden rounded-[20px] shadow-[0_24px_60px_rgba(0,0,0,0.45)] ring-1 ring-white/10">
         <ScaledFrame width={400} height={300}>
           {children}
         </ScaledFrame>
@@ -2073,9 +2098,7 @@ function DemoSiteCard({ name, trade, children }: { name: string; trade: string; 
           <span className="block text-base font-semibold text-off-white">{name}</span>
           <span className="block text-sm text-warm-gray">{trade}</span>
         </span>
-        <span className="shrink-0 rounded-full border border-off-white/15 px-2.5 py-1 text-[11px] font-semibold text-off-white/70">
-          Démo
-        </span>
+        <DemoChip />
       </figcaption>
     </figure>
   );
@@ -2256,15 +2279,45 @@ function DemoYoga() {
   );
 }
 
+function DemoChip() {
+  return (
+    <span className="shrink-0 rounded-full border border-off-white/15 px-2.5 py-1 text-[11px] font-semibold text-off-white/70">
+      Démo
+    </span>
+  );
+}
+
 function WorkGallery() {
   return (
-    <section id="work" className="scroll-reveal relative mx-auto w-full max-w-[1120px] scroll-mt-24 px-5 py-20 sm:px-8 md:py-24">
+    <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1120px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
       <Heading>Réalisations</Heading>
-      <p className="mx-auto mt-4 max-w-[560px] text-center text-[17px] font-normal leading-[1.6] text-warm-gray">
-        Des sites pensés pour les commerces de quartier, et des vidéos qui arrêtent le scroll.
-      </p>
+      <SectionLead>Des sites pensés pour les commerces de quartier, et des vidéos qui arrêtent le scroll.</SectionLead>
 
       <h3 className="mt-14 text-xl font-semibold text-off-white">Sites de démonstration</h3>
+      <div className={`${darkCard} mt-6 grid items-center gap-8 p-6 md:p-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12`}>
+        <div>
+          <div className="flex items-center gap-3">
+            <p className="text-2xl font-semibold tracking-[-0.02em] text-off-white">Le Comptoir Rose</p>
+            <DemoChip />
+          </div>
+          <p className="mt-1 text-sm text-warm-gray">Café · Toulouse</p>
+          <p className="mt-5 text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
+            Le café qui suit tout notre parcours : l'appel, la maquette, la fiche Google, puis les
+            premières réservations.
+          </p>
+          <ul className="mt-5 space-y-2.5 text-[15px] text-[#CFCCC7]">
+            {["Réservation de table en un clic", "Carte et horaires toujours à jour", "Fiche Google reliée au site"].map(
+              (point) => (
+                <li key={point} className="flex gap-3">
+                  <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                  {point}
+                </li>
+              ),
+            )}
+          </ul>
+        </div>
+        <CafeShowcase />
+      </div>
       <div className="mt-6 grid gap-8 md:grid-cols-3 md:gap-6">
         <DemoSiteCard name="Atelier Lumière" trade="Salon de coiffure · Lyon">
           <DemoSalon />
@@ -2281,14 +2334,7 @@ function WorkGallery() {
       </p>
 
       <h3 className="mt-16 text-xl font-semibold text-off-white">Vidéos en motion design</h3>
-      <div
-        aria-label="Vidéo de présentation"
-        className="group relative mt-6 overflow-hidden rounded-[18px] bg-onyx shadow-[0_30px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10 sm:rounded-[24px]"
-      >
-        <HeroVideo />
-      </div>
-      <p className="mt-3 text-sm text-warm-gray">Notre vidéo de présentation (en anglais).</p>
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 sm:gap-7">
+      <div className="mt-6 grid gap-6 sm:grid-cols-2 sm:gap-7">
         {motionVideos.map((video) => (
           <MotionVideoCard key={video.mediaId} {...video} />
         ))}
@@ -2299,7 +2345,7 @@ function WorkGallery() {
 
 function FAQ() {
   return (
-    <section id="faq" className="scroll-reveal relative mx-auto w-full max-w-[1000px] scroll-mt-24 px-5 pb-24 pt-10 sm:px-8">
+    <section id="faq" className={`scroll-reveal relative mx-auto w-full max-w-[1000px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
       <Heading tone="light">Questions fréquentes</Heading>
       <div className="mt-12 space-y-3">
         {faqs.map((faq, index) => (
@@ -2421,14 +2467,14 @@ function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative mx-auto w-full max-w-[1160px] scroll-mt-24 overflow-hidden px-5 py-[60px] sm:px-8"
+      className={`relative mx-auto w-full max-w-[1160px] scroll-mt-24 overflow-hidden px-5 sm:px-8 ${sectionY}`}
     >
       <div className="absolute left-1/2 top-1/2 -z-0 h-[60%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/8 blur-[120px]" />
-      <div className="relative z-10 grid gap-10 rounded-[30px] border border-[#2A2A2E] bg-graphite/90 p-6 backdrop-blur-2xl md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
+      <div className="relative z-10 grid gap-10 rounded-[24px] border border-white/[0.08] bg-graphite p-6 md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
         <div className="flex flex-col justify-center">
           <h2 className="text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-off-white md:text-[48px]">
             Arrêtez de perdre des clients face à des concurrents qui{" "}
-            <em className="font-display text-[1.15em] font-normal italic text-brand">
+            <em className="glow-text font-display text-[1.15em] font-normal italic text-brand">
               présentent mieux
             </em>{" "}
             en ligne.
@@ -2450,7 +2496,7 @@ function ContactSection() {
           id="contact-form"
           onSubmit={handleSubmit}
           noValidate
-          className="grid gap-4 rounded-[24px] border border-[#2A2A2E] bg-onyx/55 p-5 sm:grid-cols-2 sm:p-6"
+          className="grid gap-4 rounded-[20px] border border-white/[0.08] bg-onyx/60 p-5 sm:grid-cols-2 sm:p-6"
         >
           <label className="text-sm font-semibold text-off-white">
             Nom
@@ -2548,7 +2594,7 @@ function ContactSection() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full rounded-xl bg-brand px-6 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] disabled:cursor-wait disabled:opacity-70"
+              className="w-full rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] disabled:cursor-wait disabled:opacity-70"
             >
               {status === "sending" ? "Envoi…" : "Envoyer"}
             </button>
@@ -2697,12 +2743,14 @@ export default function App() {
       <Hero />
       <ProblemSection />
       <div className="light-section relative bg-off-white">
-        <Services />
+        <Process />
       </div>
-      <Process />
       <WorkGallery />
       <div className="light-section relative bg-off-white">
         <Reviews />
+      </div>
+      <Services />
+      <div className="light-section relative bg-off-white">
         <FAQ />
       </div>
       <ContactSection />
