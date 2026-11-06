@@ -630,47 +630,46 @@ function CafeShowcase() {
   );
 }
 
+// Titre centré, boutons, puis la vidéo de présentation en grand dessous.
 function Hero() {
   return (
     <section
       id="home"
-      className="scroll-reveal relative mx-auto grid w-full max-w-[1160px] scroll-mt-24 items-center gap-12 px-5 pb-20 pt-32 sm:px-8 md:pt-40 lg:grid-cols-[0.95fr_1.05fr] lg:gap-12 lg:pb-28"
+      className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-20 pt-36 sm:px-8 md:pt-44 lg:pb-28"
     >
-      <div className="text-center lg:text-left">
-        <h1 className="shadow-none">
-          <span className="font-ui block text-base font-normal leading-none text-warm-gray lg:text-xl">
-            Vos clients vous cherchent.
-          </span>
-          <span className="font-ui mt-4 block text-[40px] font-semibold leading-[1.04] tracking-[-0.025em] text-off-white sm:text-[52px] lg:text-[58px]">
-            Encore faut-il{" "}
-            <em className="glow-text font-display text-[1.12em] font-normal italic tracking-[-0.01em] text-brand">
-              qu’ils vous trouvent.
-            </em>
-          </span>
-        </h1>
-        <p className="mx-auto mt-6 max-w-[520px] text-[17px] font-normal leading-[1.6] text-warm-gray sm:text-lg lg:mx-0">
-          Sites web, contenus Instagram et vidéos en motion design qui rendent les
-          petites entreprises impossibles à ignorer.
-        </p>
-        <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
-          <a
-            href="#contact"
-            className="rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
-          >
-            Prendre rendez-vous
-          </a>
-          <a
-            href="#pricing"
-            className="rounded-full border border-[#2A2A2E] bg-graphite/70 px-7 py-3.5 text-sm font-semibold text-off-white transition-colors hover:border-off-white/25 hover:bg-graphite"
-          >
-            Voir nos offres
-          </a>
-        </div>
+      <h1 className="mx-auto max-w-[900px] text-center shadow-none">
+        <span className="font-ui block text-base font-normal leading-none text-warm-gray lg:text-[22px]">
+          Vos clients vous cherchent.
+        </span>
+        <span className="font-ui mt-4 block text-[40px] font-semibold leading-[1.04] tracking-[-0.025em] text-off-white sm:text-[52px] lg:text-[64px]">
+          Encore faut-il{" "}
+          <em className="glow-text font-display text-[1.12em] font-normal italic tracking-[-0.01em] text-brand">
+            qu’ils vous trouvent.
+          </em>
+        </span>
+      </h1>
+      <p className="mx-auto mt-7 max-w-[560px] text-center text-[17px] font-normal leading-[1.6] text-warm-gray sm:text-lg">
+        Sites web, contenus Instagram et vidéos en motion design qui rendent les
+        petites entreprises impossibles à ignorer.
+      </p>
+      <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a
+          href="#contact"
+          className="rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
+        >
+          Prendre rendez-vous
+        </a>
+        <a
+          href="#pricing"
+          className="rounded-full border border-[#2A2A2E] bg-graphite/70 px-7 py-3.5 text-sm font-semibold text-off-white transition-colors hover:border-off-white/25 hover:bg-graphite"
+        >
+          Voir nos offres
+        </a>
       </div>
-      <div className="relative mx-auto w-full max-w-[640px]">
+      <div className="relative mt-12">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-6 rounded-[48px] bg-[radial-gradient(ellipse_at_center,rgba(233,68,69,0.18),transparent_70%)] blur-2xl"
+          className="pointer-events-none absolute -inset-x-8 -inset-y-6 rounded-[48px] bg-[radial-gradient(ellipse_at_center,rgba(233,68,69,0.2),transparent_68%)] blur-2xl"
         />
         <div
           aria-label="Vidéo de présentation"
