@@ -43,7 +43,7 @@ Content you will most often edit lives at the top of `src/App.tsx`: the pricing 
 ## Before launch
 
 - [x] **Contact form** emails every enquiry to upscreenweb@gmail.com through [FormSubmit](https://formsubmit.co) (`contactEmail` in `src/App.tsx`). One-time step: submit the form once from the live site, then click the "Activate Form" link FormSubmit emails to that inbox (check spam).
-- [ ] **Allow Google indexing.** In `site.config.json`, set `"robots": { "index": true }`. It is set to `false` while the site is in progress.
+- [x] **Google indexing is on** (`"robots": { "index": true }` in `site.config.json`). The canonical address is https://upscren.agency/ (set in `customScripts.headEnd`), so Google lists that domain rather than the vercel.app one.
 - [ ] Add a "Recent websites" section back once you have client sites to show.
 - [x] **Real client reviews** are in `reviews` at the top of `src/App.tsx`. Only add quotes from real clients who agreed to be published. Invented reviews are illegal under Australian Consumer Law.
 

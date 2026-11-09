@@ -3,7 +3,7 @@
   "description": "UpScreen builds custom landing pages, motion design videos and Instagram content that help small businesses in Australia get seen and chosen online.",
   "language": "en",
   "robots": {
-    "index": false
+    "index": true
   },
   "accessibility": {
     "addBypassLinks": false,
@@ -13,6 +13,6 @@
     "icon": "favicon.svg"
   },
   "customScripts": {
-    "headEnd": "<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\" />"
+    "headEnd": "<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\" /><link rel=\"canonical\" href=\"https://upscren.agency/\" /><meta property=\"og:url\" content=\"https://upscren.agency/\" />"
   }
 }
