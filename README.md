@@ -1,6 +1,6 @@
 # Upscreen website
 
-Landing page for **Upscreen**, an agency that builds landing pages, motion design videos and Instagram content for small businesses. The site is in French, with prices in euros (excl. VAT), set in `prices` at the top of `src/App.tsx`.
+Landing page for **Upscreen**, an agency that builds landing pages, motion design videos and Instagram content for small businesses in Australia.
 
 Built with Preact (React-compatible API, much lighter), Vite and Tailwind CSS v4. It is a static site: no server or database needed.
 
@@ -28,7 +28,7 @@ Any static host works. Recommended: **Vercel** or **Netlify** (free for this kin
 
 | Path | What it is |
 | --- | --- |
-| `src/App.tsx` | All page sections (header, hero with the café site showcase, problem cards, pricing, timeline, demo sites and videos, reviews, FAQ, contact, footer) |
+| `src/App.tsx` | All page sections (header, hero, problem cards, pricing, timeline, work, FAQ, contact, footer) |
 | `src/index.css` | Brand colors, fonts, glass effects and animations |
 | `src/imports/` | Images, logo, video previews and icons (the animated red background is pure CSS, in `src/index.css`) |
 | `src/fonts/` | Self-hosted Open Sans and DM Serif Display (latin subset, SIL Open Font License) |
