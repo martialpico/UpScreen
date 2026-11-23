@@ -72,12 +72,10 @@ const siteOffers: SiteOffer[] = [
     cta: "Voir les options sur mesure",
     href: "#sur-mesure",
     features: [
-      "Rebranding complet : logo, charte graphique, photos",
+      "Rebranding complet : logo, charte graphique, UI/UX",
       "Vidéo de présentation en motion design",
-      "Publicité sur Instagram, Facebook et Google (budget publicitaire en plus)",
       "Menu digital, QR codes et cartes NFC",
       "Carte de fidélité digitale",
-      "Automatisations avec l'IA : messages, rendez-vous, relances",
       "Applications sur mesure",
     ],
   },
@@ -224,7 +222,7 @@ const faqs = [
   {
     question: "Proposez-vous d'autres services ?",
     answer:
-      "Oui, sur devis : rebranding complet (logo, charte graphique, photos), vidéo de présentation en motion design, publicité, menu digital, QR codes et cartes NFC, carte de fidélité, automatisations avec l'IA et applications sur mesure.",
+      "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, menu digital, QR codes et cartes NFC, carte de fidélité et applications sur mesure.",
   },
   {
     question: "Comment vous contacter ?",
@@ -2487,25 +2485,13 @@ const customServices: { icon: BrandIconName; title: string; body: string; points
     icon: "brand",
     title: "Rebranding complet",
     body: "Une identité qui donne envie d'entrer.",
-    points: ["Logo", "Charte graphique : couleurs, typographies", "Photos de votre commerce"],
-  },
-  {
-    icon: "ads",
-    title: "Publicité",
-    body: "Toucher les clients autour de chez vous.",
-    points: ["Campagnes Instagram et Facebook", "Annonces Google", "Budget publicitaire en plus"],
+    points: ["Logo", "Création de charte graphique : couleurs, typographies", "UI/UX : design de vos écrans et parcours"],
   },
   {
     icon: "qr",
     title: "Outils pour votre commerce",
     body: "Du digital directement sur le comptoir.",
     points: ["Menu digital", "QR codes et cartes NFC (avis Google, réseaux)", "Carte de fidélité digitale"],
-  },
-  {
-    icon: "spark",
-    title: "Automatisations avec l'IA",
-    body: "Moins de temps au téléphone.",
-    points: ["Réponses automatiques aux messages", "Prise de rendez-vous", "Relances clients"],
   },
   {
     icon: "app",
@@ -2519,7 +2505,7 @@ const motionFormats = [
   "Vidéo de présentation de 30 à 60 secondes",
   "Script et storyboard écrits pour vous",
   "Animation sur mesure, musique et sound design",
-  "Versions pour votre site, Instagram et vos publicités",
+  "Versions pour votre site et Instagram",
 ];
 
 function CustomServices() {
@@ -2560,7 +2546,7 @@ function CustomServices() {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {customServices.map((service) => (
           <article key={service.title} className={`${darkCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
             <BrandIcon name={service.icon} className="h-11 w-11" />
