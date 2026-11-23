@@ -679,7 +679,7 @@ function Hero() {
         </a>
         <a
           href="#pricing"
-          className="rounded-full border border-[#2A2A2E] bg-graphite/70 px-7 py-3.5 text-sm font-semibold text-off-white transition-colors hover:border-off-white/25 hover:bg-graphite"
+          className="rounded-full border border-off-white bg-off-white px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-white"
         >
           Voir les tarifs
         </a>
@@ -1354,7 +1354,7 @@ function Services() {
       id="pricing"
       className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
     >
-      <Heading eyebrow="Tarifs">Un prix clair, payé une seule fois.</Heading>
+      <Heading eyebrow="Tarifs">Des tarifs transparents.</Heading>
       <SectionLead>Votre site vous appartient. Les abonnements mensuels sont en option.</SectionLead>
       <div className="mx-auto mt-14 grid max-w-[480px] gap-6 lg:max-w-none lg:grid-cols-3">
         {siteOffers.map((offer) => (
