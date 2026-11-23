@@ -293,14 +293,14 @@ function SectionHeader({
         <span className="block text-off-white">{title}</span>
         {muted && <span className="block text-[#7d7b80]">{muted}</span>}
       </h2>
-      {lead && <p className="mt-5 max-w-[640px] text-[17px] leading-[1.6] text-[#CFCCC7] md:text-lg">{lead}</p>}
+      {lead && <p className="mt-5 max-w-[640px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#CFCCC7] md:text-[15px]">{lead}</p>}
       {aside && <div className="mt-5 max-w-[640px]">{aside}</div>}
     </div>
   );
 }
 
 function AsideLead({ children }: { children: ReactNode }) {
-  return <p className="text-[17px] leading-[1.6] text-[#CFCCC7] md:text-lg">{children}</p>;
+  return <p className="font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#CFCCC7] md:text-[15px]">{children}</p>;
 }
 
 function CheckChips({ items }: { items: string[] }) {
@@ -411,10 +411,10 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const links = [
+    ["Réalisations", "#work"],
     ["Tarifs", "#pricing"],
     ["Sur mesure", "#sur-mesure"],
     ["Méthode", "#process"],
-    ["Réalisations", "#work"],
     ["FAQ", "#faq"],
   ];
 
@@ -748,7 +748,7 @@ function Hero() {
           Encore <span className="whitespace-nowrap">faut-il</span> qu’ils vous trouvent.
         </span>
       </h1>
-      <p className="mx-auto mt-8 text-center text-[19px] font-semibold leading-[1.5] tracking-[-0.02em] text-off-white sm:text-[22px]">
+      <p className="mx-auto mt-8 text-center font-mono text-[15px] font-semibold leading-[1.6] tracking-[-0.01em] text-off-white sm:text-[18px]">
         <span className="whitespace-nowrap">Sites web & visibilité locale</span>
         <span aria-hidden="true" className="mx-3 hidden text-brand sm:inline">·</span>
         <br className="sm:hidden" />
@@ -1531,7 +1531,7 @@ function Services() {
           <span className="text-onyx">Hébergement et nom de domaine</span>
           <span className="text-brand">Inclus la 1re année</span>
         </p>
-        <p className="mx-auto mt-3 max-w-[640px] text-[16px] leading-[1.6] text-onyx/70">
+        <p className="mx-auto mt-3 max-w-[640px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-onyx/65">
           Puis {hostingRenewal} €/an, payés à la date anniversaire. Avec les offres Essentiel et Complet.
         </p>
       </div>
@@ -2672,7 +2672,7 @@ function VitrineCard({ site, large = false, onOpen }: { site: Vitrine; large?: b
             {name}
             <ArrowIcon className="h-4 w-4 text-brand transition group-hover:translate-x-1" />
           </p>
-          <p className="mt-0.5 text-sm text-warm-gray">{trade}</p>
+          <p className="mt-1 font-mono text-[12px] font-semibold tracking-[-0.01em] text-warm-gray">{trade}</p>
         </figcaption>
       </button>
     </figure>
@@ -2848,7 +2848,7 @@ function CustomServices() {
             <h3 className="text-2xl font-bold tracking-[-0.03em] text-off-white md:whitespace-nowrap">
               Vidéo de présentation en motion design
             </h3>
-            <p className="mt-1.5 text-[15px] leading-[1.6] text-[#CFCCC7]">
+            <p className="mt-2 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-[#CFCCC7]">
               Expliquer ce que vous faites en quelques secondes, avec une vidéo animée qui retient l'attention.
             </p>
           </div>
@@ -2883,7 +2883,7 @@ function CustomServices() {
               <BrandIcon name={service.icon} className="h-11 w-11 shrink-0" />
               <div>
                 <h3 className="text-2xl font-bold tracking-[-0.03em] text-off-white">{service.title}</h3>
-                <p className="mt-1.5 text-[15px] leading-[1.6] text-[#CFCCC7]">{service.body}</p>
+                <p className="mt-2 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-[#CFCCC7]">{service.body}</p>
               </div>
             </div>
             <ul className="mt-7 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -2909,7 +2909,7 @@ function CustomServices() {
           <article key={service.title} className={`${darkCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
             <BrandIcon name={service.icon} className="h-11 w-11" />
             <h3 className="mt-5 text-xl font-bold tracking-[-0.03em] text-off-white">{service.title}</h3>
-            <p className="mt-2 text-[15px] text-warm-gray">{service.body}</p>
+            <p className="mt-2 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-[#CFCCC7]">{service.body}</p>
             <ul className="mt-5 space-y-2 text-[15px] text-[#CFCCC7]">
               {service.points.map((point) => (
                 <li key={point} className="flex gap-3">
@@ -2925,7 +2925,7 @@ function CustomServices() {
           className="flex flex-col justify-center rounded-[20px] border border-dashed border-brand/50 p-6 transition hover:border-brand sm:p-7"
         >
           <span className="text-xl font-semibold text-off-white">Un autre projet ?</span>
-          <span className="mt-2 text-[15px] text-warm-gray">Parlez-nous-en, on vous dit ce qui est possible.</span>
+          <span className="mt-2 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-[#CFCCC7]">Parlez-nous-en, on vous dit ce qui est possible.</span>
           <span className="mt-6 inline-flex w-fit rounded-full bg-brand px-5 py-3 text-sm font-semibold text-onyx">
             Demander un devis
           </span>
@@ -3069,7 +3069,7 @@ function ContactSection() {
             <span className="block">Votre maquette est gratuite.</span>
             <span className="block text-[#7d7b80]">Parlons de votre commerce.</span>
           </h2>
-          <p className="mt-6 max-w-[480px] text-[17px] font-normal leading-[1.6] text-warm-gray">
+          <p className="mt-6 max-w-[480px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#CFCCC7]">
             Laissez-nous vos coordonnées : on vous rappelle pour un appel de
             20 minutes, puis on vous envoie la maquette de votre futur site.
             Vous ne payez que si elle vous plaît.
@@ -3213,10 +3213,10 @@ function ContactSection() {
 
 function Footer() {
   const navLinks = [
+    ["Réalisations", "#work"],
     ["Tarifs", "#pricing"],
     ["Sur mesure", "#sur-mesure"],
     ["Méthode", "#process"],
-    ["Réalisations", "#work"],
     ["FAQ", "#faq"],
   ];
 
@@ -3235,7 +3235,7 @@ function Footer() {
               className="block h-auto w-full"
           />
         </a>
-          <p className="mt-5 max-w-[440px] text-[15px] font-normal leading-[1.6] text-warm-gray">
+          <p className="mt-5 max-w-[440px] font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-warm-gray">
             Site web, fiche Google et réseaux sociaux pour les commerces et
             artisans de Toulouse.
           </p>
