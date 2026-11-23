@@ -2549,31 +2549,32 @@ function CustomServices() {
       </SectionLead>
 
       <div className={`${darkCard} mt-14 overflow-hidden p-6 md:p-10`}>
-        <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-12">
-          <div className="flex flex-col gap-5 sm:flex-row">
-            <BrandIcon name="play" className="h-11 w-11 shrink-0" />
-            <div>
-              <h3 className="text-2xl font-semibold tracking-[-0.02em] text-off-white">
-                Vidéo de présentation en motion design
-              </h3>
-              <p className="mt-2 text-[15px] leading-[1.6] text-[#CFCCC7]">
-                Expliquer ce que vous faites en quelques secondes, avec une vidéo animée qui retient l'attention.
-              </p>
-            </div>
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+          <BrandIcon name="play" className="h-11 w-11 shrink-0" />
+          <div>
+            <h3 className="text-2xl font-semibold tracking-[-0.02em] text-off-white md:whitespace-nowrap">
+              Vidéo de présentation en motion design
+            </h3>
+            <p className="mt-1.5 text-[15px] leading-[1.6] text-[#CFCCC7]">
+              Expliquer ce que vous faites en quelques secondes, avec une vidéo animée qui retient l'attention.
+            </p>
           </div>
-          <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
-            {motionFormats.map((point) => (
-              <li key={point} className="flex gap-2.5 text-sm leading-[1.5] text-[#CFCCC7]">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
-                  <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="m3.5 8.5 3 3 6-7" />
-                  </svg>
-                </span>
-                {point}
-              </li>
-            ))}
-          </ul>
         </div>
+        <ul className="mt-7 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {motionFormats.map((point) => (
+            <li
+              key={point}
+              className="flex h-full items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-sm leading-[1.45] text-[#CFCCC7]"
+            >
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
+                <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m3.5 8.5 3 3 6-7" />
+                </svg>
+              </span>
+              {point}
+            </li>
+          ))}
+        </ul>
         <div className="mt-8 grid grid-cols-2 gap-3 border-t border-white/[0.08] pt-8 sm:gap-4 lg:grid-cols-4">
           {motionVideos.map((video) => (
             <MotionVideoCard key={video.mediaId} {...video} />
