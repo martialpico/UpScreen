@@ -61,6 +61,7 @@ const siteOffers: SiteOffer[] = [
     delay: "Devis gratuit sous 48 h",
     cta: "Demander un devis",
     features: [
+      "Rebranding complet : logo, charte graphique, photos",
       "Vidéo de présentation en motion design",
       "Publicité sur Instagram, Facebook et Google (budget publicitaire en plus)",
       "Menu digital, QR codes et cartes NFC",
@@ -204,7 +205,7 @@ const faqs = [
   {
     question: "Proposez-vous d'autres services ?",
     answer:
-      "Oui, sur devis : vidéo de présentation en motion design, publicité, menu digital, QR codes et cartes NFC, carte de fidélité, automatisations avec l'IA et applications sur mesure.",
+      "Oui, sur devis : rebranding complet (logo, charte graphique, photos), vidéo de présentation en motion design, publicité, menu digital, QR codes et cartes NFC, carte de fidélité, automatisations avec l'IA et applications sur mesure.",
   },
   {
     question: "Comment vous contacter ?",
