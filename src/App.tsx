@@ -740,16 +740,21 @@ function Hero() {
       id="home"
       className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-16 pt-36 sm:px-8 md:pt-44 lg:pb-20"
     >
-      <Eyebrow center>Agence web · Toulouse</Eyebrow>
-      <h1 className="font-ui mx-auto max-w-[1100px] text-center text-[40px] font-extrabold leading-[1.02] tracking-[-0.05em] text-off-white sm:text-[56px] lg:text-[68px]">
+      <div className="mb-7 flex justify-center">
+        <span className="inline-flex items-center gap-2 rounded-full bg-off-white px-4 py-2 font-mono text-[12px] font-semibold uppercase leading-none tracking-[0.18em] text-onyx">
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand shadow-none" />
+          Agence web
+        </span>
+      </div>
+      <h1 className="font-ui mx-auto text-center text-[40px] font-extrabold leading-[1.02] tracking-[-0.05em] text-off-white sm:text-[46px] md:text-[48px] lg:text-[64px]">
         <span className="block">Vos clients vous cherchent.</span>
-        <span className="text-gradient-brand block text-balance">
+        <span className="text-gradient-brand block text-balance md:whitespace-nowrap">
           Encore <span className="whitespace-nowrap">faut-il</span> qu’ils vous trouvent.
         </span>
       </h1>
-      <p className="mx-auto mt-7 max-w-[560px] text-center text-[17px] font-normal leading-[1.6] text-warm-gray sm:text-lg">
+      <p className="mx-auto mt-8 text-center text-[19px] font-semibold leading-[1.5] tracking-[-0.02em] text-off-white sm:text-[22px]">
         <span className="whitespace-nowrap">Sites web & visibilité locale</span>
-        <span aria-hidden="true" className="mx-2 hidden text-brand sm:inline">·</span>
+        <span aria-hidden="true" className="mx-3 hidden text-brand sm:inline">·</span>
         <br className="sm:hidden" />
         <span className="whitespace-nowrap">Création de contenu</span>
       </p>
@@ -768,9 +773,16 @@ function Hero() {
           Voir les tarifs
         </a>
       </div>
-      <p className="mt-6 text-center font-mono text-[12px] uppercase tracking-[0.18em] text-warm-gray">
-        Appel gratuit · Maquette gratuite · Sans engagement
-      </p>
+      <ul className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
+        {["Appel gratuit", "Maquette gratuite", "Sans engagement"].map((item) => (
+          <li key={item} className="flex items-center gap-2.5 text-[15px] font-medium text-off-white">
+            <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-off-white text-brand">
+              <CheckIcon className="h-3 w-3" />
+            </span>
+            {item}
+          </li>
+        ))}
+      </ul>
       <div className="relative mt-12">
         <div
           aria-hidden="true"
