@@ -74,7 +74,7 @@ const siteOffers: SiteOffer[] = [
     features: [
       "Rebranding complet : logo, charte graphique, UI/UX",
       "Vidéo de présentation en motion design",
-      "Outils pour votre commerce : menu digital, QR codes, fidélité, planning, factures…",
+      "Outils pour votre commerce : menu digital, QR codes, fidélité, factures, stocks…",
     ],
   },
 ];
@@ -220,7 +220,7 @@ const faqs = [
   {
     question: "Proposez-vous d'autres services ?",
     answer:
-      "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, et des outils pour votre commerce : menu digital, QR codes et cartes NFC, carte de fidélité, planning des employés, devis et factures, réservations, gestion des stocks.",
+      "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, et des outils pour votre commerce : menu digital, QR codes et cartes NFC, carte de fidélité, devis et factures, gestion des stocks.",
   },
   {
     question: "Comment vous contacter ?",
