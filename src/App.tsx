@@ -1,4 +1,5 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import upscreenLogo from "./imports/upscreen-logo-reversed.svg";
 import upscreenIcon from "./imports/upscreen-icon.svg";
 import cafePhoto from "./imports/cafe-espresso.webp";
@@ -2625,48 +2626,166 @@ const vitrines = [
   { slug: "clinic", name: "Foot, Ankle & Body Experts", trade: "Clinique de santé · Brisbane" },
 ];
 
-function VitrineCard({ slug, name, trade, large = false }: { slug: string; name: string; trade: string; large?: boolean }) {
+type Vitrine = (typeof vitrines)[number];
+
+function VitrineCard({ site, large = false, onOpen }: { site: Vitrine; large?: boolean; onOpen: () => void }) {
+  const { slug, name, trade } = site;
   const src = (kind: string) => `${import.meta.env.BASE_URL}vitrines/${slug}-${kind}.webp`;
   return (
-    <figure className={`scroll-reveal group ${large ? "md:col-span-2" : ""}`}>
-      <div className="relative">
-        <div className="overflow-hidden rounded-[22px] border border-white/10 bg-graphite p-1.5 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition duration-500 group-hover:-translate-y-1 group-hover:border-white/20">
-          <div className="flex items-center gap-1.5 px-3 py-2">
-            <span className="h-2 w-2 rounded-full bg-white/15" />
-            <span className="h-2 w-2 rounded-full bg-white/15" />
-            <span className="h-2 w-2 rounded-full bg-white/15" />
+    <figure className={`scroll-reveal ${large ? "md:col-span-2" : ""}`}>
+      <button
+        type="button"
+        onClick={onOpen}
+        aria-label={`Voir le site ${name}`}
+        className="group block w-full cursor-pointer text-left"
+      >
+        <div className="relative">
+          <div className="overflow-hidden rounded-[22px] border border-white/10 bg-graphite p-1.5 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition duration-500 group-hover:-translate-y-1 group-hover:border-white/25">
+            <div className="flex items-center gap-1.5 px-3 py-2">
+              <span className="h-2 w-2 rounded-full bg-white/15" />
+              <span className="h-2 w-2 rounded-full bg-white/15" />
+              <span className="h-2 w-2 rounded-full bg-white/15" />
+            </div>
+            <div className="relative overflow-hidden rounded-[16px]">
+              <img
+                src={src("desktop")}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                width={1440}
+                height={900}
+                className="block aspect-[16/10] w-full object-cover object-top transition duration-700 group-hover:scale-[1.02]"
+              />
+              <span className="absolute inset-0 flex items-center justify-center bg-onyx/0 opacity-0 transition duration-300 group-hover:bg-onyx/45 group-hover:opacity-100">
+                <span className="inline-flex items-center gap-2 rounded-full bg-off-white px-5 py-3 text-sm font-semibold text-onyx">
+                  Voir le site <ArrowIcon />
+                </span>
+              </span>
+            </div>
           </div>
           <img
-            src={src("desktop")}
-            alt={`Site de ${name} sur ordinateur`}
+            src={src("mobile")}
+            alt=""
             loading="lazy"
             decoding="async"
-            width={1440}
-            height={900}
-            className="block aspect-[16/10] w-full rounded-[16px] object-cover object-top"
+            width={390}
+            height={844}
+            className={`absolute bottom-[-6%] right-[-2%] aspect-[390/844] rounded-[18px] border-[5px] border-onyx object-cover object-top shadow-[0_24px_50px_rgba(0,0,0,0.6)] transition duration-500 group-hover:-translate-y-2 sm:rounded-[22px] ${
+              large ? "w-[17%]" : "w-[24%]"
+            }`}
           />
         </div>
-        <img
-          src={src("mobile")}
-          alt={`Site de ${name} sur mobile`}
-          loading="lazy"
-          decoding="async"
-          width={390}
-          height={844}
-          className={`absolute bottom-[-6%] right-[-2%] aspect-[390/844] rounded-[18px] border-[5px] border-onyx object-cover object-top shadow-[0_24px_50px_rgba(0,0,0,0.6)] transition duration-500 group-hover:-translate-y-2 sm:rounded-[22px] ${
-            large ? "w-[17%]" : "w-[24%]"
-          }`}
-        />
-      </div>
-      <figcaption className="mt-7 pr-[26%]">
-        <p className="text-lg font-extrabold tracking-[-0.03em] text-off-white">{name}</p>
-        <p className="mt-0.5 text-sm text-warm-gray">{trade}</p>
-      </figcaption>
+        <figcaption className="mt-7 pr-[26%]">
+          <p className="flex items-center gap-2 text-lg font-extrabold tracking-[-0.03em] text-off-white">
+            {name}
+            <ArrowIcon className="h-4 w-4 text-brand transition group-hover:translate-x-1" />
+          </p>
+          <p className="mt-0.5 text-sm text-warm-gray">{trade}</p>
+        </figcaption>
+      </button>
     </figure>
   );
 }
 
+// Fenêtre qui affiche le vrai site (copie dans public/sites) dans un cadre,
+// en vue ordinateur ou mobile.
+function VitrineModal({ site, onClose }: { site: Vitrine; onClose: () => void }) {
+  const [device, setDevice] = useState<"desktop" | "mobile">(
+    () => (typeof window !== "undefined" && window.innerWidth < 768 ? "mobile" : "desktop"),
+  );
+  const [loaded, setLoaded] = useState(false);
+  const url = `${import.meta.env.BASE_URL}sites/${site.slug}/index.html`;
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Site ${site.name}`}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-onyx/80 p-2 backdrop-blur-md sm:p-6"
+      onClick={onClose}
+    >
+      <div
+        className="flex h-full max-h-[920px] w-full max-w-[1320px] flex-col overflow-hidden rounded-[24px] border border-white/10 bg-graphite shadow-[0_40px_120px_rgba(0,0,0,0.7)]"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <div className="flex items-center gap-3 border-b border-white/[0.08] px-4 py-3 sm:px-5">
+          <div className="hidden items-center gap-1.5 sm:flex">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+          </div>
+          <div className="min-w-0 flex-1 sm:ml-3">
+            <p className="truncate text-[15px] font-bold tracking-[-0.02em] text-off-white">{site.name}</p>
+            <p className="truncate text-xs text-warm-gray">{site.trade}</p>
+          </div>
+          <div className="hidden rounded-full bg-white/[0.06] p-1 sm:flex">
+            {(["desktop", "mobile"] as const).map((value) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setDevice(value)}
+                className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
+                  device === value ? "bg-off-white text-onyx" : "text-[#CFCCC7] hover:text-off-white"
+                }`}
+              >
+                {value === "desktop" ? "Ordinateur" : "Mobile"}
+              </button>
+            ))}
+          </div>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener"
+            className="hidden rounded-full border border-white/15 px-4 py-1.5 text-xs font-semibold text-off-white transition hover:border-white/35 md:inline-flex"
+          >
+            Nouvel onglet ↗
+          </a>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Fermer"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-off-white transition hover:bg-white/15"
+          >
+            <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M4 4l8 8M12 4l-8 8" />
+            </svg>
+          </button>
+        </div>
+        <div className="relative flex flex-1 justify-center overflow-hidden bg-onyx">
+          {!loaded && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="h-8 w-8 animate-spin rounded-full border-2 border-white/15 border-t-brand" />
+            </div>
+          )}
+          <iframe
+            key={device}
+            src={url}
+            title={`Site ${site.name}`}
+            onLoad={() => setLoaded(true)}
+            className={`h-full border-0 bg-white transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"} ${
+              device === "mobile" ? "w-full max-w-[400px] self-center sm:h-[calc(100%-2rem)] sm:rounded-[28px] sm:border-[6px] sm:border-[#2a2a2e]" : "w-full"
+            }`}
+          />
+        </div>
+      </div>
+    </div>,
+    document.body,
+  );
+}
+
 function WorkGallery() {
+  const [openSite, setOpenSite] = useState<Vitrine | null>(null);
   return (
     <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
       <SectionHeader
@@ -2675,7 +2794,7 @@ function WorkGallery() {
         muted="pour les commerces."
         aside={
           <>
-            <AsideLead>Des sites vitrines réalisés pour des restaurants, des cafés et une clinique, puis des démos pour les commerces toulousains.</AsideLead>
+            <AsideLead>Des sites vitrines réalisés pour des restaurants, des cafés et une clinique. Cliquez sur un site pour le parcourir.</AsideLead>
             <a href="#contact" className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold text-brand transition-colors hover:text-brand-light">
               Demander ma maquette <ArrowIcon />
             </a>
@@ -2685,57 +2804,11 @@ function WorkGallery() {
 
       <div className="mt-14 grid gap-x-6 gap-y-10 md:grid-cols-2">
         {vitrines.map((site, index) => (
-          <VitrineCard key={site.slug} {...site} large={index === 0} />
+          <VitrineCard key={site.slug} site={site} large={index === 0} onOpen={() => setOpenSite(site)} />
         ))}
       </div>
 
-      <div className="mt-20 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <Eyebrow>Démos</Eyebrow>
-          <h3 className="mt-4 text-[28px] font-extrabold leading-[1.05] tracking-[-0.05em] text-off-white md:text-[36px]">
-            Et pour votre commerce ?
-          </h3>
-        </div>
-        <p className="max-w-[420px] text-[15px] leading-[1.6] text-[#CFCCC7]">
-          Des commerces fictifs, créés pour montrer notre style. La maquette du vôtre est gratuite.
-        </p>
-      </div>
-
-      <div className={`${darkCard} mt-8 grid items-center gap-8 p-6 md:p-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12`}>
-        <div>
-          <div className="flex items-center gap-3">
-            <p className="text-2xl font-bold tracking-[-0.03em] text-off-white">Le Comptoir Rose</p>
-            <DemoChip />
-          </div>
-          <p className="mt-1 text-sm text-warm-gray">Café · Toulouse</p>
-          <p className="mt-5 text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
-            Le café qui suit tout notre parcours : l'appel, la maquette, la fiche Google, puis les
-            premières réservations.
-          </p>
-          <ul className="mt-5 space-y-2.5 text-[15px] text-[#CFCCC7]">
-            {["Réservation de table en un clic", "Carte et horaires toujours à jour", "Fiche Google reliée au site"].map(
-              (point) => (
-                <li key={point} className="flex gap-3">
-                  <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
-                  {point}
-                </li>
-              ),
-            )}
-          </ul>
-        </div>
-        <CafeShowcase />
-      </div>
-      <div className="mt-6 grid gap-8 md:grid-cols-3 md:gap-6">
-        <DemoSiteCard name="Atelier Lumière" trade="Salon de coiffure · Toulouse">
-          <DemoSalon />
-        </DemoSiteCard>
-        <DemoSiteCard name="Dupuy Plomberie" trade="Plombier chauffagiste · Toulouse">
-          <DemoPlumber />
-        </DemoSiteCard>
-        <DemoSiteCard name="Studio Ananda" trade="Studio de yoga · Toulouse">
-          <DemoYoga />
-        </DemoSiteCard>
-      </div>
+      {openSite && <VitrineModal site={openSite} onClose={() => setOpenSite(null)} />}
     </section>
   );
 }

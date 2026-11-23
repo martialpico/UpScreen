@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sparrow &amp; Finch Espresso | Coffee from 6am, corner of Creek &amp; Adelaide St</title>
+  <meta name="description" content="Espresso, a fresh salad bar, wraps and big breakfasts under the yellow umbrellas at 100 Creek Street, Brisbane City. Open Monday to Friday, 6am to 2:30pm." />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@600;700;800;900&family=Albert+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/bird.png" />
+  <meta property="og:title" content="Sparrow & Finch Espresso | Brisbane City" />
+  <meta property="og:description" content="Coffee from 6am, lunch till 2:30pm, at 100 Creek Street." />
+  <meta property="og:image" content="assets/latte.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Sparrow & Finch Espresso",
+    "telephone": "+61 7 3236 5353",
+    "email": "sparrowandfinch@hotmail.com",
+    "priceRange": "$",
+    "address": { "@type": "PostalAddress", "streetAddress": "Shop 5/100 Creek St", "addressLocality": "Brisbane City", "addressRegion": "QLD", "postalCode": "4000", "addressCountry": "AU" },
+    "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "06:00", "closes": "14:30" }]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="mascot" aria-hidden="true" data-mascot><img src="assets/bird.png" alt="" width="46" height="55" /></div>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Sparrow & Finch, home">
+      <img src="assets/bird.png" alt="" width="40" height="48" />
+      <span>Sparrow &amp; Finch</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#day">The day</a>
+      <a href="#menu">Menu</a>
+      <a href="#catering">Catering</a>
+      <a href="#visit">Find us</a>
+    </nav>
+    <a class="btn btn-dark nav-cta" href="tel:+61732365353">Call ahead</a>
+  </header>
+
+  <main id="main">
+    <!-- ---------- Hero ---------- -->
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="kicker" data-hero data-open-status>Open Monday to Friday, 6am to 2:30pm</p>
+        <h1 class="hero-title" data-hero>Coffee from 6am. Lunch till 2:30.</h1>
+        <p class="hero-sub" data-hero>Espresso, a fresh salad bar, wraps and big breakfasts, under the yellow umbrellas on the corner of Creek and Adelaide Street.</p>
+        <div class="hero-ctas" data-hero>
+          <a class="btn btn-yellow" href="#menu">See what's on</a>
+          <a class="btn btn-ghost" href="#visit">Find us</a>
+        </div>
+      </div>
+      <div class="hero-media" data-hero-media>
+        <div class="awning-wrap" aria-hidden="true"><div class="awning"></div></div>
+        <img class="h-main" src="assets/counter-burgers.jpg" alt="A barista carrying two burgers across the counter" width="1253" height="1400" fetchpriority="high" />
+        <img class="h-side" src="assets/latte.jpg" alt="A latte with rosetta art" width="1120" height="1400" />
+      </div>
+    </section>
+
+    <!-- ---------- La journée (frise animée par main.js) ---------- -->
+    <section class="day" id="day" aria-labelledby="day-title">
+      <div class="day-head reveal">
+        <h2 class="section-title" id="day-title">A day at Sparrow &amp; Finch.</h2>
+        <p class="now" data-now>We open at 6am, Monday to Friday.</p>
+      </div>
+      <div class="timeline reveal" data-timeline>
+        <div class="track" aria-hidden="true"><span class="track-fill" data-fill></span><span class="marker" data-marker><img src="assets/bird.png" alt="" width="34" height="40" /></span></div>
+        <ol class="moments">
+          <li data-from="360" data-to="420"><time>6:00</time><h3>First coffee</h3><p>The machine's warm and the regulars are lining up before the office opens.</p></li>
+          <li data-from="420" data-to="660"><time>7:00</time><h3>Breakfast</h3><p>Pancakes, burgers and hot plates, out of the kitchen fast.</p></li>
+          <li data-from="660" data-to="840"><time>11:00</time><h3>Salad bar and wraps</h3><p>Fresh salads made that morning, wraps and lunch to stay or go.</p></li>
+          <li data-from="840" data-to="870"><time>2:30</time><h3>Last orders</h3><p>Grab one for the afternoon. Back tomorrow at 6.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ---------- Menu ---------- -->
+    <section class="menu" id="menu">
+      <h2 class="section-title reveal">What we're known for.</h2>
+      <div class="menu-grid">
+        <article class="item item-tall reveal">
+          <img src="assets/latte.jpg" alt="Latte on the counter" loading="lazy" width="1120" height="1400" />
+          <div><h3>Espresso</h3><p>Lattes, flat whites and long blacks from 6am, made by baristas who handle the morning rush with a smile.</p></div>
+        </article>
+        <article class="item reveal">
+          <img src="assets/pancakes.jpg" alt="Pancakes with banana, strawberries and maple syrup" loading="lazy" width="907" height="907" />
+          <div><h3>Big breakfasts</h3><p>Pancakes with banana, berries and maple, and hot plates to start the day right.</p></div>
+        </article>
+        <article class="item item-yellow reveal">
+          <img class="item-bird" src="assets/bird.png" alt="" width="120" height="144" loading="lazy" />
+          <div><h3>Salad bar</h3><p>Our regulars' favourite. Fresh salads every morning, built your way at the counter.</p></div>
+        </article>
+        <article class="item reveal">
+          <img src="assets/counter-burgers.jpg" alt="Burgers coming out of the kitchen" loading="lazy" width="1253" height="1400" />
+          <div><h3>Burgers and wraps</h3><p>Hot lunches that hold you through the afternoon meeting.</p></div>
+        </article>
+        <article class="item reveal">
+          <img src="assets/cucumber-soda.jpg" alt="Sparkling water with cucumber" loading="lazy" width="1120" height="1400" />
+          <div><h3>Cold drinks</h3><p>Juices, sparkling and iced coffee for the hot days.</p></div>
+        </article>
+      </div>
+      <p class="note reveal">The full menu is up at the counter. Ask the team about dietary options.</p>
+    </section>
+
+    <!-- ---------- Terrasse ---------- -->
+    <section class="space" id="space">
+      <img class="space-img reveal" src="assets/terrace-night.jpg" alt="The terrace with yellow and white striped umbrellas and fairy lights" loading="lazy" width="1120" height="1400" />
+      <div class="space-copy reveal">
+        <h2 class="section-title">Under the yellow umbrellas.</h2>
+        <p>Our terrace sits in the laneway beside National Bank House, with fairy lights in the trees overhead. Bring the team for a long breakfast, or take ten minutes to yourself before the next meeting.</p>
+        <img class="space-small" src="assets/espresso-machine.jpg" alt="The espresso machine and stacks of cups" loading="lazy" width="1120" height="1400" />
+      </div>
+    </section>
+
+    <!-- ---------- Traiteur ---------- -->
+    <section class="catering" id="catering">
+      <div class="catering-copy reveal">
+        <h2 class="section-title">Morning meeting? We'll bring breakfast.</h2>
+        <p>Fruit platters like this one for your next meeting or morning tea. Tell us how many people and when, and we'll have it ready.</p>
+        <a class="btn btn-dark" href="mailto:sparrowandfinch@hotmail.com?subject=Catering%20enquiry">Ask about catering</a>
+      </div>
+      <img class="catering-img reveal" src="assets/fruit-box.jpg" alt="A catering box of strawberries, watermelon, blueberries, mango, mandarin and kiwi" loading="lazy" width="1400" height="1400" />
+    </section>
+
+    <!-- ---------- Visite ---------- -->
+    <section class="visit" id="visit">
+      <div class="visit-card reveal">
+        <h2 class="section-title">Find us.</h2>
+        <address>Shop 5, 100 Creek St<br />Brisbane City QLD 4000</address>
+        <p class="landmark">On the corner of Creek and Adelaide Street, at National Bank House.</p>
+        <ul class="hours" aria-label="Opening hours">
+          <li data-day="1"><span>Monday</span><span>6am to 2:30pm</span></li>
+          <li data-day="2"><span>Tuesday</span><span>6am to 2:30pm</span></li>
+          <li data-day="3"><span>Wednesday</span><span>6am to 2:30pm</span></li>
+          <li data-day="4"><span>Thursday</span><span>6am to 2:30pm</span></li>
+          <li data-day="5"><span>Friday</span><span>6am to 2:30pm</span></li>
+          <li data-day="6"><span>Saturday</span><span>Closed</span></li>
+          <li data-day="0"><span>Sunday</span><span>Closed</span></li>
+        </ul>
+        <div class="visit-ctas">
+          <a class="btn btn-dark" href="https://www.google.com/maps/dir/?api=1&destination=Sparrow+%26+Finch+Espresso+100+Creek+St+Brisbane" rel="noopener">Get directions</a>
+          <a class="btn btn-ghost" href="tel:+61732365353">07 3236 5353</a>
+        </div>
+        <p class="contact"><a href="mailto:sparrowandfinch@hotmail.com">sparrowandfinch@hotmail.com</a> · <a href="https://www.facebook.com/sparrowandfinch100/" rel="noopener">Facebook</a></p>
+      </div>
+      <div class="visit-map reveal">
+        <iframe title="Map of Sparrow & Finch Espresso, 100 Creek St, Brisbane City" src="https://www.google.com/maps?q=Sparrow+%26+Finch+Espresso+100+Creek+St+Brisbane&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="footer-brand"><img src="assets/bird.png" alt="" width="24" height="29" /> Sparrow &amp; Finch Espresso</span>
+    <p>Shop 5, 100 Creek St, Brisbane City QLD 4000</p>
+    <p class="credit">Website by <a href="https://www.upscreen.agency" rel="noopener">UpScreen</a></p>
+  </footer>
+
+  <script src="vendor/lenis.min.js"></script>
+  <script src="vendor/motion.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

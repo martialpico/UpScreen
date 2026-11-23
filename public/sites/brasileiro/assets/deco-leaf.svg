@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Tropical leaf">
+  <path d="M60 8 C92 26 108 58 104 110 C72 100 36 78 22 40 C36 36 50 34 60 8 Z" fill="#1f9d57"/>
+  <path d="M60 14 C58 50 66 84 96 104" stroke="#0c7a3f" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <g stroke="#0c7a3f" stroke-width="2.2" opacity="0.7" stroke-linecap="round">
+    <path d="M62 30 L44 30 M64 44 L42 46 M70 60 L48 64 M78 76 L56 82 M86 90 L66 96"/>
+  </g>
+</svg>

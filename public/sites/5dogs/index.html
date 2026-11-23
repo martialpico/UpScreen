@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5 Dogs | Gourmet hot dogs and loaded fries, Fortitude Valley</title>
+  <meta name="description" content="Gourmet hot dogs, chilli cheese fries and one of Australia's biggest vegan fast-food menus. Brunswick Street, Fortitude Valley, since 2011." />
+  <meta name="theme-color" content="#121110" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/logo.png" />
+  <meta property="og:title" content="5 Dogs | Hot dogs, done loud" />
+  <meta property="og:description" content="Gourmet dogs, loaded fries and a big vegan menu on Brunswick St, Fortitude Valley." />
+  <meta property="og:image" content="assets/chili-dog.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FastFoodRestaurant",
+    "name": "5 Dogs",
+    "servesCuisine": ["Hot dogs", "Vegan"],
+    "email": "accounts@5dogs.com.au",
+    "address": { "@type": "PostalAddress", "streetAddress": "216/290 Brunswick St", "addressLocality": "Fortitude Valley", "addressRegion": "QLD", "postalCode": "4006", "addressCountry": "AU" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <a class="nav-logo" href="#top" aria-label="5 Dogs, home"><img src="assets/logo.png" alt="" width="44" height="57" /><span>5 Dogs</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#menu">Menu</a>
+      <a href="#story">Our story</a>
+      <a href="#franchise">Franchise</a>
+      <a href="#visit">Find us</a>
+    </nav>
+    <a class="btn btn-solid nav-cta" href="#visit">Order now</a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <h1 class="hero-title" data-hero>Hot dogs,<br /><span>done loud.</span></h1>
+        <p class="hero-sub" data-hero>Gourmet dogs, loaded fries and one of Australia's biggest vegan menus. Brunswick St, Fortitude Valley, since 2011.</p>
+        <div class="hero-ctas" data-hero>
+          <a class="btn btn-solid" href="#visit">Order now</a>
+          <a class="btn btn-ghost" href="#menu">See the menu</a>
+        </div>
+      </div>
+      <div class="hero-media" data-hero-media>
+        <img class="hero-dog" src="assets/chili-dog.jpg" alt="Chilli dog topped with cheese, with chilli and mustard on the side" width="600" height="600" fetchpriority="high" />
+        <img class="hero-badge" src="assets/logo.png" alt="" width="410" height="534" />
+      </div>
+    </section>
+
+    <section class="menu" id="menu">
+      <div class="menu-head">
+        <h2 class="section-title">Pick your dog.</h2>
+        <div class="tabs" role="tablist" aria-label="Menu categories">
+          <button class="tab is-active" role="tab" aria-selected="true" data-filter="all">All</button>
+          <button class="tab" role="tab" aria-selected="false" data-filter="dogs">Dogs</button>
+          <button class="tab" role="tab" aria-selected="false" data-filter="vegan">Vegan</button>
+          <button class="tab" role="tab" aria-selected="false" data-filter="fries">Fries</button>
+        </div>
+      </div>
+      <ul class="menu-track" data-track>
+        <li class="dish" data-cat="dogs"><img src="assets/chili-dog.jpg" alt="Chilli dog with grated cheese" loading="lazy" width="600" height="600" /><h3>Chilli Dog</h3><p>Slow-cooked chilli, melted cheese, onion.</p></li>
+        <li class="dish" data-cat="dogs"><img src="assets/nyc-hot-dog.jpg" alt="New York style hot dog" loading="lazy" width="600" height="600" /><h3>NYC Dog</h3><p>The classic. Mustard, onion, relish.</p></li>
+        <li class="dish" data-cat="dogs"><img src="assets/german-dog.jpg" alt="German bratwurst hot dog with sauerkraut" loading="lazy" width="600" height="600" /><h3>German Dog</h3><p>Bratwurst, sauerkraut, hot mustard.</p></li>
+        <li class="dish" data-cat="dogs"><img src="assets/tradisonal-dog.jpg" alt="Traditional hot dog" loading="lazy" width="600" height="600" /><h3>Traditional</h3><p>Kransky, ketchup, mustard. No fuss.</p></li>
+        <li class="dish" data-cat="vegan"><img src="assets/vegan-beer-brat.jpg" alt="Vegan beer bratwurst hot dog" loading="lazy" width="600" height="600" /><h3>Vegan Beer Brat</h3><p>Plant-based brat with all the trimmings.</p></li>
+        <li class="dish" data-cat="vegan"><img src="assets/vegan-kielbasa.jpg" alt="Vegan kielbasa hot dog" loading="lazy" width="600" height="600" /><h3>Vegan Kielbasa</h3><p>Smoky, garlicky, 100% plants.</p></li>
+        <li class="dish" data-cat="fries"><img src="assets/chili-cheese-fries.jpg" alt="Chilli cheese fries" loading="lazy" width="600" height="600" /><h3>Chilli Cheese Fries</h3><p>The crowd favourite. Share it, or don't.</p></li>
+        <li class="dish" data-cat="fries"><img src="assets/fries-and-gravy.jpg" alt="Fries with gravy" loading="lazy" width="600" height="600" /><h3>Fries and Gravy</h3><p>Our gravy has a fan club.</p></li>
+        <li class="dish" data-cat="fries"><img src="assets/chip-buddy.jpg" alt="Chip butty sandwich" loading="lazy" width="600" height="600" /><h3>Chip Buddy</h3><p>Fries in a buttered roll. Trust us.</p></li>
+      </ul>
+    </section>
+
+    <section class="story" id="story">
+      <figure class="story-media reveal">
+        <img src="assets/storefront.jpg" alt="Rob, the founder, in front of the yellow 5 Dogs sign at night on Brunswick Street" loading="lazy" width="2000" height="1264" />
+      </figure>
+      <div class="story-copy reveal">
+        <h2 class="section-title">Everyone eats.</h2>
+        <p>Rob opened 5 Dogs in the Valley in 2011 with one idea: late-night fast food that never cuts corners on flavour. Premium sausages, proper toppings, and a vegan menu just as big as the meat one.</p>
+        <p>Fifteen years on, the yellow sign on Brunswick Street still feeds the night owls, the lunch crowd and everyone in between.</p>
+      </div>
+    </section>
+
+    <section class="franchise" id="franchise">
+      <div class="franchise-inner reveal">
+        <h2 class="section-title">Bring 5 Dogs to your suburb.</h2>
+        <p>Our virtual franchise runs from your existing kitchen. Spots are open in Brisbane, Ipswich, Moreton Bay and the Gold Coast.</p>
+        <a class="btn btn-dark" href="mailto:accounts@5dogs.com.au?subject=Franchise%20enquiry">Franchise enquiry</a>
+      </div>
+    </section>
+
+    <section class="visit" id="visit">
+      <div class="visit-copy reveal">
+        <h2 class="section-title">Find the yellow sign.</h2>
+        <address>216/290 Brunswick St<br />Fortitude Valley QLD 4006</address>
+        <p>Pick up in store, or get it delivered across the Valley, the CBD and New Farm.</p>
+        <div class="visit-ctas">
+          <a class="btn btn-solid" href="https://maps.google.com/?q=5+Dogs+290+Brunswick+St+Fortitude+Valley" rel="noopener">Get directions</a>
+        </div>
+        <ul class="socials">
+          <li><a href="https://www.instagram.com/5dogshotdogs/" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@5dogshotdogs" rel="noopener">TikTok</a></li>
+          <li><a href="https://www.facebook.com/5dogsaustralia/" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+      <div class="visit-map reveal">
+        <iframe title="Map of 5 Dogs, Brunswick Street, Fortitude Valley" src="https://maps.google.com/maps?q=290%20Brunswick%20St%2C%20Fortitude%20Valley%20QLD%204006&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 5D HQ Pty Ltd</p>
+    <p><a href="mailto:accounts@5dogs.com.au">accounts@5dogs.com.au</a></p>
+    <p class="credit">Website by <a href="https://www.upscreen.agency" rel="noopener">UpScreen</a></p>
+  </footer>
+
+  <script src="vendor/lenis.min.js"></script>
+  <script src="vendor/motion.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

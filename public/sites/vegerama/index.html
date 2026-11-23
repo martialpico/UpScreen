@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vege Rama | 100% vegan lunch on Adelaide St, Brisbane City</title>
+  <meta name="description" content="Plant-based burgers, dosas, curries and fresh salads, made daily opposite ANZAC Square. Open Monday to Friday, 8am to 6pm. Gluten-free, nut-free and onion and garlic free options." />
+  <meta name="theme-color" content="#f4f7f2" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/icon.png" />
+  <meta property="og:title" content="Vege Rama | 100% vegan lunch in Brisbane City" />
+  <meta property="og:description" content="Burgers, dosas, curries and salads made fresh every day, opposite ANZAC Square." />
+  <meta property="og:image" content="assets/tofu-salad.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Vege Rama",
+    "servesCuisine": ["Vegan", "Indian", "Salads"],
+    "priceRange": "$",
+    "telephone": "+61 7 3211 7688",
+    "email": "enquiries@vegerama.com.au",
+    "address": { "@type": "PostalAddress", "streetAddress": "Shop 1/241 Adelaide St", "addressLocality": "Brisbane City", "addressRegion": "QLD", "postalCode": "4000", "addressCountry": "AU" },
+    "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "18:00" }],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.6", "reviewCount": "651" },
+    "hasMenu": "#menu"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Vege Rama, home">
+      <img src="assets/logo.png" alt="Vege Rama, the taste of good health" width="125" height="40" />
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#today">Today</a>
+      <a href="#lunch">Build your lunch</a>
+      <a href="#menu">Menu</a>
+      <a href="#story">Our story</a>
+      <a href="#catering">Catering</a>
+    </nav>
+    <a class="btn btn-solid nav-cta" href="#visit">Find us</a>
+  </header>
+
+  <main id="main">
+    <!-- ---------- Hero ---------- -->
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="rating" data-hero><span class="stars" aria-hidden="true">★★★★★</span> 4.6 from 651 Google reviews</p>
+        <h1 class="hero-title" data-hero>100% vegan lunch, made fresh in the city.</h1>
+        <p class="hero-sub" data-hero>Burgers, dosas, curries and gourmet salads, cooked from family recipes and served opposite ANZAC Square since 2012.</p>
+        <div class="hero-ctas" data-hero>
+          <a class="btn btn-solid" href="#today">See today's menu</a>
+          <a class="btn btn-ghost" href="tel:+61732117688">Call 07 3211 7688</a>
+        </div>
+        <p class="open-now" data-hero data-open-status>Open Monday to Friday, 8am to 6pm</p>
+      </div>
+      <div class="hero-bento" aria-hidden="false">
+        <img class="b-a" src="assets/tofu-salad.jpg" alt="Sesame tofu salad with broccoli and purple cabbage" width="709" height="709" fetchpriority="high" />
+        <img class="b-b" src="assets/green-smoothie.jpg" alt="Green smoothie" width="733" height="1100" />
+        <img class="b-c" src="assets/cheesecake.jpg" alt="Vegan lime cheesecake with a date and nut base" width="1400" height="933" />
+      </div>
+    </section>
+
+    <!-- ---------- Infos rapides ---------- -->
+    <section class="facts" aria-label="Key information">
+      <div><strong>Mon to Fri, 8am to 6pm</strong><span>Breakfast, lunch and an early dinner</span></div>
+      <div><strong>241 Adelaide St</strong><span>Right opposite ANZAC Square</span></div>
+      <div><strong>Everything is vegan</strong><span>Plus gluten-free, nut-free and onion and garlic free options</span></div>
+    </section>
+
+    <!-- ---------- Tableau du jour (rempli par main.js) ---------- -->
+    <section class="today" id="today" aria-labelledby="today-title">
+      <div class="board reveal">
+        <div class="board-head">
+          <p class="board-date" data-today-date>Today</p>
+          <h2 class="section-title" id="today-title">Today at the counter.</h2>
+          <p class="board-note">Our dishes change through the week. The kitchen updates this board every morning, so you know what's on before you walk over.</p>
+        </div>
+        <div class="board-cols">
+          <div><h3>Hot dishes</h3><ul data-board="hot"></ul><p class="board-extra">Served with rice</p></div>
+          <div><h3>Salads</h3><ul data-board="salad"></ul><p class="board-extra">Made fresh this morning</p></div>
+          <div><h3>Bakes and specials</h3><ul data-board="bake"></ul><p class="board-extra">Dosas and burgers every day</p></div>
+        </div>
+        <noscript><p class="board-note">Ask at the counter for today's hot dishes, salads and bakes.</p></noscript>
+      </div>
+    </section>
+
+    <!-- ---------- Composeur de bol (géré par main.js) ---------- -->
+    <section class="lunch" id="lunch" aria-labelledby="lunch-title">
+      <div class="lunch-head reveal">
+        <h2 class="section-title" id="lunch-title">Build your lunch.</h2>
+        <p>Pick a bowl, pick a size, then tap today's dishes. Your bowl fills up and you'll know the price before you get to the counter.</p>
+      </div>
+      <div class="builder reveal">
+        <div class="builder-controls">
+          <fieldset class="step">
+            <legend><span class="step-n">1</span> Your bowl</legend>
+            <div class="seg" data-group="type">
+              <button type="button" class="seg-btn is-on" aria-pressed="true" data-type="hot">Hot dishes and rice</button>
+              <button type="button" class="seg-btn" aria-pressed="false" data-type="salad">Salads</button>
+              <button type="button" class="seg-btn" aria-pressed="false" data-type="combo">Combo</button>
+            </div>
+          </fieldset>
+          <fieldset class="step">
+            <legend><span class="step-n">2</span> Your size</legend>
+            <div class="sizes-row" data-group="size"></div>
+          </fieldset>
+          <fieldset class="step">
+            <legend><span class="step-n">3</span> Today's dishes <span class="count" data-count></span></legend>
+            <div class="chips" data-chips></div>
+          </fieldset>
+        </div>
+        <aside class="bowl-card" aria-label="Your bowl">
+          <svg class="bowl" viewBox="0 0 320 320" role="img" aria-label="Your bowl">
+            <defs>
+              <pattern id="rice" width="22" height="22" patternUnits="userSpaceOnUse">
+                <rect width="22" height="22" fill="#f1ead8" />
+                <ellipse cx="5" cy="6" rx="3.4" ry="1.5" fill="#fffdf6" transform="rotate(30 5 6)" />
+                <ellipse cx="15" cy="4" rx="3.4" ry="1.5" fill="#fffdf6" transform="rotate(-40 15 4)" />
+                <ellipse cx="10" cy="14" rx="3.4" ry="1.5" fill="#fffdf6" transform="rotate(80 10 14)" />
+                <ellipse cx="19" cy="16" rx="3.4" ry="1.5" fill="#fffdf6" transform="rotate(10 19 16)" />
+                <ellipse cx="3" cy="18" rx="3.4" ry="1.5" fill="#e4dbc3" transform="rotate(-20 3 18)" />
+              </pattern>
+              <pattern id="speck" width="26" height="26" patternUnits="userSpaceOnUse">
+                <circle cx="4" cy="5" r="1.6" fill="#fff" opacity=".35" />
+                <circle cx="17" cy="9" r="1.1" fill="#000" opacity=".12" />
+                <circle cx="10" cy="19" r="1.8" fill="#fff" opacity=".25" />
+                <circle cx="22" cy="22" r="1.2" fill="#000" opacity=".1" />
+              </pattern>
+              <radialGradient id="depth" cx="45%" cy="40%" r="62%">
+                <stop offset="0" stop-color="#fff" stop-opacity=".22" />
+                <stop offset=".7" stop-color="#fff" stop-opacity="0" />
+                <stop offset="1" stop-color="#0b2a22" stop-opacity=".28" />
+              </radialGradient>
+            </defs>
+            <circle class="plate" cx="160" cy="160" r="156" />
+            <circle class="rim" cx="160" cy="160" r="142" />
+            <circle class="well" cx="160" cy="160" r="122" />
+            <g data-bowl></g>
+            <circle cx="160" cy="160" r="120" fill="url(#speck)" pointer-events="none" data-overlay />
+            <circle cx="160" cy="160" r="122" fill="url(#depth)" pointer-events="none" />
+            <circle class="empty" cx="160" cy="160" r="104" data-empty />
+          </svg>
+          <p class="bowl-hint" data-hint>Tap a dish to fill your bowl</p>
+          <ul class="bowl-list" data-list></ul>
+          <div class="bowl-total">
+            <span data-summary>Medium bowl</span>
+            <strong data-price>$15.90</strong>
+          </div>
+          <a class="btn btn-solid" href="#visit">Come and grab it</a>
+          <p class="sr-only" aria-live="polite" data-live></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ---------- Menu ---------- -->
+    <section class="menu" id="menu">
+      <div class="menu-head reveal">
+        <h2 class="section-title">The menu.</h2>
+        <p class="legend"><span class="tag">V</span> Vegan <span class="tag">GF</span> Gluten free <span class="tag">NF</span> Nut free <span class="tag">OGF</span> Onion and garlic free</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Menu categories">
+        <button class="tab is-active" role="tab" aria-selected="true" aria-controls="p-burgers" id="t-burgers" data-panel="p-burgers">Burgers</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-dosas" id="t-dosas" data-panel="p-dosas" tabindex="-1">Dosas</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-bakes" id="t-bakes" data-panel="p-bakes" tabindex="-1">Bakes and specials</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="p-snacks" id="t-snacks" data-panel="p-snacks" tabindex="-1">Snacks and sides</button>
+      </div>
+
+      <div class="panel" id="p-burgers" role="tabpanel" aria-labelledby="t-burgers">
+        <ul class="dishes">
+          <li><div><h3>Euro <span class="tag">V</span></h3><p>Vegan "beef" patty, dijon mayo, vegan cheese, sauerkraut, caramelised onion, tomato and rocket.</p></div><strong>$15.50</strong></li>
+          <li><div><h3>Moroccan Lentil <span class="tag">V</span><span class="tag">GF</span><span class="tag">NF</span></h3><p>Lentil patty, harissa mayo, beetroot, tomato, onion, sultana relish and mesclun. GF bun available.</p></div><strong>$15.50</strong></li>
+          <li><div><h3>Satay <span class="tag">V</span></h3><p>Vegan "chicken" patty, satay peanut sauce, snow pea sprouts, cabbage and carrot slaw, cucumber, tomato.</p></div><strong>$15.50</strong></li>
+          <li><div><h3>Burger, Cajun chips and mayo</h3><p>Any burger with a side of Cajun fries.</p></div><strong>$23.10</strong></li>
+        </ul>
+      </div>
+      <div class="panel" id="p-dosas" role="tabpanel" aria-labelledby="t-dosas" hidden>
+        <p class="panel-note">Gluten-free lentil crepes, served with dahl soup, coconut chutney and spicy chutney.</p>
+        <ul class="dishes">
+          <li><div><h3>Masala Dosa <span class="tag">V</span><span class="tag">GF</span></h3><p>Filled with spiced potato masala.</p></div><strong>$17.00</strong></li>
+          <li><div><h3>Mysore Masala <span class="tag">V</span><span class="tag">GF</span></h3><p>Spicy Mysore chutney and potato masala.</p></div><strong>$18.00</strong></li>
+          <li><div><h3>Mysore <span class="tag">V</span><span class="tag">GF</span></h3><p>Spread with spicy Mysore chutney.</p></div><strong>$17.00</strong></li>
+          <li><div><h3>Plain Dosa <span class="tag">V</span><span class="tag">GF</span></h3><p>Crisp and simple, with all the sides.</p></div><strong>$15.00</strong></li>
+          <li><div><h3>Sambar dahl and rice <span class="tag">V</span></h3><p>Small, medium or large.</p></div><strong>from $11.20</strong></li>
+        </ul>
+      </div>
+      <div class="panel" id="p-bakes" role="tabpanel" aria-labelledby="t-bakes" hidden>
+        <ul class="dishes">
+          <li><div><h3>Lasagna <span class="tag">V</span><span class="tag">NF</span></h3><p>$21.50 with a side salad.</p></div><strong>$14.50</strong></li>
+          <li><div><h3>Bakes on rotation</h3><p>Warm, comforting bakes that change every day.</p></div><strong>from $14.90</strong></li>
+          <li><div><h3>Frittata <span class="tag">V</span><span class="tag">NF</span></h3><p>$17.90 with a side salad.</p></div><strong>$10.90</strong></li>
+          <li><div><h3>Pies <span class="tag">V</span></h3><p>$15.00 with salad.</p></div><strong>$8.00</strong></li>
+        </ul>
+      </div>
+      <div class="panel" id="p-snacks" role="tabpanel" aria-labelledby="t-snacks" hidden>
+        <ul class="dishes">
+          <li><div><h3>Samosa <span class="tag">V</span><span class="tag">NF</span><span class="tag">OGF</span></h3><p>Golden pastry, spiced potato and peas.</p></div><strong>$5.00</strong></li>
+          <li><div><h3>Pakora <span class="tag">V</span><span class="tag">NF</span></h3><p>Or 3 for $6.</p></div><strong>$2.50</strong></li>
+          <li><div><h3>Cajun fries</h3><p>Large $8.80.</p></div><strong>$5.60</strong></li>
+          <li><div><h3>Sweet potato fries</h3><p>Large $10.00.</p></div><strong>$7.00</strong></li>
+          <li><div><h3>Side salad</h3><p>From the salad bar.</p></div><strong>$7.00</strong></li>
+        </ul>
+      </div>
+      <p class="note">Some dishes contain nuts, seeds and other allergens. If you have a severe allergy, please let our team know.</p>
+    </section>
+
+    <!-- ---------- Galerie du comptoir ---------- -->
+    <section class="counter" aria-label="From our counter">
+      <figure class="reveal"><img src="assets/juices.jpg" alt="Cold-pressed juices in a wooden crate" loading="lazy" width="783" height="580" /><figcaption>Cold-pressed juices</figcaption></figure>
+      <figure class="reveal"><img src="assets/lasagna.jpg" alt="Vegan lasagna with green beans" loading="lazy" width="219" height="300" /><figcaption>Lasagna</figcaption></figure>
+      <figure class="reveal"><img src="assets/berry-smoothie.jpg" alt="Berry smoothie" loading="lazy" width="733" height="1100" /><figcaption>Smoothies</figcaption></figure>
+      <figure class="reveal"><img src="assets/cheesecake.jpg" alt="Vegan lime cheesecake" loading="lazy" width="1400" height="933" /><figcaption>Raw cakes</figcaption></figure>
+    </section>
+
+    <!-- ---------- Histoire ---------- -->
+    <section class="story" id="story">
+      <img class="story-img reveal" src="assets/fresh-produce.jpg" alt="Fresh tomatoes, rocket, garlic and grains" loading="lazy" width="1008" height="876" />
+      <div class="story-copy reveal">
+        <h2 class="section-title">Family recipes, since 2009.</h2>
+        <p>Vege Rama started as one small café on Queen Street, opened by someone who couldn't find anywhere in Brisbane to eat the food she grew up with. In 2012 we opened on Adelaide Street, fully vegan from day one.</p>
+        <blockquote>
+          <p>"I taught myself to cook using my mother and grandmother's recipes and techniques."</p>
+          <cite>Ruchi, founder</cite>
+        </blockquote>
+        <p>Every day we still cook that way: fresh produce, no shortcuts, and a menu that keeps moving so the regulars never get bored.</p>
+      </div>
+    </section>
+
+    <!-- ---------- Traiteur et gâteaux ---------- -->
+    <section class="catering" id="catering">
+      <div class="catering-copy reveal">
+        <h2 class="section-title">Feeding the office?</h2>
+        <p>Plant-based lunch catering for meetings and events in the CBD, plus whole vegan cakes for birthdays and farewells. Tell us the date and the headcount, we'll do the rest.</p>
+        <a class="btn btn-light" href="mailto:enquiries@vegerama.com.au?subject=Catering%20enquiry">Ask about catering</a>
+      </div>
+      <img class="catering-img reveal" src="assets/catering.jpg" alt="A catering spread of salads and plates" loading="lazy" width="903" height="580" />
+    </section>
+
+    <!-- ---------- Visite ---------- -->
+    <section class="visit" id="visit">
+      <div class="visit-card reveal">
+        <h2 class="section-title">Come and grab lunch.</h2>
+        <address>Shop 1/241 Adelaide St<br />Brisbane City QLD 4000</address>
+        <p class="landmark">Right opposite ANZAC Square, a short walk from Central Station.</p>
+        <ul class="hours" aria-label="Opening hours">
+          <li data-day="1"><span>Monday</span><span>8am to 6pm</span></li>
+          <li data-day="2"><span>Tuesday</span><span>8am to 6pm</span></li>
+          <li data-day="3"><span>Wednesday</span><span>8am to 6pm</span></li>
+          <li data-day="4"><span>Thursday</span><span>8am to 6pm</span></li>
+          <li data-day="5"><span>Friday</span><span>8am to 6pm</span></li>
+          <li data-day="6"><span>Saturday</span><span>Closed</span></li>
+          <li data-day="0"><span>Sunday</span><span>Closed</span></li>
+        </ul>
+        <div class="visit-ctas">
+          <a class="btn btn-solid" href="https://www.google.com/maps/dir/?api=1&destination=Vege+Rama+241+Adelaide+St+Brisbane" rel="noopener">Get directions</a>
+          <a class="btn btn-ghost" href="tel:+61732117688">07 3211 7688</a>
+        </div>
+        <p class="contact"><a href="mailto:enquiries@vegerama.com.au">enquiries@vegerama.com.au</a> · <a href="https://www.instagram.com/vegerama/" rel="noopener">Instagram</a> · <a href="https://www.facebook.com/VegeRama/" rel="noopener">Facebook</a></p>
+      </div>
+      <div class="visit-map reveal">
+        <iframe title="Map of Vege Rama, 241 Adelaide St, Brisbane City" src="https://www.google.com/maps?q=Vege+Rama+241+Adelaide+St+Brisbane+City&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <img src="assets/logo.png" alt="Vege Rama" width="94" height="30" />
+    <p>Shop 1/241 Adelaide St, Brisbane City QLD 4000</p>
+    <p class="credit">Website by <a href="https://www.upscreen.agency" rel="noopener">UpScreen</a></p>
+  </footer>
+
+  <script src="vendor/lenis.min.js"></script>
+  <script src="vendor/motion.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

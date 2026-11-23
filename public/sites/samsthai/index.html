@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sam's Thai Kitchen | Thai takeaway and delivery, Fortitude Valley</title>
+  <meta name="description" content="Pad thai, curries and crispy pork cooked to order on Little Street, Fortitude Valley. Open every day 11am to 9pm. Pick up or delivery across inner Brisbane." />
+  <meta name="theme-color" content="#f6f4ee" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121612" media="(prefers-color-scheme: dark)" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/logo.png" />
+  <meta property="og:title" content="Sam's Thai Kitchen | Fortitude Valley" />
+  <meta property="og:description" content="Fresh Thai cooked to order. Open every day, 11am to 9pm." />
+  <meta property="og:image" content="assets/pad-thai.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Sam's Thai Kitchen",
+    "servesCuisine": "Thai",
+    "priceRange": "$",
+    "address": { "@type": "PostalAddress", "streetAddress": "1/15 Little St", "addressLocality": "Fortitude Valley", "addressRegion": "QLD", "postalCode": "4006", "addressCountry": "AU" },
+    "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "11:00", "closes": "21:00" }],
+    "hasMenu": "#menu"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Sam's Thai Kitchen, home">
+      <img src="assets/logo.png" alt="" width="40" height="40" />
+      <span>Sam's Thai Kitchen</span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#favourites">Favourites</a>
+      <a href="#menu">Menu</a>
+      <a href="#visit">Hours and pick up</a>
+    </nav>
+    <a class="btn btn-solid nav-cta" href="https://samsthaikitchen.yumbojumbo.com.au/menu" rel="noopener">Order online</a>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <h1 class="hero-title" data-hero>Fresh Thai, cooked to order in the Valley.</h1>
+        <p class="hero-sub" data-hero>Pad thai, curries and crispy pork from our little kitchen on Little Street. Open every day, 11am to 9pm.</p>
+        <div class="hero-ctas" data-hero>
+          <a class="btn btn-solid" href="https://samsthaikitchen.yumbojumbo.com.au/menu" rel="noopener">Order online</a>
+          <a class="btn btn-ghost" href="#menu">See the menu</a>
+        </div>
+      </div>
+      <div class="hero-mosaic" data-hero-media>
+        <img class="m-a" src="assets/pad-thai.jpg" alt="Pad thai with prawns, peanuts and spring onion" width="450" height="450" fetchpriority="high" />
+        <img class="m-b" src="assets/panang-curry.jpg" alt="Panang curry with tofu, red chilli and Thai basil" width="450" height="450" />
+        <img class="m-c" src="assets/crispy-pork-gai-lan.jpg" alt="Stir-fried gai lan with crispy pork" width="450" height="450" />
+      </div>
+    </section>
+
+    <section class="favourites" id="favourites">
+      <h2 class="section-title reveal">What everyone orders.</h2>
+      <ul class="fav-grid">
+        <li class="fav fav-wide reveal">
+          <img src="assets/pad-thai.jpg" alt="Pad thai" loading="lazy" width="450" height="450" />
+          <div><h3>Pad Thai <span lang="th">ผัดไทย</span></h3><p>Rice noodles, bean sprouts, shallots, peanuts</p><strong>$19.20</strong></div>
+        </li>
+        <li class="fav reveal">
+          <img src="assets/spring-rolls.jpg" alt="Vegetarian spring rolls" loading="lazy" width="450" height="450" />
+          <div><h3>Spring Rolls (V)</h3><p>Carrot, cabbage, celery, glass noodles</p><strong>$9.05</strong></div>
+        </li>
+        <li class="fav reveal">
+          <img src="assets/curry-puff.jpg" alt="Beef curry puffs" loading="lazy" width="225" height="225" />
+          <div><h3>Beef Curry Puff</h3><p>Beef mince, potato, corn, baby peas</p><strong>$10.05</strong></div>
+        </li>
+        <li class="fav reveal">
+          <img src="assets/pineapple-fried-rice.jpg" alt="Pineapple fried rice" loading="lazy" width="450" height="450" />
+          <div><h3>Pineapple Fried Rice</h3><p>Pineapple, egg, capsicum, a touch of curry</p><strong>$19.20</strong></div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="menu" id="menu">
+      <div class="menu-head">
+        <h2 class="section-title">The menu.</h2>
+        <div class="tabs" role="tablist" aria-label="Menu sections">
+          <button class="tab is-active" role="tab" aria-selected="true" aria-controls="p-entree" id="t-entree" data-panel="p-entree">Entrées</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="p-noodles" id="t-noodles" data-panel="p-noodles" tabindex="-1">Noodles and rice</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="p-curry" id="t-curry" data-panel="p-curry" tabindex="-1">Curries</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="p-pork" id="t-pork" data-panel="p-pork" tabindex="-1">Crispy pork</button>
+        </div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p-entree" aria-labelledby="t-entree">
+        <dl class="dishes">
+          <div><dt>Spring Rolls (V)</dt><dd>$9.05</dd></div>
+          <div><dt>Beef Curry Puff</dt><dd>$10.05</dd></div>
+          <div><dt>Homemade Fishcake</dt><dd>$10.05</dd></div>
+          <div><dt>Dimsum</dt><dd>$10.05</dd></div>
+          <div><dt>Chicken Satay</dt><dd>$10.05</dd></div>
+          <div><dt>Fried Meatballs</dt><dd>$11.10</dd></div>
+          <div><dt>Salt and Pepper Calamari</dt><dd>$13.10</dd></div>
+          <div><dt>Coconut Prawns</dt><dd>$13.10</dd></div>
+        </dl>
+      </div>
+      <div class="panel" role="tabpanel" id="p-noodles" aria-labelledby="t-noodles" hidden>
+        <dl class="dishes">
+          <div><dt>Pad Thai</dt><dd>$19.20</dd></div>
+          <div><dt>Pad See Eaw</dt><dd>$19.20</dd></div>
+          <div><dt>Rad Na</dt><dd>$19.20</dd></div>
+          <div><dt>Tom Yum Fried Rice</dt><dd>$19.20</dd></div>
+          <div><dt>Green Curry Fried Rice</dt><dd>$19.20</dd></div>
+          <div><dt>Braised Beef Noodle Soup</dt><dd>$19.20</dd></div>
+          <div><dt>Crab Fried Rice</dt><dd>$21.25</dd></div>
+          <div><dt>Laksa Seafood Noodles</dt><dd>$23.25</dd></div>
+        </dl>
+      </div>
+      <div class="panel" role="tabpanel" id="p-curry" aria-labelledby="t-curry" hidden>
+        <dl class="dishes">
+          <div><dt>Green Curry</dt><dd>$21.25</dd></div>
+          <div><dt>Red Curry</dt><dd>$21.25</dd></div>
+          <div><dt>Yellow Curry</dt><dd>$21.25</dd></div>
+          <div><dt>Massaman Curry</dt><dd>$21.25</dd></div>
+          <div><dt>Panang Curry</dt><dd>$21.25</dd></div>
+          <div><dt>Jungle Curry</dt><dd>$21.25</dd></div>
+        </dl>
+        <p class="note">Curries come without rice. Tell us your spice level when you order.</p>
+      </div>
+      <div class="panel" role="tabpanel" id="p-pork" aria-labelledby="t-pork" hidden>
+        <dl class="dishes">
+          <div><dt>Gai Lan with Crispy Pork</dt><dd>$23.25</dd></div>
+          <div><dt>Spicy Crispy Pork with Thai Herbs</dt><dd>$23.25</dd></div>
+          <div><dt>Morning Glory with Crispy Pork</dt><dd>$23.25</dd></div>
+          <div><dt>Crispy Pork with Garlic</dt><dd>$23.25</dd></div>
+          <div><dt>Thai Basil Crispy Pork</dt><dd>$23.25</dd></div>
+        </dl>
+      </div>
+      <a class="menu-more" href="https://samsthaikitchen.yumbojumbo.com.au/menu" rel="noopener">Full menu, soups and vegan dishes</a>
+    </section>
+
+    <section class="visit" id="visit">
+      <div class="visit-card reveal">
+        <h2 class="section-title">Open every day.</h2>
+        <p class="hours"><strong>11am to 9pm</strong>, Monday to Sunday</p>
+        <address>Shop 1, 15 Little St<br />Fortitude Valley QLD 4006</address>
+        <p>Pick up in store, or get it delivered across inner Brisbane, from New Farm to West End.</p>
+        <p class="note">A 15% surcharge applies on Queensland public holidays.</p>
+        <a class="btn btn-solid" href="https://maps.google.com/?q=Sams+Thai+Kitchen+15+Little+St+Fortitude+Valley" rel="noopener">Get directions</a>
+      </div>
+      <div class="visit-map reveal">
+        <iframe title="Map of Sam's Thai Kitchen, 15 Little Street, Fortitude Valley" src="https://maps.google.com/maps?q=15%20Little%20St%2C%20Fortitude%20Valley%20QLD%204006&z=17&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Sam's Thai Kitchen, 1/15 Little St, Fortitude Valley</p>
+    <p class="credit">Website by <a href="https://www.upscreen.agency" rel="noopener">UpScreen</a></p>
+  </footer>
+
+  <script src="vendor/lenis.min.js"></script>
+  <script src="vendor/motion.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

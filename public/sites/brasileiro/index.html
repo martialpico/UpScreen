@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>O Brasileiro — A Taste of Brazil in Brisbane</title>
+  <meta name="description" content="O Brasileiro brings a piece of Brazil to the heart of Brisbane City. Authentic feijoada, PF plates, coxinhas, açaí & caipirinhas. Breakfast, lunch & dinner on Adelaide St." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="icon" href="assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png" />
+  <meta name="theme-color" content="#0e1410" />
+
+  <!-- Social share preview (WhatsApp, Instagram, Facebook, iMessage…).
+       At deploy: replace the relative image path with the absolute URL, e.g. https://www.obrasileiro.com.au/assets/og-image.jpg,
+       and add <link rel="canonical" href="https://YOUR-DOMAIN/" /> -->
+  <meta property="og:type" content="restaurant" />
+  <meta property="og:site_name" content="O Brasileiro" />
+  <meta property="og:title" content="O Brasileiro — A Taste of Brazil in Brisbane" />
+  <meta property="og:description" content="Feijoada, PF plates, coxinhas, açaí &amp; caipirinhas on Adelaide St, Brisbane City. Breakfast, lunch &amp; dinner." />
+  <meta property="og:image" content="assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_AU" />
+  <meta property="og:locale:alternate" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Local SEO: Google reads this to show hours, address & cuisine in search and Maps -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "O Brasileiro",
+    "description": "Handmade Brazilian food in Brisbane City: feijoada, PF plates, coxinhas, açaí and caipirinhas.",
+    "image": "assets/og-image.jpg",
+    "servesCuisine": ["Brazilian", "South American"],
+    "priceRange": "$$",
+    "telephone": "+61452517270",
+    "acceptsReservations": "https://www.quandoo.com.au/place/o-brasileiro-61662/about",
+    "hasMenu": "#menu",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1/270 Adelaide St",
+      "addressLocality": "Brisbane City",
+      "addressRegion": "QLD",
+      "postalCode": "4000",
+      "addressCountry": "AU"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": -27.4657894, "longitude": 153.0282407 },
+    "openingHoursSpecification": [
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], "opens": "07:00", "closes": "15:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday", "Sunday"], "opens": "11:00", "closes": "15:00" },
+      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Friday", "Saturday"], "opens": "17:30", "closes": "21:30" }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/obrasileirorestaurant/",
+      "https://www.facebook.com/obrasileirobrisbane/"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- ============ INTRO SPLASH (green curtain that splits open) ============ -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-panel intro-left"></div>
+    <div class="intro-panel intro-right"></div>
+    <div class="intro-logo">
+      <div class="intro-bird" role="img" aria-label="O Brasileiro — handmade Brazilian food">
+        <img class="il-layer il-base" src="assets/intro-logo-base.png" alt="O Brasileiro" />
+        <img class="il-layer il-wing" src="assets/intro-logo-wing.png" alt="" aria-hidden="true" />
+        <img class="il-layer il-beak" src="assets/intro-logo-beak.png" alt="" aria-hidden="true" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a href="#top" class="brand" aria-label="O Brasileiro — handmade Brazilian food">
+      <img class="brand-toucan" src="assets/toucan.svg" alt="" aria-hidden="true" />
+      <span class="brand-lockup">
+        <span class="brand-name">O Brasileiro</span>
+        <span class="brand-tag">Handmade Brazilian Food</span>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="#story">Story</a>
+      <a href="#signatures">Signatures</a>
+      <a href="#menu">Menu</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <div class="nav-cta">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-btn is-active" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" class="lang-btn" data-lang="pt" aria-pressed="false">PT</button>
+      </div>
+      <a href="https://www.quandoo.com.au/place/o-brasileiro-61662/about" target="_blank" rel="noopener" class="btn btn-ghost">Book a table</a>
+      <a href="https://www.ubereats.com/au/store/o-brasileiro/SuOqdRQpQUimZXNnLKGobA" target="_blank" rel="noopener" class="btn btn-solid">Order online</a>
+      <button type="button" class="nav-burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <i></i><i></i><i></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ MOBILE MENU (≤880px) ============ -->
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav class="mm-links" aria-label="Mobile">
+      <a href="#story">Story</a>
+      <a href="#signatures">Signatures</a>
+      <a href="#menu">Menu</a>
+      <a href="#visit">Visit</a>
+      <a href="#reviews">Reviews</a>
+    </nav>
+    <p class="open-status" data-open-status></p>
+    <div class="mm-cta">
+      <a href="https://www.quandoo.com.au/place/o-brasileiro-61662/about" target="_blank" rel="noopener" class="btn btn-solid">Book a table</a>
+      <a href="https://www.ubereats.com/au/store/o-brasileiro/SuOqdRQpQUimZXNnLKGobA" target="_blank" rel="noopener" class="btn btn-ghost">Order online</a>
+    </div>
+  </div>
+
+  <!-- ============ MOBILE ACTION BAR (always in thumb reach) ============ -->
+  <nav class="action-bar" aria-label="Quick actions">
+    <a href="tel:+61452517270"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg><span>Call</span></a>
+    <a href="https://www.quandoo.com.au/place/o-brasileiro-61662/about" target="_blank" rel="noopener" class="ab-main"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm-2 8h14v10H5z"/></svg><span>Book a table</span></a>
+    <a href="https://www.ubereats.com/au/store/o-brasileiro/SuOqdRQpQUimZXNnLKGobA" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4V2h10v2h3a1 1 0 0 1 1 1.1l-1.6 14.2A3 3 0 0 1 16.4 22H7.6a3 3 0 0 1-3-2.7L3 5.1A1 1 0 0 1 4 4zm2 0h6V3.5H9z"/></svg><span>Order</span></a>
+  </nav>
+
+  <span id="top"></span>
+
+  <!-- ============ HERO — cinematic scrub ============ -->
+  <section class="cinematic" id="hero">
+    <div class="sticky">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-vignette"></div>
+
+      <div class="hero-overlay">
+        <p class="hero-eyebrow reveal-line" data-in="0.00" data-out="0.26">Bem-vindo. A little corner of Brazil, right in Brisbane City.</p>
+        <h1 class="hero-title">
+          <span class="reveal-line" data-in="0.00" data-out="0.30">A piece of Brazil,</span>
+          <span class="reveal-line" data-in="0.30" data-out="0.62">slow-cooked with saudade.</span>
+          <span class="reveal-line accent" data-in="0.64" data-out="1.00">Feijoada like home.</span>
+        </h1>
+      </div>
+
+      <div class="hero-readout" id="hero-readout">FEIJOADA · panela de barro</div>
+      <div class="scroll-hint" id="scroll-hint"><span>Scroll</span><i></i></div>
+    </div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section class="story" id="story">
+    <img class="deco deco-leaf deco-story-leaf deco-float" src="assets/deco-leaf.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-lime deco-story-lime deco-float-slow" src="assets/deco-lime.svg" alt="" aria-hidden="true" />
+    <span class="neon neon-green nz-a" aria-hidden="true"></span>
+    <span class="neon neon-gold nz-b" aria-hidden="true"></span>
+    <img class="deco deco-vine deco-vine-left" src="assets/deco-vine.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-a" src="assets/deco-coffee.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-b spin-rev" src="assets/deco-brigadeiro.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-e spin-fast" src="assets/deco-chili.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-h spin-slow" src="assets/deco-banana.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-d spin-rev" src="assets/deco-acai.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-f spin-fast" src="assets/deco-paoqueijo.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-g" src="assets/deco-orange.svg" alt="" aria-hidden="true" />
+    <div class="story-inner">
+      <div class="story-copy">
+      <p class="kicker fm-reveal">Nossa história</p>
+      <h2 class="fm-reveal">Born in Brazil. <em>Brisbane is home now.</em></h2>
+      <p class="lede fm-reveal">
+        O Brasileiro started with a simple kind of homesickness: the smell of black beans
+        simmering all morning, the crackle of <em>torresmo</em>, a café com leite that tastes
+        like Sunday. We bottled that feeling and set it down in the middle of the city, on
+        Adelaide Street.
+      </p>
+      <p class="fm-reveal">
+        Everything is cooked the way our families cook it: rump cap grilled to order, farofa
+        toasted golden, açaí blended thick and cold. No shortcuts, no fuss, just generous,
+        honest Brazilian food from morning coffee to late-night caipirinha.
+      </p>
+      <div class="story-stats">
+        <div class="stat fm-reveal"><b class="stat-num" data-count="100" data-suffix="%">0%</b><span>Authentic recipes</span></div>
+        <div class="stat fm-reveal"><b class="stat-num" data-count="7" data-suffix="am">0</b><span>Coffee from</span></div>
+        <div class="stat fm-reveal"><b>Brisbane</b><span>270 Adelaide St · CBD</span></div>
+        <div class="stat stat-rating fm-reveal">
+          <b class="stars" aria-hidden="true">★★★★★</b>
+          <span>4.8 Google rating</span>
+        </div>
+      </div>
+      </div>
+      <figure class="story-media fm-reveal">
+        <img src="assets/venue-interior.jpg" alt="Inside O Brasileiro — the counter, warm wood and green neon on Adelaide St, Brisbane" loading="lazy" />
+        <figcaption>Our room on Adelaide St — warm wood, green neon, fresh pastéis on the counter.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ FOLIAGE DIVIDER (one thin leafy vine, centred on the seam) ============ -->
+  <div class="vine-divider fm-reveal" aria-hidden="true">
+    <img class="vine-line" src="assets/vine-line.svg" alt="" loading="lazy" />
+  </div>
+
+  <!-- ============ SIGNATURES ============ -->
+  <section class="signatures" id="signatures">
+    <img class="deco deco-pineapple deco-reveal" src="assets/deco-pineapple.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-lime deco-sig-lime deco-float" src="assets/deco-lime.svg" alt="" aria-hidden="true" />
+    <span class="neon neon-gold nz-a" aria-hidden="true"></span>
+    <span class="neon neon-green nz-b" aria-hidden="true"></span>
+    <img class="deco deco-vine deco-vine-right" src="assets/deco-vine.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-b spin-slow" src="assets/deco-coxinha.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-c spin-rev" src="assets/deco-acai.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-d" src="assets/deco-orange.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-g spin-fast" src="assets/deco-paoqueijo.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-a spin-rev" src="assets/deco-coffee.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-f" src="assets/deco-brigadeiro.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-h spin-slow" src="assets/deco-chili.svg" alt="" aria-hidden="true" />
+    <div class="sec-head">
+      <p class="kicker fm-reveal">Pratos que contam história</p>
+      <h2 class="fm-reveal">The dishes people come back for</h2>
+    </div>
+    <div class="sig-grid">
+      <article class="sig-card sig-feature fm-reveal">
+        <div class="sig-media"><img id="img-pf" src="assets/pf.jpg" alt="Brazilian PF plate" loading="lazy" /></div>
+        <div class="sig-body">
+          <span class="sig-tag">Most loved</span>
+          <h3>Brazilian PF</h3>
+          <p>Grilled rump cap or chicken with rice, brown beans, golden farofa, fried plantain & fresh salad. The everyday Brazilian plate, done right.</p>
+          <span class="sig-price">$27.90</span>
+        </div>
+      </article>
+      <article class="sig-card fm-reveal">
+        <div class="sig-media"><img id="img-coxinha" src="assets/coxinha.jpg" alt="Coxinha snacks" loading="lazy" /></div>
+        <div class="sig-body">
+          <h3>Coxinha</h3>
+          <p>Shredded chicken & cream cheese in golden fried dough.</p>
+          <span class="sig-price">$8.90</span>
+        </div>
+      </article>
+      <article class="sig-card fm-reveal">
+        <div class="sig-media"><img id="img-acai" src="assets/acai.jpg" alt="Açaí bowl" loading="lazy" /></div>
+        <div class="sig-body">
+          <h3>Açaí Bowl</h3>
+          <p>Thick açaí, fresh fruit, granola & honey. (DF, VG)</p>
+          <span class="sig-price">$18</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ MENU ============ -->
+  <section class="menu" id="menu">
+    <img class="deco deco-leaf deco-menu-leaf deco-float-slow" src="assets/deco-leaf.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-pineapple deco-menu-pine deco-reveal" src="assets/deco-pineapple.svg" alt="" aria-hidden="true" />
+    <span class="neon neon-green nz-c" aria-hidden="true"></span>
+    <span class="neon neon-terra nz-b" aria-hidden="true"></span>
+    <img class="deco deco-vine deco-vine-left" src="assets/deco-vine.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-a spin-rev" src="assets/deco-brigadeiro.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-c spin-slow" src="assets/deco-banana.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-e" src="assets/deco-orange.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-h spin-fast" src="assets/deco-chili.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-b" src="assets/deco-coxinha.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-f spin-rev" src="assets/deco-acai.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-g spin-slow" src="assets/deco-coffee.svg" alt="" aria-hidden="true" />
+    <div class="sec-head">
+      <p class="kicker fm-reveal">A mesa está posta</p>
+      <h2 class="fm-reveal">The full menu</h2>
+      <p class="menu-note fm-reveal">Served fresh on Adelaide St. Please advise staff of any allergies · 15% surcharge on public holidays.</p>
+    </div>
+
+    <div class="menu-tabs" role="tablist" aria-label="Menu sections">
+      <button class="tab is-active" data-tab="breakfast" role="tab" id="tab-breakfast" aria-controls="panel-breakfast" aria-selected="true">Breakfast &amp; Snacks</button>
+      <button class="tab" data-tab="mains" role="tab" id="tab-mains" aria-controls="panel-mains" aria-selected="false" tabindex="-1">PF &amp; Mains</button>
+      <button class="tab" data-tab="sharing" role="tab" id="tab-sharing" aria-controls="panel-sharing" aria-selected="false" tabindex="-1">Sharing &amp; Sides</button>
+      <button class="tab" data-tab="drinks" role="tab" id="tab-drinks" aria-controls="panel-drinks" aria-selected="false" tabindex="-1">Drinks</button>
+      <button class="tab" data-tab="sweets" role="tab" id="tab-sweets" aria-controls="panel-sweets" aria-selected="false" tabindex="-1">Sweets</button>
+    </div>
+    <p class="menu-hint">Tap a dish to see it up close.</p>
+
+    <!-- BREAKFAST -->
+    <div class="menu-panel is-active" data-panel="breakfast" role="tabpanel" id="panel-breakfast" aria-labelledby="tab-breakfast">
+      <div class="menu-cols">
+        <div class="menu-group">
+          <h3>Breakfast <span>until 11am</span></h3>
+          <ul>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/pao-na-chapa.webp" width="58" height="58" decoding="async" alt="Toast Pão na Chapa" loading="lazy" /><div><b>Toast · Pão na Chapa</b><i>Brazilian bread roll or sourdough with butter. Add spread +$1</i></div><span>$7.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/misto-quente.webp" width="58" height="58" decoding="async" alt="Misto Quente" loading="lazy" /><div><b>Ham &amp; Cheese · Misto Quente</b><i>Brazilian roll, ham &amp; cheese. Veg option with requeijão</i></div><span>$11.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/mortadela.webp" width="58" height="58" decoding="async" alt="Mortadela Roll" loading="lazy" /><div><b>Mortadela Roll · Pão com Mortadela</b><i>Brazilian roll with mortadella &amp; cheese</i></div><span>$12.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/eggs-roll.webp" width="58" height="58" decoding="async" alt="Eggs Roll" loading="lazy" /><div><b>Eggs Roll · Pão com Ovo</b><i>Roll with 2 eggs your way. Add bacon &amp; cheese +$6</i></div><span>$13.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/smashed-avo.webp" width="58" height="58" decoding="async" alt="Smashed Avo" loading="lazy" /><div><b>Smashed Avo · Abacate no Pão</b><i>Sourdough, smashed avo, 2 eggs &amp; requeijão (V)</i></div><span>$16.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/big-brekkie.webp" width="58" height="58" decoding="async" alt="Big Brekkie" loading="lazy" /><div><b>Big Brekkie</b><i>2 eggs, bacon, mushroom with onions &amp; avocado</i></div><span>$22.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/brazilian-brekkie.webp" width="58" height="58" decoding="async" alt="Brazilian Brekkie" loading="lazy" /><div><b>Brazilian Brekkie</b><i>2 eggs, ham, halloumi, requeijão &amp; 2 cheese breads</i></div><span>$23.90</span></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <h3>Snacks <span>all day</span></h3>
+          <ul>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/coxinha.webp" width="58" height="58" decoding="async" alt="Coxinha" loading="lazy" /><div><b>Coxinha</b><i>Shredded chicken &amp; cream cheese, fried</i></div><span>$8.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/bolinha-carne-seca.webp" width="58" height="58" decoding="async" alt="Bolinha de Carne Seca" loading="lazy" /><div><b>Bolinha de Carne Seca</b><i>Jerk beef &amp; cream cheese, fried</i></div><span>$8.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/bolinha-queijo.webp" width="58" height="58" decoding="async" alt="Bolinha de Queijo" loading="lazy" /><div><b>Bolinha de Queijo</b><i>Mozzarella, cream cheese &amp; oregano, fried (V)</i></div><span>$8.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/pao-de-queijo.webp" width="58" height="58" decoding="async" alt="Pão de Queijo" loading="lazy" /><div><b>Pão de Queijo</b><i>Brazilian cheese bread (GF)</i></div><span>$4.90</span></li>
+          </ul>
+          <h3>Açaí</h3>
+          <ul>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/acai.webp" width="58" height="58" decoding="async" alt="Açaí bowl" loading="lazy" /><div><b>Açaí Bowl</b><i>Açaí, banana &amp; berries, topped with fruit, granola &amp; honey (DF, VG)</i></div><span>$18</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/acai-smoothie.webp" width="58" height="58" decoding="async" alt="Açaí smoothie" loading="lazy" /><div><b>Açaí Smoothie</b><i>Blended with banana &amp; berries (DF)</i></div><span>$13</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAINS -->
+    <div class="menu-panel" data-panel="mains" role="tabpanel" id="panel-mains" aria-labelledby="tab-mains">
+      <div class="menu-cols">
+        <div class="menu-group">
+          <h3>Main dishes <span>PF · prato feito</span></h3>
+          <ul>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/pf.webp" width="58" height="58" decoding="async" alt="Brazilian PF plate" loading="lazy" /><div><b>Brazilian PF</b><i>Rump cap or chicken, rice, brown beans, chips, farofa &amp; salad</i></div><span>$27.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/feijoada.webp" width="58" height="58" decoding="async" alt="Feijoada" loading="lazy" /><div><b>Feijoada</b><i>Black beans with pork, bacon, ribs, jerk beef &amp; chorizo, rice, kale, crispy pork belly &amp; vinagrete</i></div><span>$29.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/feijao-tropeiro.webp" width="58" height="58" decoding="async" alt="Feijão Tropeiro" loading="lazy" /><div><b>Feijão Tropeiro</b><i>Brown beans with chorizo, bacon, eggs &amp; farofa, rice, cassava croquette &amp; kale. Veg/Vegan option</i></div><span>$29.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/escondidinho.webp" width="58" height="58" decoding="async" alt="Escondidinho" loading="lazy" /><div><b>Escondidinho</b><i>Cream of cassava filled with jerk beef, chicken or palm heart, rice, beans, farofa &amp; salad</i></div><span>$27.90</span></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <h3>Rump cap &amp; your way</h3>
+          <ul>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/rump-onions.webp" width="58" height="58" decoding="async" alt="Rump cap with onions" loading="lazy" /><div><b>Rump Cap with Onions</b><i>Rump cap or chicken with fried onions &amp; all the sides</i></div><span>$27.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/rump-garlic.webp" width="58" height="58" decoding="async" alt="Garlic rump cap" loading="lazy" /><div><b>Garlic Rump Cap</b><i>Topped with garlic, rice, beans, chips, farofa &amp; salad</i></div><span>$27.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/rump-4cheese.webp" width="58" height="58" decoding="async" alt="Rump cap 4 cheese" loading="lazy" /><div><b>Rump Cap 4 Cheese</b><i>Topped with four-cheese sauce</i></div><span>$28.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/pf-your-way.webp" width="58" height="58" decoding="async" alt="PF your way" loading="lazy" /><div><b>PF Your Way</b><i>Choose 1 protein + 2 sides. Extra side $1.50</i></div><span>$24.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/veg-pf.webp" width="58" height="58" decoding="async" alt="Vegetarian PF" loading="lazy" /><div><b>Vegetarian PF</b><i>Palm heart, mushroom with onions or halloumi</i></div><span>$26.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/pf-kids.webp" width="58" height="58" decoding="async" alt="PF kids" loading="lazy" /><div><b>PF Kids</b><i>Rump cap or chicken, rice, beans, chips &amp; farofa (up to 10 yo)</i></div><span>$16.90</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SHARING & SIDES -->
+    <div class="menu-panel" data-panel="sharing" role="tabpanel" id="panel-sharing" aria-labelledby="tab-sharing">
+      <div class="menu-cols">
+        <div class="menu-group">
+          <h3>Sharing <span>dinner · for the table</span></h3>
+          <ul>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/chefs-board.webp" width="58" height="58" decoding="async" alt="Chef's Board" loading="lazy" /><div><b>Chef's Board</b><i>Rump cap, 4 cheese, bread roll &amp; chips. Veg option available</i></div><span>$65.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/rump-4cheese-board.webp" width="58" height="58" decoding="async" alt="Rump Cap &amp; 4 Cheese Board" loading="lazy" /><div><b>Rump Cap &amp; 4 Cheese Board</b><i>With bread roll &amp; chips</i></div><span>$35.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/chorizo-rump-board.webp" width="58" height="58" decoding="async" alt="Chorizo &amp; Rump Cap Board" loading="lazy" /><div><b>Chorizo &amp; Rump Cap Board</b><i>With fried onions, bread roll &amp; chips</i></div><span>$35.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/bowl-chips.webp" width="58" height="58" decoding="async" alt="Bowl of Chips" loading="lazy" /><div><b>Bowl of Chips</b><i>With aioli. Add 4 cheese +$5</i></div><span>$12.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/cassava-chips.webp" width="58" height="58" decoding="async" alt="Cassava Chips" loading="lazy" /><div><b>Cassava Chips</b><i>With green mayo</i></div><span>$12.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/mozzarella-sticks.webp" width="58" height="58" decoding="async" alt="Mozzarella Sticks" loading="lazy" /><div><b>Mozzarella Sticks</b><i>With guava jam</i></div><span>$12.90</span></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <h3>Sides</h3>
+          <ul class="menu-mini">
+            <li><div><b>Picanha · Rump Cap</b></div><span>$14.90</span></li>
+            <li><div><b>Feijão Tropeiro</b></div><span>$14.90</span></li>
+            <li><div><b>Frango · Chicken Fillet</b></div><span>$11.90</span></li>
+            <li><div><b>Torresmo · Crispy Pork Belly</b></div><span>$9</span></li>
+            <li><div><b>Palmito · Palm Heart</b></div><span>$8</span></li>
+            <li><div><b>Mushroom with Onions</b></div><span>$8</span></li>
+            <li><div><b>Halloumi · 3 units</b></div><span>$9</span></li>
+            <li><div><b>Salad with Vinagrete</b></div><span>$7</span></li>
+            <li><div><b>Potato Mayo Salad</b></div><span>$7</span></li>
+            <li><div><b>Kale · Eggs</b><i>each</i></div><span>$7</span></li>
+            <li><div><b>Cassava Croquette</b></div><span>$7</span></li>
+            <li><div><b>Fries</b></div><span>$6</span></li>
+            <li><div><b>4 Cheese Sauce</b></div><span>$6</span></li>
+            <li><div><b>Vinagrete · Brazilian salsa</b></div><span>$5</span></li>
+            <li><div><b>Rice · Brown Beans · Black Beans</b><i>each</i></div><span>$5</span></li>
+            <li><div><b>Farofa · cassava flour</b></div><span>$4</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRINKS -->
+    <div class="menu-panel" data-panel="drinks" role="tabpanel" id="panel-drinks" aria-labelledby="tab-drinks">
+      <div class="menu-cols menu-cols-3">
+        <div class="menu-group">
+          <h3>Cocktail &amp; cold</h3>
+          <ul class="menu-mini">
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/caipirinha.webp" width="58" height="58" decoding="async" alt="Caipirinha" loading="lazy" /><div><b>Caipirinha</b><i>Cachaça, sugar &amp; lime. The Brazilian national cocktail</i></div><span>$17</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/guarana.webp" width="58" height="58" decoding="async" alt="Guaraná" loading="lazy" /><div><b>Guaraná</b></div><span>$4.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/cha-mate.webp" width="58" height="58" decoding="async" alt="Chá Mate" loading="lazy" /><div><b>Chá Mate</b><i>house-made iced tea</i></div><span>$6.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/iced-tea.webp" width="58" height="58" decoding="async" alt="Peach &amp; Lemon Iced Tea" loading="lazy" /><div><b>Peach / Lemon Iced Tea</b></div><span>$4.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/softdrinks.webp" width="58" height="58" decoding="async" alt="Soft drinks" loading="lazy" /><div><b>Coke · Zero · Fanta · Sprite</b></div><span>$4.50</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/ginger-beer.webp" width="58" height="58" decoding="async" alt="Ginger Beer" loading="lazy" /><div><b>Ginger Beer · Red Bull</b></div><span>$4.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/sparkling-water.webp" width="58" height="58" decoding="async" alt="Sparkling Water" loading="lazy" /><div><b>Spring / Sparkling Water</b></div><span>$3.50</span></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <h3>Beer, cider &amp; wine</h3>
+          <ul class="menu-mini">
+            <li><div><b>Brahma · Original</b></div><span>$11</span></li>
+            <li><div><b>Stone &amp; Wood</b></div><span>$10</span></li>
+            <li><div><b>Corona · Heineken · Stella</b></div><span>$9</span></li>
+            <li><div><b>Cider · apple / pear</b></div><span>$9</span></li>
+            <li><div><b>Sauvignon Blanc</b><i>glass / bottle</i></div><span>$13 / $49</span></li>
+            <li><div><b>Shiraz</b><i>glass / bottle</i></div><span>$13 / $49</span></li>
+          </ul>
+        </div>
+        <div class="menu-group">
+          <h3>Coffee &amp; juices</h3>
+          <ul class="menu-mini">
+            <li><div><b>Flat White · Latte · Cappuccino</b></div><span>$4.90</span></li>
+            <li><div><b>Mocha</b></div><span>$5.50</span></li>
+            <li><div><b>Espresso · Cafezinho · Pingado</b></div><span>$4</span></li>
+            <li><div><b>Orange · Guava Juice</b></div><span>$7</span></li>
+            <li><div><b>Green · Carrot &amp; Ginger</b></div><span>$6.50</span></li>
+            <li><div><b>Apple · Lemonade Juice</b></div><span>$6.50</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWEETS -->
+    <div class="menu-panel" data-panel="sweets" role="tabpanel" id="panel-sweets" aria-labelledby="tab-sweets">
+      <div class="menu-cols">
+        <div class="menu-group">
+          <h3>Sweets <span>doces</span></h3>
+          <ul>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/pudim.webp" width="58" height="58" decoding="async" alt="Pudim" loading="lazy" /><div><b>Pudim</b><i>Silky cream caramel pudim (GF)</i></div><span>$8.90</span></li>
+            <li class="m-item"><img class="m-thumb" src="assets/thumbs/brigadeiro.webp" width="58" height="58" decoding="async" alt="Brigadeiro" loading="lazy" /><div><b>Brigadeiro</b><i>Sweet ball of condensed milk &amp; cocoa (GF)</i></div><span>$4.90</span></li>
+          </ul>
+          <p class="menu-foot">More desserts on the front display, just ask our team.</p>
+        </div>
+        <div class="menu-group menu-sweet-media">
+          <img id="img-sweets" src="assets/sweets.jpg" alt="Brazilian desserts" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="gallery" id="gallery">
+    <img class="deco deco-food df-a spin-slow" src="assets/deco-coffee.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-d spin-rev" src="assets/deco-acai.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-e spin-fast" src="assets/deco-coxinha.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-h" src="assets/deco-paoqueijo.svg" alt="" aria-hidden="true" />
+    <div class="gal-item gal-tall fm-reveal"><img id="img-room" src="assets/g-left.jpg" alt="Inside O Brasileiro — warm wood, plants and the counter on Adelaide St, Brisbane" loading="lazy" /><span>Our room</span></div>
+    <div class="gal-item fm-reveal"><img id="img-counter" src="assets/g-mid.jpg" alt="The O Brasileiro counter — coxinhas, pão de queijo and fresh salgados in the display" loading="lazy" /><span>Fresh on the counter</span></div>
+    <div class="gal-item fm-reveal"><img id="img-guests" src="assets/g-right.jpg" alt="Happy guests with drinks and a PF plate at O Brasileiro, Brisbane" loading="lazy" /><span>Bom apetite</span></div>
+  </section>
+
+  <!-- ============ VISIT ============ -->
+  <section class="visit" id="visit">
+    <img class="deco deco-food df-a spin-rev" src="assets/deco-banana.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-c spin-fast" src="assets/deco-orange.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-f spin-slow" src="assets/deco-brigadeiro.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-g" src="assets/deco-chili.svg" alt="" aria-hidden="true" />
+    <span class="neon neon-gold nz-a" aria-hidden="true"></span>
+    <span class="neon neon-green nz-b" aria-hidden="true"></span>
+    <img class="deco deco-vine deco-vine-right" src="assets/deco-vine.svg" alt="" aria-hidden="true" />
+    <div class="visit-inner">
+      <div class="visit-info">
+        <p class="kicker fm-reveal">Venha nos visitar</p>
+        <h2 class="fm-reveal">Find us in the city</h2>
+        <div class="visit-grid">
+          <div class="fm-reveal">
+            <h3>Hours</h3>
+            <p class="open-status" data-open-status></p>
+            <ul class="hours">
+              <li data-days="1,2,3,4"><span class="hours-day">Mon–Thu</span><span>7am – 3pm</span></li>
+              <li data-days="5"><span class="hours-day">Fri</span><span>7am – 3pm · 5:30 – 9:30pm</span></li>
+              <li data-days="6"><span class="hours-day">Sat</span><span>11am – 3pm · 5:30 – 9:30pm</span></li>
+              <li data-days="0"><span class="hours-day">Sun</span><span>11am – 3pm</span></li>
+            </ul>
+          </div>
+          <div class="fm-reveal">
+            <h3>Where</h3>
+            <p>1/270 Adelaide St<br/>Brisbane City QLD 4000<br/>
+               <a href="tel:+61452517270">0452 517 270</a></p>
+          </div>
+        </div>
+        <div class="visit-cta fm-reveal">
+          <a href="https://www.quandoo.com.au/place/o-brasileiro-61662/about" target="_blank" rel="noopener" class="btn btn-solid">Book a table</a>
+          <a href="https://www.ubereats.com/au/store/o-brasileiro/SuOqdRQpQUimZXNnLKGobA" target="_blank" rel="noopener" class="btn btn-ghost">Order on Uber Eats</a>
+          <a href="https://www.google.com/maps/place/O+Brasileiro/@-27.4657894,153.0282407,17z" target="_blank" rel="noopener" class="btn btn-ghost">Get directions</a>
+        </div>
+      </div>
+      <div class="visit-media visit-map fm-reveal">
+        <iframe
+          title="O Brasileiro on Google Maps — 270 Adelaide St, Brisbane City"
+          src="https://www.google.com/maps?q=O%20Brasileiro%2C%201%2F270%20Adelaide%20St%2C%20Brisbane%20City%20QLD%204000&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+        <a class="visit-map-link" href="https://www.google.com/maps/place/O+Brasileiro/@-27.4657894,153.0282407,17z" target="_blank" rel="noopener">Open in Google Maps ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REVIEWS ============ -->
+  <section class="reviews" id="reviews">
+    <img class="deco deco-food df-b spin-slow" src="assets/deco-coffee.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-e spin-rev" src="assets/deco-acai.svg" alt="" aria-hidden="true" />
+    <img class="deco deco-food df-h spin-fast" src="assets/deco-paoqueijo.svg" alt="" aria-hidden="true" />
+    <span class="neon neon-gold nz-a" aria-hidden="true"></span>
+    <span class="neon neon-green nz-b" aria-hidden="true"></span>
+    <img class="deco deco-vine deco-vine-left" src="assets/deco-vine.svg" alt="" aria-hidden="true" />
+    <div class="sec-head">
+      <p class="kicker fm-reveal">O que dizem por aí</p>
+      <h2 class="fm-reveal">Loved by Brisbane</h2>
+      <div class="reviews-score fm-reveal">
+        <b class="stars" aria-hidden="true">★★★★★</b>
+        <span><strong>4.8</strong> out of 5 on Google</span>
+      </div>
+      <p class="reviews-note fm-reveal">What guests mention most in their reviews:</p>
+    </div>
+    <!-- Owner: to show real guest quotes here, copy them from Google with the author's
+         permission (name + date + source). Never publish invented reviews (ACCC rules). -->
+    <div class="reviews-grid">
+      <article class="review-card fm-reveal">
+        <h3>Generous Brazilian plates</h3>
+        <p>PF plates and feijoada served the way they are at home: big portions, slow-cooked, nothing held back.</p>
+      </article>
+      <article class="review-card fm-reveal">
+        <h3>Friendly, quick service</h3>
+        <p>A warm team that knows its regulars and gets you fed on a CBD lunch break.</p>
+      </article>
+      <article class="review-card fm-reveal">
+        <h3>Worth arriving early</h3>
+        <p>Lunch fills up fast. Come a little before midday, or book a table for Friday and Saturday dinner.</p>
+      </article>
+    </div>
+    <div class="reviews-cta fm-reveal">
+      <a href="https://www.google.com/maps/place/O+Brasileiro/@-27.4657894,153.0282407,17z" target="_blank" rel="noopener" class="btn btn-ghost">Read all reviews on Google ↗</a>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="brand brand-lg" aria-label="O Brasileiro">
+        <img class="brand-toucan" src="assets/toucan.svg" alt="" aria-hidden="true" />
+        <span class="brand-lockup">
+          <span class="brand-name">O Brasileiro</span>
+          <span class="brand-tag">Handmade Brazilian Food</span>
+        </span>
+      </div>
+      <p>A piece of Brazil in the heart of Brisbane.</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/obrasileirorestaurant/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/obrasileirobrisbane/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.ubereats.com/au/store/o-brasileiro/SuOqdRQpQUimZXNnLKGobA" target="_blank" rel="noopener">Uber Eats</a>
+      <a href="https://www.doordash.com/store/o-brasileiro-brisbane-city-958814/" target="_blank" rel="noopener">DoorDash</a>
+      <a href="tel:+61452517270">Call us</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 O Brasileiro · 270 Adelaide St, Brisbane City</span>
+      <span>Obrigado · feito com carinho</span>
+    </div>
+  </footer>
+
+  <!-- ============ DISH VIEWER (tap / click a menu item) ============ -->
+  <dialog class="dish-dialog" id="dish-dialog" aria-labelledby="dd-name">
+    <div class="dd-card">
+      <button type="button" class="dd-close" aria-label="Close"><span aria-hidden="true">×</span></button>
+      <div class="dd-media"><img id="dd-img" alt="" /></div>
+      <div class="dd-body">
+        <h3 id="dd-name"></h3>
+        <p id="dd-desc"></p>
+        <span class="dd-price" id="dd-price"></span>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Lenis smooth scroll (vendored locally; optional) + engine -->
+  <script src="vendor/lenis.min.js"></script>
+  <!-- framer-motion's standalone engine ("motion", vendored locally → works offline / file://) -->
+  <script src="vendor/motion.min.js"></script>
+  <script>
+    // Scroll-scrubbed hero config (frames extracted from the feijoada turntable clip, 4K master).
+    // The engine picks the lightest set that stays sharp on the visitor's screen:
+    // portrait crop for phones, then 1080p / 1440p / 4K for wider screens.
+    window.SCRUB_SECTIONS = [{
+      section: "#hero",
+      frameCount: 145,
+      bg: "#0e1410",
+      sets: [
+        { dir: "feijoada-portrait", w: 864,  h: 1440 },
+        { dir: "feijoada-1080",     w: 1920, h: 1080 },
+        { dir: "feijoada-1080",     w: 2560, h: 1440 },
+        { dir: "feijoada-1080",     w: 3840, h: 2160 }
+      ],
+      framePath: (dir, i) => `frames/${dir}/frame_${String(i).padStart(4, "0")}.webp`
+    }];
+  </script>
+  <script src="scroll-cinematic.js?v=2"></script>
+  <script src="i18n.js?v=2"></script>
+  <script src="motion.js?v=2"></script>
+  <script>
+    /* ---- Intro splash: green curtain claps the toucan beak, then splits open ---- */
+    (function intro() {
+      const el = document.getElementById("intro");
+      if (!el) return;
+      const html = document.documentElement;
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // Skip the intro on in-page anchor entry (e.g. arriving at #menu)
+      // and after the first visit of the session (no 2.3s wait on every reload)
+      let seen = false;
+      try { seen = sessionStorage.getItem("ob-intro-seen") === "1"; sessionStorage.setItem("ob-intro-seen", "1"); } catch (e) {}
+      if (seen || (window.location.hash && window.location.hash !== "#top")) {
+        el.remove();
+        return;
+      }
+
+      html.classList.add("intro-lock");
+      window.scrollTo(0, 0);
+
+      if (reduce) {
+        setTimeout(() => { html.classList.remove("intro-lock"); el.remove(); }, 350);
+        return;
+      }
+
+      // 1) bird pops in + beak claps (CSS) → 2) curtain splits → 3) overlay removed
+      setTimeout(() => {
+        el.classList.add("is-split");
+        html.classList.remove("intro-lock");
+        window.scrollTo(0, 0);
+      }, 2300);
+      setTimeout(() => { el.remove(); }, 3400);
+    })();
+  </script>
+</body>
+</html>

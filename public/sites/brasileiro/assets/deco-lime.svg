@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 110" role="img" aria-label="Citrus slice">
+  <circle cx="55" cy="55" r="50" fill="#7fc241"/>
+  <circle cx="55" cy="55" r="44" fill="#a8d44a"/>
+  <circle cx="55" cy="55" r="40" fill="#cfe98a"/>
+  <g fill="#eaf6c4" stroke="#a8d44a" stroke-width="1.5">
+    <path d="M55 55 L55 16 A40 40 0 0 1 83 28 Z"/>
+    <path d="M55 55 L83 28 A40 40 0 0 1 94 62 Z"/>
+    <path d="M55 55 L94 62 A40 40 0 0 1 72 90 Z"/>
+    <path d="M55 55 L72 90 A40 40 0 0 1 36 88 Z"/>
+    <path d="M55 55 L36 88 A40 40 0 0 1 17 58 Z"/>
+    <path d="M55 55 L17 58 A40 40 0 0 1 33 24 Z"/>
+    <path d="M55 55 L33 24 A40 40 0 0 1 55 16 Z"/>
+  </g>
+</svg>
