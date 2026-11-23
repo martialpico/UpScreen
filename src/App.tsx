@@ -1241,7 +1241,7 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
           featured
             ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
             : quote
-              ? "border-onyx bg-onyx text-off-white hover:bg-graphite"
+              ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
               : "border-white/15 text-off-white hover:border-white/35"
         }`}
       >
