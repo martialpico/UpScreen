@@ -12,7 +12,7 @@ import motionAnyStylePoster from "./imports/motion-anystyle-poster.webp";
 import motionNotionPoster from "./imports/motion-notion-poster.webp";
 import googleLogo from "./imports/google-logo.webp";
 
-// Les offres de site (paiement unique) et le sur-mesure. Prix en euros HT.
+// Les offres de site (paiement unique) et le sur-mesure. Prix en euros, TVA non applicable.
 type SiteOffer = {
   title: string;
   subtitle: string;
@@ -28,7 +28,7 @@ const siteOffers: SiteOffer[] = [
     title: "Essentiel",
     subtitle: "Être présent en ligne, vite.",
     price: "890",
-    delay: "En ligne en 7 jours",
+    delay: "En ligne sous 7 jours",
     cta: "Choisir Essentiel",
     features: [
       "Site d'une page, adapté au mobile et à la tablette",
@@ -43,12 +43,12 @@ const siteOffers: SiteOffer[] = [
     title: "Complet",
     subtitle: "Être trouvé et choisi.",
     price: "1 490",
-    delay: "En ligne en 14 jours",
+    delay: "En ligne sous 14 jours",
     featured: true,
     cta: "Choisir Complet",
     features: [
       "Tout ce que comprend l'Essentiel",
-      "Site multipage",
+      "Site multipage, jusqu'à 10 pages",
       "Création ou refonte de votre site actuel",
       "Fiche Google créée ou refaite : horaires, photos, avis",
       "Liens possibles vers Instagram et Facebook",
@@ -61,7 +61,7 @@ const siteOffers: SiteOffer[] = [
     delay: "Devis gratuit sous 48 h",
     cta: "Demander un devis",
     features: [
-      "Vidéo en motion design",
+      "Vidéo de présentation en motion design",
       "Publicité sur Instagram, Facebook et Google (budget publicitaire en plus)",
       "Menu digital, QR codes et cartes NFC",
       "Carte de fidélité digitale",
@@ -156,8 +156,8 @@ const processSteps = [
   },
   {
     title: "Mise en ligne",
-    body: "Votre site est en ligne en 7 à 14 jours, prêt à vous apporter des appels, des réservations et des messages.",
-    highlights: ["7 à 14 jours"],
+    body: "Votre site est en ligne sous 7 à 14 jours, prêt à vous apporter des appels, des réservations et des messages.",
+    highlights: ["sous 7 à 14 jours"],
     side: "left",
   },
 ];
@@ -204,7 +204,7 @@ const faqs = [
   {
     question: "Proposez-vous d'autres services ?",
     answer:
-      "Oui, sur devis : vidéo en motion design, publicité, menu digital, QR codes et cartes NFC, carte de fidélité, automatisations avec l'IA et applications sur mesure.",
+      "Oui, sur devis : vidéo de présentation en motion design, publicité, menu digital, QR codes et cartes NFC, carte de fidélité, automatisations avec l'IA et applications sur mesure.",
   },
   {
     question: "Comment vous contacter ?",
@@ -1167,7 +1167,6 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
               {offer.price}
             </span>
             <span className="text-xl text-warm-gray">€</span>
-            <span className="ml-1 text-sm text-warm-gray">HT</span>
           </>
         )}
       </div>
@@ -1308,12 +1307,12 @@ function Services() {
           <p className="text-sm font-semibold text-off-white">Vos garanties</p>
           <ul className="mt-2 space-y-1.5 text-sm leading-[1.55] text-warm-gray">
             <li>Maquette gratuite : vous ne payez que si elle vous plaît.</li>
-            <li>En ligne en 7 ou 14 jours, à partir de la réception de vos photos et infos.</li>
+            <li>En ligne sous 7 ou 14 jours, à partir de la réception de vos photos et infos.</li>
             <li>Votre site et votre nom de domaine vous appartiennent : vous les reprenez quand vous voulez, gratuitement.</li>
           </ul>
         </div>
       </div>
-      <p className="mt-8 text-center text-xs text-warm-gray">Prix HT</p>
+      <p className="mt-8 text-center text-xs text-warm-gray">TVA non applicable, art. 293 B du CGI</p>
     </section>
   );
 }
@@ -1932,7 +1931,7 @@ function Process() {
   return (
     <section id="process" className={`relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
       <Heading tone="light">Comment ça marche</Heading>
-      <SectionLead tone="light">Du premier appel à la mise en ligne, en 7 à 14 jours.</SectionLead>
+      <SectionLead tone="light">Du premier appel à la mise en ligne, sous 7 à 14 jours.</SectionLead>
       <div ref={timelineRef} className="relative mt-16">
         <div className="absolute bottom-8 left-4 top-8 w-px bg-onyx/10 sm:left-1/2 sm:-translate-x-1/2">
           <div
