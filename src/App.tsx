@@ -665,8 +665,10 @@ function Hero() {
         </span>
       </h1>
       <p className="mx-auto mt-7 max-w-[560px] text-center text-[17px] font-normal leading-[1.6] text-warm-gray sm:text-lg">
-        Site web, fiche Google et réseaux sociaux pour les commerces et artisans
-        de Toulouse. Votre maquette est gratuite, votre site en ligne sous 7 jours.
+        <span className="whitespace-nowrap">Sites web & visibilité locale</span>
+        <span aria-hidden="true" className="mx-2 hidden text-brand sm:inline">·</span>
+        <br className="sm:hidden" />
+        <span className="whitespace-nowrap">Création de contenu</span>
       </p>
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a
@@ -1146,7 +1148,7 @@ function ProblemSection() {
           <div key={title} className="relative flex flex-col">
             <ProblemVisual index={index} />
             <article className={`${darkCard} relative z-10 -mt-8 flex-1 overflow-hidden p-5 sm:p-6`}>
-              <p className="inline-block whitespace-nowrap rounded-full bg-off-white px-3.5 py-1.5 text-[15px] font-semibold leading-none tracking-[-0.01em] text-onyx">
+              <p className="inline-block whitespace-nowrap rounded-full bg-brand px-3.5 py-1.5 text-[15px] font-semibold leading-none tracking-[-0.01em] text-white">
                 {title}
               </p>
               <p className="mt-4 text-sm font-normal leading-[1.6] text-warm-gray sm:text-[15px]">
