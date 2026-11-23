@@ -255,13 +255,12 @@ function SectionLead({ children, tone = "dark" }: { children: ReactNode; tone?: 
 // Étiquette de section : texte mono rouge, espacé, en capitales.
 function Eyebrow({ children, center = false }: { children: ReactNode; center?: boolean }) {
   return (
-    <p
-      className={`font-mono text-[13px] font-medium uppercase leading-none tracking-[0.22em] text-brand ${
-        center ? "mb-6 text-center" : ""
-      }`}
-    >
-      {children}
-    </p>
+    <div className={center ? "mb-7 flex justify-center" : "flex"}>
+      <span className="inline-flex items-center gap-2 rounded-full bg-off-white px-4 py-2 font-mono text-[12px] font-semibold uppercase leading-none tracking-[0.18em] text-onyx">
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand shadow-none" />
+        {children}
+      </span>
+    </div>
   );
 }
 
@@ -272,12 +271,14 @@ function SectionHeader({
   title,
   muted,
   aside,
+  lead,
   small = false,
 }: {
   eyebrow: string;
   title: string;
   muted?: string;
   aside?: ReactNode;
+  lead?: ReactNode;
   small?: boolean;
 }) {
   return (
@@ -292,6 +293,7 @@ function SectionHeader({
           <span className="block text-off-white">{title}</span>
           {muted && <span className="block text-[#7d7b80]">{muted}</span>}
         </h2>
+        {lead && <p className="mt-5 max-w-[620px] text-[17px] leading-[1.6] text-[#CFCCC7] md:text-lg">{lead}</p>}
       </div>
       {aside && <div className="lg:pb-2">{aside}</div>}
     </div>
@@ -740,12 +742,7 @@ function Hero() {
       id="home"
       className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-16 pt-36 sm:px-8 md:pt-44 lg:pb-20"
     >
-      <div className="mb-7 flex justify-center">
-        <span className="inline-flex items-center gap-2 rounded-full bg-off-white px-4 py-2 font-mono text-[12px] font-semibold uppercase leading-none tracking-[0.18em] text-onyx">
-          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand shadow-none" />
-          Agence web
-        </span>
-      </div>
+      <Eyebrow center>Agence web</Eyebrow>
       <h1 className="font-ui mx-auto text-center text-[40px] font-extrabold leading-[1.02] tracking-[-0.05em] text-off-white sm:text-[46px] md:text-[48px] lg:text-[64px]">
         <span className="block">Vos clients vous cherchent.</span>
         <span className="text-gradient-brand block text-balance md:whitespace-nowrap">
@@ -1394,24 +1391,40 @@ function SubscriptionTable() {
         eyebrow="Abonnements"
         title="Les abonnements."
         muted="Pour faire vivre votre site."
-        aside={
-          <AsideLead>
-            Une fois en ligne, on s'occupe de votre présence chaque mois. Compatible avec tous les sites, même ceux qu'on n'a pas faits.
-          </AsideLead>
-        }
+        lead="Une fois en ligne, on s'occupe de votre présence chaque mois. Compatible avec tous les sites, même ceux qu'on n'a pas faits."
       />
 
-      <div role="table" aria-label="Comparatif des abonnements" className="mt-10 rounded-[28px] border border-white/[0.08] bg-graphite p-4 sm:p-8">
-        <div role="row" className={`${cols} items-end pb-5`}>
+      <div
+        role="table"
+        aria-label="Comparatif des abonnements"
+        className="relative mt-10 overflow-hidden rounded-[28px] border border-white/[0.09] bg-[radial-gradient(90%_70%_at_100%_0%,rgba(233,68,69,0.16),transparent_60%),linear-gradient(180deg,#1b191b,#0f0e10)] p-4 shadow-[0_40px_90px_rgba(0,0,0,0.45)] sm:p-8"
+      >
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 p-4 sm:p-8">
+          <div className={`${cols} h-full`}>
+            <span />
+            <span />
+            <span className="-mx-1.5 -my-2 rounded-[22px] border border-brand/40 bg-[radial-gradient(140%_60%_at_50%_0%,rgba(233,68,69,0.32),transparent_70%),linear-gradient(180deg,rgba(233,68,69,0.10),rgba(233,68,69,0.03))] shadow-[0_30px_70px_rgba(233,68,69,0.18)] sm:-mx-3 sm:-my-4" />
+          </div>
+        </div>
+        <div role="row" className={`${cols} relative items-end pb-5`}>
           <span role="columnheader"><span className="sr-only">Service</span></span>
-          {subscriptions.map((plan) => (
-            <span key={plan.name} role="columnheader" className="text-base font-semibold text-off-white sm:text-lg">
-              {plan.name}
-            </span>
-          ))}
+          {subscriptions.map((plan) =>
+            "featured" in plan && plan.featured ? (
+              <span key={plan.name} role="columnheader" className="flex flex-col items-start gap-2 pt-2">
+                <span className="whitespace-nowrap rounded-full bg-brand px-2 py-1 font-mono text-[9px] font-semibold uppercase leading-none tracking-[0.08em] text-onyx sm:px-2.5 sm:text-[10px] sm:tracking-[0.14em]">
+                  Le plus complet
+                </span>
+                <span className="text-lg font-extrabold tracking-[-0.03em] text-off-white sm:text-xl">{plan.name}</span>
+              </span>
+            ) : (
+              <span key={plan.name} role="columnheader" className="text-lg font-extrabold tracking-[-0.03em] text-off-white sm:text-xl">
+                {plan.name}
+              </span>
+            ),
+          )}
         </div>
 
-        <div role="row" className={`${cols} items-baseline border-t border-white/10 py-5`}>
+        <div role="row" className={`${cols} relative items-baseline border-t border-white/10 py-5`}>
           <span role="rowheader" className="text-sm text-warm-gray sm:text-[15px]">Prix</span>
           {subscriptions.map((plan) => (
             <span key={plan.name} role="cell" className="whitespace-nowrap">
@@ -1424,7 +1437,7 @@ function SubscriptionTable() {
         </div>
 
         {subscriptionRows.map(([row, visibility, premium]) => (
-          <div key={typeof row === "string" ? row : row[0]} role="row" className={`${cols} items-center border-t border-white/10 py-4 text-[13px] sm:text-[15px]`}>
+          <div key={typeof row === "string" ? row : row[0]} role="row" className={`${cols} relative items-center border-t border-white/10 py-4 text-[13px] sm:text-[15px]`}>
             <span role="rowheader" className="text-[#CFCCC7]">
               {typeof row === "string" ? (
                 row
@@ -1445,14 +1458,14 @@ function SubscriptionTable() {
           </div>
         ))}
 
-        <div role="row" className={`${cols} items-center border-t border-white/10 py-4 text-[13px] sm:text-[15px]`}>
+        <div role="row" className={`${cols} relative items-center border-t border-white/10 py-4 text-[13px] sm:text-[15px]`}>
           <span role="rowheader" className="text-[#CFCCC7]">Engagement</span>
           {subscriptions.map((plan) => (
             <span key={plan.name} role="cell" className="text-off-white">{plan.engagement}</span>
           ))}
         </div>
 
-        <div className={`${cols} pt-5`}>
+        <div className={`${cols} relative pt-5`}>
           <span />
           {subscriptions.map((plan) => (
             <a
@@ -1464,7 +1477,7 @@ function SubscriptionTable() {
                   : "border-white/15 text-off-white hover:border-white/35"
               }`}
             >
-              Choisir
+              Choisir<span className="hidden sm:inline">&nbsp;{plan.name}</span>
             </a>
           ))}
         </div>
@@ -1483,15 +1496,9 @@ function Services() {
         eyebrow="Tarifs"
         title="Des tarifs transparents."
         muted="Payés une seule fois."
-        aside={
-          <>
-            <AsideLead>
-              Pas de devis interminable : un prix fixe, tout compris. Votre site vous appartient, les abonnements mensuels sont en option.
-            </AsideLead>
-            <CheckChips items={["Maquette gratuite", "Transfert gratuit"]} />
-          </>
-        }
+        lead="Pas de devis interminable : un prix fixe, tout compris. Votre site vous appartient, les abonnements mensuels sont en option."
       />
+      <CheckChips items={["Maquette gratuite", "Transfert gratuit"]} />
       <div className="mx-auto mt-16 grid max-w-[480px] gap-6 lg:max-w-none lg:grid-cols-3 lg:items-stretch">
         {siteOffers.map((offer) => (
           <SiteOfferCard key={offer.title} offer={offer} />
@@ -2607,16 +2614,68 @@ function DemoChip() {
   );
 }
 
+// Sites vitrines réalisés : captures ordinateur et mobile dans public/vitrines.
+const vitrines = [
+  { slug: "brasileiro", name: "O Brasileiro", trade: "Restaurant brésilien · Brisbane" },
+  { slug: "aamaya", name: "Aamaya", trade: "Restaurant indien · Brisbane" },
+  { slug: "5dogs", name: "5 Dogs", trade: "Hot dogs gourmets · Brisbane" },
+  { slug: "sparrow", name: "Sparrow & Finch", trade: "Café · Brisbane" },
+  { slug: "vegerama", name: "Vege Rama", trade: "Restaurant vegan · Brisbane" },
+  { slug: "samsthai", name: "Sam's Thai Kitchen", trade: "Restaurant thaï · Brisbane" },
+  { slug: "clinic", name: "Foot, Ankle & Body Experts", trade: "Clinique de santé · Brisbane" },
+];
+
+function VitrineCard({ slug, name, trade, large = false }: { slug: string; name: string; trade: string; large?: boolean }) {
+  const src = (kind: string) => `${import.meta.env.BASE_URL}vitrines/${slug}-${kind}.webp`;
+  return (
+    <figure className={`scroll-reveal group ${large ? "md:col-span-2" : ""}`}>
+      <div className="relative">
+        <div className="overflow-hidden rounded-[22px] border border-white/10 bg-graphite p-1.5 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition duration-500 group-hover:-translate-y-1 group-hover:border-white/20">
+          <div className="flex items-center gap-1.5 px-3 py-2">
+            <span className="h-2 w-2 rounded-full bg-white/15" />
+            <span className="h-2 w-2 rounded-full bg-white/15" />
+            <span className="h-2 w-2 rounded-full bg-white/15" />
+          </div>
+          <img
+            src={src("desktop")}
+            alt={`Site de ${name} sur ordinateur`}
+            loading="lazy"
+            decoding="async"
+            width={1440}
+            height={900}
+            className="block aspect-[16/10] w-full rounded-[16px] object-cover object-top"
+          />
+        </div>
+        <img
+          src={src("mobile")}
+          alt={`Site de ${name} sur mobile`}
+          loading="lazy"
+          decoding="async"
+          width={390}
+          height={844}
+          className={`absolute bottom-[-6%] right-[-2%] aspect-[390/844] rounded-[18px] border-[5px] border-onyx object-cover object-top shadow-[0_24px_50px_rgba(0,0,0,0.6)] transition duration-500 group-hover:-translate-y-2 sm:rounded-[22px] ${
+            large ? "w-[17%]" : "w-[24%]"
+          }`}
+        />
+      </div>
+      <figcaption className="mt-7 pr-[26%]">
+        <p className="text-lg font-extrabold tracking-[-0.03em] text-off-white">{name}</p>
+        <p className="mt-0.5 text-sm text-warm-gray">{trade}</p>
+      </figcaption>
+    </figure>
+  );
+}
+
 function WorkGallery() {
   return (
     <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
       <SectionHeader
         eyebrow="Réalisations"
         title="Des sites pensés"
-        muted="pour les commerces de quartier."
+        muted="pour les commerces."
         aside={
           <>
-            <AsideLead>Des commerces fictifs, créés pour montrer notre style. La maquette du vôtre est gratuite.</AsideLead>
+            <AsideLead>Des sites vitrines réalisés pour des restaurants, des cafés et une clinique, puis des démos pour les commerces toulousains.</AsideLead>
             <a href="#contact" className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold text-brand transition-colors hover:text-brand-light">
               Demander ma maquette <ArrowIcon />
             </a>
@@ -2624,7 +2683,25 @@ function WorkGallery() {
         }
       />
 
-      <div className={`${darkCard} mt-14 grid items-center gap-8 p-6 md:p-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12`}>
+      <div className="mt-14 grid gap-x-6 gap-y-10 md:grid-cols-2">
+        {vitrines.map((site, index) => (
+          <VitrineCard key={site.slug} {...site} large={index === 0} />
+        ))}
+      </div>
+
+      <div className="mt-20 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <Eyebrow>Démos</Eyebrow>
+          <h3 className="mt-4 text-[28px] font-extrabold leading-[1.05] tracking-[-0.05em] text-off-white md:text-[36px]">
+            Et pour votre commerce ?
+          </h3>
+        </div>
+        <p className="max-w-[420px] text-[15px] leading-[1.6] text-[#CFCCC7]">
+          Des commerces fictifs, créés pour montrer notre style. La maquette du vôtre est gratuite.
+        </p>
+      </div>
+
+      <div className={`${darkCard} mt-8 grid items-center gap-8 p-6 md:p-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12`}>
         <div>
           <div className="flex items-center gap-3">
             <p className="text-2xl font-bold tracking-[-0.03em] text-off-white">Le Comptoir Rose</p>
@@ -2800,36 +2877,6 @@ function CustomServices() {
             Demander un devis
           </span>
         </a>
-      </div>
-    </section>
-  );
-}
-
-// Bandeau d'appel à l'action rouge, avec le même quadrillage que le fond.
-function CtaBand() {
-  return (
-    <section className="scroll-reveal mx-auto w-full max-w-[1160px] px-5 sm:px-8">
-      <div className="relative overflow-hidden rounded-[32px] bg-[linear-gradient(180deg,#e94445_0%,#b4282a_100%)] px-6 py-20 text-center sm:px-10 md:py-28">
-        <div aria-hidden="true" className="bg-grid-strong pointer-events-none absolute inset-0" />
-        <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-0 h-[70%] w-[70%] -translate-x-1/2 rounded-full bg-[#ff8f8f]/40 blur-[90px]" />
-        <div className="relative">
-          <h2 className="mx-auto max-w-[900px] text-balance text-[40px] font-extrabold leading-[0.98] tracking-[-0.055em] text-white md:text-[72px]">
-            <span className="block">Votre site en ligne</span>
-            <span className="block">sous 7&nbsp;jours.</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-[520px] text-[17px] leading-[1.6] text-white/90 md:text-lg">
-            Un appel de 20 minutes, une maquette gratuite, et le chrono démarre.
-          </p>
-          <a
-            href="#contact"
-            className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-semibold text-onyx shadow-[0_20px_40px_rgba(60,0,0,0.35)] transition hover:-translate-y-0.5"
-          >
-            Prendre rendez-vous <ArrowIcon className="h-4 w-4 text-brand" />
-          </a>
-          <p className="mt-6 font-mono text-[12px] uppercase tracking-[0.2em] text-white/85">
-            Appel gratuit · Sans engagement
-          </p>
-        </div>
       </div>
     </section>
   );
@@ -3234,7 +3281,6 @@ export default function App() {
       <Process />
       <WorkGallery />
       <Reviews />
-      <CtaBand />
       <FAQ />
       <ContactSection />
       <Footer />
