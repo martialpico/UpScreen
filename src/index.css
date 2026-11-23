@@ -12,6 +12,24 @@
 }
 
 @font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("./fonts/inter-latin-variable.woff2") format("woff2-variations"),
+    url("./fonts/inter-latin-variable.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("./fonts/jetbrains-mono-latin-variable.woff2") format("woff2-variations"),
+    url("./fonts/jetbrains-mono-latin-variable.woff2") format("woff2");
+}
+
+@font-face {
   font-family: "DM Serif Display";
   font-style: normal;
   font-weight: 400;
@@ -36,10 +54,11 @@
   --color-brand-deep: #a82a2b;
   --color-off-white: #f7f5f2;
   --color-warm-gray: #8c8a87;
-  --font-ui: "Open Sans", sans-serif;
-  --font-button: "Open Sans", sans-serif;
+  --font-ui: "Inter", "Open Sans", sans-serif;
+  --font-button: "Inter", "Open Sans", sans-serif;
   --font-display: "DM Serif Display", serif;
-  --font-body: "Open Sans", sans-serif;
+  --font-body: "Inter", "Open Sans", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 @layer base {
@@ -60,6 +79,8 @@
     font-size: 17px;
     font-weight: 400;
     line-height: 1.6;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
   }
 
   a,
@@ -566,5 +587,15 @@
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
     animation: none !important;
+  }
+}
+
+/* Texte en dégradé rouge pour les mots mis en avant dans les grands titres. */
+@layer utilities {
+  .text-gradient-brand {
+    background: linear-gradient(180deg, #ff8a8b 0%, var(--color-brand) 70%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }

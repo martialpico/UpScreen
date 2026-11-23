@@ -248,6 +248,18 @@ function SectionLead({ children, tone = "dark" }: { children: ReactNode; tone?: 
   );
 }
 
+// Étiquette de section : pastille blanche en police mono, avec un point rouge.
+function Eyebrow({ children }: { children: ReactNode }) {
+  return (
+    <div className="mb-5 flex justify-center">
+      <span className="inline-flex items-center gap-2 rounded-full bg-off-white px-3.5 py-1.5 font-mono text-[12px] font-semibold uppercase leading-none tracking-[0.08em] text-brand">
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand shadow-none" />
+        {children}
+      </span>
+    </div>
+  );
+}
+
 // Titres de section. L'italique rouge est réservé au hero et au titre de
 // contact : ici, il ne s'applique que si on le demande (emphasize > 0).
 function Heading({
@@ -267,23 +279,15 @@ function Heading({
 
   return (
     <>
-    {eyebrow && (
-      <p
-        className={`mb-4 text-center text-[13px] font-semibold uppercase tracking-[0.14em] ${
-          tone === "light" ? "text-brand-deep" : "text-brand"
-        }`}
-      >
-        {eyebrow}
-      </p>
-    )}
+    {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
     <h2
-      className={`font-ui mx-auto max-w-[880px] text-balance text-center text-[32px] font-semibold leading-tight tracking-[-0.02em] md:text-[46px] ${
+      className={`font-ui mx-auto max-w-[900px] text-balance text-center text-[36px] font-extrabold leading-[1.04] tracking-[-0.045em] md:text-[56px] ${
         tone === "light" ? "text-onyx" : "text-off-white"
       }`}
     >
       {emphasizedWords ? `${words.join(" ")} ` : children}
       {emphasizedWords && (
-        <em className="font-display text-[1.15em] font-normal italic text-brand">
+        <em className="text-gradient-brand not-italic">
           {emphasizedWords}
         </em>
       )}
@@ -653,15 +657,11 @@ function Hero() {
       id="home"
       className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-16 pt-36 sm:px-8 md:pt-44 lg:pb-20"
     >
-      <h1 className="mx-auto max-w-[900px] text-center shadow-none">
-        <span className="font-ui block text-base font-normal leading-none text-warm-gray lg:text-[22px]">
-          Vos clients vous cherchent.
-        </span>
-        <span className="font-ui mt-4 block text-[40px] font-semibold leading-[1.04] tracking-[-0.025em] text-off-white sm:text-[52px] lg:text-[64px]">
-          Encore faut-il{" "}
-          <em className="glow-text font-display text-[1.12em] font-normal italic tracking-[-0.01em] text-brand">
-            qu’ils vous trouvent.
-          </em>
+      <Eyebrow>Agence web · Toulouse</Eyebrow>
+      <h1 className="font-ui mx-auto max-w-[1100px] text-center text-[40px] font-extrabold leading-[1.02] tracking-[-0.05em] text-off-white sm:text-[56px] lg:text-[68px]">
+        <span className="block">Vos clients vous cherchent.</span>
+        <span className="text-gradient-brand block text-balance">
+          Encore <span className="whitespace-nowrap">faut-il</span> qu’ils vous trouvent.
         </span>
       </h1>
       <p className="mx-auto mt-7 max-w-[560px] text-center text-[17px] font-normal leading-[1.6] text-warm-gray sm:text-lg">
@@ -1184,17 +1184,17 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
           Recommandé
         </span>
       )}
-      <h3 className={`text-2xl font-semibold tracking-[-0.02em] ${quote ? "text-onyx" : "text-off-white"}`}>{offer.title}</h3>
+      <h3 className={`text-2xl font-bold tracking-[-0.03em] ${quote ? "text-onyx" : "text-off-white"}`}>{offer.title}</h3>
       <p className={`mt-2 text-sm font-semibold ${featured ? "text-brand-light" : quote ? "text-onyx/55" : "text-warm-gray"}`}>
         {offer.subtitle}
       </p>
 
       <div className="mt-6 flex items-baseline gap-1.5 whitespace-nowrap">
         {quote ? (
-          <span className="font-display text-[40px] leading-none text-onyx sm:text-[44px]">Sur devis</span>
+          <span className="text-[40px] font-extrabold leading-none tracking-[-0.045em] text-onyx sm:text-[46px]">Sur devis</span>
         ) : (
           <>
-            <span className={`font-display text-[52px] leading-none tracking-[-0.025em] sm:text-[58px] ${featured ? "text-brand" : "text-off-white"}`}>
+            <span className={`text-[52px] font-extrabold leading-none tracking-[-0.05em] sm:text-[60px] ${featured ? "text-brand" : "text-off-white"}`}>
               {offer.price}
             </span>
             <span className="text-xl text-warm-gray">€</span>
@@ -1269,7 +1269,7 @@ function SubscriptionTable() {
 
   return (
     <div className="scroll-reveal mt-20">
-      <h3 className="text-center text-2xl font-semibold tracking-[-0.02em] text-off-white md:text-3xl">
+      <h3 className="text-center text-2xl font-bold tracking-[-0.03em] text-off-white md:text-3xl">
         Les abonnements
       </h3>
       <p className="mx-auto mt-3 max-w-[560px] text-center text-[15px] text-warm-gray">
@@ -1290,7 +1290,7 @@ function SubscriptionTable() {
           <span role="rowheader" className="text-sm text-warm-gray sm:text-[15px]">Prix</span>
           {subscriptions.map((plan) => (
             <span key={plan.name} role="cell" className="whitespace-nowrap">
-              <span className={`font-display text-[30px] leading-none sm:text-[40px] ${"featured" in plan && plan.featured ? "text-brand" : "text-off-white"}`}>
+              <span className={`text-[30px] font-extrabold leading-none tracking-[-0.045em] sm:text-[40px] ${"featured" in plan && plan.featured ? "text-brand" : "text-off-white"}`}>
                 {plan.price}
               </span>
               <span className="ml-1 text-xs text-warm-gray sm:text-sm">€/mois</span>
@@ -1367,7 +1367,7 @@ function Services() {
       <div className="mx-auto mt-12 grid max-w-[900px] gap-4 md:grid-cols-[0.8fr_1.2fr]">
         <div className={`${darkCard} flex flex-col p-6 sm:p-7`}>
           <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-brand">Hébergement et domaine</p>
-          <p className="mt-4 text-2xl font-semibold tracking-[-0.02em] text-off-white">1re année incluse</p>
+          <p className="mt-4 text-2xl font-bold tracking-[-0.03em] text-off-white">1re année incluse</p>
           <p className="mt-1 text-[15px] text-[#CFCCC7]">
             puis <span className="font-semibold text-off-white">{hostingRenewal} €/an</span>, à la date anniversaire.
           </p>
@@ -1430,7 +1430,7 @@ function Reviews() {
               <div className="flex items-start justify-between gap-3">
                 <span
                   aria-hidden="true"
-                  className="font-display -mt-1 text-[44px] leading-none text-brand"
+                  className="-mt-1 text-[44px] font-extrabold leading-none text-brand"
                 >
                   &ldquo;
                 </span>
@@ -2153,7 +2153,7 @@ function Process() {
             <span className="text-xs font-semibold tracking-[0.12em] text-warm-gray/70">
               06
             </span>
-            <span className="inline-block text-xl font-semibold tracking-[-0.02em] text-off-white sm:text-3xl">
+            <span className="inline-block text-xl font-bold tracking-[-0.03em] text-off-white sm:text-3xl">
               On vous accompagne ensuite
             </span>
             <BrandIcon name="growth" className="h-10 w-10 sm:h-11 sm:w-11" />
@@ -2473,7 +2473,7 @@ function WorkGallery() {
       <div className={`${darkCard} mt-14 grid items-center gap-8 p-6 md:p-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12`}>
         <div>
           <div className="flex items-center gap-3">
-            <p className="text-2xl font-semibold tracking-[-0.02em] text-off-white">Le Comptoir Rose</p>
+            <p className="text-2xl font-bold tracking-[-0.03em] text-off-white">Le Comptoir Rose</p>
             <DemoChip />
           </div>
           <p className="mt-1 text-sm text-warm-gray">Café · Toulouse</p>
@@ -2555,7 +2555,7 @@ function CustomServices() {
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
           <BrandIcon name="play" className="h-11 w-11 shrink-0" />
           <div>
-            <h3 className="text-2xl font-semibold tracking-[-0.02em] text-off-white md:whitespace-nowrap">
+            <h3 className="text-2xl font-bold tracking-[-0.03em] text-off-white md:whitespace-nowrap">
               Vidéo de présentation en motion design
             </h3>
             <p className="mt-1.5 text-[15px] leading-[1.6] text-[#CFCCC7]">
@@ -2592,7 +2592,7 @@ function CustomServices() {
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
               <BrandIcon name={service.icon} className="h-11 w-11 shrink-0" />
               <div>
-                <h3 className="text-2xl font-semibold tracking-[-0.02em] text-off-white">{service.title}</h3>
+                <h3 className="text-2xl font-bold tracking-[-0.03em] text-off-white">{service.title}</h3>
                 <p className="mt-1.5 text-[15px] leading-[1.6] text-[#CFCCC7]">{service.body}</p>
               </div>
             </div>
@@ -2618,7 +2618,7 @@ function CustomServices() {
         {customServices.filter((service) => service.title !== "Rebranding complet").map((service) => (
           <article key={service.title} className={`${darkCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
             <BrandIcon name={service.icon} className="h-11 w-11" />
-            <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] text-off-white">{service.title}</h3>
+            <h3 className="mt-5 text-xl font-bold tracking-[-0.03em] text-off-white">{service.title}</h3>
             <p className="mt-2 text-[15px] text-warm-gray">{service.body}</p>
             <ul className="mt-5 space-y-2 text-[15px] text-[#CFCCC7]">
               {service.points.map((point) => (
@@ -2774,11 +2774,9 @@ function ContactSection() {
       <div className="absolute left-1/2 top-1/2 -z-0 h-[60%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/8 blur-[120px]" />
       <div className="relative z-10 grid gap-10 rounded-[24px] border border-white/[0.08] bg-graphite p-6 md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
         <div className="flex flex-col justify-center">
-          <h2 className="text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-off-white md:text-[48px]">
+          <h2 className="text-[36px] font-extrabold leading-[1.02] tracking-[-0.045em] text-off-white md:text-[52px]">
             Votre maquette est gratuite.{" "}
-            <em className="glow-text font-display text-[1.15em] font-normal italic text-brand">
-              Parlons de votre commerce.
-            </em>
+            <span className="text-gradient-brand">Parlons de votre commerce.</span>
           </h2>
           <p className="mt-6 max-w-[480px] text-[17px] font-normal leading-[1.6] text-warm-gray">
             Laissez-nous vos coordonnées : on vous rappelle pour un appel de
