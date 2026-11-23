@@ -275,7 +275,7 @@ function SectionHeader({
   lead,
   small = false,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   muted?: string;
   aside?: ReactNode;
@@ -283,20 +283,18 @@ function SectionHeader({
   small?: boolean;
 }) {
   return (
-    <div className={`grid gap-8 ${aside ? "lg:grid-cols-[1.35fr_0.65fr] lg:items-end lg:gap-14" : ""}`}>
-      <div>
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <h2
-          className={`mt-5 font-extrabold tracking-[-0.055em] ${
-            small ? "text-[32px] leading-[1.02] md:text-[44px]" : "text-[40px] leading-[0.98] md:text-[56px] lg:text-[60px]"
-          }`}
-        >
-          <span className="block text-off-white">{title}</span>
-          {muted && <span className="block text-[#7d7b80]">{muted}</span>}
-        </h2>
-        {lead && <p className="mt-5 max-w-[620px] text-[17px] leading-[1.6] text-[#CFCCC7] md:text-lg">{lead}</p>}
-      </div>
-      {aside && <div className="lg:pb-2">{aside}</div>}
+    <div className="mx-auto flex max-w-[900px] flex-col items-center text-center">
+      {eyebrow && <Eyebrow center>{eyebrow}</Eyebrow>}
+      <h2
+        className={`text-balance font-extrabold tracking-[-0.055em] ${
+          small ? "text-[32px] leading-[1.02] md:text-[44px]" : "text-[40px] leading-[0.98] md:text-[56px] lg:text-[60px]"
+        }`}
+      >
+        <span className="block text-off-white">{title}</span>
+        {muted && <span className="block text-[#7d7b80]">{muted}</span>}
+      </h2>
+      {lead && <p className="mt-5 max-w-[640px] text-[17px] leading-[1.6] text-[#CFCCC7] md:text-lg">{lead}</p>}
+      {aside && <div className="mt-5 max-w-[640px]">{aside}</div>}
     </div>
   );
 }
@@ -307,7 +305,7 @@ function AsideLead({ children }: { children: ReactNode }) {
 
 function CheckChips({ items }: { items: string[] }) {
   return (
-    <div className="mt-5 flex flex-wrap gap-2.5">
+    <div className="mt-5 flex flex-wrap justify-center gap-2.5">
       {items.map((item) => (
         <span
           key={item}
@@ -1403,9 +1401,92 @@ function PlanMark({ value }: { value: PlanCell }) {
   return <span>{value}</span>;
 }
 
-function SubscriptionTable() {
-  const cols = "grid grid-cols-[1.25fr_0.85fr_1fr] gap-x-3 sm:grid-cols-[1.6fr_1fr_1fr] sm:gap-x-6";
+const subscriptionTaglines: Record<string, string> = {
+  Visibilité: "Pour rester visible sur Google, mois après mois.",
+  Premium: "Google, blog et Instagram gérés pour vous.",
+};
 
+function SubscriptionCard({ plan }: { plan: (typeof subscriptions)[number] }) {
+  const featured = "featured" in plan && plan.featured;
+  const column = subscriptions.indexOf(plan) + 1;
+  const items = subscriptionRows
+    .filter((row) => row[column] !== false)
+    .map((row) => {
+      const value = row[column];
+      const [label, detail] = typeof row[0] === "string" ? [row[0], undefined] : row[0];
+      return { label: typeof value === "string" ? `${label} : ${value}` : label, detail };
+    });
+
+  return (
+    <article
+      className={`scroll-reveal relative flex flex-col overflow-hidden rounded-[28px] border p-7 sm:p-9 ${
+        featured
+          ? "isolate border-white/10 bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)]"
+          : "border-white/[0.08] bg-graphite"
+      }`}
+    >
+      {featured && <PremiumBlobs />}
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="text-[28px] font-extrabold leading-none tracking-[-0.05em] text-off-white">{plan.name}</h3>
+        {featured && (
+          <span className="whitespace-nowrap rounded-full bg-white/90 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-onyx">
+            Le plus complet
+          </span>
+        )}
+      </div>
+      <p className={`mt-3 ${featured ? "font-mono text-[13px] font-semibold leading-[1.6] text-white/75" : "text-[15px] text-[#CFCCC7]"}`}>
+        {subscriptionTaglines[plan.name]}
+      </p>
+      <p className="mt-7 flex items-baseline gap-2 whitespace-nowrap">
+        <span className="text-[56px] font-extrabold leading-none tracking-[-0.055em] text-off-white sm:text-[64px]">{plan.price}&nbsp;€</span>
+        <span className="text-[17px] font-medium text-white/60">/mois</span>
+      </p>
+      <div className="mt-5">
+        <span className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-white/[0.08] px-3 py-1.5 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.12em] text-[#E4E1DC]">
+          <ClockIcon className="h-3.5 w-3.5 text-brand" />
+          {plan.engagement === "Aucun" ? "Sans engagement" : plan.engagement}
+        </span>
+      </div>
+      <ul className="mt-8 space-y-4 text-[15px] leading-[1.5] text-[#E4E1DC]">
+        {items.map(({ label, detail }) => (
+          <li key={label}>
+            {detail ? (
+              <details className="group">
+                <summary className="flex cursor-pointer list-none gap-3 [&::-webkit-details-marker]:hidden">
+                  <CheckDot solid={featured} />
+                  <span className="flex-1">{label}</span>
+                  <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-[0.3em] h-4 w-4 shrink-0 text-warm-gray transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m4 6 4 4 4-4" />
+                  </svg>
+                </summary>
+                <p className="ml-[34px] mt-1.5 pr-6 text-[13px] leading-[1.5] text-warm-gray">{detail}</p>
+              </details>
+            ) : (
+              <span className="flex gap-3">
+                <CheckDot solid={featured} />
+                {label}
+              </span>
+            )}
+          </li>
+        ))}
+      </ul>
+      <div aria-hidden="true" className="min-h-10 flex-1" />
+      <a
+        href="#contact"
+        className={`inline-flex w-full items-center justify-center gap-2 rounded-full border px-5 py-4 text-[15px] font-semibold transition duration-200 hover:-translate-y-0.5 ${
+          featured
+            ? "border-white bg-white text-onyx shadow-[0_18px_40px_rgba(0,0,0,0.35)] hover:bg-off-white"
+            : "border-white/15 text-off-white hover:border-white/35"
+        }`}
+      >
+        Choisir {plan.name}
+        <ArrowIcon />
+      </a>
+    </article>
+  );
+}
+
+function SubscriptionTable() {
   return (
     <div className="scroll-reveal mt-24">
       <SectionHeader
@@ -1415,97 +1496,10 @@ function SubscriptionTable() {
         muted="Pour faire vivre votre site."
         lead="Une fois en ligne, on s'occupe de votre présence chaque mois. Compatible avec tous les sites, même ceux qu'on n'a pas faits."
       />
-
-      <div
-        role="table"
-        aria-label="Comparatif des abonnements"
-        className="relative mt-10 overflow-hidden rounded-[28px] border border-white/[0.09] bg-[radial-gradient(90%_70%_at_100%_0%,rgba(233,68,69,0.16),transparent_60%),linear-gradient(180deg,#1b191b,#0f0e10)] p-4 shadow-[0_40px_90px_rgba(0,0,0,0.45)] sm:p-8"
-      >
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 p-4 sm:p-8">
-          <div className={`${cols} h-full`}>
-            <span />
-            <span />
-            <span className="relative isolate -mx-1.5 -my-2 overflow-hidden rounded-[22px] border border-white/10 bg-[#0b0a0b] shadow-[0_30px_70px_rgba(233,68,69,0.22)] sm:-mx-3 sm:-my-4">
-              <PremiumBlobs />
-              <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,10,11,0.15),rgba(11,10,11,0.55))]" />
-            </span>
-          </div>
-        </div>
-        <div role="row" className={`${cols} relative items-end pb-5`}>
-          <span role="columnheader"><span className="sr-only">Service</span></span>
-          {subscriptions.map((plan) =>
-            "featured" in plan && plan.featured ? (
-              <span key={plan.name} role="columnheader" className="flex flex-col items-start gap-2 pt-2">
-                <span className="whitespace-nowrap rounded-full bg-white/90 px-2 py-1 font-mono text-[9px] font-semibold uppercase leading-none tracking-[0.08em] text-onyx sm:px-2.5 sm:text-[10px] sm:tracking-[0.14em]">
-                  Le plus complet
-                </span>
-                <span className="text-lg font-extrabold tracking-[-0.03em] text-off-white sm:text-xl">{plan.name}</span>
-              </span>
-            ) : (
-              <span key={plan.name} role="columnheader" className="text-lg font-extrabold tracking-[-0.03em] text-off-white sm:text-xl">
-                {plan.name}
-              </span>
-            ),
-          )}
-        </div>
-
-        <div role="row" className={`${cols} relative items-baseline border-t border-white/10 py-5`}>
-          <span role="rowheader" className="text-sm text-warm-gray sm:text-[15px]">Prix</span>
-          {subscriptions.map((plan) => (
-            <span key={plan.name} role="cell" className="whitespace-nowrap">
-              <span className={`text-[30px] font-extrabold leading-none tracking-[-0.045em] sm:text-[40px] text-off-white`}>
-                {plan.price}
-              </span>
-              <span className="ml-1 text-xs text-warm-gray sm:text-sm">€/mois</span>
-            </span>
-          ))}
-        </div>
-
-        {subscriptionRows.map(([row, visibility, premium]) => (
-          <div key={typeof row === "string" ? row : row[0]} role="row" className={`${cols} relative items-center border-t border-white/10 py-4 text-[13px] sm:text-[15px]`}>
-            <span role="rowheader" className="text-[#CFCCC7]">
-              {typeof row === "string" ? (
-                row
-              ) : (
-                <details className="group">
-                  <summary className="flex cursor-pointer list-none items-start gap-1.5 [&::-webkit-details-marker]:hidden">
-                    <span>{row[0]}</span>
-                    <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-[0.25em] h-4 w-4 shrink-0 text-warm-gray transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="m4 6 4 4 4-4" />
-                    </svg>
-                  </summary>
-                  <span className="mt-1.5 block text-[12px] leading-[1.5] text-warm-gray sm:text-[13px]">{row[1]}</span>
-                </details>
-              )}
-            </span>
-            <span role="cell" className="text-off-white"><PlanMark value={visibility} /></span>
-            <span role="cell" className="font-semibold text-off-white"><PlanMark value={premium} /></span>
-          </div>
+      <div className="mx-auto mt-12 grid max-w-[940px] gap-6 md:grid-cols-2">
+        {subscriptions.map((plan) => (
+          <SubscriptionCard key={plan.name} plan={plan} />
         ))}
-
-        <div role="row" className={`${cols} relative items-center border-t border-white/10 py-4 text-[13px] sm:text-[15px]`}>
-          <span role="rowheader" className="text-[#CFCCC7]">Engagement</span>
-          {subscriptions.map((plan) => (
-            <span key={plan.name} role="cell" className="text-off-white">{plan.engagement}</span>
-          ))}
-        </div>
-
-        <div className={`${cols} relative pt-5`}>
-          <span />
-          {subscriptions.map((plan) => (
-            <a
-              key={plan.name}
-              href="#contact"
-              className={`flex items-center justify-center rounded-full border px-3 py-3 text-xs font-semibold transition sm:text-sm ${
-                "featured" in plan && plan.featured
-                  ? "border-white bg-white text-onyx hover:bg-off-white"
-                  : "border-white/15 text-off-white hover:border-white/35"
-              }`}
-            >
-              Choisir<span className="hidden sm:inline">&nbsp;{plan.name}</span>
-            </a>
-          ))}
-        </div>
       </div>
     </div>
   );
@@ -1532,40 +1526,16 @@ function Services() {
 
       <SubscriptionTable />
 
-      <div className={`${darkCard} scroll-reveal mt-6 flex flex-col gap-6 rounded-[28px] p-7 md:flex-row md:items-center md:justify-between md:p-9`}>
-        <div>
-          <p className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-[24px] font-extrabold tracking-[-0.045em]">
-            <span className="text-off-white">Hébergement et nom de domaine</span>
-            <span className="text-brand">Inclus la 1re année</span>
-          </p>
-          <p className="mt-3 max-w-[640px] text-[16px] leading-[1.6] text-[#CFCCC7]">
-            Puis {hostingRenewal} €/an, payés à la date anniversaire. Avec les offres Essentiel et Complet.
-          </p>
-        </div>
-        <a
-          href="#contact"
-          className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-white/15 px-6 py-3.5 text-[15px] font-semibold text-off-white transition-colors hover:border-white/35 md:self-center"
-        >
-          En parler <ArrowIcon />
-        </a>
+      <div className="scroll-reveal mx-auto mt-6 max-w-[940px] rounded-[28px] border border-white/80 bg-off-white p-7 text-center shadow-[0_30px_70px_rgba(0,0,0,0.45)] md:p-9">
+        <p className="flex flex-wrap items-baseline justify-center gap-x-4 gap-y-1 text-[24px] font-extrabold tracking-[-0.045em]">
+          <span className="text-onyx">Hébergement et nom de domaine</span>
+          <span className="text-brand">Inclus la 1re année</span>
+        </p>
+        <p className="mx-auto mt-3 max-w-[640px] text-[16px] leading-[1.6] text-onyx/70">
+          Puis {hostingRenewal} €/an, payés à la date anniversaire. Avec les offres Essentiel et Complet.
+        </p>
       </div>
-
-      <div className="mt-6 grid gap-4 md:grid-cols-3">
-        {[
-          ["Maquette gratuite", "Vous ne payez que si elle vous plaît."],
-          ["En ligne sous 7 ou 14 jours", "À partir de la réception de vos photos et infos."],
-          ["Transfert gratuit", "Votre site et votre nom de domaine vous appartiennent."],
-        ].map(([title, text]) => (
-          <div key={title} className="flex gap-3 rounded-[22px] border border-white/[0.08] bg-graphite p-5">
-            <CheckDot />
-            <span>
-              <span className="block text-[15px] font-bold tracking-[-0.02em] text-off-white">{title}</span>
-              <span className="mt-0.5 block text-sm leading-[1.5] text-[#CFCCC7]">{text}</span>
-            </span>
-          </div>
-        ))}
-      </div>
-      <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.14em] text-warm-gray">TVA non applicable, art. 293 B du CGI</p>
+      <p className="mt-8 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-warm-gray">TVA non applicable, art. 293 B du CGI</p>
     </section>
   );
 }
@@ -2810,19 +2780,7 @@ function WorkGallery() {
   const [openSite, setOpenSite] = useState<Vitrine | null>(null);
   return (
     <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <SectionHeader
-        eyebrow="Réalisations"
-        title="Des sites pensés"
-        muted="pour les commerces."
-        aside={
-          <>
-            <AsideLead>Des sites vitrines réalisés pour des restaurants, des cafés et une clinique. Cliquez sur un site pour le parcourir.</AsideLead>
-            <a href="#contact" className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold text-brand transition-colors hover:text-brand-light">
-              Demander ma maquette <ArrowIcon />
-            </a>
-          </>
-        }
-      />
+      <SectionHeader title="Des sites sur-mesure" muted="conçus pour votre entreprise." />
 
       <div className="mt-14 grid gap-x-6 gap-y-10 md:grid-cols-2">
         {vitrines.map((site, index) => (
@@ -2979,11 +2937,9 @@ function CustomServices() {
 
 function FAQ() {
   return (
-    <section id="faq" className={`scroll-reveal relative mx-auto grid w-full max-w-[1160px] scroll-mt-24 gap-10 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 ${sectionY}`}>
-      <div className="lg:sticky lg:top-28 lg:self-start">
-        <SectionHeader eyebrow="FAQ" title="Vos questions." muted="Nos réponses." />
-      </div>
-      <div className="space-y-3">
+    <section id="faq" className={`scroll-reveal relative mx-auto w-full max-w-[960px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
+      <SectionHeader eyebrow="FAQ" title="Vos questions." muted="Nos réponses." />
+      <div className="mt-12 space-y-3">
         {faqs.map((faq, index) => (
           <details
             key={`${faq.question}-${index}`}
