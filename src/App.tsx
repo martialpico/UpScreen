@@ -1364,19 +1364,35 @@ function Services() {
 
       <SubscriptionTable />
 
-      <div className="mx-auto mt-12 grid max-w-[900px] gap-4 md:grid-cols-2">
-        <div className="rounded-[20px] border border-white/[0.08] p-6">
-          <p className="text-sm font-semibold text-off-white">Hébergement et nom de domaine</p>
-          <p className="mt-2 text-sm leading-[1.6] text-warm-gray">
-            Inclus la 1re année avec Essentiel et Complet, puis {hostingRenewal} €/an, payés à la date anniversaire.
+      <div className="mx-auto mt-12 grid max-w-[900px] gap-4 md:grid-cols-[0.8fr_1.2fr]">
+        <div className={`${darkCard} flex flex-col p-6 sm:p-7`}>
+          <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-brand">Hébergement et domaine</p>
+          <p className="mt-4 text-2xl font-semibold tracking-[-0.02em] text-off-white">1re année incluse</p>
+          <p className="mt-1 text-[15px] text-[#CFCCC7]">
+            puis <span className="font-semibold text-off-white">{hostingRenewal} €/an</span>, à la date anniversaire.
           </p>
+          <p className="mt-auto pt-5 text-[13px] leading-[1.5] text-warm-gray">Avec les offres Essentiel et Complet.</p>
         </div>
-        <div className="rounded-[20px] border border-white/[0.08] p-6">
-          <p className="text-sm font-semibold text-off-white">Vos garanties</p>
-          <ul className="mt-2 space-y-1.5 text-sm leading-[1.55] text-warm-gray">
-            <li>Maquette gratuite : vous ne payez que si elle vous plaît.</li>
-            <li>En ligne sous 7 ou 14 jours, à partir de la réception de vos photos et infos.</li>
-            <li>Transfert gratuit : votre site et votre nom de domaine vous appartiennent, vous les reprenez quand vous voulez.</li>
+        <div className={`${darkCard} p-6 sm:p-7`}>
+          <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-brand">Vos garanties</p>
+          <ul className="mt-4 space-y-4">
+            {[
+              ["Maquette gratuite", "Vous ne payez que si elle vous plaît."],
+              ["En ligne sous 7 ou 14 jours", "À partir de la réception de vos photos et infos."],
+              ["Transfert gratuit", "Votre site et votre nom de domaine vous appartiennent."],
+            ].map(([title, text]) => (
+              <li key={title} className="flex gap-3">
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
+                  <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m3.5 8.5 3 3 6-7" />
+                  </svg>
+                </span>
+                <span>
+                  <span className="block text-[15px] font-semibold text-off-white">{title}</span>
+                  <span className="block text-sm leading-[1.5] text-[#CFCCC7]">{text}</span>
+                </span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
