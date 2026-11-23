@@ -1323,7 +1323,7 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
       </div>
       <p
         className={`mt-3 ${
-          featured ? "font-mono text-[13px] font-semibold leading-[1.6] text-white/75" : quote ? "text-[15px] text-onyx/60" : "text-[15px] text-[#CFCCC7]"
+          featured ? "font-mono text-[13px] font-semibold leading-[1.6] text-white/75" : quote ? "font-mono text-[13px] font-semibold leading-[1.6] text-onyx/60" : "font-mono text-[13px] font-semibold leading-[1.6] text-[#CFCCC7]"
         }`}
       >
         {offer.subtitle}
@@ -1434,7 +1434,7 @@ function SubscriptionCard({ plan }: { plan: (typeof subscriptions)[number] }) {
           </span>
         )}
       </div>
-      <p className={`mt-3 ${featured ? "font-mono text-[13px] font-semibold leading-[1.6] text-white/75" : "text-[15px] text-[#CFCCC7]"}`}>
+      <p className={`mt-3 font-mono text-[13px] font-semibold leading-[1.6] ${featured ? "text-white/75" : "text-[#CFCCC7]"}`}>
         {subscriptionTaglines[plan.name]}
       </p>
       <p className="mt-7 flex items-baseline gap-2 whitespace-nowrap">
