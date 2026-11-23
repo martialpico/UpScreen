@@ -2938,16 +2938,14 @@ export default function App() {
       <Header />
       <Hero />
       <ProblemSection />
+      <Services />
+      <CustomServices />
       <div className="light-section relative bg-off-white">
         <Process />
       </div>
       <WorkGallery />
       <div className="light-section relative bg-off-white">
         <Reviews />
-      </div>
-      <Services />
-      <CustomServices />
-      <div className="light-section relative bg-off-white">
         <FAQ />
       </div>
       <ContactSection />
