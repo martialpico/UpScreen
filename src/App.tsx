@@ -28,7 +28,7 @@ type SiteOffer = {
 const siteOffers: SiteOffer[] = [
   {
     title: "Essentiel",
-    subtitle: "Être présent en ligne, vite.",
+    subtitle: "Pour être en ligne rapidement.",
     price: "890",
     delay: "En ligne sous 7 jours",
     cta: "Choisir Essentiel",
@@ -46,7 +46,7 @@ const siteOffers: SiteOffer[] = [
   },
   {
     title: "Complet",
-    subtitle: "Être trouvé et choisi.",
+    subtitle: "Pour être trouvé et choisi.",
     price: "1 490",
     delay: "En ligne sous 14 jours",
     featured: true,
@@ -106,8 +106,8 @@ const subscriptionRows: [string | [string, string], PlanCell, PlanCell][] = [
 
 const hostingRenewal = "49";
 
-// Vrais avis clients, publiés avec leur accord, dans la langue où le client les
-// a écrits. "person" est facultatif (prénom et rôle). Ajouter placeholder: true
+// Vrais avis clients, publiés avec leur accord. lang "EN" = avis écrit en
+// anglais, affiché traduit avec la mention « Traduit de l'anglais ». "person" est facultatif (prénom et rôle). Ajouter placeholder: true
 // affiche un badge « Exemple » sur un avis en attente.
 type Review = {
   lang: "EN" | "FR";
@@ -127,7 +127,7 @@ const reviews: Review[] = [
   {
     lang: "EN",
     quote:
-      "We struggled to grow our online presence before. Now we're reaching a much wider audience and seeing real results for our business.",
+      "Avant, on avait du mal à développer notre présence en ligne. Aujourd'hui, on touche un public bien plus large et on voit de vrais résultats pour notre activité.",
     business: "The Modern Studio",
   },
   {
@@ -139,7 +139,7 @@ const reviews: Review[] = [
   {
     lang: "EN",
     quote:
-      "Quentin is always available and very attentive to our needs. He's responsive, easy to communicate with, and genuinely takes the time to understand and support us throughout the project.",
+      "Quentin est toujours disponible et très attentif à nos besoins. Réactif, facile à joindre, il prend vraiment le temps de comprendre notre projet et de nous accompagner du début à la fin.",
     business: "Martial Production",
   },
 ];
@@ -153,26 +153,26 @@ const processSteps = [
     side: "left",
   },
   {
-    title: "Maquette offerte",
-    body: "Nous concevons gratuitement une maquette de votre futur site. Vous ne continuez que si elle vous plaît.",
-    highlights: ["gratuitement"],
+    title: "Maquette gratuite",
+    body: "Nous concevons une maquette de votre futur site, sans frais. Vous ne continuez que si elle vous plaît.",
+    highlights: ["sans frais"],
     side: "right",
   },
   {
     title: "On construit",
-    body: "Nous créons votre site et rédigeons tous les textes : pensé pour le mobile, rapide, avec votre formulaire de contact ou de réservation.",
+    body: "Nous créons votre site et rédigeons tous les textes. Rapide, pensé pour le mobile et relié à votre prise de rendez-vous.",
     highlights: ["rédigeons tous les textes"],
     side: "left",
   },
   {
     title: "Google & SEO",
-    body: "Nous créons votre fiche Google Business et optimisons votre site pour la recherche locale, pour que les clients du quartier vous trouvent sur Google et Maps.",
-    highlights: ["fiche Google Business"],
+    body: "Nous optimisons votre site pour la recherche locale et soignons votre fiche Google, pour que les clients du quartier vous trouvent sur Google et Maps.",
+    highlights: ["fiche Google"],
     side: "right",
   },
   {
     title: "Mise en ligne",
-    body: "Votre site est en ligne sous 7 à 14 jours, prêt à vous apporter des appels, des réservations et des messages.",
+    body: "Votre site est en ligne sous 7 à 14 jours, prêt à vous apporter des appels et des réservations.",
     highlights: ["sous 7 à 14 jours"],
     side: "left",
   },
@@ -180,7 +180,7 @@ const processSteps = [
 
 const processIcons: Record<string, BrandIconName> = {
   "Appel découverte": "chat",
-  "Maquette offerte": "mockup",
+  "Maquette gratuite": "mockup",
   "On construit": "build",
   "Google & SEO": "seo",
   "Mise en ligne": "launch",
@@ -190,12 +190,12 @@ const faqs = [
   {
     question: "Que proposez-vous exactement ?",
     answer:
-      "Nous créons des sites sur mesure pour les commerces et les indépendants, avec la prise de rendez-vous, la fiche Google et le référencement. Ensuite, nos abonnements Visibilité et Premium s'occupent de votre présence en ligne chaque mois.",
+      "Nous créons des sites pour les commerces et les artisans, reliés à votre prise de rendez-vous, à vos avis et à votre fiche Google. Ensuite, nos abonnements Visibilité et Premium font vivre votre présence en ligne chaque mois.",
   },
   {
     question: "À qui s'adressent vos services ?",
     answer:
-      "Aux entreprises locales qui veulent être aussi convaincantes en ligne qu'en vrai : restaurants, cafés, salons, salles de sport, artisans, cabinets et commerces.",
+      "Aux commerces de Toulouse et des alentours qui veulent donner en ligne la même envie qu'en vrai : cafés, restaurants, salons de beauté, artisans, salles de sport et boutiques.",
   },
   {
     question: "Combien de temps faut-il ?",
@@ -254,18 +254,30 @@ function Heading({
   children,
   emphasize = 0,
   tone = "dark",
+  eyebrow,
 }: {
   children: string;
   emphasize?: number;
   tone?: "dark" | "light";
+  eyebrow?: string;
 }) {
   const words = children.trim().split(" ");
   const emphasizedWords =
     emphasize > 0 && words.length > 1 ? words.splice(-emphasize).join(" ") : null;
 
   return (
+    <>
+    {eyebrow && (
+      <p
+        className={`mb-4 text-center text-[13px] font-semibold uppercase tracking-[0.14em] ${
+          tone === "light" ? "text-brand-deep" : "text-brand"
+        }`}
+      >
+        {eyebrow}
+      </p>
+    )}
     <h2
-      className={`font-ui text-center text-[32px] font-semibold leading-tight tracking-[-0.02em] md:text-[46px] ${
+      className={`font-ui mx-auto max-w-[880px] text-balance text-center text-[32px] font-semibold leading-tight tracking-[-0.02em] md:text-[46px] ${
         tone === "light" ? "text-onyx" : "text-off-white"
       }`}
     >
@@ -276,6 +288,7 @@ function Heading({
         </em>
       )}
     </h2>
+    </>
   );
 }
 
@@ -310,10 +323,10 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const links = [
-    ["Services", "#services"],
+    ["Tarifs", "#pricing"],
+    ["Sur mesure", "#sur-mesure"],
     ["Méthode", "#process"],
     ["Réalisations", "#work"],
-    ["Tarifs", "#pricing"],
     ["FAQ", "#faq"],
   ];
 
@@ -652,8 +665,8 @@ function Hero() {
         </span>
       </h1>
       <p className="mx-auto mt-7 max-w-[560px] text-center text-[17px] font-normal leading-[1.6] text-warm-gray sm:text-lg">
-        Sites web, contenus Instagram et vidéos en motion design qui rendent les
-        petites entreprises impossibles à ignorer.
+        Site web, fiche Google et réseaux sociaux pour les commerces et artisans
+        de Toulouse. Votre maquette est gratuite, votre site en ligne sous 7 jours.
       </p>
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a
@@ -666,9 +679,12 @@ function Hero() {
           href="#pricing"
           className="rounded-full border border-[#2A2A2E] bg-graphite/70 px-7 py-3.5 text-sm font-semibold text-off-white transition-colors hover:border-off-white/25 hover:bg-graphite"
         >
-          Voir nos offres
+          Voir les tarifs
         </a>
       </div>
+      <p className="mt-5 text-center text-[13px] text-warm-gray/80">
+        Appel gratuit · Maquette gratuite · Sans engagement
+      </p>
       <div className="relative mt-12">
         <div
           aria-hidden="true"
@@ -1124,7 +1140,7 @@ function ProblemSection() {
       id="services"
       className="scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-14 sm:px-8 md:pb-28 md:pt-16"
     >
-      <Heading tone="light">Vous perdez des clients avant même de dire bonjour.</Heading>
+      <Heading tone="light" eyebrow="Le constat">Vous perdez des clients avant même de dire bonjour.</Heading>
       <div className="mx-auto mt-12 grid max-w-[420px] grid-cols-1 gap-8 md:max-w-[1040px] md:grid-cols-3 md:gap-5 lg:gap-7">
         {problems.map(([title, description], index) => (
           <div key={title} className="relative flex flex-col">
@@ -1253,7 +1269,7 @@ function SubscriptionTable() {
         Les abonnements
       </h3>
       <p className="mx-auto mt-3 max-w-[560px] text-center text-[15px] text-warm-gray">
-        Après la mise en ligne, on s'occupe de votre visibilité chaque mois. À ajouter à n'importe quel site.
+        Une fois en ligne, on fait vivre votre présence chaque mois. Compatible avec tous les sites, même ceux qu'on n'a pas faits.
       </p>
 
       <div role="table" aria-label="Comparatif des abonnements" className="mx-auto mt-10 max-w-[900px] rounded-[20px] border border-white/[0.08] bg-graphite p-4 sm:p-8">
@@ -1334,8 +1350,8 @@ function Services() {
       id="pricing"
       className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
     >
-      <Heading>Des prix transparents, sans frais cachés.</Heading>
-      <SectionLead>Le site se paie une seule fois. Les abonnements sont en option.</SectionLead>
+      <Heading eyebrow="Tarifs">Un prix clair, payé une seule fois.</Heading>
+      <SectionLead>Votre site vous appartient. Les abonnements mensuels sont en option.</SectionLead>
       <div className="mx-auto mt-14 grid max-w-[480px] gap-6 lg:max-w-none lg:grid-cols-3">
         {siteOffers.map((offer) => (
           <SiteOfferCard key={offer.title} offer={offer} />
@@ -1378,7 +1394,7 @@ function Reviews() {
       className={`scroll-reveal relative w-full scroll-mt-24 ${sectionY}`}
     >
       <div className="px-5 sm:px-8">
-        <Heading tone="light">Ce que disent nos clients.</Heading>
+        <Heading tone="light" eyebrow="Avis">Ils nous ont fait confiance.</Heading>
       </div>
       <div className="reviews-viewport relative mt-12 overflow-hidden">
         <div
@@ -1404,13 +1420,15 @@ function Reviews() {
                       Exemple
                     </span>
                   )}
-                  <span className="rounded-full bg-onyx/[0.06] px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] text-onyx/55">
-                    {review.lang}
-                  </span>
+                  {review.lang === "EN" && (
+                    <span className="rounded-full bg-onyx/[0.06] px-2.5 py-1 text-[10px] font-semibold text-onyx/55">
+                      Traduit de l'anglais
+                    </span>
+                  )}
                 </span>
               </div>
               <blockquote
-                lang={review.lang.toLowerCase()}
+                lang="fr"
                 className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-onyx/75"
               >
                 {review.quote}
@@ -1536,7 +1554,7 @@ function StepVisualPanel({
     );
   }
 
-  if (title === "Maquette offerte") {
+  if (title === "Maquette gratuite") {
     // La page d'accueil du café en cours de design, avec le commentaire de la cliente.
     return (
       <div className={panelClass}>
@@ -2020,8 +2038,8 @@ function Process() {
 
   return (
     <section id="process" className={`relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <Heading tone="light">Comment ça marche</Heading>
-      <SectionLead tone="light">Du premier appel à la mise en ligne, sous 7 à 14 jours.</SectionLead>
+      <Heading tone="light" eyebrow="Méthode">Du premier appel à la mise en ligne.</Heading>
+      <SectionLead tone="light">Vous voyez votre site avant de payer. Il est en ligne sous 7 à 14 jours.</SectionLead>
       <div ref={timelineRef} className="relative mt-16">
         <div className="absolute bottom-8 left-4 top-8 w-px bg-onyx/10 sm:left-1/2 sm:-translate-x-1/2">
           <div
@@ -2121,7 +2139,7 @@ function Process() {
             <BrandIcon name="growth" className="h-10 w-10 sm:h-11 sm:w-11" />
           </div>
           <p className="mt-3 text-[17px] font-normal leading-[1.6] text-onyx/70">
-            Hébergement, mises à jour et SEO local, gérés pour vous chaque mois.
+            Avec un abonnement, on gère chaque mois votre fiche Google, votre référencement et vos réseaux.
           </p>
         </div>
       </div>
@@ -2265,7 +2283,7 @@ function DemoSalon() {
           <div className="pb-2">
             <p className="font-display text-[26px] leading-[1]">Révélez votre lumière.</p>
             <p className="mt-2 text-[8.5px] leading-[1.45] opacity-75">
-              Salon de coiffure à Lyon 6e. Coupe, couleur et soins, sur rendez-vous.
+              Salon de coiffure aux Carmes. Coupe, couleur et soins, sur rendez-vous.
             </p>
             <span className="mt-3 inline-block rounded-full px-3 py-1.5 text-[8.5px] font-bold text-white" style={{ background: rose }}>
               Réserver en ligne
@@ -2383,7 +2401,7 @@ function DemoYoga() {
           <div className="relative">
             <p className="font-display text-[25px] leading-[1.02]">Respirez. Bougez. Revenez à vous.</p>
             <p className="mt-2 text-[8.5px] leading-[1.45] opacity-75">
-              Studio de yoga à Bordeaux, tous niveaux. Petits groupes de 12 personnes maximum.
+              Studio de yoga à Saint-Cyprien, tous niveaux. Petits groupes de 12 personnes maximum.
             </p>
             <span className="mt-3 inline-block rounded-full px-3 py-1.5 text-[8.5px] font-bold text-white" style={{ background: sage }}>
               1er cours offert
@@ -2429,11 +2447,10 @@ function DemoChip() {
 function WorkGallery() {
   return (
     <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1120px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <Heading>Réalisations</Heading>
-      <SectionLead>Des sites pensés pour les commerces de quartier.</SectionLead>
+      <Heading eyebrow="Réalisations">Des sites pensés pour les commerces de quartier.</Heading>
+      <SectionLead>Des commerces fictifs, créés pour montrer notre style. La maquette du vôtre est gratuite.</SectionLead>
 
-      <h3 className="mt-14 text-xl font-semibold text-off-white">Sites de démonstration</h3>
-      <div className={`${darkCard} mt-6 grid items-center gap-8 p-6 md:p-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12`}>
+      <div className={`${darkCard} mt-14 grid items-center gap-8 p-6 md:p-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12`}>
         <div>
           <div className="flex items-center gap-3">
             <p className="text-2xl font-semibold tracking-[-0.02em] text-off-white">Le Comptoir Rose</p>
@@ -2458,19 +2475,16 @@ function WorkGallery() {
         <CafeShowcase />
       </div>
       <div className="mt-6 grid gap-8 md:grid-cols-3 md:gap-6">
-        <DemoSiteCard name="Atelier Lumière" trade="Salon de coiffure · Lyon">
+        <DemoSiteCard name="Atelier Lumière" trade="Salon de coiffure · Toulouse">
           <DemoSalon />
         </DemoSiteCard>
         <DemoSiteCard name="Dupuy Plomberie" trade="Plombier chauffagiste · Toulouse">
           <DemoPlumber />
         </DemoSiteCard>
-        <DemoSiteCard name="Studio Ananda" trade="Studio de yoga · Bordeaux">
+        <DemoSiteCard name="Studio Ananda" trade="Studio de yoga · Toulouse">
           <DemoYoga />
         </DemoSiteCard>
       </div>
-      <p className="mt-6 text-sm text-warm-gray">
-        Des commerces fictifs, créés pour montrer notre style. La maquette du vôtre est offerte.
-      </p>
     </section>
   );
 }
@@ -2509,24 +2523,24 @@ function CustomServices() {
   return (
     <section
       id="sur-mesure"
-      className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
+      className="scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-6 sm:px-8 md:pb-28 md:pt-10"
     >
-      <Heading tone="light">Sur mesure</Heading>
-      <SectionLead tone="light">
-        Pour aller plus loin que le site. On étudie votre projet et on vous envoie un devis gratuit sous 48 h.
+      <Heading eyebrow="Sur mesure">Besoin de plus qu'un site ?</Heading>
+      <SectionLead>
+        Vidéo, identité visuelle ou outil pour votre commerce : on étudie votre projet et on vous envoie un devis gratuit sous 48 h.
       </SectionLead>
 
-      <div className={`${lightCard} mt-14 overflow-hidden`}>
+      <div className={`${darkCard} mt-14 overflow-hidden`}>
         <div className="grid gap-8 p-6 md:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
           <div>
             <BrandIcon name="play" className="h-11 w-11" />
-            <h3 className="mt-5 text-2xl font-semibold tracking-[-0.02em] text-onyx">
+            <h3 className="mt-5 text-2xl font-semibold tracking-[-0.02em] text-off-white">
               Vidéo de présentation en motion design
             </h3>
-            <p className="mt-3 text-[17px] leading-[1.6] text-onyx/70">
+            <p className="mt-3 text-[17px] leading-[1.6] text-[#CFCCC7]">
               Expliquer ce que vous faites en quelques secondes, avec une vidéo animée qui retient l'attention.
             </p>
-            <ul className="mt-5 space-y-2.5 text-[15px] text-onyx/75">
+            <ul className="mt-5 space-y-2.5 text-[15px] text-[#CFCCC7]">
               {motionFormats.map((point) => (
                 <li key={point} className="flex gap-3">
                   <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
@@ -2545,14 +2559,14 @@ function CustomServices() {
 
       <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {customServices.map((service) => (
-          <article key={service.title} className={`${lightCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
+          <article key={service.title} className={`${darkCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
             <BrandIcon name={service.icon} className="h-11 w-11" />
-            <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] text-onyx">{service.title}</h3>
-            <p className="mt-2 text-[15px] text-onyx/55">{service.body}</p>
-            <ul className="mt-5 space-y-2 text-[15px] text-onyx/75">
+            <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] text-off-white">{service.title}</h3>
+            <p className="mt-2 text-[15px] text-warm-gray">{service.body}</p>
+            <ul className="mt-5 space-y-2 text-[15px] text-[#CFCCC7]">
               {service.points.map((point) => (
                 <li key={point} className="flex gap-3">
-                  <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-onyx/30" />
+                  <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-warm-gray/60" />
                   {point}
                 </li>
               ))}
@@ -2561,10 +2575,10 @@ function CustomServices() {
         ))}
         <a
           href="#contact"
-          className="flex flex-col justify-center rounded-[20px] border border-dashed border-onyx/25 bg-white/50 p-6 transition hover:border-brand sm:p-7"
+          className="flex flex-col justify-center rounded-[20px] border border-dashed border-brand/50 p-6 transition hover:border-brand sm:p-7"
         >
-          <span className="text-xl font-semibold text-onyx">Un autre projet ?</span>
-          <span className="mt-2 text-[15px] text-onyx/55">Parlez-nous-en, on vous dit ce qui est possible.</span>
+          <span className="text-xl font-semibold text-off-white">Un autre projet ?</span>
+          <span className="mt-2 text-[15px] text-warm-gray">Parlez-nous-en, on vous dit ce qui est possible.</span>
           <span className="mt-6 inline-flex w-fit rounded-full bg-brand px-5 py-3 text-sm font-semibold text-onyx">
             Demander un devis
           </span>
@@ -2577,7 +2591,7 @@ function CustomServices() {
 function FAQ() {
   return (
     <section id="faq" className={`scroll-reveal relative mx-auto w-full max-w-[1000px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <Heading tone="light">Questions fréquentes</Heading>
+      <Heading tone="light" eyebrow="FAQ">Vos questions, nos réponses.</Heading>
       <div className="mt-12 space-y-3">
         {faqs.map((faq, index) => (
           <details
@@ -2704,23 +2718,16 @@ function ContactSection() {
       <div className="relative z-10 grid gap-10 rounded-[24px] border border-white/[0.08] bg-graphite p-6 md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
         <div className="flex flex-col justify-center">
           <h2 className="text-[32px] font-semibold leading-[1.08] tracking-[-0.02em] text-off-white md:text-[48px]">
-            Arrêtez de perdre des clients face à des concurrents qui{" "}
+            Votre maquette est gratuite.{" "}
             <em className="glow-text font-display text-[1.15em] font-normal italic text-brand">
-              présentent mieux
-            </em>{" "}
-            en ligne.
+              Parlons de votre commerce.
+            </em>
           </h2>
           <p className="mt-6 max-w-[480px] text-[17px] font-normal leading-[1.6] text-warm-gray">
-            Réservez votre appel découverte gratuit sur WhatsApp ou via le
-            formulaire. Vous recevez ensuite une maquette gratuite, et vous ne
-            continuez que si elle vous plaît.
+            Laissez-nous vos coordonnées : on vous rappelle pour un appel de
+            20 minutes, puis on vous envoie la maquette de votre futur site.
+            Vous ne payez que si elle vous plaît.
           </p>
-          <a
-            href="#contact-form"
-            className="mt-8 inline-flex w-fit rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
-          >
-            Prendre rendez-vous
-          </a>
         </div>
 
         <form
@@ -2804,7 +2811,7 @@ function ContactSection() {
             <textarea
               name="message"
               rows={4}
-              placeholder="Parlez-nous de votre projet"
+              placeholder="Votre commerce, ce dont vous avez besoin…"
               className={fieldClass}
             />
             {errors.message && (
@@ -2827,7 +2834,7 @@ function ContactSection() {
               disabled={status === "sending"}
               className="w-full rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] disabled:cursor-wait disabled:opacity-70"
             >
-              {status === "sending" ? "Envoi…" : "Envoyer"}
+              {status === "sending" ? "Envoi…" : "Demander ma maquette gratuite"}
             </button>
             <div aria-live="polite">
               {status === "sent" && (
@@ -2860,10 +2867,10 @@ function ContactSection() {
 
 function Footer() {
   const navLinks = [
-    ["Services", "#services"],
+    ["Tarifs", "#pricing"],
+    ["Sur mesure", "#sur-mesure"],
     ["Méthode", "#process"],
     ["Réalisations", "#work"],
-    ["Tarifs", "#pricing"],
     ["FAQ", "#faq"],
   ];
 
@@ -2883,11 +2890,11 @@ function Footer() {
           />
         </a>
           <p className="mt-5 max-w-[440px] text-[15px] font-normal leading-[1.6] text-warm-gray">
-            Sites web, contenus Instagram et vidéos en motion design pour les
-            petites entreprises.
+            Site web, fiche Google et réseaux sociaux pour les commerces et
+            artisans de Toulouse.
           </p>
           <p className="mt-6 text-sm font-semibold text-off-white">
-            Be seen. Be chosen.
+            Être vu. Être choisi.
           </p>
         </div>
         <div className="md:text-right">
@@ -2976,8 +2983,8 @@ export default function App() {
         <ProblemSection />
       </div>
       <Services />
+      <CustomServices />
       <div className="light-section relative bg-off-white">
-        <CustomServices />
         <Process />
       </div>
       <WorkGallery />
