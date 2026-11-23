@@ -638,7 +638,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-20 pt-36 sm:px-8 md:pt-44 lg:pb-28"
+      className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-16 pt-36 sm:px-8 md:pt-44 lg:pb-20"
     >
       <h1 className="mx-auto max-w-[900px] text-center shadow-none">
         <span className="font-ui block text-base font-normal leading-none text-warm-gray lg:text-[22px]">
@@ -819,7 +819,7 @@ function ProblemVisual({ index }: { index: number }) {
       style={{ containerType: "inline-size" }}
     >
       <div
-        className={`step-panel problem-panel relative w-full overflow-hidden border border-white/80 bg-off-white text-onyx shadow-[0_25px_60px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.9)] ${floatClass}`}
+        className={`step-panel problem-panel relative w-full overflow-hidden border border-onyx/[0.06] bg-white text-onyx shadow-[0_24px_50px_rgba(10,10,11,0.12)] ${floatClass}`}
         style={{
           aspectRatio: "1.08 / 1",
           borderRadius: u(20),
@@ -1114,37 +1114,34 @@ function DeadFeedWidget() {
 
 function ProblemSection() {
   const problems = [
-    ["Page 3 de Google", "Personne ne vous trouve."],
-    ["Site lent et dépassé", "Ils repartent en quelques secondes."],
-    ["Dernier post : 2023", "Ils se demandent si vous êtes encore ouvert."],
+    ["Site non référencé", "Personne ne vous trouve sur Google."],
+    ["Site lent et dépassé", "Les visiteurs repartent en quelques secondes."],
+    ["Absent des réseaux", "On se demande si vous êtes encore ouvert."],
   ];
 
   return (
     <section
       id="services"
-      className={`scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
+      className="scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-14 sm:px-8 md:pb-28 md:pt-16"
     >
-      <Heading>
-        La plupart des entreprises perdent des clients avant même de dire bonjour.
-      </Heading>
+      <Heading tone="light">Vous perdez des clients avant même de dire bonjour.</Heading>
       <div className="mx-auto mt-12 grid max-w-[420px] grid-cols-1 gap-8 md:max-w-[1040px] md:grid-cols-3 md:gap-5 lg:gap-7">
         {problems.map(([title, description], index) => (
           <div key={title} className="relative flex flex-col">
             <ProblemVisual index={index} />
-            <article className={`${darkCard} relative z-10 -mt-8 flex-1 overflow-hidden p-5 sm:p-6`}>
-              <p className="inline-block whitespace-nowrap rounded-full border border-brand/35 bg-brand/12 px-3.5 py-1.5 text-[15px] font-semibold leading-none tracking-[-0.01em] text-brand-light">
+            <article className={`${lightCard} relative z-10 -mt-8 flex-1 overflow-hidden p-5 sm:p-6`}>
+              <p className="inline-block whitespace-nowrap rounded-full bg-onyx px-3.5 py-1.5 text-[15px] font-semibold leading-none tracking-[-0.01em] text-white">
                 {title}
               </p>
-              <p className="mt-4 text-sm font-normal leading-[1.6] text-warm-gray sm:text-[15px]">
+              <p className="mt-4 text-sm font-normal leading-[1.6] text-onyx/65 sm:text-[15px]">
                 {description}
               </p>
             </article>
           </div>
         ))}
       </div>
-      <p className="mx-auto mt-10 max-w-[760px] text-center text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
-        Alors ils choisissent votre concurrent. Pas parce qu'il est meilleur. Parce qu'il{" "}
-        <span className="font-semibold text-off-white">présente mieux.</span>
+      <p className="mx-auto mt-10 max-w-[760px] text-center text-[17px] font-semibold leading-[1.6] text-onyx">
+        Résultat : ils choisissent votre concurrent.
       </p>
     </section>
   );
@@ -2514,22 +2511,22 @@ function CustomServices() {
       id="sur-mesure"
       className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
     >
-      <Heading>Sur mesure</Heading>
-      <SectionLead>
+      <Heading tone="light">Sur mesure</Heading>
+      <SectionLead tone="light">
         Pour aller plus loin que le site. On étudie votre projet et on vous envoie un devis gratuit sous 48 h.
       </SectionLead>
 
-      <div className={`${darkCard} mt-14 overflow-hidden`}>
+      <div className={`${lightCard} mt-14 overflow-hidden`}>
         <div className="grid gap-8 p-6 md:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
           <div>
             <BrandIcon name="play" className="h-11 w-11" />
-            <h3 className="mt-5 text-2xl font-semibold tracking-[-0.02em] text-off-white">
+            <h3 className="mt-5 text-2xl font-semibold tracking-[-0.02em] text-onyx">
               Vidéo de présentation en motion design
             </h3>
-            <p className="mt-3 text-[17px] leading-[1.6] text-[#CFCCC7]">
+            <p className="mt-3 text-[17px] leading-[1.6] text-onyx/70">
               Expliquer ce que vous faites en quelques secondes, avec une vidéo animée qui retient l'attention.
             </p>
-            <ul className="mt-5 space-y-2.5 text-[15px] text-[#CFCCC7]">
+            <ul className="mt-5 space-y-2.5 text-[15px] text-onyx/75">
               {motionFormats.map((point) => (
                 <li key={point} className="flex gap-3">
                   <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
@@ -2548,14 +2545,14 @@ function CustomServices() {
 
       <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {customServices.map((service) => (
-          <article key={service.title} className={`${darkCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
+          <article key={service.title} className={`${lightCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
             <BrandIcon name={service.icon} className="h-11 w-11" />
-            <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] text-off-white">{service.title}</h3>
-            <p className="mt-2 text-[15px] text-warm-gray">{service.body}</p>
-            <ul className="mt-5 space-y-2 text-[15px] text-[#CFCCC7]">
+            <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] text-onyx">{service.title}</h3>
+            <p className="mt-2 text-[15px] text-onyx/55">{service.body}</p>
+            <ul className="mt-5 space-y-2 text-[15px] text-onyx/75">
               {service.points.map((point) => (
                 <li key={point} className="flex gap-3">
-                  <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-warm-gray/60" />
+                  <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-onyx/30" />
                   {point}
                 </li>
               ))}
@@ -2564,10 +2561,10 @@ function CustomServices() {
         ))}
         <a
           href="#contact"
-          className="flex flex-col justify-center rounded-[20px] border border-dashed border-brand/50 p-6 transition hover:border-brand sm:p-7"
+          className="flex flex-col justify-center rounded-[20px] border border-dashed border-onyx/25 bg-white/50 p-6 transition hover:border-brand sm:p-7"
         >
-          <span className="text-xl font-semibold text-off-white">Un autre projet ?</span>
-          <span className="mt-2 text-[15px] text-warm-gray">Parlez-nous-en, on vous dit ce qui est possible.</span>
+          <span className="text-xl font-semibold text-onyx">Un autre projet ?</span>
+          <span className="mt-2 text-[15px] text-onyx/55">Parlez-nous-en, on vous dit ce qui est possible.</span>
           <span className="mt-6 inline-flex w-fit rounded-full bg-brand px-5 py-3 text-sm font-semibold text-onyx">
             Demander un devis
           </span>
@@ -2975,10 +2972,12 @@ export default function App() {
       <BackgroundLights />
       <Header />
       <Hero />
-      <ProblemSection />
-      <Services />
-      <CustomServices />
       <div className="light-section relative bg-off-white">
+        <ProblemSection />
+      </div>
+      <Services />
+      <div className="light-section relative bg-off-white">
+        <CustomServices />
         <Process />
       </div>
       <WorkGallery />
