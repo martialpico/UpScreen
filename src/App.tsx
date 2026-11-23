@@ -21,7 +21,8 @@ type SiteOffer = {
   featured?: boolean;
   cta: string;
   href?: string;
-  features: string[];
+  // Une ligne simple, ou [intitulé, détail] pour une ligne dépliable.
+  features: (string | [string, string])[];
 };
 
 const siteOffers: SiteOffer[] = [
@@ -33,10 +34,12 @@ const siteOffers: SiteOffer[] = [
     cta: "Choisir Essentiel",
     features: [
       "Site d'une page, adapté au mobile et à la tablette",
-      "Liaison avec votre outil de prise de rendez-vous",
-      "Avis clients et témoignages",
-      "Formulaire de contact",
-      "SEO de base",
+      [
+        "Liaison avec votre outil de prise de rendez-vous",
+        "Votre numéro de téléphone en un clic, ou un formulaire de contact pour réserver.",
+      ],
+      ["Avis clients et témoignages Google", "Vos avis Google affichés directement sur votre site."],
+      ["SEO de base", "Référencement des balises et des textes de votre site pour Google."],
       "Nom de domaine et hébergement inclus la 1re année",
     ],
   },
@@ -49,8 +52,11 @@ const siteOffers: SiteOffer[] = [
     cta: "Choisir Complet",
     features: [
       "Tout ce que comprend l'Essentiel",
-      "Site multipage, jusqu'à 10 pages",
-      "Création ou refonte de votre site actuel",
+      "Site multipage",
+      [
+        "Création de zéro ou refonte de votre site actuel",
+        "Pour une refonte, on repart de votre site actuel et de son référencement.",
+      ],
       "Fiche Google créée ou refaite : horaires, photos, avis",
       "Liens possibles vers Instagram et Facebook",
     ],
@@ -1178,12 +1184,33 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
       </p>
 
       <ul className="mt-7 space-y-3.5 border-t border-white/10 pt-7 text-[15px] leading-[1.5] text-[#CFCCC7]">
-        {offer.features.map((feature) => (
-          <li key={feature} className="flex gap-3">
+        {offer.features.map((feature) => {
+          const bullet = (
             <span className={`mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full ${featured ? "bg-brand" : "bg-warm-gray/60"}`} />
-            {feature}
-          </li>
-        ))}
+          );
+          if (typeof feature === "string")
+            return (
+              <li key={feature} className="flex gap-3">
+                {bullet}
+                {feature}
+              </li>
+            );
+          const [label, detail] = feature;
+          return (
+            <li key={label}>
+              <details className="group">
+                <summary className="flex cursor-pointer list-none gap-3 [&::-webkit-details-marker]:hidden">
+                  {bullet}
+                  <span className="flex-1">{label}</span>
+                  <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-[0.3em] h-4 w-4 shrink-0 text-warm-gray transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m4 6 4 4 4-4" />
+                  </svg>
+                </summary>
+                <p className="ml-[18px] mt-1.5 pr-6 text-[13px] leading-[1.5] text-warm-gray">{detail}</p>
+              </details>
+            </li>
+          );
+        })}
       </ul>
 
       <a
