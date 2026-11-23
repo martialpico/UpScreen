@@ -33,6 +33,7 @@ const siteOffers: SiteOffer[] = [
     delay: "En ligne sous 7 jours",
     cta: "Choisir Essentiel",
     features: [
+      "Création de votre site de zéro",
       "Site d'une page, adapté au mobile et à la tablette",
       [
         "Liaison avec votre outil de prise de rendez-vous",
@@ -57,8 +58,11 @@ const siteOffers: SiteOffer[] = [
         "Création de zéro ou refonte de votre site actuel",
         "Pour une refonte, on repart de votre site actuel et de son référencement.",
       ],
-      "Fiche Google créée ou refaite : horaires, photos, avis",
-      "Liens possibles vers Instagram et Facebook",
+      ["Fiche Google créée ou refaite", "Horaires, catégorie d'activité et photos fournies par vous."],
+      [
+        "Liens possibles vers Instagram et Facebook",
+        "Si vous en avez, on connecte votre Instagram et votre Facebook pour afficher vos derniers posts sur le site.",
+      ],
     ],
   },
   {
@@ -83,16 +87,24 @@ const siteOffers: SiteOffer[] = [
 type PlanCell = true | false | string;
 const subscriptions = [
   { name: "Visibilité", price: "99", engagement: "Aucun" },
-  { name: "Premium", price: "299", engagement: "2 mois, puis sans engagement", featured: true },
+  { name: "Premium", price: "249", engagement: "2 mois, puis sans engagement", featured: true },
 ] as const;
 
-const subscriptionRows: [string, PlanCell, PlanCell][] = [
-  ["SEO renforcé et référencement", true, true],
-  ["Fiche Google : posts et réponses aux avis", true, true],
-  ["Petites modifications du site", true, true],
-  ["Mises à jour et sauvegardes", true, true],
+// Une ligne simple, ou [intitulé, détail] pour une ligne dépliable.
+const subscriptionRows: [string | [string, string], PlanCell, PlanCell][] = [
+  [
+    ["Fiche Google active", "Publications régulières sur votre fiche Google et réponse à chaque avis client. Une fiche active remonte plus haut sur Google et Maps."],
+    true,
+    true,
+  ],
+  [
+    ["SEO renforcé et référencement", "Y compris le référencement sur les IA : ChatGPT, Claude, Gemini…"],
+    true,
+    true,
+  ],
+  ["Petites modifications, mises à jour et sauvegardes", true, true],
   ["Articles de blog", "1 par mois", "1 par semaine"],
-  ["Instagram", false, "1 post par semaine, à partir de vos photos et vidéos"],
+  ["Instagram", false, "2 carrousels par semaine, à partir de vos photos et vidéos"],
   ["Légendes et programmation des posts", false, true],
 ];
 
@@ -207,7 +219,7 @@ const faqs = [
   {
     question: "Comment fonctionnent l'hébergement et les abonnements ?",
     answer:
-      "Le nom de domaine et l'hébergement sont inclus la 1re année, puis facturés 49 €/an. Les abonnements sont en option : Visibilité à 99 €/mois sans engagement, Premium à 299 €/mois avec 2 mois d'engagement. Votre site et votre nom de domaine vous appartiennent : si vous arrêtez, vous les récupérez gratuitement.",
+      "Le nom de domaine et l'hébergement sont inclus la 1re année, puis facturés 49 €/an. Les abonnements sont en option : Visibilité à 99 €/mois sans engagement, Premium à 249 €/mois avec 2 mois d'engagement. Votre site et votre nom de domaine vous appartiennent : si vous arrêtez, le transfert est gratuit.",
   },
   {
     question: "Proposez-vous d'autres services ?",
@@ -1273,9 +1285,23 @@ function SubscriptionTable() {
           ))}
         </div>
 
-        {subscriptionRows.map(([label, visibility, premium]) => (
-          <div key={label} role="row" className={`${cols} items-center border-t border-white/10 py-4 text-[13px] sm:text-[15px]`}>
-            <span role="rowheader" className="text-[#CFCCC7]">{label}</span>
+        {subscriptionRows.map(([row, visibility, premium]) => (
+          <div key={typeof row === "string" ? row : row[0]} role="row" className={`${cols} items-center border-t border-white/10 py-4 text-[13px] sm:text-[15px]`}>
+            <span role="rowheader" className="text-[#CFCCC7]">
+              {typeof row === "string" ? (
+                row
+              ) : (
+                <details className="group">
+                  <summary className="flex cursor-pointer list-none items-start gap-1.5 [&::-webkit-details-marker]:hidden">
+                    <span>{row[0]}</span>
+                    <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-[0.25em] h-4 w-4 shrink-0 text-warm-gray transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m4 6 4 4 4-4" />
+                    </svg>
+                  </summary>
+                  <span className="mt-1.5 block text-[12px] leading-[1.5] text-warm-gray sm:text-[13px]">{row[1]}</span>
+                </details>
+              )}
+            </span>
             <span role="cell" className="text-off-white"><PlanMark value={visibility} /></span>
             <span role="cell" className="font-semibold text-off-white"><PlanMark value={premium} /></span>
           </div>
@@ -1337,7 +1363,7 @@ function Services() {
           <ul className="mt-2 space-y-1.5 text-sm leading-[1.55] text-warm-gray">
             <li>Maquette gratuite : vous ne payez que si elle vous plaît.</li>
             <li>En ligne sous 7 ou 14 jours, à partir de la réception de vos photos et infos.</li>
-            <li>Votre site et votre nom de domaine vous appartiennent : vous les reprenez quand vous voulez, gratuitement.</li>
+            <li>Transfert gratuit : votre site et votre nom de domaine vous appartiennent, vous les reprenez quand vous voulez.</li>
           </ul>
         </div>
       </div>
