@@ -1259,6 +1259,18 @@ function ProblemSection() {
   );
 }
 
+// Fond « premium » : formes rouges floues qui dérivent lentement.
+function PremiumBlobs() {
+  return (
+    <div aria-hidden="true" className="premium-blobs pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <span className="blob blob-a" />
+      <span className="blob blob-b" />
+      <span className="blob blob-c" />
+      <span className="blob blob-d" />
+    </div>
+  );
+}
+
 function DelayChip({ children, tone = "dark" }: { children: ReactNode; tone?: "dark" | "light" }) {
   return (
     <span
@@ -1292,25 +1304,32 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
     <article
       className={`scroll-reveal relative flex flex-col overflow-hidden rounded-[28px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${
         featured
-          ? "border-brand/50 bg-[radial-gradient(120%_70%_at_0%_0%,rgba(233,68,69,0.30),transparent_60%),linear-gradient(180deg,#1c1314,#0e0c0d)] shadow-[0_40px_90px_rgba(233,68,69,0.16)] lg:-my-5 lg:py-11"
+          ? "isolate border-white/10 bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)] lg:-my-5 lg:py-11"
           : quote
             ? "border-white/80 bg-off-white shadow-[0_30px_70px_rgba(0,0,0,0.45)]"
             : "border-white/[0.08] bg-graphite hover:border-white/20"
       }`}
     >
+      {featured && <PremiumBlobs />}
       <div className="flex items-start justify-between gap-3">
         <h3 className={`text-[26px] font-extrabold leading-none tracking-[-0.05em] ${quote ? "text-onyx" : "text-off-white"}`}>
           {offer.title}
         </h3>
         {featured ? (
-          <span className="whitespace-nowrap rounded-full bg-brand/20 px-3 py-1.5 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.12em] text-brand-light">
+          <span className="whitespace-nowrap rounded-full bg-white/90 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-onyx">
             Recommandé
           </span>
         ) : (
           <DelayChip tone={quote ? "light" : "dark"}>{offer.chip}</DelayChip>
         )}
       </div>
-      <p className={`mt-3 text-[15px] ${quote ? "text-onyx/60" : "text-[#CFCCC7]"}`}>{offer.subtitle}</p>
+      <p
+        className={`mt-3 ${
+          featured ? "font-mono text-[13px] font-semibold leading-[1.6] text-white/75" : quote ? "text-[15px] text-onyx/60" : "text-[15px] text-[#CFCCC7]"
+        }`}
+      >
+        {offer.subtitle}
+      </p>
 
       <p className="mt-7 whitespace-nowrap">
         {quote ? (
@@ -1359,9 +1378,11 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
       <a
         href={offer.href ?? "#contact"}
         className={`inline-flex w-full items-center justify-center gap-2 rounded-full border px-5 py-4 text-[15px] font-semibold transition duration-200 hover:-translate-y-0.5 ${
-          featured || quote
-            ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
-            : "border-white/15 text-off-white hover:border-white/35"
+          featured
+            ? "border-white bg-white text-onyx shadow-[0_18px_40px_rgba(0,0,0,0.35)] hover:bg-off-white"
+            : quote
+              ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
+              : "border-white/15 text-off-white hover:border-white/35"
         }`}
       >
         {offer.cta}
@@ -1404,7 +1425,10 @@ function SubscriptionTable() {
           <div className={`${cols} h-full`}>
             <span />
             <span />
-            <span className="-mx-1.5 -my-2 rounded-[22px] border border-brand/40 bg-[radial-gradient(140%_60%_at_50%_0%,rgba(233,68,69,0.32),transparent_70%),linear-gradient(180deg,rgba(233,68,69,0.10),rgba(233,68,69,0.03))] shadow-[0_30px_70px_rgba(233,68,69,0.18)] sm:-mx-3 sm:-my-4" />
+            <span className="relative isolate -mx-1.5 -my-2 overflow-hidden rounded-[22px] border border-white/10 bg-[#0b0a0b] shadow-[0_30px_70px_rgba(233,68,69,0.22)] sm:-mx-3 sm:-my-4">
+              <PremiumBlobs />
+              <span className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,10,11,0.15),rgba(11,10,11,0.55))]" />
+            </span>
           </div>
         </div>
         <div role="row" className={`${cols} relative items-end pb-5`}>
@@ -1412,7 +1436,7 @@ function SubscriptionTable() {
           {subscriptions.map((plan) =>
             "featured" in plan && plan.featured ? (
               <span key={plan.name} role="columnheader" className="flex flex-col items-start gap-2 pt-2">
-                <span className="whitespace-nowrap rounded-full bg-brand px-2 py-1 font-mono text-[9px] font-semibold uppercase leading-none tracking-[0.08em] text-onyx sm:px-2.5 sm:text-[10px] sm:tracking-[0.14em]">
+                <span className="whitespace-nowrap rounded-full bg-white/90 px-2 py-1 font-mono text-[9px] font-semibold uppercase leading-none tracking-[0.08em] text-onyx sm:px-2.5 sm:text-[10px] sm:tracking-[0.14em]">
                   Le plus complet
                 </span>
                 <span className="text-lg font-extrabold tracking-[-0.03em] text-off-white sm:text-xl">{plan.name}</span>
@@ -1429,7 +1453,7 @@ function SubscriptionTable() {
           <span role="rowheader" className="text-sm text-warm-gray sm:text-[15px]">Prix</span>
           {subscriptions.map((plan) => (
             <span key={plan.name} role="cell" className="whitespace-nowrap">
-              <span className={`text-[30px] font-extrabold leading-none tracking-[-0.045em] sm:text-[40px] ${"featured" in plan && plan.featured ? "text-brand" : "text-off-white"}`}>
+              <span className={`text-[30px] font-extrabold leading-none tracking-[-0.045em] sm:text-[40px] text-off-white`}>
                 {plan.price}
               </span>
               <span className="ml-1 text-xs text-warm-gray sm:text-sm">€/mois</span>
@@ -1474,7 +1498,7 @@ function SubscriptionTable() {
               href="#contact"
               className={`flex items-center justify-center rounded-full border px-3 py-3 text-xs font-semibold transition sm:text-sm ${
                 "featured" in plan && plan.featured
-                  ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
+                  ? "border-white bg-white text-onyx hover:bg-off-white"
                   : "border-white/15 text-off-white hover:border-white/35"
               }`}
             >
@@ -3346,11 +3370,10 @@ export default function App() {
       <BackgroundLights />
       <Header />
       <Hero />
-      <ProblemSection />
+      <WorkGallery />
       <Services />
       <CustomServices />
       <Process />
-      <WorkGallery />
       <Reviews />
       <FAQ />
       <ContactSection />

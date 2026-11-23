@@ -615,3 +615,40 @@
     background-size: 56px 56px;
   }
 }
+
+/* Formes floues des offres premium (carte Complet, colonne Premium). */
+@layer components {
+  .premium-blobs .blob {
+    position: absolute;
+    border-radius: 45%;
+    filter: blur(42px);
+    opacity: 0.85;
+    will-change: transform;
+  }
+  .premium-blobs .blob-a {
+    width: 70%; height: 45%; right: -20%; top: -12%;
+    background: #ff4d4f;
+    animation: blob-drift-a 14s ease-in-out infinite alternate;
+  }
+  .premium-blobs .blob-b {
+    width: 38%; height: 55%; right: 18%; top: 18%;
+    background: #ff9a9b; opacity: 0.55; transform: rotate(35deg);
+    animation: blob-drift-b 17s ease-in-out infinite alternate;
+  }
+  .premium-blobs .blob-c {
+    width: 55%; height: 40%; right: -10%; bottom: 10%;
+    background: #c62d30;
+    animation: blob-drift-c 19s ease-in-out infinite alternate;
+  }
+  .premium-blobs .blob-d {
+    width: 30%; height: 30%; left: 30%; top: 2%;
+    background: #ffd2d2; opacity: 0.35;
+    animation: blob-drift-b 21s ease-in-out infinite alternate-reverse;
+  }
+  @keyframes blob-drift-a { to { transform: translate(-14%, 12%) rotate(25deg) scale(1.1); } }
+  @keyframes blob-drift-b { to { transform: translate(12%, -10%) rotate(-20deg) scale(0.9); } }
+  @keyframes blob-drift-c { to { transform: translate(-10%, -14%) rotate(15deg) scale(1.15); } }
+  @media (prefers-reduced-motion: reduce) {
+    .premium-blobs .blob { animation: none; }
+  }
+}
