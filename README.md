@@ -1,6 +1,6 @@
 # Upscreen website
 
-Landing page for **Upscreen**, an agency that builds landing pages, motion design videos and Instagram content for small businesses in Australia.
+Landing page for **Upscreen**, an agency that builds landing pages, motion design videos and Instagram content for small businesses. The site is in French, with prices in euros (excl. VAT), set in `prices` at the top of `src/App.tsx`.
 
 Built with Preact (React-compatible API, much lighter), Vite and Tailwind CSS v4. It is a static site: no server or database needed.
 
@@ -28,7 +28,7 @@ Any static host works. Recommended: **Vercel** or **Netlify** (free for this kin
 
 | Path | What it is |
 | --- | --- |
-| `src/App.tsx` | All page sections (header, hero, problem cards, pricing, timeline, work, FAQ, contact, footer) |
+| `src/App.tsx` | All page sections (header, hero with the café site showcase, problem cards, pricing, timeline, demo sites and videos, reviews, FAQ, contact, footer) |
 | `src/index.css` | Brand colors, fonts, glass effects and animations |
 | `src/imports/` | Images, logo, video previews and icons (the animated red background is pure CSS, in `src/index.css`) |
 | `src/fonts/` | Self-hosted Open Sans and DM Serif Display (latin subset, SIL Open Font License) |
@@ -43,7 +43,7 @@ Content you will most often edit lives at the top of `src/App.tsx`: the pricing 
 ## Before launch
 
 - [x] **Contact form** emails every enquiry to upscreenweb@gmail.com through [FormSubmit](https://formsubmit.co) (`contactEmail` in `src/App.tsx`). One-time step: submit the form once from the live site, then click the "Activate Form" link FormSubmit emails to that inbox (check spam).
-- [x] **Google indexing is on** (`"robots": { "index": true }` in `site.config.json`). The canonical address is https://upscren.agency/ (set in `customScripts.headEnd`), so Google lists that domain rather than the vercel.app one.
+- [ ] **Allow Google indexing.** In `site.config.json`, set `"robots": { "index": true }`. It is set to `false` while the site is in progress.
 - [ ] Add a "Recent websites" section back once you have client sites to show.
 - [x] **Real client reviews** are in `reviews` at the top of `src/App.tsx`. Only add quotes from real clients who agreed to be published. Invented reviews are illegal under Australian Consumer Law.
 
