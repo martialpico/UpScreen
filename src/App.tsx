@@ -1302,14 +1302,14 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
     <article
       className={`scroll-reveal relative flex flex-col overflow-hidden rounded-[28px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${
         featured
-          ? "isolate border-white/10 bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)] lg:-my-5 lg:py-11"
+          ? "isolate border-white/10 bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)]"
           : quote
             ? "border-white/80 bg-off-white shadow-[0_30px_70px_rgba(0,0,0,0.45)]"
             : "border-white/[0.08] bg-graphite hover:border-white/20"
       }`}
     >
       {featured && <PremiumBlobs />}
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex min-h-[28px] items-start justify-between gap-3">
         <h3 className={`text-[26px] font-extrabold leading-none tracking-[-0.05em] ${quote ? "text-onyx" : "text-off-white"}`}>
           {offer.title}
         </h3>
@@ -1317,9 +1317,7 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
           <span className="whitespace-nowrap rounded-full bg-white/90 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase leading-none tracking-[0.12em] text-onyx">
             Recommandé
           </span>
-        ) : (
-          <DelayChip tone={quote ? "light" : "dark"}>{offer.chip}</DelayChip>
-        )}
+        ) : null}
       </div>
       <p
         className={`mt-3 ${
@@ -1329,7 +1327,7 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
         {offer.subtitle}
       </p>
 
-      <p className="mt-7 whitespace-nowrap">
+      <p className="mt-7 flex h-[62px] items-end whitespace-nowrap">
         {quote ? (
           <span className="text-[48px] font-extrabold leading-none tracking-[-0.055em] text-onyx sm:text-[54px]">Sur devis</span>
         ) : (
@@ -1338,11 +1336,9 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
           </span>
         )}
       </p>
-      {featured && (
-        <div className="mt-5">
-          <DelayChip>{offer.chip}</DelayChip>
-        </div>
-      )}
+      <div className="mt-5">
+        <DelayChip tone={quote ? "light" : "dark"}>{offer.chip}</DelayChip>
+      </div>
 
       <ul className={`mt-8 space-y-4 text-[15px] leading-[1.5] ${quote ? "text-onyx/80" : "text-[#E4E1DC]"}`}>
         {offer.features.map((feature) => {
@@ -1515,7 +1511,7 @@ function Services() {
         eyebrow="Tarifs"
         title="Des tarifs transparents."
         muted="Payés une seule fois."
-        lead="Pas de devis interminable : un prix fixe, tout compris. Votre site vous appartient, les abonnements mensuels sont en option."
+        lead="Pas de devis interminable : un prix fixe, tout compris. Votre site vous appartient."
       />
       <CheckChips items={["Maquette gratuite", "Transfert gratuit"]} />
       <div className="mx-auto mt-16 grid max-w-[480px] gap-6 lg:max-w-none lg:grid-cols-3 lg:items-stretch">
@@ -2780,7 +2776,11 @@ function WorkGallery() {
   const [openSite, setOpenSite] = useState<Vitrine | null>(null);
   return (
     <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <SectionHeader title="Des sites sur-mesure" muted="conçus pour votre entreprise." />
+      <SectionHeader
+        title="Des sites sur-mesure"
+        muted="conçus pour votre entreprise."
+        lead="Restaurants, cafés, clinique : chaque site est dessiné pour son activité, rapide et pensé pour le mobile. Cliquez sur un site pour le parcourir."
+      />
 
       <div className="mt-14 grid gap-x-6 gap-y-10 md:grid-cols-2">
         {vitrines.map((site, index) => (
