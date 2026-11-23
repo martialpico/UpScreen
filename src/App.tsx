@@ -835,7 +835,7 @@ function ProblemVisual({ index }: { index: number }) {
       style={{ containerType: "inline-size" }}
     >
       <div
-        className={`step-panel problem-panel relative w-full overflow-hidden border border-onyx/[0.06] bg-white text-onyx shadow-[0_24px_50px_rgba(10,10,11,0.12)] ${floatClass}`}
+        className={`step-panel problem-panel relative w-full overflow-hidden border border-white/80 bg-off-white text-onyx shadow-[0_25px_60px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.9)] ${floatClass}`}
         style={{
           aspectRatio: "1.08 / 1",
           borderRadius: u(20),
@@ -1138,25 +1138,25 @@ function ProblemSection() {
   return (
     <section
       id="services"
-      className="scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-14 sm:px-8 md:pb-28 md:pt-16"
+      className="scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-4 sm:px-8 md:pb-28 md:pt-6"
     >
-      <Heading tone="light" eyebrow="Le constat">Vous perdez des clients avant même de dire bonjour.</Heading>
+      <Heading eyebrow="Le constat">Vous perdez des clients avant même de dire bonjour.</Heading>
       <div className="mx-auto mt-12 grid max-w-[420px] grid-cols-1 gap-8 md:max-w-[1040px] md:grid-cols-3 md:gap-5 lg:gap-7">
         {problems.map(([title, description], index) => (
           <div key={title} className="relative flex flex-col">
             <ProblemVisual index={index} />
-            <article className={`${lightCard} relative z-10 -mt-8 flex-1 overflow-hidden p-5 sm:p-6`}>
-              <p className="inline-block whitespace-nowrap rounded-full bg-onyx px-3.5 py-1.5 text-[15px] font-semibold leading-none tracking-[-0.01em] text-white">
+            <article className={`${darkCard} relative z-10 -mt-8 flex-1 overflow-hidden p-5 sm:p-6`}>
+              <p className="inline-block whitespace-nowrap rounded-full bg-off-white px-3.5 py-1.5 text-[15px] font-semibold leading-none tracking-[-0.01em] text-onyx">
                 {title}
               </p>
-              <p className="mt-4 text-sm font-normal leading-[1.6] text-onyx/65 sm:text-[15px]">
+              <p className="mt-4 text-sm font-normal leading-[1.6] text-warm-gray sm:text-[15px]">
                 {description}
               </p>
             </article>
           </div>
         ))}
       </div>
-      <p className="mx-auto mt-10 max-w-[760px] text-center text-[17px] font-semibold leading-[1.6] text-onyx">
+      <p className="mx-auto mt-10 max-w-[760px] text-center text-[17px] font-semibold leading-[1.6] text-off-white">
         Résultat : ils choisissent votre concurrent.
       </p>
     </section>
@@ -1394,7 +1394,7 @@ function Reviews() {
       className={`scroll-reveal relative w-full scroll-mt-24 ${sectionY}`}
     >
       <div className="px-5 sm:px-8">
-        <Heading tone="light" eyebrow="Avis">Ils nous ont fait confiance.</Heading>
+        <Heading eyebrow="Avis">Ils nous ont fait confiance.</Heading>
       </div>
       <div className="reviews-viewport relative mt-12 overflow-hidden">
         <div
@@ -1405,7 +1405,7 @@ function Reviews() {
             <figure
               key={index}
               aria-hidden={index >= reviews.length}
-              className={`${lightCard} relative flex w-[300px] shrink-0 flex-col p-6 sm:w-[360px] sm:p-7`}
+              className={`${darkCard} relative flex w-[300px] shrink-0 flex-col p-6 sm:w-[360px] sm:p-7`}
             >
               <div className="flex items-start justify-between gap-3">
                 <span
@@ -1416,12 +1416,12 @@ function Reviews() {
                 </span>
                 <span className="flex items-center gap-2">
                   {review.placeholder && (
-                    <span className="rounded-full border border-onyx/15 px-2.5 py-1 text-[10px] font-semibold text-onyx/50">
+                    <span className="rounded-full border border-white/15 px-2.5 py-1 text-[10px] font-semibold text-warm-gray">
                       Exemple
                     </span>
                   )}
                   {review.lang === "EN" && (
-                    <span className="rounded-full bg-onyx/[0.06] px-2.5 py-1 text-[10px] font-semibold text-onyx/55">
+                    <span className="rounded-full bg-white/[0.06] px-2.5 py-1 text-[10px] font-semibold text-warm-gray">
                       Traduit de l'anglais
                     </span>
                   )}
@@ -1429,14 +1429,14 @@ function Reviews() {
               </div>
               <blockquote
                 lang="fr"
-                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-onyx/75"
+                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-[#CFCCC7]"
               >
                 {review.quote}
               </blockquote>
-              <figcaption className="mt-6 border-t border-onyx/10 pt-4">
-                <p className="text-sm font-semibold text-onyx">{review.business}</p>
+              <figcaption className="mt-6 border-t border-white/10 pt-4">
+                <p className="text-sm font-semibold text-off-white">{review.business}</p>
                 {review.person && (
-                  <p className="mt-0.5 text-xs font-normal text-onyx/50">{review.person}</p>
+                  <p className="mt-0.5 text-xs font-normal text-warm-gray">{review.person}</p>
                 )}
               </figcaption>
             </figure>
@@ -1493,7 +1493,7 @@ function StepVisualPanel({
   title: string;
   isLeft: boolean;
 }) {
-  const panelClass = `step-panel relative z-0 aspect-[1.28/1] w-full origin-bottom overflow-hidden rounded-[20px] border border-onyx/[0.06] bg-white p-5 text-onyx shadow-[0_24px_50px_rgba(10,10,11,0.12)] transition-transform duration-700 ${
+  const panelClass = `step-panel relative z-0 aspect-[1.28/1] w-full origin-bottom overflow-hidden rounded-[20px] border border-white/80 bg-off-white p-5 text-onyx shadow-[0_25px_60px_rgba(0,0,0,0.38),inset_0_1px_0_rgba(255,255,255,0.9)] transition-transform duration-700 ${
     isLeft
       ? "step-panel-float-left"
       : "step-panel-float-right"
@@ -2038,10 +2038,10 @@ function Process() {
 
   return (
     <section id="process" className={`relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <Heading tone="light" eyebrow="Méthode">Du premier appel à la mise en ligne.</Heading>
-      <SectionLead tone="light">Vous voyez votre site avant de payer. Il est en ligne sous 7 à 14 jours.</SectionLead>
+      <Heading eyebrow="Méthode">Du premier appel à la mise en ligne.</Heading>
+      <SectionLead>Vous voyez votre site avant de payer. Il est en ligne sous 7 à 14 jours.</SectionLead>
       <div ref={timelineRef} className="relative mt-16">
-        <div className="absolute bottom-8 left-4 top-8 w-px bg-onyx/10 sm:left-1/2 sm:-translate-x-1/2">
+        <div className="absolute bottom-8 left-4 top-8 w-px bg-white/10 sm:left-1/2 sm:-translate-x-1/2">
           <div
             aria-hidden="true"
             className="absolute inset-0 origin-top bg-gradient-to-b from-brand-light via-brand to-brand-deep will-change-transform"
@@ -2082,7 +2082,7 @@ function Process() {
                     <StepVisual title={step.title} isLeft={isLeft} />
                   </div>
                   <article
-                    className={`${lightCard} relative z-10 -mt-8 overflow-hidden p-5 transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-7 ${
+                    className={`${darkCard} relative z-10 -mt-8 overflow-hidden p-5 transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-7 ${
                       isRevealed
                         ? "translate-y-0 opacity-100 sm:translate-x-0"
                         : isLeft
@@ -2091,18 +2091,18 @@ function Process() {
                     }`}
                   >
                     <div className="flex items-center justify-start gap-3">
-                      <span className="text-xs font-semibold tracking-[0.12em] text-onyx/40">
+                      <span className="text-xs font-semibold tracking-[0.12em] text-warm-gray/70">
                         0{index + 1}
                       </span>
                       <h3
-                        className="inline-block whitespace-nowrap rounded-full border border-onyx/10 bg-onyx/[0.04] px-4 py-2 text-lg font-semibold leading-none tracking-[-0.02em] text-onyx sm:px-5 sm:text-2xl"
+                        className="inline-block whitespace-nowrap rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-lg font-semibold leading-none tracking-[-0.02em] text-off-white sm:px-5 sm:text-2xl"
                       >
                         {step.title}
                       </h3>
                       <BrandIcon name={processIcons[step.title]} className="h-10 w-10 sm:h-11 sm:w-11" />
                     </div>
                     <p
-                      className={`mt-5 text-[17px] font-normal leading-[1.6] text-onyx/70 ${
+                      className={`mt-5 text-[17px] font-normal leading-[1.6] text-[#CFCCC7] ${
                         isLeft ? "sm:text-left" : ""
                       }`}
                     >
@@ -2114,10 +2114,10 @@ function Process() {
                   </article>
                 </div>
                 <span
-                  className={`col-start-1 row-start-1 mt-7 h-5 w-5 justify-self-center rounded-full border-4 border-off-white transition-all duration-500 sm:col-start-2 sm:h-6 sm:w-6 ${
+                  className={`col-start-1 row-start-1 mt-7 h-5 w-5 justify-self-center rounded-full border-4 border-onyx transition-all duration-500 sm:col-start-2 sm:h-6 sm:w-6 ${
                     isRevealed
                       ? "scale-100 bg-brand shadow-[0_4px_14px_rgba(233,68,69,0.45)] ring-1 ring-brand"
-                      : "scale-75 bg-white ring-1 ring-onyx/15"
+                      : "scale-75 bg-graphite ring-1 ring-white/15"
                   }`}
                 />
               </div>
@@ -2125,20 +2125,20 @@ function Process() {
           })}
         </div>
         <div
-          className={`${lightCard} relative z-10 mx-auto mt-12 flex max-w-[700px] flex-col items-center px-6 py-7 text-center transition-[opacity,transform] duration-700 sm:px-10 ${
+          className={`${darkCard} relative z-10 mx-auto mt-12 flex max-w-[700px] flex-col items-center px-6 py-7 text-center transition-[opacity,transform] duration-700 sm:px-10 ${
             showFinalStep ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
           <div className="flex items-center justify-center gap-3">
-            <span className="text-xs font-semibold tracking-[0.12em] text-onyx/40">
+            <span className="text-xs font-semibold tracking-[0.12em] text-warm-gray/70">
               06
             </span>
-            <span className="inline-block text-xl font-semibold tracking-[-0.02em] text-onyx sm:text-3xl">
+            <span className="inline-block text-xl font-semibold tracking-[-0.02em] text-off-white sm:text-3xl">
               On vous accompagne ensuite
             </span>
             <BrandIcon name="growth" className="h-10 w-10 sm:h-11 sm:w-11" />
           </div>
-          <p className="mt-3 text-[17px] font-normal leading-[1.6] text-onyx/70">
+          <p className="mt-3 text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
             Avec un abonnement, on gère chaque mois votre fiche Google, votre référencement et vos réseaux.
           </p>
         </div>
@@ -2591,14 +2591,14 @@ function CustomServices() {
 function FAQ() {
   return (
     <section id="faq" className={`scroll-reveal relative mx-auto w-full max-w-[1000px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <Heading tone="light" eyebrow="FAQ">Vos questions, nos réponses.</Heading>
+      <Heading eyebrow="FAQ">Vos questions, nos réponses.</Heading>
       <div className="mt-12 space-y-3">
         {faqs.map((faq, index) => (
           <details
             key={`${faq.question}-${index}`}
-            className="scroll-reveal group overflow-hidden rounded-[20px] border border-onyx/10 bg-white transition-colors open:border-onyx/25 hover:border-onyx/25"
+            className="scroll-reveal group overflow-hidden rounded-[20px] border border-white/[0.08] bg-graphite transition-colors open:border-white/20 hover:border-white/20"
           >
-            <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-semibold text-onyx sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-semibold text-off-white sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
               <span className="flex-1">{faq.question}</span>
               <span className="relative h-5 w-5 shrink-0 text-brand">
                 <span className="absolute left-1/2 top-1/2 h-0.5 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-current" />
@@ -2607,7 +2607,7 @@ function FAQ() {
             </summary>
             <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 group-open:grid-rows-[1fr]">
               <div className="overflow-hidden">
-                <p className="border-t border-onyx/10 px-5 pb-6 pt-4 text-[17px] font-normal leading-[1.6] text-onyx/65 sm:px-7">
+                <p className="border-t border-white/[0.08] px-5 pb-6 pt-4 text-[17px] font-normal leading-[1.6] text-warm-gray sm:px-7">
                   {faq.answer}
                 </p>
               </div>
@@ -2979,19 +2979,13 @@ export default function App() {
       <BackgroundLights />
       <Header />
       <Hero />
-      <div className="light-section relative bg-off-white">
-        <ProblemSection />
-      </div>
+      <ProblemSection />
       <Services />
       <CustomServices />
-      <div className="light-section relative bg-off-white">
-        <Process />
-      </div>
+      <Process />
       <WorkGallery />
-      <div className="light-section relative bg-off-white">
-        <Reviews />
-        <FAQ />
-      </div>
+      <Reviews />
+      <FAQ />
       <ContactSection />
       <Footer />
     </main>
