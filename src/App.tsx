@@ -20,6 +20,7 @@ type SiteOffer = {
   delay?: string;
   featured?: boolean;
   cta: string;
+  href?: string;
   features: string[];
 };
 
@@ -59,7 +60,8 @@ const siteOffers: SiteOffer[] = [
     title: "Sur mesure",
     subtitle: "Pour aller plus loin.",
     delay: "Devis gratuit sous 48 h",
-    cta: "Demander un devis",
+    cta: "Voir les options sur mesure",
+    href: "#sur-mesure",
     features: [
       "Rebranding complet : logo, charte graphique, photos",
       "Vidéo de présentation en motion design",
@@ -1186,7 +1188,7 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
       </ul>
 
       <a
-        href="#contact"
+        href={offer.href ?? "#contact"}
         className={`mt-auto flex w-full items-center justify-center rounded-full border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${
           featured
             ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
@@ -1738,7 +1740,9 @@ function StepVisualPanel({
 
 // Process icons in the brand style: the same red rounded square and white
 // line glyph as the UpScreen app icon (corner radius 23%, like the logo).
-type BrandIconName = "chat" | "mockup" | "build" | "seo" | "launch" | "growth";
+type BrandIconName =
+  | "chat" | "mockup" | "build" | "seo" | "launch" | "growth"
+  | "brand" | "play" | "ads" | "qr" | "spark" | "app";
 
 const brandIconGlyphs: Record<BrandIconName, ReactNode> = {
   chat: (
@@ -1777,6 +1781,46 @@ const brandIconGlyphs: Record<BrandIconName, ReactNode> = {
       <circle cx="12" cy="9.8" r="1.5" />
       <path d="M7.9 12.6 5 15.4v2.8h2.9M16.1 12.6l2.9 2.8v2.8h-2.9" />
       <path d="M10.4 18.9 12 21.2l1.6-2.3" />
+    </>
+  ),
+  brand: (
+    <>
+      <path d="M12 3.5a8.5 8.5 0 1 0 0 17c1.1 0 1.7-.9 1.4-1.9-.3-1 .4-2 1.5-2h1.7a3.9 3.9 0 0 0 3.9-3.9C20.5 7.6 16.7 3.5 12 3.5Z" />
+      <circle cx="7.8" cy="11" r="1" fill="currentColor" stroke="none" />
+      <circle cx="10.5" cy="7.4" r="1" fill="currentColor" stroke="none" />
+      <circle cx="15" cy="7.6" r="1" fill="currentColor" stroke="none" />
+    </>
+  ),
+  play: (
+    <>
+      <rect x="3.5" y="5" width="17" height="14" rx="3" />
+      <path d="m10.2 9.2 4.6 2.8-4.6 2.8Z" fill="currentColor" stroke="none" />
+    </>
+  ),
+  ads: (
+    <>
+      <path d="M4 10v4h3l7 4V6L7 10H4Z" />
+      <path d="M17.5 9.5a3.5 3.5 0 0 1 0 5" />
+    </>
+  ),
+  qr: (
+    <>
+      <rect x="4" y="4" width="6" height="6" rx="1.2" />
+      <rect x="14" y="4" width="6" height="6" rx="1.2" />
+      <rect x="4" y="14" width="6" height="6" rx="1.2" />
+      <path d="M14 14h2v2h-2zM18 18h2v2h-2zM14 18h2M18 14h2" />
+    </>
+  ),
+  spark: (
+    <>
+      <path d="M12 4.5 13.6 9l4.4 1.6-4.4 1.6L12 16.7l-1.6-4.5L6 10.6 10.4 9Z" />
+      <path d="M18 15.5v4M16 17.5h4" />
+    </>
+  ),
+  app: (
+    <>
+      <rect x="7" y="3.5" width="10" height="17" rx="2.5" />
+      <path d="M10.5 17.5h3" />
     </>
   ),
   growth: (
@@ -2341,7 +2385,7 @@ function WorkGallery() {
   return (
     <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1120px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
       <Heading>Réalisations</Heading>
-      <SectionLead>Des sites pensés pour les commerces de quartier, et des vidéos qui arrêtent le scroll.</SectionLead>
+      <SectionLead>Des sites pensés pour les commerces de quartier.</SectionLead>
 
       <h3 className="mt-14 text-xl font-semibold text-off-white">Sites de démonstration</h3>
       <div className={`${darkCard} mt-6 grid items-center gap-8 p-6 md:p-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12`}>
@@ -2382,12 +2426,114 @@ function WorkGallery() {
       <p className="mt-6 text-sm text-warm-gray">
         Des commerces fictifs, créés pour montrer notre style. La maquette du vôtre est offerte.
       </p>
+    </section>
+  );
+}
 
-      <h3 className="mt-16 text-xl font-semibold text-off-white">Vidéos en motion design</h3>
-      <div className="mt-6 grid gap-6 sm:grid-cols-2 sm:gap-7">
-        {motionVideos.map((video) => (
-          <MotionVideoCard key={video.mediaId} {...video} />
+const customServices: { icon: BrandIconName; title: string; body: string; points: string[] }[] = [
+  {
+    icon: "brand",
+    title: "Rebranding complet",
+    body: "Une identité qui donne envie d'entrer.",
+    points: ["Logo", "Charte graphique : couleurs, typographies", "Photos de votre commerce"],
+  },
+  {
+    icon: "ads",
+    title: "Publicité",
+    body: "Toucher les clients autour de chez vous.",
+    points: ["Campagnes Instagram et Facebook", "Annonces Google", "Budget publicitaire en plus"],
+  },
+  {
+    icon: "qr",
+    title: "Outils pour votre commerce",
+    body: "Du digital directement sur le comptoir.",
+    points: ["Menu digital", "QR codes et cartes NFC (avis Google, réseaux)", "Carte de fidélité digitale"],
+  },
+  {
+    icon: "spark",
+    title: "Automatisations avec l'IA",
+    body: "Moins de temps au téléphone.",
+    points: ["Réponses automatiques aux messages", "Prise de rendez-vous", "Relances clients"],
+  },
+  {
+    icon: "app",
+    title: "Applications sur mesure",
+    body: "Un outil pensé pour votre activité.",
+    points: ["Application web ou mobile", "Réservation, commande, espace client"],
+  },
+];
+
+const motionFormats = [
+  "Vidéo de présentation de 30 à 60 secondes",
+  "Script et storyboard écrits pour vous",
+  "Animation sur mesure, musique et sound design",
+  "Versions pour votre site, Instagram et vos publicités",
+];
+
+function CustomServices() {
+  return (
+    <section
+      id="sur-mesure"
+      className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
+    >
+      <Heading>Sur mesure</Heading>
+      <SectionLead>
+        Pour aller plus loin que le site. On étudie votre projet et on vous envoie un devis gratuit sous 48 h.
+      </SectionLead>
+
+      <div className={`${darkCard} mt-14 overflow-hidden`}>
+        <div className="grid gap-8 p-6 md:p-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
+          <div>
+            <BrandIcon name="play" className="h-11 w-11" />
+            <h3 className="mt-5 text-2xl font-semibold tracking-[-0.02em] text-off-white">
+              Vidéo de présentation en motion design
+            </h3>
+            <p className="mt-3 text-[17px] leading-[1.6] text-[#CFCCC7]">
+              Expliquer ce que vous faites en quelques secondes, avec une vidéo animée qui retient l'attention.
+            </p>
+            <ul className="mt-5 space-y-2.5 text-[15px] text-[#CFCCC7]">
+              {motionFormats.map((point) => (
+                <li key={point} className="flex gap-3">
+                  <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {motionVideos.map((video) => (
+              <MotionVideoCard key={video.mediaId} {...video} />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {customServices.map((service) => (
+          <article key={service.title} className={`${darkCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
+            <BrandIcon name={service.icon} className="h-11 w-11" />
+            <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] text-off-white">{service.title}</h3>
+            <p className="mt-2 text-[15px] text-warm-gray">{service.body}</p>
+            <ul className="mt-5 space-y-2 text-[15px] text-[#CFCCC7]">
+              {service.points.map((point) => (
+                <li key={point} className="flex gap-3">
+                  <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-warm-gray/60" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </article>
         ))}
+        <a
+          href="#contact"
+          className="flex flex-col justify-center rounded-[20px] border border-dashed border-brand/50 p-6 transition hover:border-brand sm:p-7"
+        >
+          <span className="text-xl font-semibold text-off-white">Un autre projet ?</span>
+          <span className="mt-2 text-[15px] text-warm-gray">Parlez-nous-en, on vous dit ce qui est possible.</span>
+          <span className="mt-6 inline-flex w-fit rounded-full bg-brand px-5 py-3 text-sm font-semibold text-onyx">
+            Demander un devis
+          </span>
+        </a>
       </div>
     </section>
   );
@@ -2800,6 +2946,7 @@ export default function App() {
         <Reviews />
       </div>
       <Services />
+      <CustomServices />
       <div className="light-section relative bg-off-white">
         <FAQ />
       </div>
