@@ -2514,7 +2514,7 @@ const customServices: { icon: BrandIconName; title: string; body: string; points
     icon: "brand",
     title: "Rebranding complet",
     body: "Une identité qui donne envie d'entrer.",
-    points: ["Logo", "Création de charte graphique : couleurs, typographies", "UI/UX : design de vos écrans et parcours"],
+    points: ["Logo", "Charte graphique : couleurs, typographies", "UI/UX : design de vos écrans et parcours"],
   },
   {
     icon: "qr",
@@ -2582,8 +2582,37 @@ function CustomServices() {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {customServices.map((service) => (
+      {customServices
+        .filter((service) => service.title === "Rebranding complet")
+        .map((service) => (
+          <div key={service.title} className={`${darkCard} scroll-reveal mt-6 p-6 md:p-10`}>
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
+              <BrandIcon name={service.icon} className="h-11 w-11 shrink-0" />
+              <div>
+                <h3 className="text-2xl font-semibold tracking-[-0.02em] text-off-white">{service.title}</h3>
+                <p className="mt-1.5 text-[15px] leading-[1.6] text-[#CFCCC7]">{service.body}</p>
+              </div>
+            </div>
+            <ul className="mt-7 grid auto-rows-fr gap-3 sm:grid-cols-3">
+              {service.points.map((point) => (
+                <li
+                  key={point}
+                  className="flex h-full items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-sm leading-[1.45] text-[#CFCCC7]"
+                >
+                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
+                    <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="m3.5 8.5 3 3 6-7" />
+                    </svg>
+                  </span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
+      <div className="mt-6 grid gap-6 md:grid-cols-2">
+        {customServices.filter((service) => service.title !== "Rebranding complet").map((service) => (
           <article key={service.title} className={`${darkCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
             <BrandIcon name={service.icon} className="h-11 w-11" />
             <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] text-off-white">{service.title}</h3>
