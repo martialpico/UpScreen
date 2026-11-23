@@ -53,7 +53,6 @@ const siteOffers: SiteOffer[] = [
       "Création ou refonte de votre site actuel",
       "Fiche Google créée ou refaite : horaires, photos, avis",
       "Liens possibles vers Instagram et Facebook",
-      "Optimisé pour les recherches sur ChatGPT et les autres IA",
     ],
   },
   {
@@ -82,7 +81,7 @@ const subscriptions = [
 ] as const;
 
 const subscriptionRows: [string, PlanCell, PlanCell][] = [
-  ["SEO et référencement", true, true],
+  ["SEO renforcé et référencement", true, true],
   ["Fiche Google : posts et réponses aux avis", true, true],
   ["Petites modifications du site", true, true],
   ["Mises à jour et sauvegardes", true, true],
