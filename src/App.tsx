@@ -74,9 +74,7 @@ const siteOffers: SiteOffer[] = [
     features: [
       "Rebranding complet : logo, charte graphique, UI/UX",
       "Vidéo de présentation en motion design",
-      "Menu digital, QR codes et cartes NFC",
-      "Carte de fidélité digitale",
-      "Applications sur mesure",
+      "Outils pour votre commerce : menu digital, QR codes, fidélité, planning, factures…",
     ],
   },
 ];
@@ -222,7 +220,7 @@ const faqs = [
   {
     question: "Proposez-vous d'autres services ?",
     answer:
-      "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, menu digital, QR codes et cartes NFC, carte de fidélité et applications sur mesure.",
+      "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, et des outils pour votre commerce : menu digital, QR codes et cartes NFC, carte de fidélité, planning des employés, devis et factures, réservations, gestion des stocks.",
   },
   {
     question: "Comment vous contacter ?",
@@ -2490,14 +2488,16 @@ const customServices: { icon: BrandIconName; title: string; body: string; points
   {
     icon: "qr",
     title: "Outils pour votre commerce",
-    body: "Du digital directement sur le comptoir.",
-    points: ["Menu digital", "QR codes et cartes NFC (avis Google, réseaux)", "Carte de fidélité digitale"],
-  },
-  {
-    icon: "app",
-    title: "Applications sur mesure",
-    body: "Un outil pensé pour votre activité.",
-    points: ["Application web ou mobile", "Réservation, commande, espace client"],
+    body: "Des applications simples qui vous font gagner du temps chaque jour.",
+    points: [
+      "Menu digital, QR codes et cartes NFC (avis Google, réseaux)",
+      "Carte de fidélité digitale",
+      "Planning des employés, pointage et congés",
+      "Devis et factures depuis votre téléphone",
+      "Réservations avec rappel SMS",
+      "Gestion des stocks et commandes fournisseurs",
+      "Et tout outil sur mesure pour votre activité",
+    ],
   },
 ];
 
@@ -2546,7 +2546,7 @@ function CustomServices() {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {customServices.map((service) => (
           <article key={service.title} className={`${darkCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
             <BrandIcon name={service.icon} className="h-11 w-11" />
