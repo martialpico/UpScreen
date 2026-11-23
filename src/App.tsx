@@ -2514,7 +2514,10 @@ const customServices: { icon: BrandIconName; title: string; body: string; points
     icon: "brand",
     title: "Rebranding complet",
     body: "Une identité qui donne envie d'entrer.",
-    points: ["Logo", "Charte graphique : couleurs, typographies", "UI/UX : design de vos écrans et parcours"],
+    points: ["Logo",
+      "Charte graphique : couleurs, typographies",
+      "UI/UX : design de vos écrans et parcours",
+      "Supports imprimés : cartes de visite, flyers, menus",],
   },
   {
     icon: "qr",
@@ -2593,7 +2596,7 @@ function CustomServices() {
                 <p className="mt-1.5 text-[15px] leading-[1.6] text-[#CFCCC7]">{service.body}</p>
               </div>
             </div>
-            <ul className="mt-7 grid auto-rows-fr gap-3 sm:grid-cols-3">
+            <ul className="mt-7 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {service.points.map((point) => (
                 <li
                   key={point}
