@@ -2618,10 +2618,8 @@ function DemoChip() {
 // Sites vitrines réalisés : captures ordinateur et mobile dans public/vitrines.
 const vitrines = [
   { slug: "brasileiro", name: "O Brasileiro", trade: "Restaurant brésilien · Brisbane" },
-  { slug: "aamaya", name: "Aamaya", trade: "Restaurant indien · Brisbane" },
   { slug: "5dogs", name: "5 Dogs", trade: "Hot dogs gourmets · Brisbane" },
   { slug: "sparrow", name: "Sparrow & Finch", trade: "Café · Brisbane" },
-  { slug: "vegerama", name: "Vege Rama", trade: "Restaurant vegan · Brisbane" },
   { slug: "samsthai", name: "Sam's Thai Kitchen", trade: "Restaurant thaï · Brisbane" },
   { slug: "clinic", name: "Foot, Ankle & Body Experts", trade: "Clinique de santé · Brisbane" },
 ];
