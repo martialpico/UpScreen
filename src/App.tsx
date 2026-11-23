@@ -18,6 +18,7 @@ type SiteOffer = {
   subtitle: string;
   price?: string;
   delay?: string;
+  chip: string;
   featured?: boolean;
   cta: string;
   href?: string;
@@ -31,6 +32,7 @@ const siteOffers: SiteOffer[] = [
     subtitle: "Pour être en ligne rapidement.",
     price: "890",
     delay: "En ligne sous 7 jours",
+    chip: "7 jours",
     cta: "Choisir Essentiel",
     features: [
       "Création de votre site de zéro",
@@ -49,6 +51,7 @@ const siteOffers: SiteOffer[] = [
     subtitle: "Pour être trouvé et choisi.",
     price: "1 490",
     delay: "En ligne sous 14 jours",
+    chip: "14 jours",
     featured: true,
     cta: "Choisir Complet",
     features: [
@@ -69,6 +72,7 @@ const siteOffers: SiteOffer[] = [
     title: "Sur mesure",
     subtitle: "Pour aller plus loin.",
     delay: "Devis gratuit sous 48 h",
+    chip: "Devis 48 h",
     cta: "Voir les options sur mesure",
     href: "#sur-mesure",
     features: [
@@ -248,15 +252,94 @@ function SectionLead({ children, tone = "dark" }: { children: ReactNode; tone?: 
   );
 }
 
-// Étiquette de section : pastille blanche en police mono, avec un point rouge.
-function Eyebrow({ children }: { children: ReactNode }) {
+// Étiquette de section : texte mono rouge, espacé, en capitales.
+function Eyebrow({ children, center = false }: { children: ReactNode; center?: boolean }) {
   return (
-    <div className="mb-5 flex justify-center">
-      <span className="inline-flex items-center gap-2 rounded-full bg-off-white px-3.5 py-1.5 font-mono text-[12px] font-semibold uppercase leading-none tracking-[0.08em] text-brand">
-        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand shadow-none" />
-        {children}
-      </span>
+    <p
+      className={`font-mono text-[13px] font-medium uppercase leading-none tracking-[0.22em] text-brand ${
+        center ? "mb-6 text-center" : ""
+      }`}
+    >
+      {children}
+    </p>
+  );
+}
+
+// En-tête de section : étiquette, titre sur deux lignes (blanc puis gris),
+// et à droite une phrase d'introduction, des pastilles ou un lien.
+function SectionHeader({
+  eyebrow,
+  title,
+  muted,
+  aside,
+  small = false,
+}: {
+  eyebrow: string;
+  title: string;
+  muted?: string;
+  aside?: ReactNode;
+  small?: boolean;
+}) {
+  return (
+    <div className={`grid gap-8 ${aside ? "lg:grid-cols-[1.35fr_0.65fr] lg:items-end lg:gap-14" : ""}`}>
+      <div>
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <h2
+          className={`mt-5 font-extrabold tracking-[-0.055em] ${
+            small ? "text-[32px] leading-[1.02] md:text-[44px]" : "text-[40px] leading-[0.98] md:text-[56px] lg:text-[60px]"
+          }`}
+        >
+          <span className="block text-off-white">{title}</span>
+          {muted && <span className="block text-[#7d7b80]">{muted}</span>}
+        </h2>
+      </div>
+      {aside && <div className="lg:pb-2">{aside}</div>}
     </div>
+  );
+}
+
+function AsideLead({ children }: { children: ReactNode }) {
+  return <p className="text-[17px] leading-[1.6] text-[#CFCCC7] md:text-lg">{children}</p>;
+}
+
+function CheckChips({ items }: { items: string[] }) {
+  return (
+    <div className="mt-5 flex flex-wrap gap-2.5">
+      {items.map((item) => (
+        <span
+          key={item}
+          className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-4 py-2 text-sm font-medium text-off-white"
+        >
+          <CheckIcon className="h-3.5 w-3.5 text-brand" />
+          {item}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function CheckIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m3.5 8.5 3 3 6-7" />
+    </svg>
+  );
+}
+
+function ArrowIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 8h10M9 4l4 4-4 4" />
+    </svg>
+  );
+}
+
+function ClockIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 16 16" className={className} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+      <circle cx="8" cy="8" r="6" />
+      <path d="M8 5v3l2 1.5" />
+    </svg>
   );
 }
 
@@ -657,7 +740,7 @@ function Hero() {
       id="home"
       className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-16 pt-36 sm:px-8 md:pt-44 lg:pb-20"
     >
-      <Eyebrow>Agence web · Toulouse</Eyebrow>
+      <Eyebrow center>Agence web · Toulouse</Eyebrow>
       <h1 className="font-ui mx-auto max-w-[1100px] text-center text-[40px] font-extrabold leading-[1.02] tracking-[-0.05em] text-off-white sm:text-[56px] lg:text-[68px]">
         <span className="block">Vos clients vous cherchent.</span>
         <span className="text-gradient-brand block text-balance">
@@ -673,9 +756,10 @@ function Hero() {
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a
           href="#contact"
-          className="rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
+          className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
         >
           Prendre rendez-vous
+          <ArrowIcon />
         </a>
         <a
           href="#pricing"
@@ -684,7 +768,7 @@ function Hero() {
           Voir les tarifs
         </a>
       </div>
-      <p className="mt-5 text-center text-[13px] text-warm-gray/80">
+      <p className="mt-6 text-center font-mono text-[12px] uppercase tracking-[0.18em] text-warm-gray">
         Appel gratuit · Maquette gratuite · Sans engagement
       </p>
       <div className="relative mt-12">
@@ -1142,7 +1226,7 @@ function ProblemSection() {
       id="services"
       className="scroll-reveal mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-4 sm:px-8 md:pb-28 md:pt-6"
     >
-      <Heading eyebrow="Le constat">Vous perdez des clients avant même de dire bonjour.</Heading>
+      <SectionHeader eyebrow="Le constat" title="Vous perdez des clients" muted="avant même de dire bonjour." />
       <div className="mx-auto mt-12 grid max-w-[420px] grid-cols-1 gap-8 md:max-w-[1040px] md:grid-cols-3 md:gap-5 lg:gap-7">
         {problems.map(([title, description], index) => (
           <div key={title} className="relative flex flex-col">
@@ -1165,56 +1249,81 @@ function ProblemSection() {
   );
 }
 
+function DelayChip({ children, tone = "dark" }: { children: ReactNode; tone?: "dark" | "light" }) {
+  return (
+    <span
+      className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-3 py-1.5 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.12em] ${
+        tone === "light" ? "bg-onyx/[0.06] text-onyx/70" : "bg-white/[0.06] text-[#CFCCC7]"
+      }`}
+    >
+      <ClockIcon className="h-3.5 w-3.5 text-brand" />
+      {children}
+    </span>
+  );
+}
+
+function CheckDot({ solid = false, light = false }: { solid?: boolean; light?: boolean }) {
+  return (
+    <span
+      className={`mt-0.5 flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full ${
+        solid ? "bg-brand text-white shadow-none" : light ? "bg-brand/12 text-brand" : "bg-brand/15 text-brand"
+      }`}
+    >
+      <CheckIcon className="h-3 w-3" />
+    </span>
+  );
+}
+
 function SiteOfferCard({ offer }: { offer: SiteOffer }) {
   const featured = Boolean(offer.featured);
   const quote = !offer.price;
 
   return (
     <article
-      className={`scroll-reveal relative flex flex-col rounded-[20px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${
+      className={`scroll-reveal relative flex flex-col overflow-hidden rounded-[28px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${
         featured
-          ? "border-[1.5px] border-brand bg-graphite shadow-[0_30px_70px_rgba(0,0,0,0.45)] lg:-my-3"
+          ? "border-brand/50 bg-[radial-gradient(120%_70%_at_0%_0%,rgba(233,68,69,0.30),transparent_60%),linear-gradient(180deg,#1c1314,#0e0c0d)] shadow-[0_40px_90px_rgba(233,68,69,0.16)] lg:-my-5 lg:py-11"
           : quote
             ? "border-white/80 bg-off-white shadow-[0_30px_70px_rgba(0,0,0,0.45)]"
             : "border-white/[0.08] bg-graphite hover:border-white/20"
       }`}
     >
-      {featured && (
-        <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-brand px-5 py-2 text-xs font-semibold text-onyx">
-          Recommandé
-        </span>
-      )}
-      <h3 className={`text-2xl font-bold tracking-[-0.03em] ${quote ? "text-onyx" : "text-off-white"}`}>{offer.title}</h3>
-      <p className={`mt-2 text-sm font-semibold ${featured ? "text-brand-light" : quote ? "text-onyx/55" : "text-warm-gray"}`}>
-        {offer.subtitle}
-      </p>
-
-      <div className="mt-6 flex items-baseline gap-1.5 whitespace-nowrap">
-        {quote ? (
-          <span className="text-[40px] font-extrabold leading-none tracking-[-0.045em] text-onyx sm:text-[46px]">Sur devis</span>
+      <div className="flex items-start justify-between gap-3">
+        <h3 className={`text-[26px] font-extrabold leading-none tracking-[-0.05em] ${quote ? "text-onyx" : "text-off-white"}`}>
+          {offer.title}
+        </h3>
+        {featured ? (
+          <span className="whitespace-nowrap rounded-full bg-brand/20 px-3 py-1.5 font-mono text-[11px] font-medium uppercase leading-none tracking-[0.12em] text-brand-light">
+            Recommandé
+          </span>
         ) : (
-          <>
-            <span className={`text-[52px] font-extrabold leading-none tracking-[-0.05em] sm:text-[60px] ${featured ? "text-brand" : "text-off-white"}`}>
-              {offer.price}
-            </span>
-            <span className="text-xl text-warm-gray">€</span>
-          </>
+          <DelayChip tone={quote ? "light" : "dark"}>{offer.chip}</DelayChip>
         )}
       </div>
-      <p className={`mt-3 flex items-center gap-2 text-sm font-semibold ${quote ? "text-onyx/75" : "text-off-white/80"}`}>
-        <span className={`h-1.5 w-1.5 rounded-full ${featured || quote ? "bg-brand" : "bg-off-white/40"}`} />
-        {offer.delay}
-      </p>
+      <p className={`mt-3 text-[15px] ${quote ? "text-onyx/60" : "text-[#CFCCC7]"}`}>{offer.subtitle}</p>
 
-      <ul className={`mt-7 space-y-3.5 border-t pt-7 text-[15px] leading-[1.5] ${quote ? "border-onyx/10 text-onyx/75" : "border-white/10 text-[#CFCCC7]"}`}>
+      <p className="mt-7 whitespace-nowrap">
+        {quote ? (
+          <span className="text-[48px] font-extrabold leading-none tracking-[-0.055em] text-onyx sm:text-[54px]">Sur devis</span>
+        ) : (
+          <span className="text-[54px] font-extrabold leading-none tracking-[-0.055em] text-off-white sm:text-[62px]">
+            {offer.price}&nbsp;€
+          </span>
+        )}
+      </p>
+      {featured && (
+        <div className="mt-5">
+          <DelayChip>{offer.chip}</DelayChip>
+        </div>
+      )}
+
+      <ul className={`mt-8 space-y-4 text-[15px] leading-[1.5] ${quote ? "text-onyx/80" : "text-[#E4E1DC]"}`}>
         {offer.features.map((feature) => {
-          const bullet = (
-            <span className={`mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full ${featured ? "bg-brand" : quote ? "bg-onyx/30" : "bg-warm-gray/60"}`} />
-          );
+          const dot = <CheckDot solid={featured} light={quote} />;
           if (typeof feature === "string")
             return (
               <li key={feature} className="flex gap-3">
-                {bullet}
+                {dot}
                 {feature}
               </li>
             );
@@ -1223,31 +1332,30 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
             <li key={label}>
               <details className="group">
                 <summary className="flex cursor-pointer list-none gap-3 [&::-webkit-details-marker]:hidden">
-                  {bullet}
+                  {dot}
                   <span className="flex-1">{label}</span>
                   <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-[0.3em] h-4 w-4 shrink-0 text-warm-gray transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     <path d="m4 6 4 4 4-4" />
                   </svg>
                 </summary>
-                <p className="ml-[18px] mt-1.5 pr-6 text-[13px] leading-[1.5] text-warm-gray">{detail}</p>
+                <p className="ml-[34px] mt-1.5 pr-6 text-[13px] leading-[1.5] text-warm-gray">{detail}</p>
               </details>
             </li>
           );
         })}
       </ul>
 
-      <div aria-hidden="true" className="min-h-9 flex-1" />
+      <div aria-hidden="true" className="min-h-10 flex-1" />
       <a
         href={offer.href ?? "#contact"}
-        className={`flex w-full items-center justify-center rounded-full border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${
-          featured
+        className={`inline-flex w-full items-center justify-center gap-2 rounded-full border px-5 py-4 text-[15px] font-semibold transition duration-200 hover:-translate-y-0.5 ${
+          featured || quote
             ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
-            : quote
-              ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
-              : "border-white/15 text-off-white hover:border-white/35"
+            : "border-white/15 text-off-white hover:border-white/35"
         }`}
       >
         {offer.cta}
+        <ArrowIcon />
       </a>
     </article>
   );
@@ -1268,15 +1376,20 @@ function SubscriptionTable() {
   const cols = "grid grid-cols-[1.25fr_0.85fr_1fr] gap-x-3 sm:grid-cols-[1.6fr_1fr_1fr] sm:gap-x-6";
 
   return (
-    <div className="scroll-reveal mt-20">
-      <h3 className="text-center text-2xl font-bold tracking-[-0.03em] text-off-white md:text-3xl">
-        Les abonnements
-      </h3>
-      <p className="mx-auto mt-3 max-w-[560px] text-center text-[15px] text-warm-gray">
-        Une fois en ligne, on fait vivre votre présence chaque mois. Compatible avec tous les sites, même ceux qu'on n'a pas faits.
-      </p>
+    <div className="scroll-reveal mt-24">
+      <SectionHeader
+        small
+        eyebrow="Abonnements"
+        title="Les abonnements."
+        muted="Pour faire vivre votre site."
+        aside={
+          <AsideLead>
+            Une fois en ligne, on s'occupe de votre présence chaque mois. Compatible avec tous les sites, même ceux qu'on n'a pas faits.
+          </AsideLead>
+        }
+      />
 
-      <div role="table" aria-label="Comparatif des abonnements" className="mx-auto mt-10 max-w-[900px] rounded-[20px] border border-white/[0.08] bg-graphite p-4 sm:p-8">
+      <div role="table" aria-label="Comparatif des abonnements" className="mt-10 rounded-[28px] border border-white/[0.08] bg-graphite p-4 sm:p-8">
         <div role="row" className={`${cols} items-end pb-5`}>
           <span role="columnheader"><span className="sr-only">Service</span></span>
           {subscriptions.map((plan) => (
@@ -1354,9 +1467,20 @@ function Services() {
       id="pricing"
       className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
     >
-      <Heading eyebrow="Tarifs">Des tarifs transparents.</Heading>
-      <SectionLead>Votre site vous appartient. Les abonnements mensuels sont en option.</SectionLead>
-      <div className="mx-auto mt-14 grid max-w-[480px] gap-6 lg:max-w-none lg:grid-cols-3">
+      <SectionHeader
+        eyebrow="Tarifs"
+        title="Des tarifs transparents."
+        muted="Payés une seule fois."
+        aside={
+          <>
+            <AsideLead>
+              Pas de devis interminable : un prix fixe, tout compris. Votre site vous appartient, les abonnements mensuels sont en option.
+            </AsideLead>
+            <CheckChips items={["Maquette gratuite", "Transfert gratuit"]} />
+          </>
+        }
+      />
+      <div className="mx-auto mt-16 grid max-w-[480px] gap-6 lg:max-w-none lg:grid-cols-3 lg:items-stretch">
         {siteOffers.map((offer) => (
           <SiteOfferCard key={offer.title} offer={offer} />
         ))}
@@ -1364,39 +1488,40 @@ function Services() {
 
       <SubscriptionTable />
 
-      <div className="mx-auto mt-12 grid max-w-[900px] gap-4 md:grid-cols-[0.8fr_1.2fr]">
-        <div className={`${darkCard} flex flex-col p-6 sm:p-7`}>
-          <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-brand">Hébergement et domaine</p>
-          <p className="mt-4 text-2xl font-bold tracking-[-0.03em] text-off-white">1re année incluse</p>
-          <p className="mt-1 text-[15px] text-[#CFCCC7]">
-            puis <span className="font-semibold text-off-white">{hostingRenewal} €/an</span>, à la date anniversaire.
+      <div className={`${darkCard} scroll-reveal mt-6 flex flex-col gap-6 rounded-[28px] p-7 md:flex-row md:items-center md:justify-between md:p-9`}>
+        <div>
+          <p className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-[24px] font-extrabold tracking-[-0.045em]">
+            <span className="text-off-white">Hébergement et nom de domaine</span>
+            <span className="text-brand">Inclus la 1re année</span>
           </p>
-          <p className="mt-auto pt-5 text-[13px] leading-[1.5] text-warm-gray">Avec les offres Essentiel et Complet.</p>
+          <p className="mt-3 max-w-[640px] text-[16px] leading-[1.6] text-[#CFCCC7]">
+            Puis {hostingRenewal} €/an, payés à la date anniversaire. Avec les offres Essentiel et Complet.
+          </p>
         </div>
-        <div className={`${darkCard} p-6 sm:p-7`}>
-          <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-brand">Vos garanties</p>
-          <ul className="mt-4 space-y-4">
-            {[
-              ["Maquette gratuite", "Vous ne payez que si elle vous plaît."],
-              ["En ligne sous 7 ou 14 jours", "À partir de la réception de vos photos et infos."],
-              ["Transfert gratuit", "Votre site et votre nom de domaine vous appartiennent."],
-            ].map(([title, text]) => (
-              <li key={title} className="flex gap-3">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
-                  <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="m3.5 8.5 3 3 6-7" />
-                  </svg>
-                </span>
-                <span>
-                  <span className="block text-[15px] font-semibold text-off-white">{title}</span>
-                  <span className="block text-sm leading-[1.5] text-[#CFCCC7]">{text}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <a
+          href="#contact"
+          className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-white/15 px-6 py-3.5 text-[15px] font-semibold text-off-white transition-colors hover:border-white/35 md:self-center"
+        >
+          En parler <ArrowIcon />
+        </a>
       </div>
-      <p className="mt-8 text-center text-xs text-warm-gray">TVA non applicable, art. 293 B du CGI</p>
+
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
+        {[
+          ["Maquette gratuite", "Vous ne payez que si elle vous plaît."],
+          ["En ligne sous 7 ou 14 jours", "À partir de la réception de vos photos et infos."],
+          ["Transfert gratuit", "Votre site et votre nom de domaine vous appartiennent."],
+        ].map(([title, text]) => (
+          <div key={title} className="flex gap-3 rounded-[22px] border border-white/[0.08] bg-graphite p-5">
+            <CheckDot />
+            <span>
+              <span className="block text-[15px] font-bold tracking-[-0.02em] text-off-white">{title}</span>
+              <span className="mt-0.5 block text-sm leading-[1.5] text-[#CFCCC7]">{text}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+      <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.14em] text-warm-gray">TVA non applicable, art. 293 B du CGI</p>
     </section>
   );
 }
@@ -1414,7 +1539,9 @@ function Reviews() {
       className={`scroll-reveal relative w-full scroll-mt-24 ${sectionY}`}
     >
       <div className="px-5 sm:px-8">
-        <Heading eyebrow="Avis">Ils nous ont fait confiance.</Heading>
+        <div className="mx-auto max-w-[1096px]">
+          <SectionHeader eyebrow="Avis" title="Ils nous ont fait confiance." muted="Ils en parlent mieux que nous." />
+        </div>
       </div>
       <div className="reviews-viewport relative mt-12 overflow-hidden">
         <div
@@ -2057,9 +2184,13 @@ function Process() {
   }, []);
 
   return (
-    <section id="process" className={`relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <Heading eyebrow="Méthode">Du premier appel à la mise en ligne.</Heading>
-      <SectionLead>Vous voyez votre site avant de payer. Il est en ligne sous 7 à 14 jours.</SectionLead>
+    <section id="process" className={`relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
+      <SectionHeader
+        eyebrow="Méthode"
+        title="Du premier appel"
+        muted="à la mise en ligne."
+        aside={<AsideLead>Vous voyez votre site avant de payer. Il est en ligne sous 7 à 14 jours.</AsideLead>}
+      />
       <div ref={timelineRef} className="relative mt-16">
         <div className="absolute bottom-8 left-4 top-8 w-px bg-white/10 sm:left-1/2 sm:-translate-x-1/2">
           <div
@@ -2466,9 +2597,20 @@ function DemoChip() {
 
 function WorkGallery() {
   return (
-    <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1120px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <Heading eyebrow="Réalisations">Des sites pensés pour les commerces de quartier.</Heading>
-      <SectionLead>Des commerces fictifs, créés pour montrer notre style. La maquette du vôtre est gratuite.</SectionLead>
+    <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
+      <SectionHeader
+        eyebrow="Réalisations"
+        title="Des sites pensés"
+        muted="pour les commerces de quartier."
+        aside={
+          <>
+            <AsideLead>Des commerces fictifs, créés pour montrer notre style. La maquette du vôtre est gratuite.</AsideLead>
+            <a href="#contact" className="mt-5 inline-flex items-center gap-2 text-[15px] font-semibold text-brand transition-colors hover:text-brand-light">
+              Demander ma maquette <ArrowIcon />
+            </a>
+          </>
+        }
+      />
 
       <div className={`${darkCard} mt-14 grid items-center gap-8 p-6 md:p-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12`}>
         <div>
@@ -2546,10 +2688,16 @@ function CustomServices() {
       id="sur-mesure"
       className="scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-6 sm:px-8 md:pb-28 md:pt-10"
     >
-      <Heading eyebrow="Sur mesure">Besoin de plus qu'un site ?</Heading>
-      <SectionLead>
-        Vidéo, identité visuelle ou outil pour votre commerce : on étudie votre projet et on vous envoie un devis gratuit sous 48 h.
-      </SectionLead>
+      <SectionHeader
+        eyebrow="Sur mesure"
+        title="Besoin de plus"
+        muted="qu'un site ?"
+        aside={
+          <AsideLead>
+            Vidéo, identité visuelle ou outil pour votre commerce : on étudie votre projet et on vous envoie un devis gratuit sous 48 h.
+          </AsideLead>
+        }
+      />
 
       <div className={`${darkCard} mt-14 overflow-hidden p-6 md:p-10`}>
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
@@ -2645,11 +2793,43 @@ function CustomServices() {
   );
 }
 
+// Bandeau d'appel à l'action rouge, avec le même quadrillage que le fond.
+function CtaBand() {
+  return (
+    <section className="scroll-reveal mx-auto w-full max-w-[1160px] px-5 sm:px-8">
+      <div className="relative overflow-hidden rounded-[32px] bg-[linear-gradient(180deg,#e94445_0%,#b4282a_100%)] px-6 py-20 text-center sm:px-10 md:py-28">
+        <div aria-hidden="true" className="bg-grid-strong pointer-events-none absolute inset-0" />
+        <div aria-hidden="true" className="pointer-events-none absolute left-1/2 top-0 h-[70%] w-[70%] -translate-x-1/2 rounded-full bg-[#ff8f8f]/40 blur-[90px]" />
+        <div className="relative">
+          <h2 className="mx-auto max-w-[900px] text-balance text-[40px] font-extrabold leading-[0.98] tracking-[-0.055em] text-white md:text-[72px]">
+            <span className="block">Votre site en ligne</span>
+            <span className="block">sous 7&nbsp;jours.</span>
+          </h2>
+          <p className="mx-auto mt-6 max-w-[520px] text-[17px] leading-[1.6] text-white/90 md:text-lg">
+            Un appel de 20 minutes, une maquette gratuite, et le chrono démarre.
+          </p>
+          <a
+            href="#contact"
+            className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-semibold text-onyx shadow-[0_20px_40px_rgba(60,0,0,0.35)] transition hover:-translate-y-0.5"
+          >
+            Prendre rendez-vous <ArrowIcon className="h-4 w-4 text-brand" />
+          </a>
+          <p className="mt-6 font-mono text-[12px] uppercase tracking-[0.2em] text-white/85">
+            Appel gratuit · Sans engagement
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FAQ() {
   return (
-    <section id="faq" className={`scroll-reveal relative mx-auto w-full max-w-[1000px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
-      <Heading eyebrow="FAQ">Vos questions, nos réponses.</Heading>
-      <div className="mt-12 space-y-3">
+    <section id="faq" className={`scroll-reveal relative mx-auto grid w-full max-w-[1160px] scroll-mt-24 gap-10 px-5 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 ${sectionY}`}>
+      <div className="lg:sticky lg:top-28 lg:self-start">
+        <SectionHeader eyebrow="FAQ" title="Vos questions." muted="Nos réponses." />
+      </div>
+      <div className="space-y-3">
         {faqs.map((faq, index) => (
           <details
             key={`${faq.question}-${index}`}
@@ -2774,9 +2954,10 @@ function ContactSection() {
       <div className="absolute left-1/2 top-1/2 -z-0 h-[60%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/8 blur-[120px]" />
       <div className="relative z-10 grid gap-10 rounded-[24px] border border-white/[0.08] bg-graphite p-6 md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
         <div className="flex flex-col justify-center">
-          <h2 className="text-[36px] font-extrabold leading-[1.02] tracking-[-0.045em] text-off-white md:text-[52px]">
-            Votre maquette est gratuite.{" "}
-            <span className="text-gradient-brand">Parlons de votre commerce.</span>
+          <Eyebrow>Contact</Eyebrow>
+          <h2 className="mt-5 text-[36px] font-extrabold leading-[1] tracking-[-0.055em] text-off-white md:text-[52px]">
+            <span className="block">Votre maquette est gratuite.</span>
+            <span className="block text-[#7d7b80]">Parlons de votre commerce.</span>
           </h2>
           <p className="mt-6 max-w-[480px] text-[17px] font-normal leading-[1.6] text-warm-gray">
             Laissez-nous vos coordonnées : on vous rappelle pour un appel de
@@ -2995,6 +3176,7 @@ function BackgroundLights() {
       <span className="bg-light bg-light-d" />
       <span className="bg-streak bg-streak-a" />
       <span className="bg-streak bg-streak-b" />
+      <div className="bg-grid absolute inset-0" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,10,11,0.5)_80%)]" />
     </div>
   );
@@ -3040,6 +3222,7 @@ export default function App() {
       <Process />
       <WorkGallery />
       <Reviews />
+      <CtaBand />
       <FAQ />
       <ContactSection />
       <Footer />
