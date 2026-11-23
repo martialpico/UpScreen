@@ -1173,7 +1173,7 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
         featured
           ? "border-[1.5px] border-brand bg-graphite shadow-[0_30px_70px_rgba(0,0,0,0.45)] lg:-my-3"
           : quote
-            ? "border-dashed border-white/15 bg-transparent"
+            ? "border-white/80 bg-off-white shadow-[0_30px_70px_rgba(0,0,0,0.45)]"
             : "border-white/[0.08] bg-graphite hover:border-white/20"
       }`}
     >
@@ -1182,14 +1182,14 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
           Recommandé
         </span>
       )}
-      <h3 className="text-2xl font-semibold tracking-[-0.02em] text-off-white">{offer.title}</h3>
-      <p className={`mt-2 text-sm font-semibold ${featured ? "text-brand-light" : "text-warm-gray"}`}>
+      <h3 className={`text-2xl font-semibold tracking-[-0.02em] ${quote ? "text-onyx" : "text-off-white"}`}>{offer.title}</h3>
+      <p className={`mt-2 text-sm font-semibold ${featured ? "text-brand-light" : quote ? "text-onyx/55" : "text-warm-gray"}`}>
         {offer.subtitle}
       </p>
 
       <div className="mt-6 flex items-baseline gap-1.5 whitespace-nowrap">
         {quote ? (
-          <span className="font-display text-[40px] leading-none text-off-white sm:text-[44px]">Sur devis</span>
+          <span className="font-display text-[40px] leading-none text-onyx sm:text-[44px]">Sur devis</span>
         ) : (
           <>
             <span className={`font-display text-[52px] leading-none tracking-[-0.025em] sm:text-[58px] ${featured ? "text-brand" : "text-off-white"}`}>
@@ -1199,15 +1199,15 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
           </>
         )}
       </div>
-      <p className="mt-3 flex items-center gap-2 text-sm font-semibold text-off-white/80">
-        <span className={`h-1.5 w-1.5 rounded-full ${featured ? "bg-brand" : "bg-off-white/40"}`} />
+      <p className={`mt-3 flex items-center gap-2 text-sm font-semibold ${quote ? "text-onyx/75" : "text-off-white/80"}`}>
+        <span className={`h-1.5 w-1.5 rounded-full ${featured || quote ? "bg-brand" : "bg-off-white/40"}`} />
         {offer.delay}
       </p>
 
-      <ul className="mt-7 space-y-3.5 border-t border-white/10 pt-7 text-[15px] leading-[1.5] text-[#CFCCC7]">
+      <ul className={`mt-7 space-y-3.5 border-t pt-7 text-[15px] leading-[1.5] ${quote ? "border-onyx/10 text-onyx/75" : "border-white/10 text-[#CFCCC7]"}`}>
         {offer.features.map((feature) => {
           const bullet = (
-            <span className={`mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full ${featured ? "bg-brand" : "bg-warm-gray/60"}`} />
+            <span className={`mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full ${featured ? "bg-brand" : quote ? "bg-onyx/30" : "bg-warm-gray/60"}`} />
           );
           if (typeof feature === "string")
             return (
@@ -1234,14 +1234,16 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
         })}
       </ul>
 
+      <div aria-hidden="true" className="min-h-9 flex-1" />
       <a
         href={offer.href ?? "#contact"}
-        className={`mt-auto flex w-full items-center justify-center rounded-full border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${
+        className={`flex w-full items-center justify-center rounded-full border px-5 py-3.5 text-sm font-semibold transition duration-200 hover:-translate-y-0.5 ${
           featured
             ? "border-brand bg-brand text-onyx hover:bg-[#FF7A7B]"
-            : "border-white/15 text-off-white hover:border-white/35"
+            : quote
+              ? "border-onyx bg-onyx text-off-white hover:bg-graphite"
+              : "border-white/15 text-off-white hover:border-white/35"
         }`}
-        style={{ marginTop: "2.25rem" }}
       >
         {offer.cta}
       </a>
