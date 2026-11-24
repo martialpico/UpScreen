@@ -656,6 +656,37 @@
   .frame-bottom { bottom: calc(-1 * var(--fy)); transform-origin: right; transition-delay: 160ms; }
   .frame-left { left: calc(-1 * var(--fx)); transform-origin: bottom; transition-delay: 240ms; }
   .frame-right { right: calc(-1 * var(--fx)); transform-origin: top; transition-delay: 80ms; }
+  /* Carrés aux intersections, comme les poignées d'un cadre de sélection. */
+  .frame-corner {
+    position: absolute;
+    z-index: 1;
+    width: 11px;
+    height: 11px;
+    margin: -5.5px;
+    pointer-events: none;
+    background: #ffffff;
+    border: 2px solid var(--color-brand);
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(233, 68, 69, 0.25);
+    opacity: 0;
+    transform: scale(0) rotate(-45deg);
+    transition:
+      opacity 300ms ease,
+      transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .frame-tl { top: calc(-1 * var(--fy)); left: calc(-1 * var(--fx)); transition-delay: 700ms; }
+  .frame-tr { top: calc(-1 * var(--fy)); right: calc(-1 * var(--fx)); transition-delay: 780ms; }
+  .frame-br { bottom: calc(-1 * var(--fy)); right: calc(-1 * var(--fx)); transition-delay: 860ms; }
+  .frame-bl { bottom: calc(-1 * var(--fy)); left: calc(-1 * var(--fx)); transition-delay: 940ms; }
+  .title-frame:not(.is-visible) .frame-corner { transition-delay: 0ms; }
+  .title-frame.is-visible .frame-corner {
+    opacity: 1;
+    transform: none;
+  }
+  @media (min-width: 768px) {
+    .frame-corner { width: 13px; height: 13px; margin: -6.5px; }
+  }
+
   .title-frame.is-visible .frame-top,
   .title-frame.is-visible .frame-bottom { transform: scaleX(1); }
   .title-frame.is-visible .frame-left,
@@ -703,6 +734,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .frame-line { animation: none; transform: none !important; transition: none; }
+    .frame-corner { opacity: 1 !important; transform: none !important; transition: none; }
     .scroll-reveal,
     .reveal-mask .reveal-line,
     .step-row .step-anim,

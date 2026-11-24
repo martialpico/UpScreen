@@ -325,6 +325,10 @@ function SectionHeader({
             <span aria-hidden="true" className="frame-line frame-right" />
             <span aria-hidden="true" className="frame-line frame-bottom" />
             <span aria-hidden="true" className="frame-line frame-left" />
+            <span aria-hidden="true" className="frame-corner frame-tl" />
+            <span aria-hidden="true" className="frame-corner frame-tr" />
+            <span aria-hidden="true" className="frame-corner frame-br" />
+            <span aria-hidden="true" className="frame-corner frame-bl" />
           </>
         )}
         <span className="scroll-reveal reveal-mask block"><span className="reveal-line block text-off-white">{title}</span></span>
