@@ -230,7 +230,7 @@ const faqs = [
   {
     question: "Comment vous contacter ?",
     answer:
-      "Écrivez-nous à upscreenweb@gmail.com : on vous rappelle pour un appel découverte gratuit de 20 minutes.",
+      "Laissez vos coordonnées dans le formulaire en bas de page, ou écrivez-nous à upscreenweb@gmail.com : on vous rappelle pour un appel découverte gratuit de 20 minutes.",
   },
 ];
 
@@ -498,7 +498,7 @@ function Header() {
             href="#contact"
             className="hidden h-12 items-center gap-2 whitespace-nowrap rounded-[14px] bg-brand px-6 text-[15px] font-semibold text-onyx transition hover:-translate-y-0.5 hover:bg-[#FF7A7B] sm:inline-flex"
           >
-            Prendre rendez-vous <ArrowIcon />
+            Être rappelé <ArrowIcon />
           </a>
           <LiquidGlassButton
             tone="dark"
@@ -545,7 +545,7 @@ function Header() {
               tabIndex={menuOpen ? 0 : -1}
               className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-4 py-3.5 text-sm font-semibold text-onyx hover:bg-[#FF7A7B]"
             >
-              Prendre rendez-vous <ArrowIcon />
+              Être rappelé <ArrowIcon />
             </a>
           </div>
         </div>
@@ -1559,7 +1559,7 @@ function Reviews() {
             <figure
               key={index}
               aria-hidden={index >= reviews.length}
-              className={`${darkCard} relative flex w-[300px] shrink-0 flex-col p-6 sm:w-[360px] sm:p-7`}
+              className="relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-white/80 bg-off-white p-6 shadow-[0_24px_60px_rgba(0,0,0,0.4)] sm:w-[360px] sm:p-7"
             >
               <div className="flex items-start justify-between gap-3">
                 <span
@@ -1570,12 +1570,12 @@ function Reviews() {
                 </span>
                 <span className="flex items-center gap-2">
                   {review.placeholder && (
-                    <span className="rounded-full border border-white/15 px-2.5 py-1 text-[10px] font-semibold text-warm-gray">
+                    <span className="rounded-full border border-onyx/15 px-2.5 py-1 text-[10px] font-semibold text-onyx/55">
                       Exemple
                     </span>
                   )}
                   {review.lang === "EN" && (
-                    <span className="rounded-full bg-white/[0.06] px-2.5 py-1 text-[10px] font-semibold text-warm-gray">
+                    <span className="rounded-full bg-onyx/[0.06] px-2.5 py-1 font-mono text-[10px] font-semibold text-onyx/55">
                       Traduit de l'anglais
                     </span>
                   )}
@@ -1583,14 +1583,14 @@ function Reviews() {
               </div>
               <blockquote
                 lang="fr"
-                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-[#CFCCC7]"
+                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-onyx/80"
               >
                 {review.quote}
               </blockquote>
-              <figcaption className="mt-6 border-t border-white/10 pt-4">
-                <p className="text-sm font-semibold text-off-white">{review.business}</p>
+              <figcaption className="mt-6 border-t border-onyx/10 pt-4">
+                <p className="text-[15px] font-extrabold tracking-[-0.02em] text-onyx">{review.business}</p>
                 {review.person && (
-                  <p className="mt-0.5 text-xs font-normal text-warm-gray">{review.person}</p>
+                  <p className="mt-0.5 text-xs font-normal text-onyx/55">{review.person}</p>
                 )}
               </figcaption>
             </figure>
@@ -2940,9 +2940,9 @@ function FAQ() {
         {faqs.map((faq, index) => (
           <details
             key={`${faq.question}-${index}`}
-            className="scroll-reveal group overflow-hidden rounded-[20px] border border-white/[0.08] bg-graphite transition-colors open:border-white/20 hover:border-white/20"
+            className="scroll-reveal group overflow-hidden rounded-[20px] border border-white/80 bg-off-white shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition-colors"
           >
-            <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-semibold text-off-white sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-bold tracking-[-0.02em] text-onyx sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
               <span className="flex-1">{faq.question}</span>
               <span className="relative h-5 w-5 shrink-0 text-brand">
                 <span className="absolute left-1/2 top-1/2 h-0.5 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-current" />
@@ -2951,7 +2951,7 @@ function FAQ() {
             </summary>
             <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 group-open:grid-rows-[1fr]">
               <div className="overflow-hidden">
-                <p className="border-t border-white/[0.08] px-5 pb-6 pt-4 text-[17px] font-normal leading-[1.6] text-warm-gray sm:px-7">
+                <p className="border-t border-onyx/10 px-5 pb-6 pt-4 text-[16px] font-normal leading-[1.65] text-onyx/70 sm:px-7">
                   {faq.answer}
                 </p>
               </div>
@@ -2972,44 +2972,254 @@ const formEndpoint = `https://formsubmit.co/ajax/${contactEmail}`;
 type FormStatus = "idle" | "sending" | "sent" | "activate" | "error";
 
 function ContactSection() {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [status, setStatus] = useState<FormStatus>("idle");
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const value = (field: string) => String(data.get(field) || "").trim();
+    const nextErrors: Record<string, string> = {};
+
+    ["name", "business", "industry", "email", "phone", "message"].forEach(
+      (field) => {
+        if (!String(data.get(field) || "").trim()) {
+          nextErrors[field] = "Ce champ est obligatoire.";
+        }
+      },
+    );
+
+    const email = String(data.get("email") || "");
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      nextErrors.email = "Entrez une adresse email valide.";
+    }
+
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setStatus("idle");
+      return;
+    }
+
+    const clearForm = () => {
+      form.reset();
+      const industry = form.elements.namedItem("industry") as HTMLSelectElement | null;
+      if (industry) industry.value = "";
+    };
+
+    // Hidden field only bots fill in: pretend it worked, send nothing.
+    if (value("_honey")) {
+      clearForm();
+      setStatus("sent");
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const response = await fetch(formEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `Nouvelle demande de ${value("business")}`,
+          _template: "table",
+          _replyto: value("email"),
+          _captcha: "false",
+          Nom: value("name"),
+          Entreprise: value("business"),
+          Secteur: value("industry"),
+          Email: value("email"),
+          Téléphone: value("phone"),
+          Message: value("message"),
+        }),
+      });
+      const result = (await response.json().catch(() => null)) as
+        | { success?: boolean | string; message?: string }
+        | null;
+      const succeeded = response.ok && (result?.success === true || result?.success === "true");
+
+      if (succeeded) {
+        clearForm();
+        setStatus("sent");
+      } else if (/activat/i.test(result?.message ?? "")) {
+        setStatus("activate");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  const fieldClass =
+    "mt-2 w-full rounded-xl border border-[#2A2A2E] bg-onyx/70 px-4 py-3 text-base font-normal text-off-white outline-none transition placeholder:text-warm-gray/55 focus:border-off-white/30";
+
   return (
     <section
       id="contact"
       className={`relative mx-auto w-full max-w-[1160px] scroll-mt-24 overflow-hidden px-5 sm:px-8 ${sectionY}`}
     >
       <div className="absolute left-1/2 top-1/2 -z-0 h-[60%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/8 blur-[120px]" />
-      <div className="relative z-10 isolate overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] px-6 py-16 text-center md:px-12 md:py-20">
+      <div className="relative z-10 isolate grid gap-10 overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] p-6 md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
         <PremiumBlobs />
-        <div className="absolute inset-0 -z-[5] bg-[linear-gradient(180deg,rgba(11,10,11,0.35),rgba(11,10,11,0.75))]" />
-        <Eyebrow center>Contact</Eyebrow>
-        <h2 className="mx-auto max-w-[820px] text-[38px] font-extrabold leading-[1] tracking-[-0.055em] text-off-white md:text-[58px]">
-          <span className="block">Votre maquette est gratuite.</span>
-          <span className="block text-white/55">Parlons de votre commerce.</span>
-        </h2>
-        <p className="mx-auto mt-6 max-w-[560px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-white/80 md:text-[15px]">
-          Écrivez-nous : on vous rappelle pour un appel de 20 minutes, puis on vous envoie la maquette de
-          votre futur site. Vous ne payez que si elle vous plaît.
-        </p>
-        <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a
-            href={`mailto:${contactEmail}?subject=${encodeURIComponent("Demande de maquette gratuite")}`}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-[15px] font-semibold text-onyx shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition hover:-translate-y-0.5"
-          >
-            Nous écrire <ArrowIcon />
-          </a>
-          {whatsappLink && (
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center gap-2 rounded-full border border-white/25 px-8 py-4 text-[15px] font-semibold text-off-white transition hover:border-white/50"
-            >
-              <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
-              WhatsApp
+        <div className="absolute inset-0 -z-[5] bg-[linear-gradient(180deg,rgba(11,10,11,0.3),rgba(11,10,11,0.7))]" />
+        <div className="flex flex-col justify-center">
+          <Eyebrow>Contact</Eyebrow>
+          <h2 className="mt-5 text-[36px] font-extrabold leading-[1] tracking-[-0.055em] text-off-white md:text-[52px]">
+            <span className="block">Votre maquette est gratuite.</span>
+            <span className="block text-white/55">Parlons de votre commerce.</span>
+          </h2>
+          <p className="mt-6 max-w-[460px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-white/80">
+            Laissez vos coordonnées, on vous rappelle. En 20 minutes, on fait le point sur votre commerce,
+            puis on vous envoie la maquette de votre futur site.
+          </p>
+          <ul className="mt-6 space-y-2.5">
+            {["Appel gratuit de 20 minutes", "Maquette gratuite", "Vous ne payez que si elle vous plaît"].map((item) => (
+              <li key={item} className="flex items-center gap-2.5 text-[15px] font-medium text-off-white">
+                <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-off-white text-brand">
+                  <CheckIcon className="h-3 w-3" />
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-7 font-mono text-[12px] font-semibold text-white/60">
+            Ou écrivez-nous :{" "}
+            <a href={`mailto:${contactEmail}`} className="text-off-white underline underline-offset-4 hover:text-brand-light">
+              {contactEmail}
             </a>
-          )}
+          </p>
         </div>
-        <p className="mt-5 font-mono text-[12px] font-semibold tracking-[0.04em] text-white/60">{contactEmail}</p>
+
+        <form
+          id="contact-form"
+          onSubmit={handleSubmit}
+          noValidate
+          className="grid scroll-mt-28 gap-4 rounded-[22px] border border-white/10 bg-[#121113]/90 p-5 shadow-[0_30px_70px_rgba(0,0,0,0.45)] sm:grid-cols-2 sm:p-7"
+        >
+          <label className="text-sm font-semibold text-off-white">
+            Nom
+            <input name="name" placeholder="Votre nom" className={fieldClass} />
+            {errors.name && (
+              <span className="mt-1 block text-xs font-normal text-amber-400">
+                {errors.name}
+              </span>
+            )}
+          </label>
+          <label className="text-sm font-semibold text-off-white">
+            Entreprise
+            <input
+              name="business"
+              placeholder="Nom de votre entreprise"
+              className={fieldClass}
+            />
+            {errors.business && (
+              <span className="mt-1 block text-xs font-normal text-amber-400">
+                {errors.business}
+              </span>
+            )}
+          </label>
+          <label className="text-sm font-semibold text-off-white">
+            Secteur
+            <select name="industry" defaultValue="" className={fieldClass}>
+              <option value="" disabled>
+                Votre secteur
+              </option>
+              <option>Restaurant / Café</option>
+              <option>Coiffure / Beauté</option>
+              <option>Sport / Fitness</option>
+              <option>Artisan / BTP</option>
+              <option>Santé / Cabinet</option>
+              <option>Commerce</option>
+              <option>Autre</option>
+            </select>
+            {errors.industry && (
+              <span className="mt-1 block text-xs font-normal text-amber-400">
+                {errors.industry}
+              </span>
+            )}
+          </label>
+          <label className="text-sm font-semibold text-off-white">
+            Email
+            <input
+              name="email"
+              type="email"
+              placeholder="vous@entreprise.fr"
+              className={fieldClass}
+            />
+            {errors.email && (
+              <span className="mt-1 block text-xs font-normal text-amber-400">
+                {errors.email}
+              </span>
+            )}
+          </label>
+          <label className="text-sm font-semibold text-off-white sm:col-span-2">
+            Téléphone
+            <input
+              name="phone"
+              type="tel"
+              placeholder="Votre numéro de téléphone"
+              className={fieldClass}
+            />
+            {errors.phone && (
+              <span className="mt-1 block text-xs font-normal text-amber-400">
+                {errors.phone}
+              </span>
+            )}
+          </label>
+          <label className="text-sm font-semibold text-off-white sm:col-span-2">
+            Message
+            <textarea
+              name="message"
+              rows={4}
+              placeholder="Votre commerce, ce dont vous avez besoin…"
+              className={fieldClass}
+            />
+            {errors.message && (
+              <span className="mt-1 block text-xs font-normal text-amber-400">
+                {errors.message}
+              </span>
+            )}
+          </label>
+          <input
+            type="text"
+            name="_honey"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
+          <div className="sm:col-span-2">
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="w-full rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] disabled:cursor-wait disabled:opacity-70"
+            >
+              {status === "sending" ? "Envoi…" : "Être rappelé"}
+            </button>
+            <div aria-live="polite">
+              {status === "sent" && (
+                <p className="mt-3 text-sm font-normal text-off-white">
+                  Merci ! Votre message est bien parti. Nous revenons vers vous très vite.
+                </p>
+              )}
+              {status === "activate" && (
+                <p className="mt-3 text-sm font-normal text-amber-400">
+                  Presque fini : ouvrez l'email « Activate Form » envoyé à {contactEmail}, cliquez
+                  sur le lien, puis renvoyez le formulaire.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="mt-3 text-sm font-normal text-amber-400">
+                  Votre message n'est pas parti. Réessayez, ou écrivez-nous à{" "}
+                  <a href={`mailto:${contactEmail}`} className="underline underline-offset-2">
+                    {contactEmail}
+                  </a>
+                  .
+                </p>
+              )}
+            </div>
+          </div>
+        </form>
       </div>
     </section>
   );
