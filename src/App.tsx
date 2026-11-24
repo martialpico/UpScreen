@@ -1327,7 +1327,7 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
             : "border-white/[0.08] bg-graphite hover:border-white/20"
       }`}
     >
-      {featured ? <PremiumBlobs /> : <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(130%_70%_at_100%_0%,rgba(233,68,69,0.16),rgba(233,68,69,0.05)_45%,transparent_70%)]" />}
+      {featured ? <PremiumBlobs /> : <div aria-hidden="true" className="tint-drift pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(130%_70%_at_100%_0%,rgba(233,68,69,0.16),rgba(233,68,69,0.05)_45%,transparent_70%)]" />}
       <div className="flex min-h-[28px] items-start justify-between gap-3">
         <h3 className={`text-[26px] font-extrabold leading-none tracking-[-0.05em] ${quote ? "text-onyx" : "text-off-white"}`}>
           {offer.title}
@@ -1440,7 +1440,7 @@ function SubscriptionCard({ plan }: { plan: (typeof subscriptions)[number] }) {
           : "border-white/[0.08] bg-graphite"
       }`}
     >
-      {featured ? <PremiumBlobs /> : <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(130%_70%_at_100%_0%,rgba(233,68,69,0.16),rgba(233,68,69,0.05)_45%,transparent_70%)]" />}
+      {featured ? <PremiumBlobs /> : <div aria-hidden="true" className="tint-drift pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(130%_70%_at_100%_0%,rgba(233,68,69,0.16),rgba(233,68,69,0.05)_45%,transparent_70%)]" />}
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-[28px] font-extrabold leading-none tracking-[-0.05em] text-off-white">{plan.name}</h3>
         {featured && (
@@ -1541,7 +1541,7 @@ function Services() {
       <SubscriptionTable />
 
       <div className="scroll-reveal dark-island relative isolate mx-auto mt-6 max-w-[940px] overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] p-7 text-center shadow-[0_30px_70px_rgba(233,68,69,0.18)] md:p-9">
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(70%_120%_at_50%_0%,rgba(233,68,69,0.28),transparent_70%)]" />
+        <div aria-hidden="true" className="tint-drift absolute inset-0 -z-10 bg-[radial-gradient(70%_120%_at_50%_0%,rgba(233,68,69,0.28),transparent_70%)]" />
         <p className="flex flex-wrap items-baseline justify-center gap-x-4 gap-y-1 text-[24px] font-extrabold tracking-[-0.045em]">
           <span className="text-white">Hébergement et nom de domaine</span>
           <span className="text-brand-light">Inclus la 1re année</span>
@@ -1581,7 +1581,7 @@ function Reviews() {
             <figure
               key={index}
               aria-hidden={index >= reviews.length}
-              className="dark-island relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(120%_70%_at_100%_0%,rgba(233,68,69,0.22),transparent_60%)] p-6 shadow-[0_24px_60px_rgba(14,13,16,0.18)] sm:w-[360px] sm:p-7"
+              className="tint-drift dark-island relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(120%_70%_at_100%_0%,rgba(233,68,69,0.22),transparent_60%)] p-6 shadow-[0_24px_60px_rgba(14,13,16,0.18)] sm:w-[360px] sm:p-7"
             >
               <div className="flex items-start justify-between gap-3">
                 <span
@@ -2970,7 +2970,7 @@ function CustomOfferCard({ offer, index, onOpen }: { offer: CustomOffer; index: 
       {(offer.id === "menu" || offer.id === "webapp") && (
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[linear-gradient(200deg,rgba(233,68,69,0.42)_0%,rgba(233,68,69,0.14)_38%,rgba(233,68,69,0)_62%)]"
+          className="tint-drift absolute inset-0 -z-10 bg-[linear-gradient(200deg,rgba(233,68,69,0.42)_0%,rgba(233,68,69,0.14)_38%,rgba(233,68,69,0)_62%)]"
         />
       )}
       <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase leading-none tracking-[0.14em] text-[#0e0d10] backdrop-blur">
@@ -3150,7 +3150,7 @@ function FAQ() {
         {faqs.map((faq, index) => (
           <details
             key={`${faq.question}-${index}`}
-            className="dark-island scroll-reveal group overflow-hidden rounded-[20px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(90%_140%_at_100%_0%,rgba(233,68,69,0.22),rgba(233,68,69,0.06)_45%,transparent_70%)] shadow-[0_16px_40px_rgba(14,13,16,0.15)] transition-colors open:border-brand/40 hover:border-white/25"
+            className="tint-drift dark-island scroll-reveal group overflow-hidden rounded-[20px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(90%_140%_at_100%_0%,rgba(233,68,69,0.22),rgba(233,68,69,0.06)_45%,transparent_70%)] shadow-[0_16px_40px_rgba(14,13,16,0.15)] transition-colors open:border-brand/40 hover:border-white/25"
           >
             <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-bold tracking-[-0.02em] text-white sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
               <span className="flex-1">{faq.question}</span>

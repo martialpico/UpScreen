@@ -897,3 +897,26 @@
 @keyframes motion-logo { 0%, 100% { transform: scale(0.94); opacity: 0.85; } 50% { transform: scale(1); opacity: 1; } }
 .motion-logo { animation: motion-logo 2.5s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .motion-logo { animation: none; } }
+
+/* Dégradés rouges des cartes qui dérivent lentement. */
+@keyframes tint-drift {
+  0% { background-position: 100% 0%; }
+  50% { background-position: 40% 30%; }
+  100% { background-position: 80% 60%; }
+}
+.tint-drift {
+  background-size: 170% 170%;
+  animation: tint-drift 14s ease-in-out infinite alternate;
+}
+
+/* Fond clair : lumières rouges très légères qui bougent. */
+.theme-light .bg-lights .bg-light {
+  display: block;
+  opacity: 0.22;
+}
+.theme-light .bg-lights .bg-light-c {
+  opacity: 0.12;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tint-drift { animation: none; }
+}
