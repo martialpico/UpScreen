@@ -2343,7 +2343,7 @@ function Process() {
             On vous accompagne ensuite
           </span>
           <p className="mt-4 max-w-[520px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-white/80">
-            Avec un abonnement, on gère chaque mois votre fiche Google, votre référencement et vos réseaux.
+            Avec un abonnement, on gère chaque mois votre fiche Google, votre référencement, vos réseaux… et bien plus si besoin.
           </p>
         </div>
       </div>
