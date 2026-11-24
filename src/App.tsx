@@ -3638,7 +3638,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
         )}
 
         {/* Comment ça marche (menu, web app) */}
-        {page.processMode === "grid" && (
+        {page.processMode === "grid" && offer.id !== "menu" && (
           <section className="mx-auto w-full max-w-[1160px] px-5 py-12 sm:px-8 lg:py-16">
             <OfferHeading eyebrow={page.processEyebrow} title={page.processTitle} lead={page.processLead} />
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
