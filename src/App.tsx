@@ -2910,13 +2910,15 @@ function MotionEditorUI() {
   return (
     <div aria-hidden="true" className="relative mt-5">
       <div className="overflow-hidden rounded-[14px] border border-white/12 bg-[#141214] p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-        <div className="relative flex aspect-[16/8] items-center justify-center overflow-hidden rounded-[10px] bg-[radial-gradient(120%_90%_at_30%_20%,#ff6b6c_0%,#e94445_38%,#7a1416_100%)]">
-          <span className="absolute left-2 top-1.5 font-mono text-[8px] font-semibold text-white/80">presentation.mp4</span>
-          <span className="motion-shape-a absolute left-[12%] top-[40%] h-4 w-4 rounded-full bg-white/80" />
-          <span className="motion-shape-b absolute bottom-[18%] right-[12%] h-2.5 w-8 rounded-full bg-[#0e0d10]/60" />
-          <span className="absolute right-[20%] top-[24%] h-3.5 w-3.5 rotate-12 rounded-[4px] border-2 border-white/70" />
-          <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
-            <svg viewBox="0 0 16 16" className="ml-0.5 h-5 w-5 text-brand" fill="currentColor">
+        <div className="relative flex aspect-[16/8] items-center justify-center overflow-hidden rounded-[10px] bg-[radial-gradient(90%_80%_at_50%_45%,#3b1012_0%,#141012_70%,#0b0a0b_100%)]">
+          <span className="absolute left-2 top-1.5 font-mono text-[8px] font-semibold text-white/60">upscreen-presentation.mp4</span>
+          <span className="motion-shape-a absolute left-[10%] top-[44%] h-3.5 w-3.5 rounded-full bg-white/80" />
+          <span className="motion-shape-b absolute bottom-[20%] right-[10%] h-2.5 w-7 rounded-full bg-brand" />
+          <span className="flex items-center gap-1.5">
+            <img src={upscreenLogo} alt="" className="motion-logo h-auto w-[104px] drop-shadow-[0_6px_16px_rgba(0,0,0,0.3)]" />
+          </span>
+          <span className="absolute bottom-1.5 left-2 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
+            <svg viewBox="0 0 16 16" className="ml-px h-2.5 w-2.5 text-brand" fill="currentColor">
               <path d="M4.5 2.8v10.4a.6.6 0 0 0 .9.5l8.2-5.2a.6.6 0 0 0 0-1L5.4 2.3a.6.6 0 0 0-.9.5Z" />
             </svg>
           </span>

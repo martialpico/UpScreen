@@ -894,3 +894,6 @@
 @media (prefers-reduced-motion: reduce) {
   .motion-playhead, .motion-shape-a, .motion-shape-b { animation: none; }
 }
+@keyframes motion-logo { 0%, 100% { transform: scale(0.94); opacity: 0.85; } 50% { transform: scale(1); opacity: 1; } }
+.motion-logo { animation: motion-logo 2.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .motion-logo { animation: none; } }
