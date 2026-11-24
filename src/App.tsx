@@ -1,5 +1,11 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import {
+  LiquidGlassButton,
+  LiquidGlassToolbar,
+  LiquidGlassToolbarItem,
+  liquidGlassClass,
+} from "@/components/goodui/liquid-glass-button";
 import upscreenLogo from "./imports/upscreen-logo-reversed.svg";
 import upscreenIcon from "./imports/upscreen-icon.svg";
 import cafePhoto from "./imports/cafe-espresso.webp";
@@ -403,148 +409,131 @@ function WhatsAppIcon({ className = "" }: { className?: string }) {
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const links = [
-    ["Réalisations", "#work"],
-    ["Tarifs", "#pricing"],
-    ["Sur mesure", "#sur-mesure"],
-    ["Méthode", "#process"],
-    ["FAQ", "#faq"],
+  const [active, setActive] = useState("");
+  const links: [string, string][] = [
+    ["Réalisations", "work"],
+    ["Tarifs", "pricing"],
+    ["Sur mesure", "sur-mesure"],
+    ["Méthode", "process"],
+    ["FAQ", "faq"],
   ];
 
+  // Section visible au milieu de l'écran : la loupe du menu la suit.
   useEffect(() => {
-    const updateHeader = () => setScrolled(window.scrollY > 24);
-    updateHeader();
-    window.addEventListener("scroll", updateHeader, { passive: true });
-    return () => window.removeEventListener("scroll", updateHeader);
+    const sections = links
+      .map(([, id]) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    sections.forEach((el) => observer.observe(el));
+    const onTop = () => window.scrollY < 300 && setActive("");
+    window.addEventListener("scroll", onTop, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onTop);
+    };
   }, []);
 
+  const goTo = (id: string) => {
+    setMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    history.replaceState(null, "", `#${id}`);
+  };
+
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-[100] border-b transition-colors duration-300 ${
-        scrolled
-          ? "border-[#2A2A2E] bg-onyx/95 backdrop-blur-xl"
-          : "border-transparent bg-transparent"
-      }`}
-    >
-      <div className="relative mx-auto flex h-20 max-w-[1160px] items-center justify-between px-5 sm:px-8">
+    <header className="fixed inset-x-0 top-0 z-[100] px-3 pt-3 sm:px-5 sm:pt-4">
+      <div className="relative mx-auto flex max-w-[1160px] items-center justify-between gap-3">
         <a
           href="#home"
           aria-label="Accueil UpScreen"
           onClick={() => setMenuOpen(false)}
-          className="relative z-10 block w-[132px] shrink-0 sm:w-[148px]"
+          className={`${liquidGlassClass("dark")} flex h-12 shrink-0 items-center rounded-full px-4 sm:px-5`}
         >
-          <img
-            src={upscreenLogo}
-            alt="UpScreen"
-            className="block h-auto w-full drop-shadow-[0_0_14px_rgba(233,68,69,0.35)]"
-          />
+          <img src={upscreenLogo} alt="UpScreen" className="relative z-[2] block h-auto w-[118px] sm:w-[128px]" />
         </a>
 
-        <nav
-          aria-label="Navigation principale"
-          className="hidden items-center gap-1 lg:flex"
-        >
-          {links.map(([label, href]) => (
-            <a
-              key={href}
-              href={href}
-              className="rounded-full px-4 py-2 text-sm font-semibold text-off-white/65 transition-colors hover:bg-off-white/6 hover:text-off-white"
-            >
+        <nav className="hidden lg:block" aria-label="Navigation principale">
+        <LiquidGlassToolbar tone="dark" value={active} onValueChange={goTo} aria-label="Sections du site">
+          {links.map(([label, id]) => (
+            <LiquidGlassToolbarItem key={id} value={id}>
               {label}
-            </a>
+            </LiquidGlassToolbarItem>
           ))}
+        </LiquidGlassToolbar>
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="flex items-center gap-2">
           {whatsappLink && (
             <a
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Écrire sur WhatsApp"
-              className="inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-full border border-off-white/15 bg-off-white/5 px-3 text-sm font-semibold text-off-white transition-colors hover:border-off-white/30 hover:bg-off-white/10 xl:px-4"
+              className={`${liquidGlassClass("dark")} lg-press grid h-12 w-12 place-items-center rounded-full text-[#25D366]`}
             >
-              <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
-              <span className="hidden xl:inline">WhatsApp</span>
+              <WhatsAppIcon className="relative z-[2] h-5 w-5" />
             </a>
           )}
           <a
             href="#contact"
-            className="inline-flex whitespace-nowrap rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
+            className="hidden h-12 items-center gap-2 whitespace-nowrap rounded-full bg-brand px-6 text-sm font-semibold text-onyx transition hover:-translate-y-0.5 hover:bg-[#FF7A7B] sm:inline-flex"
           >
-            Prendre rendez-vous
+            Prendre rendez-vous <ArrowIcon />
           </a>
-        </div>
-
-        <div className="relative z-10 flex items-center gap-2 lg:hidden">
-          {whatsappLink && (
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Écrire sur WhatsApp"
-              className="grid h-10 w-10 place-items-center rounded-full border border-off-white/12 bg-off-white/5 text-[#25D366]"
-            >
-              <WhatsAppIcon className="h-5 w-5" />
-            </a>
-          )}
-        <button
-          type="button"
-          aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((current) => !current)}
-          className="grid h-10 w-10 place-items-center rounded-full border border-off-white/12 bg-off-white/5 text-off-white"
-        >
-          <span className="relative h-4 w-5" aria-hidden="true">
-            <span
-              className={`absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current transition-transform ${
-                menuOpen ? "translate-y-[7px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`absolute left-0 top-[7px] h-0.5 w-5 rounded-full bg-current transition-opacity ${
-                menuOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`absolute left-0 top-[14px] h-0.5 w-5 rounded-full bg-current transition-transform ${
-                menuOpen ? "-translate-y-[7px] -rotate-45" : ""
-              }`}
-            />
-          </span>
-        </button>
+          <LiquidGlassButton
+            tone="dark"
+            size="icon"
+            aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((current) => !current)}
+            className="!h-12 !w-12 lg:hidden"
+          >
+            <span className="relative block h-4 w-5" aria-hidden="true">
+              <span className={`absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current transition-transform ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
+              <span className={`absolute left-0 top-[7px] h-0.5 w-5 rounded-full bg-current transition-opacity ${menuOpen ? "opacity-0" : ""}`} />
+              <span className={`absolute left-0 top-[14px] h-0.5 w-5 rounded-full bg-current transition-transform ${menuOpen ? "-translate-y-[7px] -rotate-45" : ""}`} />
+            </span>
+          </LiquidGlassButton>
         </div>
 
         <div
-          className={`absolute left-4 right-4 top-[72px] overflow-hidden rounded-[20px] border border-[#2A2A2E] bg-onyx/95 p-2 shadow-2xl backdrop-blur-2xl transition-all duration-300 lg:hidden ${
-            menuOpen
-              ? "visible translate-y-0 opacity-100"
-              : "invisible -translate-y-2 opacity-0"
+          className={`${liquidGlassClass("dark")} absolute left-0 right-0 top-[60px] !rounded-[26px] p-2 transition-all duration-300 lg:hidden ${
+            menuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
           }`}
         >
-          {links.map(([label, href]) => (
+          <div className="relative z-[2]">
+            {links.map(([label, id]) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  goTo(id);
+                }}
+                tabIndex={menuOpen ? 0 : -1}
+                className={`flex items-center justify-between rounded-2xl px-4 py-3.5 text-[15px] font-semibold transition-colors hover:bg-white/[0.06] ${
+                  active === id ? "bg-white/[0.08] text-off-white" : "text-off-white/80"
+                }`}
+              >
+                {label}
+                <ArrowIcon className="h-4 w-4 text-brand" />
+              </a>
+            ))}
             <a
-              key={href}
-              href={href}
+              href="#contact"
               onClick={() => setMenuOpen(false)}
               tabIndex={menuOpen ? 0 : -1}
-              className="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-semibold text-off-white/80 transition-colors hover:bg-off-white/5 hover:text-off-white"
+              className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-4 py-3.5 text-sm font-semibold text-onyx hover:bg-[#FF7A7B]"
             >
-              {label}
-              <span aria-hidden="true" className="text-brand">
-                ↗
-              </span>
+              Prendre rendez-vous <ArrowIcon />
             </a>
-          ))}
-          <a
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
-            tabIndex={menuOpen ? 0 : -1}
-            className="mt-2 flex w-full items-center justify-center rounded-full bg-brand px-4 py-3.5 text-sm font-semibold text-onyx hover:bg-[#FF7A7B]"
-          >
-            Prendre rendez-vous
-          </a>
+          </div>
         </div>
       </div>
     </header>
