@@ -1250,3 +1250,10 @@
   50% { transform: perspective(1400px) rotateX(-2deg) rotateY(4deg); }
 }
 @media (prefers-reduced-motion: reduce) { .mv-float { animation: none; } .tilt3d { transition: none; } }
+
+/* Héros menu digital : léger flottement 3D */
+.hero-phone { animation: hero-phone 9s ease-in-out infinite; transform-style: preserve-3d; }
+.hero-qr { animation: hero-qr 7s ease-in-out infinite; }
+@keyframes hero-phone { 0%,100% { transform: perspective(1400px) rotateY(-9deg) rotateX(4deg) translateY(0); } 50% { transform: perspective(1400px) rotateY(-3deg) rotateX(1deg) translateY(-8px); } }
+@keyframes hero-qr { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-10px) rotate(-2deg); } }
+@media (prefers-reduced-motion: reduce) { .hero-phone, .hero-qr { animation: none; } }

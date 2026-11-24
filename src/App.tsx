@@ -3053,7 +3053,7 @@ type OfferPage = {
 const offerPages: Record<string, OfferPage> = {
   menu: {
     eyebrow: "Menu digital & QR codes",
-    title: ["Menu", "digital."],
+    title: ["Menu", "digital"],
     lead: "Vos clients scannent un QR code et lisent votre carte sur leur téléphone. Un plat change ? Vous le modifiez en un clic, c'est en ligne tout de suite.",
     includedEyebrow: "Le menu digital",
     includedTitle: ["Ce qui est", "inclus."],
@@ -3159,63 +3159,85 @@ const offerPages: Record<string, OfferPage> = {
   },
 };
 
-// Maquette : téléphone avec une carte de café.
+// Maquette : iPhone avec la carte en ligne d'un café-bistrot.
 function PhoneMenuMockup() {
-  const items = [
-    ["Brunch du week-end", "Œufs, avocat, pain au levain", "18,50 €"],
-    ["Tartine avocat", "Citron, graines, piment doux", "9,50 €"],
-    ["Granola maison", "Yaourt grec, fruits de saison", "7,00 €"],
-    ["Cookie du jour", "Chocolat noir, fleur de sel", "3,20 €"],
+  const items: [string, string, string, string, string?][] = [
+    ["salmon", "Pavé de saumon", "Purée maison, asperges", "14,50 €"],
+    ["salad", "Salade du marché", "Feta, tomates, noix", "11,00 €", "Végé"],
+    ["burger", "Burger du Comptoir", "Cheddar affiné, oignons confits", "16,00 €"],
+    ["cake", "Fondant chocolat", "Framboises fraîches", "7,50 €"],
   ];
   return (
-    <div aria-hidden="true" className="relative mx-auto w-[260px] sm:w-[290px]">
-      <div className="absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(233,68,69,0.35),transparent)] blur-2xl" />
-      <div className="rounded-[44px] bg-[#0e0d10] p-2.5 shadow-[0_40px_90px_rgba(14,13,16,0.35)] ring-1 ring-black/10">
-        <div className="relative overflow-hidden rounded-[36px] bg-[#fbf8f4]">
-          <div className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-[#0e0d10]" />
-          <div className="bg-[#e94445] px-5 pb-5 pt-10 text-center text-white">
-            <p className="text-[19px] font-extrabold tracking-[-0.03em]">Le Comptoir Rose</p>
-            <p className="mt-1 text-[10px] font-semibold text-white/80">Café · brunch · Toulouse</p>
-            <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[9px] font-bold text-[#1f7a43]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#22a35a]" /> Ouvert · 8 h – 16 h
-            </span>
-          </div>
-          <div className="flex gap-1.5 px-4 pt-3">
-            {["Brunch", "Boissons", "Desserts"].map((tab, i) => (
-              <span key={tab} className={`rounded-full px-2.5 py-1 text-[9px] font-bold ${i === 0 ? "bg-[#0e0d10] text-white" : "bg-[#0e0d10]/[0.06] text-[#0e0d10]/70"}`}>
-                {tab}
-              </span>
-            ))}
-          </div>
-          <div className="px-4 pb-6 pt-2">
-            <div className="mt-2 flex items-center gap-2">
-              <span className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#e94445]">Plat du jour</span>
-              <span className="h-px flex-1 bg-[#e94445]/30" />
-            </div>
-            <div className="mt-2 overflow-hidden rounded-[14px]">
-              <img src={cafePhoto} alt="" className="h-[86px] w-full object-cover" />
-            </div>
-            {items.map(([name, desc, price]) => (
-              <div key={name} className="flex items-start justify-between gap-3 border-b border-dashed border-[#0e0d10]/10 py-2.5">
-                <div>
-                  <p className="text-[11px] font-bold text-[#0e0d10]">{name}</p>
-                  <p className="mt-0.5 text-[9px] text-[#0e0d10]/55">{desc}</p>
-                </div>
-                <p className="text-[11px] font-extrabold text-[#0e0d10]">{price}</p>
+    <div aria-hidden="true" className="hero-phone relative mx-auto w-[300px]">
+      <div className="absolute -inset-12 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(233,68,69,0.32),transparent)] blur-2xl" />
+      {/* cadre titane */}
+      <div className="relative rounded-[50px] bg-[linear-gradient(135deg,#9a989d_0%,#3c3b3f_16%,#1d1c1f_50%,#47454a_84%,#a3a1a6_100%)] p-[5px] shadow-[0_50px_100px_rgba(14,13,16,0.38),0_12px_30px_rgba(14,13,16,0.22)]">
+        <span className="absolute -left-[3px] top-[110px] h-[30px] w-[3px] rounded-l bg-[#4a484d]" />
+        <span className="absolute -left-[3px] top-[155px] h-[52px] w-[3px] rounded-l bg-[#4a484d]" />
+        <span className="absolute -right-[3px] top-[140px] h-[76px] w-[3px] rounded-r bg-[#4a484d]" />
+        <div className="rounded-[45px] bg-black p-[4px]">
+          <div className="relative overflow-hidden rounded-[41px] bg-[#f2f2f7]" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif' }}>
+            {/* photo de couverture */}
+            <div className="relative h-[150px]">
+              <img src={cafePhoto} alt="" className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0)_45%,rgba(0,0,0,0.15)_100%)]" />
+              <div className="absolute left-1/2 top-[10px] h-[24px] w-[84px] -translate-x-1/2 rounded-full bg-black" />
+              <div className="absolute inset-x-0 top-[12px] flex justify-between px-6 text-[11px] font-semibold text-white">
+                <span>9:41</span>
+                <span className="flex items-center gap-1">
+                  <svg width="15" height="10" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1" /><rect x="5" y="5.5" width="3" height="6.5" rx="1" /><rect x="10" y="3" width="3" height="9" rx="1" /><rect x="15" y="0" width="3" height="12" rx="1" /></svg>
+                  <svg width="22" height="10" viewBox="0 0 27 12"><rect x="0.5" y="0.5" width="22" height="11" rx="3.2" fill="none" stroke="#fff" strokeOpacity="0.5" /><rect x="2" y="2" width="17" height="8" rx="2" fill="#fff" /></svg>
+                </span>
               </div>
-            ))}
+            </div>
+            {/* en-tête */}
+            <div className="relative -mt-7 px-4">
+              <div className="rounded-[20px] bg-white p-3.5 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+                <div className="flex items-center gap-3">
+                  <div className="grid h-11 w-11 shrink-0 place-items-center rounded-[13px] bg-[linear-gradient(145deg,#f26a5c,#e94445_55%,#b8302f)] font-serif text-[20px] font-bold italic text-white shadow-[0_4px_10px_rgba(233,68,69,0.35)]">C</div>
+                  <div className="min-w-0">
+                    <p className="text-[15px] font-bold leading-tight tracking-[-0.02em] text-[#111]">Le Comptoir Rose</p>
+                    <p className="mt-0.5 flex items-center gap-1.5 text-[10px] font-semibold text-[#1f8a3b]">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#34c759]" /> Ouvert · jusqu'à 23 h
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* onglets */}
+            <div className="flex gap-1.5 px-4 pt-3">
+              {["Plats", "Entrées", "Desserts", "Vins"].map((tab, i) => (
+                <span key={tab} className={`rounded-full px-3 py-1.5 text-[10px] font-semibold ${i === 0 ? "bg-[#e94445] text-white" : "bg-white text-[#333]"}`}>{tab}</span>
+              ))}
+            </div>
+            {/* plats */}
+            <div className="mx-4 mb-7 mt-3 overflow-hidden rounded-[18px] bg-white">
+              {items.map(([img, name, desc, price, tag], i) => (
+                <div key={name} className={`flex items-center gap-3 px-3 py-2.5 ${i ? "border-t border-black/[0.06]" : ""}`}>
+                  <div className="h-[46px] w-[46px] shrink-0 rounded-[12px] bg-cover bg-center" style={{ backgroundImage: `url(/menu/${img}.webp)` }} />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-[12px] font-semibold tracking-[-0.01em] text-[#111]">{name}</p>
+                    <p className="mt-0.5 truncate text-[10px] text-[#8a8a8e]">{desc}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[12px] font-bold text-[#111]">{price}</p>
+                    {tag && <span className="mt-1 inline-block rounded-full bg-[#e8f6ea] px-1.5 py-0.5 text-[8px] font-bold text-[#1f8a3b]">{tag}</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="absolute bottom-[7px] left-1/2 h-[4px] w-[110px] -translate-x-1/2 rounded-full bg-black/80" />
           </div>
         </div>
       </div>
-      <div className="absolute -left-12 bottom-14 hidden rounded-[16px] bg-white p-2.5 shadow-[0_20px_50px_rgba(14,13,16,0.2)] sm:block">
-        <svg viewBox="0 0 21 21" className="h-16 w-16 text-[#0e0d10]" shapeRendering="crispEdges">
-          {[
-            "M0 0h7v7H0zM14 0h7v7h-7zM0 14h7v7H0z",
-          ].map((d) => <path key={d} d={d} fill="currentColor" />)}
-          <path d="M1 1h5v5H1zM15 1h5v5h-5zM1 15h5v5H1z" fill="#fff" />
-          <path d="M2 2h3v3H2zM16 2h3v3h-3zM2 16h3v3H2zM9 1h2v2H9zM8 4h2v2H8zM11 5h2v2h-2zM9 8h3v2H9zM14 9h2v2h-2zM17 8h3v2h-3zM8 12h2v2H8zM12 12h2v3h-2zM15 13h2v2h-2zM18 12h2v2h-2zM9 16h2v2H9zM12 17h3v2h-3zM16 16h2v2h-2zM18 18h2v2h-2zM1 9h2v2H1zM4 8h2v3H4z" fill="currentColor" />
+      {/* QR code posé à côté */}
+      <div className="hero-qr absolute -left-[104px] bottom-[60px] hidden w-[118px] rounded-[20px] bg-white p-3 text-center shadow-[0_24px_60px_rgba(14,13,16,0.22)] sm:block">
+        <svg viewBox="-1 -1 23 23" className="mx-auto h-[86px] w-[86px]" shapeRendering="crispEdges">
+          <path d="M0 0h7v7H0zM1 1v5h5V1zM2 2h3v3H2zM14 0h7v7h-7zM15 1v5h5V1zM16 2h3v3h-3zM0 14h7v7H0zM1 15v5h5v-5zM2 16h3v3H2z" fill="#111" fillRule="evenodd" />
+          <path d="M9 1h2v2H9zM8 4h2v2H8zM11 5h2v2h-2zM9 8h3v2H9zM14 9h2v2h-2zM17 8h3v2h-3zM8 12h2v2H8zM12 12h2v3h-2zM15 13h2v2h-2zM18 12h2v2h-2zM9 16h2v2H9zM12 17h3v2h-3zM16 16h2v2h-2zM18 18h2v2h-2zM1 9h2v2H1zM4 8h2v3H4zM11 10h1v2h-1zM19 15h2v2h-2z" fill="#111" />
         </svg>
-        <p className="mt-1 text-center text-[9px] font-bold text-[#e94445]">Scannez-moi</p>
+        <p className="mt-2 text-[11px] font-bold tracking-[-0.01em] text-[#111]">Scannez la carte</p>
+        <p className="text-[9px] font-medium text-[#8a8a8e]">Sans application</p>
       </div>
     </div>
   );
