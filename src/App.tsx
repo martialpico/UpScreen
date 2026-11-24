@@ -3391,7 +3391,7 @@ function ScrollProcess({
 
   return (
     <section ref={sectionRef} className="relative" style={{ height: `calc(100dvh + ${Math.round(distance * 1.1)}px)` }}>
-      <div className="sticky top-0 flex h-[100dvh] flex-col justify-center overflow-hidden pb-6 pt-24">
+      <div className="sticky top-0 flex h-[100dvh] flex-col justify-start overflow-hidden pb-6 pt-[92px] sm:pt-[100px]">
         <div className="offer-process-head mx-auto w-full max-w-[1160px] px-5 sm:px-8">
           <OfferHeading eyebrow={page.processEyebrow} title={page.processTitle} lead={page.processLead} center />
         </div>
@@ -3553,7 +3553,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
 
       <div className="relative">
         {/* Hero */}
-        <section className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-5 pb-12 pt-12 sm:px-8 md:pt-16 lg:grid-cols-[1.05fr_1fr] lg:pb-16">
+        <section className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-5 pb-6 pt-12 sm:px-8 md:pt-16 lg:grid-cols-[1.05fr_1fr] lg:pb-8">
           <div>
             <p className="scroll-reveal flex items-center gap-3 font-mono text-[12px] font-semibold uppercase tracking-[0.22em] text-[#e94445]">
               <span aria-hidden="true" className="h-px w-10 bg-[#e94445]" />
