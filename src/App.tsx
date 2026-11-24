@@ -3346,6 +3346,8 @@ function ScrollProcess({
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [distance, setDistance] = useState(0);
+  const [panelHeight, setPanelHeight] = useState(0);
+  const panelRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const steps = page.process;
 
@@ -3361,13 +3363,16 @@ function ScrollProcess({
       if (!first || !last) return;
       const span = last.offsetLeft + last.offsetWidth / 2 - (first.offsetLeft + first.offsetWidth / 2);
       setDistance(span);
+      if (panelRef.current) setPanelHeight(panelRef.current.offsetHeight);
       return span;
     };
     let span = measure() ?? 0;
     const update = () => {
       frame = 0;
       const rect = section.getBoundingClientRect();
-      const total = section.offsetHeight - root.clientHeight;
+      // Le panneau reste collé en haut pendant que la section défile :
+      // la course correspond à la hauteur de la section moins celle du panneau.
+      const total = section.offsetHeight - (panelRef.current?.offsetHeight ?? root.clientHeight);
       const progress = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
       track.style.transform = `translate3d(${(-progress * span).toFixed(1)}px,0,0)`;
       setActive(Math.round(progress * (steps.length - 1)));
@@ -3390,8 +3395,12 @@ function ScrollProcess({
   }, [scroller, steps.length]);
 
   return (
-    <section ref={sectionRef} className="relative" style={{ height: `calc(100dvh + ${Math.round(distance * 1.1)}px)` }}>
-      <div className="sticky top-0 flex h-[100dvh] flex-col justify-start overflow-hidden pb-6 pt-[92px] sm:pt-[100px]">
+    <section
+      ref={sectionRef}
+      className="relative"
+      style={{ height: panelHeight ? `${Math.round(panelHeight + distance * 1.1)}px` : `calc(100dvh + ${Math.round(distance * 1.1)}px)` }}
+    >
+      <div ref={panelRef} className="sticky top-0 flex max-h-[100dvh] flex-col justify-start overflow-hidden pb-6 pt-[92px] sm:pt-[100px]">
         <div className="offer-process-head mx-auto w-full max-w-[1160px] px-5 sm:px-8">
           <OfferHeading eyebrow={page.processEyebrow} title={page.processTitle} lead={page.processLead} center />
         </div>
@@ -3585,7 +3594,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
 
         {/* Ce qui est inclus (pas pour la vidéo) */}
         {offer.id !== "motion" && (
-        <section className="mx-auto w-full max-w-[1160px] px-5 py-12 sm:px-8 lg:py-16">
+        <section className={`mx-auto w-full max-w-[1160px] px-5 pb-12 sm:px-8 lg:pb-16 ${page.processMode === "scroll" ? "pt-6 lg:pt-8" : "pt-12 lg:pt-16"}`}>
           <OfferHeading eyebrow={page.includedEyebrow} title={page.includedTitle} />
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {page.feature && (
@@ -3634,7 +3643,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
 
         {/* Réalisations vidéo */}
         {offer.videos && (
-          <section className="mx-auto w-full max-w-[1160px] px-5 py-12 sm:px-8 lg:py-16">
+          <section className="mx-auto w-full max-w-[1160px] px-5 pb-12 pt-6 sm:px-8 lg:pb-16 lg:pt-8">
             <OfferHeading eyebrow="Réalisations" title={["Quelques vidéos", "qu'on a réalisées."]} />
             <div className="modal-videos offer-videos dark-island mt-12 grid gap-5 md:grid-cols-2">
               {motionVideos.map((video) => (
