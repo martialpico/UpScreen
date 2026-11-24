@@ -3028,7 +3028,7 @@ type OfferPage = {
   processTitle: [string, string];
   processLead: string;
   processMode: "grid" | "scroll";
-  process: { title: string; text: string; icon?: OfferIcon }[];
+  process: { title: string; text: string; icon?: OfferIcon; image?: string }[];
 };
 
 const offerPages: Record<string, OfferPage> = {
@@ -3105,12 +3105,12 @@ const offerPages: Record<string, OfferPage> = {
     processLead: "Vous validez chaque étape : pas de surprise, pas de mauvaise direction.",
     processMode: "scroll",
     process: [
-      { icon: "palette", title: "Direction artistique", text: "Couleurs, typographies, style d'illustration : on définit l'univers de votre vidéo avant toute production." },
-      { icon: "pen", title: "Script", text: "On écrit ensemble le message, le ton et le déroulé. Chaque seconde a une raison d'être." },
-      { icon: "layers", title: "Storyboard", text: "Votre vidéo découpée image par image : vous validez le rythme et chaque plan avant l'animation." },
-      { icon: "film", title: "Animation", text: "Chaque seconde est animée à la main. Aucun template, aucun élément générique." },
-      { icon: "music", title: "Sound design", text: "Voix off, musique et effets sonores : le son fait la moitié de l'impact d'une vidéo." },
-      { icon: "send", title: "Livraison", text: "En HD ou 4K, déclinée en 16:9, vertical et carré selon vos usages." },
+      { icon: "palette", image: `${import.meta.env.BASE_URL}process/m0.webp`, title: "Direction artistique", text: "Couleurs, typographies, style d'illustration : on définit l'univers de votre vidéo avant toute production." },
+      { icon: "pen", image: `${import.meta.env.BASE_URL}process/m1.webp`, title: "Script", text: "On écrit ensemble le message, le ton et le déroulé. Chaque seconde a une raison d'être." },
+      { icon: "layers", image: `${import.meta.env.BASE_URL}process/m2.webp`, title: "Storyboard", text: "Votre vidéo découpée image par image : vous validez le rythme et chaque plan avant l'animation." },
+      { icon: "film", image: `${import.meta.env.BASE_URL}process/m3.webp`, title: "Animation", text: "Chaque seconde est animée à la main. Aucun template, aucun élément générique." },
+      { icon: "music", image: `${import.meta.env.BASE_URL}process/m4.webp`, title: "Sound design", text: "Voix off, musique et effets sonores : le son fait la moitié de l'impact d'une vidéo." },
+      { icon: "send", image: `${import.meta.env.BASE_URL}process/m5.webp`, title: "Livraison", text: "En HD ou 4K, déclinée en 16:9, vertical et carré selon vos usages." },
     ],
   },
   brand: {
@@ -3409,20 +3409,45 @@ function ScrollProcess({
               return (
                 <article
                   key={step.title}
-                  className={`flex h-[min(420px,52dvh)] min-h-[330px] w-[min(480px,84vw)] shrink-0 flex-col rounded-[30px] border p-7 transition-[background-color,border-color,box-shadow,transform] duration-500 sm:p-10 ${
+                  className={`flex w-[min(480px,84vw)] shrink-0 flex-col rounded-[30px] border transition-[background-color,border-color,box-shadow,transform] duration-500 ${
+                    step.image ? "p-4 sm:p-5" : "h-[min(420px,52dvh)] min-h-[330px] p-7 sm:p-10"
+                  } ${
                     isActive
                       ? "scale-[1.02] border-[#e94445]/50 bg-[linear-gradient(160deg,#fff_0%,#ffe9e9_100%)] shadow-[0_24px_60px_rgba(233,68,69,0.28)]"
                       : "border-[#0e0d10]/[0.08] bg-white shadow-[0_14px_40px_rgba(14,13,16,0.06)]"
                   }`}
                 >
-                  <div className="flex items-start justify-between">
-                    <div className={`transition-transform duration-500 ${isActive ? "scale-[1.35]" : "scale-125"}`} style={{ transformOrigin: "left top" }}>
-                      {step.icon && <OfferIconBadge name={step.icon} />}
-                    </div>
-                    <span className="offer-outline-number text-[64px] font-extrabold leading-[0.8] tracking-[-0.04em] sm:text-[80px]">{String(index + 1).padStart(2, "0")}</span>
-                  </div>
-                  <h4 className="mt-auto text-[30px] font-extrabold leading-[1.02] tracking-[-0.045em] text-[#0e0d10] sm:text-[40px]">{step.title}</h4>
-                  <p className="mt-3 text-[15px] leading-[1.6] text-[#0e0d10]/65 sm:text-[17px]">{step.text}</p>
+                  {step.image ? (
+                    <>
+                      <div className="overflow-hidden rounded-[20px] bg-[#f4f2ef] ring-1 ring-[#0e0d10]/[0.06]">
+                        <img
+                          src={step.image}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          className={`aspect-[16/9] max-h-[30dvh] w-full object-cover transition-transform duration-700 ${isActive ? "scale-[1.04]" : ""}`}
+                        />
+                      </div>
+                      <div className="px-2 pb-2 pt-5 sm:px-3">
+                        <div className="flex items-end justify-between gap-4">
+                          <h4 className="text-[26px] font-extrabold leading-[1.02] tracking-[-0.045em] text-[#0e0d10] sm:text-[32px]">{step.title}</h4>
+                          <span className="offer-outline-number shrink-0 text-[44px] font-extrabold leading-[0.8] tracking-[-0.04em] sm:text-[52px]">{String(index + 1).padStart(2, "0")}</span>
+                        </div>
+                        <p className="mt-3 text-[15px] leading-[1.6] text-[#0e0d10]/65 sm:text-[16px]">{step.text}</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-start justify-between">
+                        <div className={`transition-transform duration-500 ${isActive ? "scale-[1.35]" : "scale-125"}`} style={{ transformOrigin: "left top" }}>
+                          {step.icon && <OfferIconBadge name={step.icon} />}
+                        </div>
+                        <span className="offer-outline-number text-[64px] font-extrabold leading-[0.8] tracking-[-0.04em] sm:text-[80px]">{String(index + 1).padStart(2, "0")}</span>
+                      </div>
+                      <h4 className="mt-auto text-[30px] font-extrabold leading-[1.02] tracking-[-0.045em] text-[#0e0d10] sm:text-[40px]">{step.title}</h4>
+                      <p className="mt-3 text-[15px] leading-[1.6] text-[#0e0d10]/65 sm:text-[17px]">{step.text}</p>
+                    </>
+                  )}
                 </article>
               );
             })}
