@@ -2958,7 +2958,7 @@ function CustomOfferCard({ offer, index, onOpen }: { offer: CustomOffer; index: 
           className="absolute inset-0 -z-20 h-full w-full object-cover transition duration-700 group-hover:scale-105"
         />
       )}
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(20,4,5,0.25)_0%,rgba(20,4,5,0)_35%,rgba(20,4,5,0.55)_62%,rgba(12,3,4,0.92)_100%)]" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(10,10,11,0.2)_0%,rgba(10,10,11,0)_30%,rgba(10,10,11,0.55)_60%,rgba(10,10,11,0.92)_100%)]" />
       <span className="text-[88px] font-extrabold leading-[0.85] tracking-[-0.06em] text-white sm:text-[104px]">
         0{index + 1}
       </span>
