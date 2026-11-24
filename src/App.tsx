@@ -101,7 +101,7 @@ const siteOffers: SiteOffer[] = [
 type PlanCell = true | false | string;
 const subscriptions = [
   { name: "Visibilité", price: "99", engagement: "Aucun" },
-  { name: "Premium", price: "249", engagement: "2 mois, puis sans engagement", featured: true },
+  { name: "Premium", price: "249", engagement: "Aucun", featured: true },
 ] as const;
 
 // Une ligne simple, ou [intitulé, détail] pour une ligne dépliable.
@@ -238,7 +238,7 @@ const faqs = [
   {
     question: "Comment fonctionnent l'hébergement et les abonnements ?",
     answer:
-      "Le nom de domaine et l'hébergement sont inclus la 1re année, puis facturés 49 €/an. Les abonnements sont en option : Visibilité à 99 €/mois sans engagement, Premium à 249 €/mois avec 2 mois d'engagement. Votre site et votre nom de domaine vous appartiennent : si vous arrêtez, le transfert est gratuit.",
+      "Le nom de domaine et l'hébergement sont inclus la 1re année, puis facturés 49 €/an. Les abonnements sont en option : Visibilité à 99 €/mois et Premium à 249 €/mois, tous les deux sans engagement. Votre site et votre nom de domaine vous appartiennent : si vous arrêtez, le transfert est gratuit.",
   },
   {
     question: "Proposez-vous d'autres services ?",
