@@ -1231,3 +1231,22 @@
 .mv-qr { display: block; width: 100%; height: 100%; }
 .mv-star { color: #ffb400; }
 .mv-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+
+/* Cartes « Inclus » : légère 3D */
+.offer-tilt-grid { perspective: 1400px; }
+.tilt3d { transition: rotate 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.5s; will-change: rotate; }
+.tilt3d .mv-center, .tilt3d .mv-feature .mv-in { translate: calc(var(--px, 0) * 16px) calc(var(--py, 0) * 12px); transition: translate 0.5s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.mv-float { animation: mv-float 7s ease-in-out infinite; transform-style: preserve-3d; }
+.mv-float-lg { animation-duration: 9s; }
+.offer-tilt-grid > :nth-child(2n) .mv-float { animation-delay: -2.3s; }
+.offer-tilt-grid > :nth-child(3n) .mv-float { animation-delay: -4.6s; }
+@keyframes mv-float {
+  0%, 100% { transform: perspective(700px) rotateX(5deg) rotateY(-7deg) translateY(0); }
+  50% { transform: perspective(700px) rotateX(-3deg) rotateY(7deg) translateY(-4px); }
+}
+.mv-float-lg { animation-name: mv-float-lg; }
+@keyframes mv-float-lg {
+  0%, 100% { transform: perspective(1400px) rotateX(3deg) rotateY(-4deg); }
+  50% { transform: perspective(1400px) rotateX(-2deg) rotateY(4deg); }
+}
+@media (prefers-reduced-motion: reduce) { .mv-float { animation: none; } .tilt3d { transition: none; } }

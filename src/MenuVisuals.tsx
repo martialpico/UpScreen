@@ -290,27 +290,252 @@ function V7() {
   );
 }
 
-const VISUALS = [V0, V1, V2, V3, V4, V5, V6];
+/* =================== WEB APP SUR MESURE =================== */
+const GREEN = "#1f9d55";
+const tile = (bg: string, icon: ComponentChildren, label: string) => (
+  <div style={{ textAlign: "center" }}>
+    <div style={{ width: "3.6em", height: "3.6em", margin: "0 auto", borderRadius: "1em", background: bg, display: "grid", placeItems: "center", color: "#fff", boxShadow: "0 0.3em 0.7em rgba(0,0,0,0.18)" }}>{icon}</div>
+    <div style={{ fontSize: "0.72em", fontWeight: 600, marginTop: "0.5em", color: "#333" }}>{label}</div>
+  </div>
+);
+const ic = (d: string) => <svg width="1.7em" height="1.7em" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>;
+const ICONS = {
+  cal: "M4 6h16v14H4zM4 10h16M8 3v4M16 3v4",
+  box: "M3 8l9-5 9 5-9 5-9-5zM3 8v8l9 5 9-5V8M12 13v8",
+  doc: "M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6",
+  cash: "M3 7h18v10H3zM12 12m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0-5 0",
+  users: "M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M17 11a3 3 0 1 0 0-6M21 20c0-2.6-1.6-4.8-4-5.6",
+  chart: "M4 20V10M10 20V4M16 20v-7M22 20H2",
+  bank: "M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18",
+};
 
-export function MenuVisual({ index }: { index: number }) {
-  const V = VISUALS[index];
-  if (!V) return null;
+/* W0 — Tout au même endroit */
+function W0() {
   return (
-    <div className="mv">
-      <div className="mv-in">
-        <div className="mv-center">
-          <V />
+    <div style={{ ...card, width: "25em", padding: "1.5em 1.6em" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", rowGap: "1.1em" }}>
+        {tile(RED, ic(ICONS.cal), "Agenda")}
+        {tile("#2b2b2e", ic(ICONS.box), "Stocks")}
+        {tile("#3b6fd8", ic(ICONS.doc), "Devis")}
+        {tile(GREEN, ic(ICONS.cash), "Caisse")}
+        {tile("#c8873a", ic(ICONS.users), "Clients")}
+        {tile("#7a4bd6", ic(ICONS.chart), "Chiffres")}
+      </div>
+    </div>
+  );
+}
+
+/* W1 — Reliée à vos logiciels */
+function W1() {
+  const node = (x: string, y: string, bg: string, d: string, label: string) => (
+    <div className="mv-a" style={{ left: x, top: y, transform: "translate(-50%,-50%)", textAlign: "center" }}>
+      <div style={{ width: "3.4em", height: "3.4em", borderRadius: "0.95em", background: "#fff", display: "grid", placeItems: "center", boxShadow: "0 0.3em 0.8em rgba(0,0,0,0.3), 0 1.4em 2.6em rgba(0,0,0,0.4)" }}>
+        <svg width="1.6em" height="1.6em" viewBox="0 0 24 24" fill="none" stroke={bg} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>
+      </div>
+      <div style={{ fontSize: "0.7em", fontWeight: 600, color: "rgba(255,255,255,0.85)", marginTop: "0.45em" }}>{label}</div>
+    </div>
+  );
+  return (
+    <div style={{ position: "relative", width: "28em", height: "17em" }}>
+      <svg className="mv-a" style={{ inset: 0, width: "100%", height: "100%" }} viewBox="0 0 280 170">
+        {[[40, 40], [240, 40], [40, 130], [240, 130]].map(([x, y], i) => (
+          <path key={i} d={`M140 85 L${x} ${y}`} stroke="rgba(255,255,255,0.45)" strokeWidth="1.6" strokeDasharray="4 5" />
+        ))}
+      </svg>
+      {node("14%", "23%", RED, ICONS.cal, "Agenda")}
+      {node("86%", "23%", GREEN, ICONS.doc, "Tableur")}
+      {node("14%", "72%", "#2b2b2e", ICONS.cash, "Caisse")}
+      {node("86%", "72%", "#3b6fd8", ICONS.bank, "Banque")}
+      <div className="mv-a" style={{ left: "50%", top: "50%", transform: "translate(-50%,-50%)", width: "5.6em", height: "5.6em", borderRadius: "1.5em", background: `linear-gradient(140deg,#f0595a,${RED} 50%,#b52a2c)`, display: "grid", placeItems: "center", boxShadow: "0 0 0 0.6em rgba(233,68,69,0.18), 0 1.6em 3em rgba(0,0,0,0.5)" }}>
+        <svg width="2.4em" height="2.4em" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" /></svg>
+      </div>
+    </div>
+  );
+}
+
+/* mini tableau de bord réutilisé */
+function MiniDash({ compact = false }: { compact?: boolean }) {
+  const bars = [40, 62, 48, 75, 58, 90, 70];
+  return (
+    <div style={{ height: "100%", background: "#f6f6f8", padding: compact ? "0.7em" : "0.9em", display: "flex", flexDirection: "column", gap: "0.6em" }}>
+      <div className="mv-row" style={{ gap: "0.5em" }}>
+        <div style={{ flex: 1, background: "#fff", borderRadius: "0.6em", padding: "0.55em 0.65em" }}>
+          <div className="mv-sub" style={{ fontSize: "0.5em" }}>Ventes</div>
+          <div className="mv-h" style={{ fontSize: "0.85em", marginTop: "0.15em" }}>3 240 €</div>
+        </div>
+        {!compact && (
+          <div style={{ flex: 1, background: "#fff", borderRadius: "0.6em", padding: "0.55em 0.65em" }}>
+            <div className="mv-sub" style={{ fontSize: "0.5em" }}>Commandes</div>
+            <div className="mv-h" style={{ fontSize: "0.85em", marginTop: "0.15em" }}>48</div>
+          </div>
+        )}
+      </div>
+      <div style={{ flex: 1, background: "#fff", borderRadius: "0.6em", padding: "0.6em", display: "flex", alignItems: "flex-end", gap: "0.35em" }}>
+        {bars.map((h, i) => <div key={i} style={{ flex: 1, height: `${h}%`, borderRadius: "0.25em", background: i === 5 ? RED : "#e4e4ea" }} />)}
+      </div>
+    </div>
+  );
+}
+
+/* W2 — Sur ordinateur et téléphone */
+function W2() {
+  return (
+    <div style={{ position: "relative", width: "26em", height: "15.5em" }}>
+      <div className="mv-a" style={{ left: 0, top: 0, width: "21em", height: "13.4em", borderRadius: "0.9em", background: "#1a1a1c", padding: "0.45em", boxShadow: "0 2em 4em rgba(0,0,0,0.55), inset 0 0 0 0.1em #444" }}>
+        <div style={{ height: "100%", borderRadius: "0.5em", overflow: "hidden" }}><MiniDash /></div>
+      </div>
+      <div className="mv-a" style={{ left: "-1.2em", top: "13.2em", width: "23.4em", height: "0.8em", borderRadius: "0 0 0.8em 0.8em", background: "linear-gradient(180deg,#d7d7dc,#9a9aa0)" }} />
+      <div className="mv-a" style={{ right: 0, top: "3.6em", width: "6.4em", height: "11.8em", borderRadius: "1.1em", background: "#111", padding: "0.25em", boxShadow: "0 1.6em 3em rgba(0,0,0,0.6), inset 0 0 0 0.1em #555" }}>
+        <div style={{ height: "100%", borderRadius: "0.9em", overflow: "hidden", fontSize: "0.82em", paddingTop: "0.6em", background: "#f6f6f8" }}><MiniDash compact /></div>
+      </div>
+    </div>
+  );
+}
+
+/* W3 — Vos chiffres en clair */
+function W3() {
+  const pts = [62, 55, 58, 44, 47, 33, 36, 22, 14];
+  const d = pts.map((y, i) => `${i ? "L" : "M"}${i * 25} ${y}`).join(" ");
+  return (
+    <div style={{ ...card, width: "25em", padding: "1.4em 1.6em" }}>
+      <div className="mv-sub" style={{ fontSize: "0.8em" }}>Chiffre d'affaires du mois</div>
+      <div className="mv-row" style={{ gap: "0.6em", marginTop: "0.25em", alignItems: "baseline" }}>
+        <span className="mv-h" style={{ fontSize: "2.3em" }}>12 480 €</span>
+        <span className="mv-chip" style={{ fontSize: "0.75em", background: "#e6f6ec", color: GREEN }}>+18 %</span>
+      </div>
+      <svg style={{ display: "block", width: "100%", height: "5em", marginTop: "0.9em" }} viewBox="0 0 200 70" preserveAspectRatio="none">
+        <defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor={RED} stopOpacity="0.25" /><stop offset="1" stopColor={RED} stopOpacity="0" /></linearGradient></defs>
+        <path d={`${d} L200 70 L0 70Z`} fill="url(#wg)" />
+        <path d={d} fill="none" stroke={RED} strokeWidth="2.4" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+      </svg>
+    </div>
+  );
+}
+
+/* W4 — Devis et factures */
+function W4() {
+  const row = (l: string, r: string) => (
+    <div className="mv-row" style={{ justifyContent: "space-between", fontSize: "0.82em", marginTop: "0.55em" }}><span style={{ color: "#555" }}>{l}</span><span style={{ fontWeight: 600 }}>{r}</span></div>
+  );
+  return (
+    <div style={{ ...card, width: "22em", padding: "1.4em 1.5em" }}>
+      <div className="mv-row" style={{ justifyContent: "space-between" }}>
+        <span className="mv-h" style={{ fontSize: "1.1em" }}>Devis n° 0142</span>
+        <span className="mv-chip" style={{ fontSize: "0.68em", background: "#e6f6ec", color: GREEN }}>✓ Envoyé</span>
+      </div>
+      {row("Pose cuisine", "980 €")}
+      {row("Fournitures", "260 €")}
+      <div style={{ height: "0.06em", background: "#e5e5ea", margin: "0.8em 0 0.2em" }} />
+      <div className="mv-row" style={{ justifyContent: "space-between" }}>
+        <span className="mv-h" style={{ fontSize: "0.95em" }}>Total</span>
+        <span className="mv-h" style={{ fontSize: "1.45em" }}>1 240 €</span>
+      </div>
+    </div>
+  );
+}
+
+/* W5 — Stocks et commandes */
+function W5() {
+  const item = (name: string, pct: number, low: boolean) => (
+    <div style={{ marginTop: "0.9em" }}>
+      <div className="mv-row" style={{ justifyContent: "space-between", fontSize: "0.85em" }}>
+        <span style={{ fontWeight: 600 }}>{name}</span>
+        <span style={{ fontWeight: 700, color: low ? RED : GREEN }}>{low ? "Stock bas" : `${pct} %`}</span>
+      </div>
+      <div style={{ height: "0.55em", borderRadius: "1em", background: "#eeeef2", marginTop: "0.4em" }}>
+        <div style={{ width: `${pct}%`, height: "100%", borderRadius: "1em", background: low ? RED : GREEN }} />
+      </div>
+    </div>
+  );
+  return (
+    <div style={{ ...card, width: "24em", padding: "1.2em 1.5em 1.4em" }}>
+      {item("Farine T55", 12, true)}
+      {item("Huile d'olive", 76, false)}
+      {item("Café en grains", 54, false)}
+    </div>
+  );
+}
+
+/* W6 — Réservations et commandes */
+function W6() {
+  const r = (t: string, n: string, p: string, c: string) => (
+    <div className="mv-row" style={{ gap: "0.8em", padding: "0.6em 0", borderTop: "0.06em solid #ececf0" }}>
+      <span className="mv-h" style={{ fontSize: "0.95em", width: "3.2em" }}>{t}</span>
+      <span style={{ flex: 1, fontSize: "0.85em", fontWeight: 600 }}>{n}</span>
+      <span className="mv-chip" style={{ fontSize: "0.68em", background: c + "1f", color: c }}>{p}</span>
+    </div>
+  );
+  return (
+    <div style={{ ...card, width: "24em", padding: "1.2em 1.5em 0.6em" }}>
+      <div className="mv-row" style={{ justifyContent: "space-between", marginBottom: "0.5em" }}>
+        <span className="mv-h" style={{ fontSize: "1.1em" }}>Ce soir</span>
+        <span className="mv-sub" style={{ fontSize: "0.8em" }}>12 couverts</span>
+      </div>
+      {r("19:30", "Martin", "4 pers.", RED)}
+      {r("20:00", "Durand", "2 pers.", "#3b6fd8")}
+      {r("20:45", "Leroy", "6 pers.", GREEN)}
+    </div>
+  );
+}
+
+/* Grande carte — Votre outil, partout */
+function WFeature() {
+  const nav = ["Tableau de bord", "Réservations", "Stocks", "Devis", "Clients"];
+  return (
+    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingBottom: "9em" }}>
+      <div style={{ position: "relative", width: "34em", height: "21em" }}>
+        <div className="mv-a" style={{ left: 0, top: 0, width: "30em", height: "19em", borderRadius: "1em", background: "#1a1a1c", padding: "0.5em", boxShadow: "0 2.4em 5em rgba(0,0,0,0.6), inset 0 0 0 0.1em #444" }}>
+          <div style={{ height: "100%", borderRadius: "0.6em", overflow: "hidden", display: "flex", background: "#f6f6f8" }}>
+            <div style={{ width: "7.4em", background: "#fff", padding: "0.9em 0.7em", borderRight: "0.06em solid #ececf0" }}>
+              <div className="mv-row" style={{ gap: "0.4em", marginBottom: "1em" }}><Logo size={1.4} radius={0.4} /><span className="mv-h" style={{ fontSize: "0.62em" }}>Bellevue</span></div>
+              {nav.map((n, i) => (
+                <div key={n} style={{ fontSize: "0.55em", fontWeight: 600, padding: "0.55em 0.7em", borderRadius: "0.6em", marginTop: "0.25em", background: i === 0 ? "#fff1f0" : "transparent", color: i === 0 ? RED : "#555" }}>{n}</div>
+              ))}
+            </div>
+            <div style={{ flex: 1, fontSize: "1.15em" }}><MiniDash /></div>
+          </div>
+        </div>
+        <div className="mv-a" style={{ right: 0, top: "5em", width: "8.4em", height: "16.4em", borderRadius: "1.4em", background: "#111", padding: "0.3em", boxShadow: "0 2em 4em rgba(0,0,0,0.65), inset 0 0 0 0.1em #555" }}>
+          <div style={{ height: "100%", borderRadius: "1.15em", overflow: "hidden", background: "#fff", padding: "1.3em 0.7em 0" }}>
+            <div className="mv-h" style={{ fontSize: "0.7em" }}>Aujourd'hui</div>
+            {[["Commande fournisseur", RED], ["Rappeler M. Durand", "#3b6fd8"], ["Envoyer devis 0142", GREEN]].map(([t, c]) => (
+              <div key={t} className="mv-row" style={{ gap: "0.4em", marginTop: "0.7em", fontSize: "0.5em", fontWeight: 600 }}>
+                <span style={{ width: "1em", height: "1em", borderRadius: "0.3em", border: `0.15em solid ${c}`, flex: "none" }} />{t}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export function MenuFeatureVisual() {
+const VISUALS: Record<string, () => preact.JSX.Element> = {
+  "menu-0": V0, "menu-1": V1, "menu-2": V2, "menu-3": V3, "menu-4": V4, "menu-5": V5, "menu-6": V6,
+  "webapp-0": W0, "webapp-1": W1, "webapp-2": W2, "webapp-3": W3, "webapp-4": W4, "webapp-5": W5, "webapp-6": W6,
+};
+
+export function OfferVisual({ id }: { id: string }) {
+  const V = VISUALS[id];
+  if (!V) return null;
+  return (
+    <div className="mv">
+      <div className="mv-in">
+        <div className="mv-center">
+          <div className="mv-float"><V /></div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function OfferFeatureVisual({ id }: { id: string }) {
   return (
     <div className="mv-feature">
       <div className="mv-in">
-        <V7 />
+        <div className="mv-float mv-float-lg" style={{ position: "absolute", inset: 0 }}>
+          {id === "webapp" ? <WFeature /> : <V7 />}
+        </div>
       </div>
     </div>
   );

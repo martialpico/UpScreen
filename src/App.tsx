@@ -1,6 +1,6 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { MenuFeatureVisual, MenuVisual } from "./MenuVisuals";
+import { OfferFeatureVisual, OfferVisual } from "./MenuVisuals";
 import {
   LiquidGlassButton,
   LiquidGlassToolbar,
@@ -3016,14 +3016,32 @@ function OfferIconBadge({ name, tone = "dark" }: { name: OfferIcon; tone?: "dark
   );
 }
 
+function tilt3d(e: PointerEvent) {
+  if (e.pointerType !== "mouse") return;
+  const el = e.currentTarget as HTMLElement;
+  const r = el.getBoundingClientRect();
+  const x = (e.clientX - r.left) / r.width - 0.5;
+  const y = (e.clientY - r.top) / r.height - 0.5;
+  const mag = Math.min(1, Math.hypot(x, y) * 2) * 7;
+  el.style.rotate = `${(-y).toFixed(3)} ${x.toFixed(3)} 0 ${mag.toFixed(2)}deg`;
+  el.style.setProperty("--px", x.toFixed(3));
+  el.style.setProperty("--py", y.toFixed(3));
+}
+function untilt3d(e: PointerEvent) {
+  const el = e.currentTarget as HTMLElement;
+  el.style.rotate = "";
+  el.style.setProperty("--px", "0");
+  el.style.setProperty("--py", "0");
+}
+
 type OfferPage = {
   eyebrow: string;
   title: [string, string];
   lead: string;
   includedEyebrow: string;
   includedTitle: [string, string];
-  included: { icon: OfferIcon; title: string; text: string; visual?: number }[];
-  feature?: { title: string; text: string; visual?: boolean };
+  included: { icon: OfferIcon; title: string; text: string; visual?: string }[];
+  feature?: { title: string; text: string; visual?: string };
   highlight?: { big: string; text: string };
   processEyebrow: string;
   processTitle: [string, string];
@@ -3039,15 +3057,15 @@ const offerPages: Record<string, OfferPage> = {
     lead: "Vos clients scannent un QR code et lisent votre carte sur leur téléphone. Un plat change ? Vous le modifiez en un clic, c'est en ligne tout de suite.",
     includedEyebrow: "Le menu digital",
     includedTitle: ["Ce qui est", "inclus."],
-    feature: { title: "Votre carte en ligne", text: "Photos, descriptions, prix et allergènes, lisibles sur tous les téléphones.", visual: true },
+    feature: { title: "Votre carte en ligne", text: "Photos, descriptions, prix et allergènes, lisibles sur tous les téléphones.", visual: "menu" },
     included: [
-      { icon: "palette", title: "À votre image", text: "Vos couleurs, votre logo, votre ambiance.", visual: 0 },
-      { icon: "refresh", title: "Modifiable à tout moment", text: "Plat du jour, prix, rupture : changé en quelques secondes.", visual: 1 },
-      { icon: "leaf", title: "Sans réimpression", text: "Moins de frais, moins de papier.", visual: 2 },
-      { icon: "star", title: "QR code d'avis Google", text: "Vos clients laissent un avis en un geste.", visual: 3 },
-      { icon: "card", title: "Carte de fidélité digitale", text: "Fini les cartes en carton perdues.", visual: 4 },
-      { icon: "qr", title: "QR codes pour vos supports", text: "Tables, vitrine, comptoir, flyers et sacs.", visual: 5 },
-      { icon: "phone", title: "Sans application", text: "Un scan suffit, sur iPhone comme sur Android.", visual: 6 },
+      { icon: "palette", title: "À votre image", text: "Vos couleurs, votre logo, votre ambiance.", visual: "menu-0" },
+      { icon: "refresh", title: "Modifiable à tout moment", text: "Plat du jour, prix, rupture : changé en quelques secondes.", visual: "menu-1" },
+      { icon: "leaf", title: "Sans réimpression", text: "Moins de frais, moins de papier.", visual: "menu-2" },
+      { icon: "star", title: "QR code d'avis Google", text: "Vos clients laissent un avis en un geste.", visual: "menu-3" },
+      { icon: "card", title: "Carte de fidélité digitale", text: "Fini les cartes en carton perdues.", visual: "menu-4" },
+      { icon: "qr", title: "QR codes pour vos supports", text: "Tables, vitrine, comptoir, flyers et sacs.", visual: "menu-5" },
+      { icon: "phone", title: "Sans application", text: "Un scan suffit, sur iPhone comme sur Android.", visual: "menu-6" },
     ],
     highlight: { big: "QR", text: "À vos couleurs, avec votre logo." },
     processEyebrow: "Comment ça marche",
@@ -3067,15 +3085,15 @@ const offerPages: Record<string, OfferPage> = {
     lead: "Un outil à vos couleurs, pensé pour votre commerce : vos devis, vos stocks, vos réservations et vos chiffres réunis au même endroit.",
     includedEyebrow: "Pourquoi sur mesure",
     includedTitle: ["Tous vos outils", "en un seul."],
-    feature: { title: "Votre outil, partout", text: "Au comptoir, en réserve ou chez vous : vos chiffres et vos tâches du jour, toujours à portée de main." },
+    feature: { title: "Votre outil, partout", text: "Au comptoir, en réserve ou chez vous : vos chiffres et vos tâches du jour, toujours à portée de main.", visual: "webapp" },
     included: [
-      { icon: "layers", title: "Tout au même endroit", text: "Un seul écran au lieu de dix fichiers et cinq onglets ouverts." },
-      { icon: "link", title: "Reliée à vos logiciels", text: "Agenda, tableurs, caisse ou banque : les données arrivent toutes seules." },
-      { icon: "phone", title: "Sur ordinateur et téléphone", text: "Au comptoir, en réserve ou chez vous, sans rien installer." },
-      { icon: "chart", title: "Vos chiffres en clair", text: "Tableaux de bord et alertes pour décider plus vite." },
-      { icon: "doc", title: "Devis et factures", text: "Créés depuis votre téléphone, envoyés en un clic." },
-      { icon: "box", title: "Stocks et commandes", text: "Alertes de stock bas et commandes fournisseurs prêtes." },
-      { icon: "calendar", title: "Réservations et commandes", text: "Centralisées et visibles d'un coup d'œil." },
+      { icon: "layers", title: "Tout au même endroit", text: "Un seul écran au lieu de dix fichiers et cinq onglets ouverts.", visual: "webapp-0" },
+      { icon: "link", title: "Reliée à vos logiciels", text: "Agenda, tableurs, caisse ou banque : les données arrivent toutes seules.", visual: "webapp-1" },
+      { icon: "phone", title: "Sur ordinateur et téléphone", text: "Au comptoir, en réserve ou chez vous, sans rien installer.", visual: "webapp-2" },
+      { icon: "chart", title: "Vos chiffres en clair", text: "Tableaux de bord et alertes pour décider plus vite.", visual: "webapp-3" },
+      { icon: "doc", title: "Devis et factures", text: "Créés depuis votre téléphone, envoyés en un clic.", visual: "webapp-4" },
+      { icon: "box", title: "Stocks et commandes", text: "Alertes de stock bas et commandes fournisseurs prêtes.", visual: "webapp-5" },
+      { icon: "calendar", title: "Réservations et commandes", text: "Centralisées et visibles d'un coup d'œil.", visual: "webapp-6" },
     ],
     highlight: { big: "1", text: "seul outil, pensé pour votre façon de travailler." },
     processEyebrow: "Comment ça marche",
@@ -3597,15 +3615,15 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
         {offer.id !== "motion" && (
         <section className={`mx-auto w-full max-w-[1160px] px-5 pb-12 sm:px-8 lg:pb-16 ${page.processMode === "scroll" ? "pt-6 lg:pt-8" : "pt-12 lg:pt-16"}`}>
           <OfferHeading eyebrow={page.includedEyebrow} title={page.includedTitle} />
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="offer-tilt-grid mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {page.feature && (
-              <article className="scroll-reveal dark-island relative isolate flex min-h-[340px] flex-col justify-end overflow-hidden rounded-[26px] bg-[#0b0a0b] p-7 text-white sm:col-span-2 lg:row-span-2">
+              <article onPointerMove={tilt3d} onPointerLeave={untilt3d} className="tilt3d scroll-reveal dark-island relative isolate flex min-h-[340px] flex-col justify-end overflow-hidden rounded-[26px] bg-[#0b0a0b] p-7 text-white sm:col-span-2 lg:row-span-2">
                 {page.feature.visual ? (
-                  <div aria-hidden="true" className="absolute inset-0 -z-20"><MenuFeatureVisual /></div>
+                  <div aria-hidden="true" className="absolute inset-0 -z-20"><OfferFeatureVisual id={page.feature.visual} /></div>
                 ) : (
                   <img src={offer.image} alt="" loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
                 )}
-                <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(10,10,11,0)_30%,rgba(10,10,11,0.9)_100%)]" />
+                <div aria-hidden="true" className={`absolute inset-0 -z-10 ${page.feature.visual ? "bg-[linear-gradient(180deg,rgba(10,10,11,0)_62%,rgba(10,10,11,0.95)_88%)]" : "bg-[linear-gradient(180deg,rgba(10,10,11,0)_30%,rgba(10,10,11,0.9)_100%)]"}`} />
                 <h4 className="text-[28px] font-extrabold tracking-[-0.045em]">{page.feature.title}</h4>
                 <p className="mt-2 max-w-[420px] text-[15px] leading-[1.6] text-white/75">{page.feature.text}</p>
               </article>
@@ -3613,11 +3631,13 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
             {page.included.map((item) => (
               <article
                 key={item.title}
-                className="scroll-reveal dark-island tint-drift relative isolate flex min-h-[170px] flex-col overflow-hidden rounded-[26px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(110%_80%_at_100%_0%,rgba(233,68,69,0.28),transparent_60%)] p-6 text-white shadow-[0_24px_60px_rgba(14,13,16,0.16)]"
+                onPointerMove={tilt3d}
+                onPointerLeave={untilt3d}
+                className="tilt3d scroll-reveal dark-island tint-drift relative isolate flex min-h-[170px] flex-col overflow-hidden rounded-[26px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(110%_80%_at_100%_0%,rgba(233,68,69,0.28),transparent_60%)] p-6 text-white shadow-[0_24px_60px_rgba(14,13,16,0.16)]"
               >
                 {item.visual !== undefined ? (
                   <div aria-hidden="true" className="relative -mx-6 -mt-6 mb-1 flex flex-1 flex-col justify-center">
-                    <MenuVisual index={item.visual} />
+                    <OfferVisual id={item.visual} />
                     <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(11,10,11,0)_88%,#0b0a0b_100%)]" />
                   </div>
                 ) : (
@@ -3628,7 +3648,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
               </article>
             ))}
             {page.highlight && (
-              <article className="scroll-reveal relative isolate flex min-h-[170px] flex-col overflow-hidden rounded-[26px] bg-[linear-gradient(140deg,#f0595a_0%,#e94445_45%,#b52a2c_100%)] p-6 text-white shadow-[0_24px_60px_rgba(233,68,69,0.35)]">
+              <article onPointerMove={tilt3d} onPointerLeave={untilt3d} className="tilt3d scroll-reveal relative isolate flex min-h-[170px] flex-col overflow-hidden rounded-[26px] bg-[linear-gradient(140deg,#f0595a_0%,#e94445_45%,#b52a2c_100%)] p-6 text-white shadow-[0_24px_60px_rgba(233,68,69,0.35)]">
                 <p className="text-[76px] font-extrabold leading-[0.85] tracking-[-0.06em]">{page.highlight.big}</p>
                 <p className="mt-auto pt-6 text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]">{page.highlight.text}</p>
               </article>
