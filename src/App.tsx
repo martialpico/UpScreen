@@ -3725,17 +3725,25 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
         <section className="mx-auto w-full max-w-[1160px] px-5 pb-16 pt-6 sm:px-8">
           <div className="scroll-reveal dark-island relative isolate overflow-hidden rounded-[30px] bg-[#0b0a0b] px-7 py-12 text-white sm:px-12 sm:py-16">
             <PremiumBlobs />
-            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-              <div>
+            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+              <div className="max-w-[560px]">
                 <p className="font-mono text-[12px] font-semibold uppercase tracking-[0.22em] text-[#ff8a8b]">Devis gratuit sous 48 h</p>
                 <h3 className="mt-3 text-[34px] font-extrabold leading-[1] tracking-[-0.05em] sm:text-[48px]">
                   Parlons de votre projet.
                 </h3>
-                <p className="mt-3 max-w-[460px] text-[15px] leading-[1.6] text-white/70">
-                  On étudie votre besoin et on vous envoie une proposition claire, sans engagement.
+                <p className="mt-4 max-w-[480px] text-[15px] leading-[1.6] text-white/70">
+                  Un court appel pour comprendre votre activité, puis un devis détaillé, prix ferme et délais inclus.
                 </p>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {["Appel de 15 min", "Devis sous 48 h", "Sans engagement"].map((t) => (
+                    <li key={t} className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.06] px-3 py-1.5 text-[12px] font-semibold text-white/85">
+                      <svg aria-hidden="true" viewBox="0 0 12 12" className="h-3 w-3 text-[#ff8a8b]"><path d="M2.5 6.2 5 8.6l4.6-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <OfferCTAs onClose={onClose} light />
+              <div className="shrink-0"><OfferCTAs onClose={onClose} light /></div>
             </div>
           </div>
         </section>
