@@ -2842,11 +2842,211 @@ const motionFormats = [
   "Versions pour votre site et Instagram",
 ];
 
+type CustomOffer = {
+  id: string;
+  title: string;
+  body: string;
+  image: string;
+  details: string[];
+  videos?: boolean;
+};
+
+const customOffers: CustomOffer[] = [
+  {
+    id: "menu",
+    title: "Menu digital & QR codes",
+    body: "Votre carte sur téléphone, des QR codes et des cartes NFC pour vos avis Google et vos réseaux.",
+    image: cafePhoto,
+    details: [
+      "Menu digital, modifiable en un clic",
+      "QR codes pour vos tables, votre vitrine et vos flyers",
+      "Cartes NFC : un geste pour laisser un avis Google ou suivre vos réseaux",
+      "Carte de fidélité digitale",
+    ],
+  },
+  {
+    id: "webapp",
+    title: "Web app sur mesure",
+    body: "Un outil pensé pour votre commerce, qui vous fait gagner du temps chaque jour.",
+    image: `${import.meta.env.BASE_URL}vitrines/samsthai-desktop.webp`,
+    details: [
+      "Devis et factures depuis votre téléphone",
+      "Gestion des stocks et des commandes fournisseurs",
+      "Réservations et prises de commande",
+      "Et tout outil sur mesure pour votre activité",
+    ],
+  },
+  {
+    id: "motion",
+    title: "Vidéo en motion design",
+    body: "30 à 60 secondes pour expliquer ce que vous faites et retenir l'attention.",
+    image: motionAnyStylePoster,
+    details: motionFormats,
+    videos: true,
+  },
+  {
+    id: "brand",
+    title: "Refonte graphique complète",
+    body: "Logo, charte et supports : une identité qui donne envie de pousser la porte.",
+    image: `${import.meta.env.BASE_URL}vitrines/brasileiro-desktop.webp`,
+    details: [
+      "Logo",
+      "Charte graphique : couleurs, typographies",
+      "UI/UX : design de vos écrans et parcours",
+      "Supports imprimés : cartes de visite, flyers, menus",
+    ],
+  },
+];
+
+function CustomOfferCard({ offer, index, onOpen }: { offer: CustomOffer; index: number; onOpen: () => void }) {
+  return (
+    <article
+      className="stagger-card dark-island group relative isolate flex min-h-[440px] flex-col overflow-hidden rounded-[26px] border border-white/10 bg-[#b52a2c] p-6 text-white shadow-[0_30px_70px_rgba(233,68,69,0.25)] sm:min-h-[480px]"
+      style={{ ["--i" as string]: index }}
+    >
+      <img
+        src={offer.image}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 -z-20 h-full w-full scale-110 object-cover opacity-90 blur-[2px] grayscale contrast-125 transition duration-700 group-hover:scale-100 group-hover:blur-0"
+      />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[#e94445] mix-blend-multiply" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(233,68,69,0.15)_0%,rgba(120,18,20,0.35)_45%,rgba(40,6,7,0.85)_100%)]" />
+      <span className="text-[88px] font-extrabold leading-[0.85] tracking-[-0.06em] text-white sm:text-[104px]">
+        0{index + 1}
+      </span>
+      <div className="mt-auto">
+        <h3 className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.045em]">{offer.title}</h3>
+        <p className="mt-3 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-white/85">{offer.body}</p>
+        <button
+          type="button"
+          onClick={onOpen}
+          aria-haspopup="dialog"
+          aria-label={`Découvrir : ${offer.title}`}
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold text-[#0e0d10] transition hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        >
+          Découvrir <ArrowIcon />
+        </button>
+      </div>
+    </article>
+  );
+}
+
+function CustomOfferModal({ offer, index, onClose }: { offer: CustomOffer; index: number; onClose: () => void }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
+    const previous = document.body.style.overflow;
+    const opener = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    closeRef.current?.focus();
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+      opener?.focus();
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`offer-${offer.id}`}
+      className="fixed inset-0 z-[110] flex items-center justify-center bg-[#0e0d10]/70 p-3 backdrop-blur-md sm:p-6"
+      onClick={onClose}
+    >
+      <div
+        className="relative max-h-full w-full max-w-[760px] overflow-y-auto rounded-[28px] bg-white p-6 text-[#0e0d10] shadow-[0_40px_120px_rgba(0,0,0,0.45)] sm:p-10"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          ref={closeRef}
+          type="button"
+          onClick={onClose}
+          aria-label="Fermer"
+          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#0e0d10]/[0.06] transition hover:bg-[#0e0d10]/[0.12]"
+        >
+          <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M4 4l8 8M12 4l-8 8" />
+          </svg>
+        </button>
+        <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.16em] text-[#e94445]">Sur mesure · 0{index + 1}</span>
+        <h3 id={`offer-${offer.id}`} className="mt-3 pr-10 text-[32px] font-extrabold leading-[1.02] tracking-[-0.05em] sm:text-[42px]">
+          {offer.title}
+        </h3>
+        <p className="mt-4 font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#0e0d10]/65">{offer.body}</p>
+        <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+          {offer.details.map((item) => (
+            <li key={item} className="flex items-start gap-3 rounded-2xl border border-[#0e0d10]/[0.08] bg-[#0e0d10]/[0.03] px-4 py-3.5 text-[15px] leading-[1.45]">
+              <span className="mt-0.5 flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-[#e94445] text-white">
+                <CheckIcon className="h-3 w-3" />
+              </span>
+              {item}
+            </li>
+          ))}
+        </ul>
+        {offer.videos && (
+          <div className="modal-videos dark-island mt-7 grid grid-cols-2 gap-3">
+            {motionVideos.map((video) => (
+              <MotionVideoCard key={video.mediaId} {...video} />
+            ))}
+          </div>
+        )}
+        <div className="mt-8 flex flex-col items-start gap-3 border-t border-[#0e0d10]/[0.08] pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="font-mono text-[13px] font-semibold text-[#0e0d10]/60">Sur devis · devis gratuit sous 48 h</p>
+          <a
+            href="#contact-form"
+            onClick={onClose}
+            className="inline-flex items-center gap-2 rounded-full bg-[#e94445] px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+          >
+            Demander un devis <ArrowIcon />
+          </a>
+        </div>
+      </div>
+    </div>,
+    document.body,
+  );
+}
+
 function CustomServices() {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  // Progression du défilement (0 → 1) : les cartes montent une à une.
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      grid.style.setProperty("--p", "1");
+      return;
+    }
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = grid.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh * 0.75 + rect.height * 0.35)));
+      grid.style.setProperty("--p", progress.toFixed(3));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <section
       id="sur-mesure"
-      className="scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-6 sm:px-8 md:pb-28 md:pt-10"
+      className="relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-6 sm:px-8 md:pb-28 md:pt-10"
     >
       <SectionHeader
         eyebrow="Sur mesure"
@@ -2854,101 +3054,28 @@ function CustomServices() {
         muted="qu'un site ?"
         aside={
           <AsideLead>
-            Vidéo, identité visuelle ou outil pour votre commerce : on étudie votre projet et on vous envoie un devis gratuit sous 48 h.
+            Outil, vidéo ou identité visuelle pour votre commerce : on étudie votre projet et on vous envoie un devis gratuit sous 48 h.
           </AsideLead>
         }
       />
 
-      <div className={`${darkCard} mt-14 overflow-hidden p-6 md:p-10`}>
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-          <BrandIcon name="play" className="h-11 w-11 shrink-0" />
-          <div>
-            <h3 className="text-2xl font-bold tracking-[-0.03em] text-off-white md:whitespace-nowrap">
-              Vidéo de présentation en motion design
-            </h3>
-            <p className="mt-2 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-[#CFCCC7]">
-              Expliquer ce que vous faites en quelques secondes, avec une vidéo animée qui retient l'attention.
-            </p>
-          </div>
-        </div>
-        <ul className="mt-7 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {motionFormats.map((point) => (
-            <li
-              key={point}
-              className="flex h-full items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-sm leading-[1.45] text-[#CFCCC7]"
-            >
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
-                <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="m3.5 8.5 3 3 6-7" />
-                </svg>
-              </span>
-              {point}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-8 grid grid-cols-2 gap-3 border-t border-white/[0.08] pt-8 sm:gap-4 lg:grid-cols-4">
-          {motionVideos.map((video) => (
-            <MotionVideoCard key={video.mediaId} {...video} />
-          ))}
-        </div>
+      <div ref={gridRef} className="stagger-grid mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {customOffers.map((offer, index) => (
+          <CustomOfferCard key={offer.id} offer={offer} index={index} onOpen={() => setOpenIndex(index)} />
+        ))}
       </div>
 
-      {customServices
-        .filter((service) => service.title === "Rebranding complet")
-        .map((service) => (
-          <div key={service.title} className={`${darkCard} scroll-reveal mt-6 p-6 md:p-10`}>
-            <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-              <BrandIcon name={service.icon} className="h-11 w-11 shrink-0" />
-              <div>
-                <h3 className="text-2xl font-bold tracking-[-0.03em] text-off-white">{service.title}</h3>
-                <p className="mt-2 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-[#CFCCC7]">{service.body}</p>
-              </div>
-            </div>
-            <ul className="mt-7 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {service.points.map((point) => (
-                <li
-                  key={point}
-                  className="flex h-full items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-sm leading-[1.45] text-[#CFCCC7]"
-                >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
-                    <svg aria-hidden="true" viewBox="0 0 16 16" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="m3.5 8.5 3 3 6-7" />
-                    </svg>
-                  </span>
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-
-      <div className="mt-6 grid gap-6 md:grid-cols-2">
-        {customServices.filter((service) => service.title !== "Rebranding complet").map((service) => (
-          <article key={service.title} className={`${darkCard} scroll-reveal flex flex-col p-6 sm:p-7`}>
-            <BrandIcon name={service.icon} className="h-11 w-11" />
-            <h3 className="mt-5 text-xl font-bold tracking-[-0.03em] text-off-white">{service.title}</h3>
-            <p className="mt-2 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-[#CFCCC7]">{service.body}</p>
-            <ul className="mt-5 space-y-2 text-[15px] text-[#CFCCC7]">
-              {service.points.map((point) => (
-                <li key={point} className="flex gap-3">
-                  <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-warm-gray/60" />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))}
-        <a
-          href="#contact"
-          className="flex flex-col justify-center rounded-[20px] border border-dashed border-brand/50 p-6 transition hover:border-brand sm:p-7"
-        >
-          <span className="text-xl font-semibold text-off-white">Un autre projet ?</span>
-          <span className="mt-2 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-[#CFCCC7]">Parlez-nous-en, on vous dit ce qui est possible.</span>
-          <span className="mt-6 inline-flex w-fit rounded-full bg-brand px-5 py-3 text-sm font-semibold text-onyx">
-            Demander un devis
-          </span>
+      <p className="mt-10 text-center font-mono text-[13px] font-semibold text-warm-gray">
+        Un autre projet ?{" "}
+        <a href="#contact-form" className="text-brand underline underline-offset-4 hover:text-brand-deep">
+          Parlez-nous-en
         </a>
-      </div>
+        , on vous dit ce qui est possible.
+      </p>
+
+      {openIndex !== null && (
+        <CustomOfferModal offer={customOffers[openIndex]} index={openIndex} onClose={() => setOpenIndex(null)} />
+      )}
     </section>
   );
 }
