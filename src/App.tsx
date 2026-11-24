@@ -3583,7 +3583,8 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
         {/* Déroulé horizontal (vidéo, branding) */}
         {page.processMode === "scroll" && <ScrollProcess page={page} scroller={scrollerRef} onClose={onClose} />}
 
-        {/* Ce qui est inclus */}
+        {/* Ce qui est inclus (pas pour la vidéo) */}
+        {offer.id !== "motion" && (
         <section className="mx-auto w-full max-w-[1160px] px-5 py-12 sm:px-8 lg:py-16">
           <OfferHeading eyebrow={page.includedEyebrow} title={page.includedTitle} />
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -3613,6 +3614,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
             )}
           </div>
         </section>
+        )}
 
         {/* Comment ça marche (menu, web app) */}
         {page.processMode === "grid" && (
