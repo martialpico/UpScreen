@@ -2800,7 +2800,7 @@ function WorkGallery() {
       <SectionHeader
         title="Des sites sur-mesure"
         muted="conçus pour votre entreprise."
-        lead="Chaque site est dessiné pour son activité, rapide et pensé pour le mobile. Cliquez sur un site pour le parcourir."
+        lead="Un design unique pour chaque activité, rapide et pensé d'abord pour le mobile. Cliquez sur un site pour le découvrir."
       />
 
       <div className="mt-14 grid gap-x-6 gap-y-10 md:grid-cols-2">
