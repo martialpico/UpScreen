@@ -292,6 +292,7 @@ function SectionHeader({
   aside,
   lead,
   small = false,
+  framed = false,
 }: {
   eyebrow?: string;
   title: string;
@@ -299,6 +300,7 @@ function SectionHeader({
   aside?: ReactNode;
   lead?: ReactNode;
   small?: boolean;
+  framed?: boolean;
 }) {
   return (
     <div className="mx-auto flex max-w-[900px] flex-col items-center text-center">
@@ -308,10 +310,18 @@ function SectionHeader({
         </div>
       )}
       <h2
-        className={`text-balance font-extrabold tracking-[-0.055em] ${
+        className={`${framed ? "scroll-reveal title-frame relative my-6 px-7 md:my-8 md:px-0" : ""} text-balance font-extrabold tracking-[-0.055em] ${
           small ? "text-[32px] leading-[1.02] md:text-[44px]" : "text-[40px] leading-[0.98] md:text-[56px] lg:text-[60px]"
         }`}
       >
+        {framed && (
+          <>
+            <span aria-hidden="true" className="frame-line frame-top" />
+            <span aria-hidden="true" className="frame-line frame-right" />
+            <span aria-hidden="true" className="frame-line frame-bottom" />
+            <span aria-hidden="true" className="frame-line frame-left" />
+          </>
+        )}
         <span className="scroll-reveal reveal-mask block"><span className="reveal-line block text-off-white">{title}</span></span>
         {muted && (
           <span className="scroll-reveal reveal-mask block">
@@ -2752,7 +2762,8 @@ function WorkGallery() {
   return (
     <section id="work" className={`relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
       <SectionHeader
-        title="Des sites sur-mesure"
+        framed
+          title="Des sites sur-mesure"
         muted="conçus pour votre entreprise."
         lead="Des sites uniques, rapides et pensés pour ordinateur et mobile, qui donnent envie de pousser la porte. Cliquez pour en découvrir un."
       />

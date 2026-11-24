@@ -589,6 +589,48 @@
     transition-delay: 150ms;
   }
 
+  /* Titre encadré : quatre traits qui se dessinent autour du texte,
+     chacun dans un sens, comme des repères de mise en page. */
+  .scroll-reveal.title-frame,
+  .scroll-reveal.title-frame[data-exit="top"]:not(.is-visible) {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  .title-frame { --fx: -14px; --fy: 14px; --ext: 16px; }
+  @media (min-width: 768px) {
+    .title-frame { --fx: 34px; --fy: 20px; --ext: 56px; }
+  }
+  .frame-line {
+    position: absolute;
+    pointer-events: none;
+    background: var(--color-brand);
+    transition: transform 1100ms cubic-bezier(0.65, 0, 0.2, 1);
+  }
+  .frame-top,
+  .frame-bottom {
+    left: calc(-1 * var(--fx) - var(--ext));
+    right: calc(-1 * var(--fx) - var(--ext));
+    height: 1.5px;
+    transform: scaleX(0);
+  }
+  .frame-left,
+  .frame-right {
+    top: calc(-1 * var(--fy) - var(--ext));
+    bottom: calc(-1 * var(--fy) - var(--ext));
+    width: 1.5px;
+    transform: scaleY(0);
+  }
+  .frame-top { top: calc(-1 * var(--fy)); transform-origin: left; }
+  .frame-bottom { bottom: calc(-1 * var(--fy)); transform-origin: right; transition-delay: 160ms; }
+  .frame-left { left: calc(-1 * var(--fx)); transform-origin: bottom; transition-delay: 240ms; }
+  .frame-right { right: calc(-1 * var(--fx)); transform-origin: top; transition-delay: 80ms; }
+  .title-frame.is-visible .frame-top,
+  .title-frame.is-visible .frame-bottom { transform: scaleX(1); }
+  .title-frame.is-visible .frame-left,
+  .title-frame.is-visible .frame-right { transform: scaleY(1); }
+
   /* Cascade : les éléments voisins apparaissent l'un après l'autre. */
   .scroll-reveal:nth-child(2) { transition-delay: 90ms; }
   .scroll-reveal:nth-child(3) { transition-delay: 180ms; }
@@ -633,6 +675,7 @@
     .scroll-reveal,
     .reveal-mask .reveal-line,
     .step-row .step-anim,
+    .frame-line,
     .scroll-reveal.reveal-pop {
       opacity: 1;
       transform: none;
