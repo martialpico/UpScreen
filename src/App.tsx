@@ -89,9 +89,10 @@ const siteOffers: SiteOffer[] = [
     cta: "Voir les options sur mesure",
     href: "#sur-mesure",
     features: [
-      "Rebranding complet : logo, charte graphique, UI/UX",
+      "Menu digital & QR codes",
+      "Web app sur mesure",
       "Vidéo de présentation en motion design",
-      "Outils pour votre commerce : menu digital, QR codes, fidélité, factures, stocks…",
+      "Refonte graphique complète : logo, charte, supports",
     ],
   },
 ];
@@ -231,7 +232,7 @@ const faqs = [
   {
     question: "Proposez-vous d'autres services ?",
     answer:
-      "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, et des outils pour votre commerce : menu digital, QR codes et cartes NFC, carte de fidélité, devis et factures, gestion des stocks.",
+      "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, et des outils pour votre commerce : menu digital et QR codes, carte de fidélité, devis et factures, gestion des stocks.",
   },
   {
     question: "Comment vous contacter ?",
@@ -1504,7 +1505,6 @@ function SubscriptionTable() {
   return (
     <div className="scroll-reveal mt-24">
       <SectionHeader
-        small
         eyebrow="Abonnements"
         title="Les abonnements."
         muted="Pour faire vivre votre site."
@@ -2651,9 +2651,9 @@ function VitrineCard({ site, large = false, onOpen }: { site: Vitrine; large?: b
         <div className="relative">
           <div className="dark-island overflow-hidden rounded-[22px] border border-white/10 bg-[#121113] p-1.5 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition duration-500 group-hover:-translate-y-1 group-hover:border-white/25">
             <div className="flex items-center gap-1.5 px-3 py-2">
-              <span className="h-2 w-2 rounded-full bg-white/15" />
-              <span className="h-2 w-2 rounded-full bg-white/15" />
-              <span className="h-2 w-2 rounded-full bg-white/15" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
             </div>
             <div className="relative overflow-hidden rounded-[16px]">
               <img
@@ -2829,7 +2829,7 @@ const customServices: { icon: BrandIconName; title: string; body: string; points
     title: "Outils pour votre commerce",
     body: "Des applications simples qui vous font gagner du temps chaque jour.",
     points: [
-      "Menu digital, QR codes et cartes NFC (avis Google, réseaux)",
+      "Menu digital et QR codes (avis Google, réseaux)",
       "Carte de fidélité digitale",
       "Devis et factures depuis votre téléphone",
       "Gestion des stocks et commandes fournisseurs",
@@ -2859,14 +2859,14 @@ type CustomOffer = {
 const customOffers: CustomOffer[] = [
   {
     id: "menu",
-    tag: "QR · NFC",
+    tag: "QR codes",
     title: "Menu digital & QR codes",
-    body: "Votre carte sur téléphone, des QR codes et des cartes NFC pour vos avis Google et vos réseaux.",
+    body: "Votre carte sur téléphone et des QR codes pour vos avis Google et vos réseaux.",
     image: `${import.meta.env.BASE_URL}sur-mesure/menu.webp`,
     details: [
       "Menu digital, modifiable en un clic",
       "QR codes pour vos tables, votre vitrine et vos flyers",
-      "Cartes NFC : un geste pour laisser un avis Google ou suivre vos réseaux",
+      "QR code d'avis : vos clients laissent un avis Google en un geste",
       "Carte de fidélité digitale",
     ],
   },
@@ -2874,7 +2874,7 @@ const customOffers: CustomOffer[] = [
     id: "webapp",
     tag: "Web app",
     title: "Web app sur mesure",
-    body: "Un outil pensé pour votre commerce, qui vous fait gagner du temps chaque jour.",
+    body: "Des outils pensés pour votre commerce, qui vous font gagner du temps chaque jour.",
     image: `${import.meta.env.BASE_URL}sur-mesure/webapp.webp`,
     details: [
       "Devis et factures depuis votre téléphone",
@@ -3150,7 +3150,7 @@ function FAQ() {
         {faqs.map((faq, index) => (
           <details
             key={`${faq.question}-${index}`}
-            className="dark-island scroll-reveal group overflow-hidden rounded-[20px] border border-white/10 bg-[#0b0a0b] shadow-[0_16px_40px_rgba(14,13,16,0.15)] transition-colors open:border-brand/40 hover:border-white/25"
+            className="dark-island scroll-reveal group overflow-hidden rounded-[20px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(90%_140%_at_100%_0%,rgba(233,68,69,0.22),rgba(233,68,69,0.06)_45%,transparent_70%)] shadow-[0_16px_40px_rgba(14,13,16,0.15)] transition-colors open:border-brand/40 hover:border-white/25"
           >
             <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-bold tracking-[-0.02em] text-white sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
               <span className="flex-1">{faq.question}</span>
@@ -3274,7 +3274,7 @@ function ContactSection() {
         <div className="absolute inset-0 -z-[5] bg-[linear-gradient(180deg,rgba(11,10,11,0.3),rgba(11,10,11,0.7))]" />
         <div className="flex flex-col justify-center">
           <Eyebrow>Contact</Eyebrow>
-          <h2 className="mt-5 text-[36px] font-extrabold leading-[1] tracking-[-0.055em] text-off-white md:text-[52px]">
+          <h2 className="mt-5 text-[40px] font-extrabold leading-[0.98] tracking-[-0.055em] text-off-white md:text-[56px] lg:text-[60px]">
             <span className="block">Votre maquette est gratuite.</span>
             <span className="block text-white/55">Parlons de votre commerce.</span>
           </h2>
