@@ -1573,7 +1573,7 @@ function Services() {
     >
       <SectionHeader
         eyebrow="Tarifs"
-        title={<>Des tarifs <span className="title-box">transparents</span>.</>}
+        title={<>Des tarifs <span className="title-box">transparents</span></>}
         muted="Payés une seule fois."
         lead={
           <>
