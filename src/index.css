@@ -1186,3 +1186,8 @@
   -webkit-text-stroke: 1.6px #e94445;
 }
 .offer-page .modal-videos .scroll-reveal { opacity: 1; transform: none; filter: none; }
+.offer-videos > article > div { border-radius: 26px; box-shadow: 0 30px 70px rgba(14, 13, 16, 0.18); }
+.offer-videos > article > div > button > span:last-child { width: 4.5rem; height: 4.5rem; }
+@media (max-height: 780px) {
+  .offer-process-head h3 + p { display: none; }
+}

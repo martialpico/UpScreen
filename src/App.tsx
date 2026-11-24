@@ -3390,52 +3390,45 @@ function ScrollProcess({
   }, [scroller, steps.length]);
 
   return (
-    <section ref={sectionRef} className="relative" style={{ height: `calc(100dvh + ${Math.round(distance * 1.15)}px)` }}>
-      <div className="sticky top-0 flex h-[100dvh] flex-col justify-center overflow-hidden py-20">
-        <div className="mx-auto w-full max-w-[1160px] px-5 sm:px-8">
+    <section ref={sectionRef} className="relative" style={{ height: `calc(100dvh + ${Math.round(distance * 1.1)}px)` }}>
+      <div className="sticky top-0 flex h-[100dvh] flex-col justify-center overflow-hidden pb-6 pt-24">
+        <div className="offer-process-head mx-auto w-full max-w-[1160px] px-5 sm:px-8">
           <OfferHeading eyebrow={page.processEyebrow} title={page.processTitle} lead={page.processLead} center />
         </div>
-        <div className="relative mt-10">
-          <div aria-hidden="true" className="pointer-events-none absolute -top-4 bottom-[-16px] left-1/2 z-20 w-px -translate-x-1/2 bg-[#0e0d10]">
+        <div className="relative mt-8 lg:mt-10">
+          <div aria-hidden="true" className="pointer-events-none absolute -top-5 bottom-[-20px] left-1/2 z-20 w-px -translate-x-1/2 bg-[#0e0d10]">
             <span className="absolute -top-1 left-1/2 h-0 w-0 -translate-x-1/2 border-x-[6px] border-t-[8px] border-x-transparent border-t-[#0e0d10]" />
           </div>
           <div
             ref={trackRef}
-            className="flex w-max gap-4 will-change-transform sm:gap-5"
-            style={{ paddingLeft: "calc(50vw - min(150px, 39vw))", paddingRight: "calc(50vw - min(150px, 39vw))" }}
+            className="flex w-max gap-5 will-change-transform sm:gap-7"
+            style={{ paddingLeft: "calc(50vw - min(240px, 42vw))", paddingRight: "calc(50vw - min(240px, 42vw))" }}
           >
             {steps.map((step, index) => {
               const isActive = index === active;
               return (
                 <article
                   key={step.title}
-                  className={`flex min-h-[250px] w-[min(300px,78vw)] shrink-0 flex-col rounded-[24px] border p-6 transition-[background-color,border-color,box-shadow,transform] duration-500 sm:min-h-[270px] sm:p-7 ${
+                  className={`flex h-[min(420px,52dvh)] min-h-[330px] w-[min(480px,84vw)] shrink-0 flex-col rounded-[30px] border p-7 transition-[background-color,border-color,box-shadow,transform] duration-500 sm:p-10 ${
                     isActive
                       ? "scale-[1.02] border-[#e94445]/50 bg-[linear-gradient(160deg,#fff_0%,#ffe9e9_100%)] shadow-[0_24px_60px_rgba(233,68,69,0.28)]"
                       : "border-[#0e0d10]/[0.08] bg-white shadow-[0_14px_40px_rgba(14,13,16,0.06)]"
                   }`}
                 >
-                  <span className="font-mono text-[12px] font-semibold text-[#0e0d10]/40">({String(index + 1).padStart(2, "0")})</span>
-                  <div className={`mt-6 transition-transform duration-500 ${isActive ? "scale-110" : ""}`} style={{ transformOrigin: "left" }}>
-                    {step.icon && <OfferIconBadge name={step.icon} />}
+                  <div className="flex items-start justify-between">
+                    <div className={`transition-transform duration-500 ${isActive ? "scale-[1.35]" : "scale-125"}`} style={{ transformOrigin: "left top" }}>
+                      {step.icon && <OfferIconBadge name={step.icon} />}
+                    </div>
+                    <span className="offer-outline-number text-[64px] font-extrabold leading-[0.8] tracking-[-0.04em] sm:text-[80px]">{String(index + 1).padStart(2, "0")}</span>
                   </div>
-                  <h4 className="mt-5 text-[22px] font-extrabold tracking-[-0.04em] text-[#0e0d10]">{step.title}</h4>
-                  <p className="mt-2 text-[14px] leading-[1.6] text-[#0e0d10]/65">{step.text}</p>
+                  <h4 className="mt-auto text-[30px] font-extrabold leading-[1.02] tracking-[-0.045em] text-[#0e0d10] sm:text-[40px]">{step.title}</h4>
+                  <p className="mt-3 text-[15px] leading-[1.6] text-[#0e0d10]/65 sm:text-[17px]">{step.text}</p>
                 </article>
               );
             })}
           </div>
         </div>
-        <div className="mt-10 flex justify-center px-5">
-          <a
-            href="#contact-form"
-            onClick={onClose}
-            className="inline-flex items-center gap-2 rounded-full bg-[#e94445] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(233,68,69,0.35)] transition hover:-translate-y-0.5"
-          >
-            Être rappelé <ArrowIcon />
-          </a>
-        </div>
-        <div aria-hidden="true" className="mx-auto mt-6 flex gap-1.5">
+        <div aria-hidden="true" className="mx-auto mt-8 flex gap-1.5">
           {steps.map((step, index) => (
             <span key={step.title} className={`h-1.5 rounded-full transition-all duration-500 ${index === active ? "w-6 bg-[#e94445]" : "w-1.5 bg-[#0e0d10]/15"}`} />
           ))}
@@ -3607,8 +3600,8 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
         {/* Réalisations vidéo */}
         {offer.videos && (
           <section className="mx-auto w-full max-w-[1160px] px-5 py-20 sm:px-8 lg:py-24">
-            <OfferHeading eyebrow="Réalisations" title={["Quelques vidéos", "qu'on a animées."]} />
-            <div className="modal-videos dark-island mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <OfferHeading eyebrow="Réalisations" title={["Quelques vidéos", "qu'on a réalisées."]} />
+            <div className="modal-videos offer-videos dark-island mt-12 grid gap-5 md:grid-cols-2">
               {motionVideos.map((video) => (
                 <MotionVideoCard key={video.mediaId} {...video} />
               ))}
