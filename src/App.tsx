@@ -2850,11 +2850,13 @@ type CustomOffer = {
   details: string[];
   videos?: boolean;
   ui?: "motion";
+  tag: string;
 };
 
 const customOffers: CustomOffer[] = [
   {
     id: "menu",
+    tag: "QR · NFC",
     title: "Menu digital & QR codes",
     body: "Votre carte sur téléphone, des QR codes et des cartes NFC pour vos avis Google et vos réseaux.",
     image: `${import.meta.env.BASE_URL}sur-mesure/menu.webp`,
@@ -2867,6 +2869,7 @@ const customOffers: CustomOffer[] = [
   },
   {
     id: "webapp",
+    tag: "Web app",
     title: "Web app sur mesure",
     body: "Un outil pensé pour votre commerce, qui vous fait gagner du temps chaque jour.",
     image: `${import.meta.env.BASE_URL}sur-mesure/webapp.webp`,
@@ -2879,6 +2882,7 @@ const customOffers: CustomOffer[] = [
   },
   {
     id: "motion",
+    tag: "Vidéo",
     title: "Vidéo en motion design",
     body: "30 à 60 secondes pour expliquer ce que vous faites et retenir l'attention.",
     image: "",
@@ -2888,6 +2892,7 @@ const customOffers: CustomOffer[] = [
   },
   {
     id: "brand",
+    tag: "Branding",
     title: "Refonte graphique complète",
     body: "Logo, charte et supports : une identité qui donne envie de pousser la porte.",
     image: `${import.meta.env.BASE_URL}sur-mesure/brand.webp`,
@@ -2908,7 +2913,7 @@ function MotionEditorUI() {
     { color: "bg-brand", left: "28%", width: "55%" },
   ];
   return (
-    <div aria-hidden="true" className="relative mt-5">
+    <div aria-hidden="true" className="relative mt-8">
       <div className="overflow-hidden rounded-[14px] border border-white/12 bg-[#141214] p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <div className="relative flex aspect-[16/8] items-center justify-center overflow-hidden rounded-[10px] bg-[radial-gradient(90%_80%_at_50%_45%,#3b1012_0%,#141012_70%,#0b0a0b_100%)]">
           <span className="absolute left-2 top-1.5 font-mono text-[8px] font-semibold text-white/60">upscreen-presentation.mp4</span>
@@ -2959,8 +2964,15 @@ function CustomOfferCard({ offer, index, onOpen }: { offer: CustomOffer; index: 
         />
       )}
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(10,10,11,0.2)_0%,rgba(10,10,11,0)_30%,rgba(10,10,11,0.55)_60%,rgba(10,10,11,0.92)_100%)]" />
-      <span className="text-[88px] font-extrabold leading-[0.85] tracking-[-0.06em] text-white sm:text-[104px]">
-        0{index + 1}
+      {(offer.id === "menu" || offer.id === "webapp") && (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-[linear-gradient(200deg,rgba(233,68,69,0.42)_0%,rgba(233,68,69,0.14)_38%,rgba(233,68,69,0)_62%)]"
+        />
+      )}
+      <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase leading-none tracking-[0.14em] text-[#0e0d10] backdrop-blur">
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand shadow-none" />
+        {offer.tag}
       </span>
       {offer.ui === "motion" && <MotionEditorUI />}
       <div className="mt-auto pt-6">
@@ -3019,7 +3031,7 @@ function CustomOfferModal({ offer, index, onClose }: { offer: CustomOffer; index
             <path d="M4 4l8 8M12 4l-8 8" />
           </svg>
         </button>
-        <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.16em] text-[#e94445]">Sur mesure · 0{index + 1}</span>
+        <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.16em] text-[#e94445]">Sur mesure · {offer.tag}</span>
         <h3 id={`offer-${offer.id}`} className="mt-3 pr-10 text-[32px] font-extrabold leading-[1.02] tracking-[-0.05em] sm:text-[42px]">
           {offer.title}
         </h3>
