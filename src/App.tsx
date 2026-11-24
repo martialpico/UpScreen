@@ -127,9 +127,9 @@ const subscriptionRows: [string | [string, string], PlanCell, PlanCell][] = [
     "1 par semaine",
   ],
   [
-    ["Instagram", "Des carrousels soignés créés à partir de vos photos, pour un compte actif qui donne envie de venir."],
+    ["Instagram", "Des posts soignés créés à partir de vos photos, pour un compte actif qui donne envie de venir."],
     false,
-    "2 carrousels par semaine, à partir de vos photos et vidéos",
+    "2 posts par semaine, à partir de vos photos et vidéos",
   ],
   [
     ["Légendes et programmation des posts", "On écrit les textes et on publie aux meilleurs horaires, vous n'avez rien à faire."],
@@ -1486,11 +1486,11 @@ function SubscriptionCard({ plan }: { plan: (typeof subscriptions)[number] }) {
                 <summary className="flex cursor-pointer list-none gap-3 [&::-webkit-details-marker]:hidden">
                   <CheckDot solid={featured} />
                   <span className="flex-1">{label}</span>
-                  <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-[0.3em] h-4 w-4 shrink-0 text-warm-gray transition-transform group-open:rotate-180" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <svg aria-hidden="true" viewBox="0 0 16 16" className={`mt-[0.3em] h-4 w-4 shrink-0 transition-transform group-open:rotate-180 ${featured ? "text-white/80" : "text-warm-gray"}`} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     <path d="m4 6 4 4 4-4" />
                   </svg>
                 </summary>
-                <p className="ml-[34px] mt-1.5 pr-6 text-[13px] leading-[1.5] text-warm-gray">{detail}</p>
+                <p className={`ml-[34px] mt-1.5 pr-6 text-[13px] leading-[1.5] ${featured ? "text-white/85" : "text-warm-gray"}`}>{detail}</p>
               </details>
             ) : (
               <span className="flex gap-3">
