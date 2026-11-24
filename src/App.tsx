@@ -300,7 +300,7 @@ function SectionHeader({
   framed = false,
 }: {
   eyebrow?: string;
-  title: string;
+  title: ReactNode;
   muted?: string;
   aside?: ReactNode;
   lead?: ReactNode;
@@ -1573,7 +1573,7 @@ function Services() {
     >
       <SectionHeader
         eyebrow="Tarifs"
-        title="Des tarifs transparents."
+        title={<>Des tarifs <span className="title-box">transparents</span>.</>}
         muted="Payés une seule fois."
         lead={
           <>

@@ -597,6 +597,36 @@
     transition-delay: 150ms;
   }
 
+  /* Mot mis en avant dans un titre : blanc dans une box rouge qui se
+     déploie de gauche à droite à l'apparition du titre. */
+  .title-box {
+    position: relative;
+    display: inline-block;
+    margin: 0 0.04em;
+    padding: 0.02em 0.16em 0.06em;
+    color: #ffffff;
+    isolation: isolate;
+  }
+  .title-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 0.14em;
+    background: linear-gradient(135deg, #f0595a, var(--color-brand) 55%, #c9302f);
+    box-shadow: 0 0.12em 0.35em rgba(233, 68, 69, 0.35);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 800ms cubic-bezier(0.65, 0, 0.2, 1) 350ms;
+  }
+  .title-box {
+    color: transparent;
+    transition: color 400ms ease 750ms;
+  }
+  .reveal-mask.is-visible .title-box { color: #ffffff; }
+  .reveal-mask.is-visible .title-box::before { transform: none; }
+  .reveal-mask:not(.is-visible) .title-box { color: inherit; }
+
   /* Titre encadré : quatre traits qui se dessinent autour du texte,
      chacun dans un sens, comme des repères de mise en page. */
   .scroll-reveal.title-frame,
@@ -734,6 +764,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .frame-line { animation: none; transform: none !important; transition: none; }
+    .title-box::before { transform: none !important; transition: none; }
+    .title-box { color: #ffffff !important; }
     .frame-corner { opacity: 1 !important; transform: none !important; transition: none; }
     .scroll-reveal,
     .reveal-mask .reveal-line,
