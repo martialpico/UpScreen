@@ -602,24 +602,46 @@
   @media (min-width: 768px) {
     .title-frame { --fx: 34px; --fy: 20px; --ext: 56px; }
   }
+  /* Tirets rouges qui défilent en continu, extrémités fondues en dégradé. */
   .frame-line {
     position: absolute;
     pointer-events: none;
-    background: var(--color-brand);
     transition: transform 1100ms cubic-bezier(0.65, 0, 0.2, 1);
+    animation: frame-march 1.2s linear infinite;
+  }
+  .frame-top,
+  .frame-bottom {
+    background: repeating-linear-gradient(90deg, var(--color-brand) 0 10px, transparent 10px 18px);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+  }
+  .frame-left,
+  .frame-right {
+    background: repeating-linear-gradient(180deg, var(--color-brand) 0 10px, transparent 10px 18px);
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
+  }
+  /* Le sens de défilement fait tourner les tirets autour du titre. */
+  .frame-top { --march: 18px 0; }
+  .frame-right { --march: 0 18px; }
+  .frame-bottom { --march: -18px 0; }
+  .frame-left { --march: 0 -18px; }
+  @keyframes frame-march {
+    from { background-position: 0 0; }
+    to { background-position: var(--march); }
   }
   .frame-top,
   .frame-bottom {
     left: calc(-1 * var(--fx) - var(--ext));
     right: calc(-1 * var(--fx) - var(--ext));
-    height: 1.5px;
+    height: 2px;
     transform: scaleX(0);
   }
   .frame-left,
   .frame-right {
     top: calc(-1 * var(--fy) - var(--ext));
     bottom: calc(-1 * var(--fy) - var(--ext));
-    width: 1.5px;
+    width: 2px;
     transform: scaleY(0);
   }
   .frame-top { top: calc(-1 * var(--fy)); transform-origin: left; }
@@ -672,10 +694,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .frame-line { animation: none; transform: none !important; transition: none; }
     .scroll-reveal,
     .reveal-mask .reveal-line,
     .step-row .step-anim,
-    .frame-line,
     .scroll-reveal.reveal-pop {
       opacity: 1;
       transform: none;
