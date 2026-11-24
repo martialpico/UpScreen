@@ -2964,77 +2964,676 @@ function CustomOfferCard({ offer, index, onOpen }: { offer: CustomOffer; index: 
   );
 }
 
-function CustomOfferModal({ offer, index, onClose }: { offer: CustomOffer; index: number; onClose: () => void }) {
-  const closeRef = useRef<HTMLButtonElement>(null);
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => event.key === "Escape" && onClose();
-    const previous = document.body.style.overflow;
-    const opener = document.activeElement as HTMLElement | null;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    closeRef.current?.focus();
-    return () => {
-      document.body.style.overflow = previous;
-      window.removeEventListener("keydown", onKey);
-      opener?.focus();
-    };
-  }, [onClose]);
+// ---------------------------------------------------------------------------
+// Pages « Découvrir » des offres sur mesure : une page plein écran par offre,
+// ouverte par-dessus le site (hero + maquette, ce qui est inclus, déroulé).
+// Pour la vidéo et le branding, le déroulé défile à l'horizontale pendant
+// qu'on scrolle, avec une ligne centrale qui met l'étape en cours en avant.
+// ---------------------------------------------------------------------------
 
-  return createPortal(
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={`offer-${offer.id}`}
-      className="fixed inset-0 z-[110] flex items-center justify-center bg-[#0e0d10]/70 p-3 backdrop-blur-md sm:p-6"
-      onClick={onClose}
+type OfferIcon =
+  | "phone" | "palette" | "refresh" | "leaf" | "star" | "card" | "qr" | "link"
+  | "chart" | "layers" | "doc" | "box" | "calendar" | "pen" | "film" | "music"
+  | "send" | "type" | "print" | "eye" | "screen";
+
+const offerIconPaths: Record<OfferIcon, string> = {
+  phone: "M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm3 17h2",
+  palette: "M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.9 1.2-1.8-.5-1-.2-2.2 1.1-2.2H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10ZM7.5 11.5h.01M10 7.5h.01M14.5 7.5h.01",
+  refresh: "M20 11a8 8 0 0 0-14.6-4.5L4 8m0-4v4h4M4 13a8 8 0 0 0 14.6 4.5L20 16m0 4v-4h-4",
+  leaf: "M5 19c6 0 14-4 14-15C9 4 5 9 5 15v4Zm0 0 7-7",
+  star: "m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z",
+  card: "M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm0 3h18M7 15h4",
+  qr: "M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm10 0h2v2h-2v-2Zm4 0h2v2h-2zm-4 4h2v2h-2zm4 0h2v2h-2z",
+  link: "M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1",
+  chart: "M4 20V10m6 10V4m6 16v-7m4 7H3",
+  layers: "m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5",
+  doc: "M7 3h7l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm7 0v5h5M9 13h6M9 17h4",
+  box: "m21 8-9-5-9 5v8l9 5 9-5V8ZM3 8l9 5 9-5M12 13v8",
+  calendar: "M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm-2 5h18M8 3v4m8-4v4",
+  pen: "m15 5 4 4L8 20H4v-4L15 5Zm-2 2 4 4",
+  film: "M4 4h16v16H4V4Zm4 0v16m8-16v16M4 9h4m8 0h4M4 15h4m8 0h4",
+  music: "M9 18V6l11-2v12M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm11-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z",
+  send: "M21 3 10 14M21 3l-7 18-4-7-7-4 18-7Z",
+  type: "M5 6V4h14v2M12 4v16m-3 0h6",
+  print: "M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M7 14h10v7H7v-7Z",
+  eye: "M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Zm10 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z",
+  screen: "M3 5h18v11H3V5Zm6 15h6m-3-4v4",
+};
+
+function OfferIconBadge({ name, tone = "dark" }: { name: OfferIcon; tone?: "dark" | "red" }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`flex h-12 w-12 items-center justify-center rounded-[14px] ${
+        tone === "red" ? "bg-white text-[#e94445]" : "bg-[#e94445] text-white shadow-[0_10px_24px_rgba(233,68,69,0.35)]"
+      }`}
     >
-      <div
-        className="relative max-h-full w-full max-w-[760px] overflow-y-auto rounded-[28px] bg-white p-6 text-[#0e0d10] shadow-[0_40px_120px_rgba(0,0,0,0.45)] sm:p-10"
-        onClick={(event) => event.stopPropagation()}
-      >
-        <button
-          ref={closeRef}
-          type="button"
-          onClick={onClose}
-          aria-label="Fermer"
-          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#0e0d10]/[0.06] transition hover:bg-[#0e0d10]/[0.12]"
-        >
-          <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M4 4l8 8M12 4l-8 8" />
-          </svg>
-        </button>
-        <span className="font-mono text-[12px] font-semibold uppercase tracking-[0.16em] text-[#e94445]">Sur mesure · {offer.tag}</span>
-        <h3 id={`offer-${offer.id}`} className="mt-3 pr-10 text-[32px] font-extrabold leading-[1.02] tracking-[-0.05em] sm:text-[42px]">
-          {offer.title}
-        </h3>
-        <p className="mt-4 font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#0e0d10]/65">{offer.body}</p>
-        <ul className="mt-7 grid gap-3 sm:grid-cols-2">
-          {offer.details.map((item) => (
-            <li key={item} className="flex items-start gap-3 rounded-2xl border border-[#0e0d10]/[0.08] bg-[#0e0d10]/[0.03] px-4 py-3.5 text-[15px] leading-[1.45]">
-              <span className="mt-0.5 flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-[#e94445] text-white">
-                <CheckIcon className="h-3 w-3" />
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d={offerIconPaths[name]} />
+      </svg>
+    </span>
+  );
+}
+
+type OfferPage = {
+  eyebrow: string;
+  title: [string, string];
+  lead: string;
+  includedEyebrow: string;
+  includedTitle: [string, string];
+  included: { icon: OfferIcon; title: string; text: string }[];
+  feature?: { title: string; text: string };
+  highlight?: { big: string; text: string };
+  processEyebrow: string;
+  processTitle: [string, string];
+  processLead: string;
+  processMode: "grid" | "scroll";
+  process: { title: string; text: string; icon?: OfferIcon }[];
+};
+
+const offerPages: Record<string, OfferPage> = {
+  menu: {
+    eyebrow: "Menu digital & QR codes",
+    title: ["Menu", "digital."],
+    lead: "Vos clients scannent un QR code et lisent votre carte sur leur téléphone. Un plat change ? Vous le modifiez en un clic, c'est en ligne tout de suite.",
+    includedEyebrow: "Le menu digital",
+    includedTitle: ["Ce qui est", "inclus."],
+    feature: { title: "Votre carte en ligne", text: "Photos, descriptions, prix et allergènes, lisibles sur tous les téléphones." },
+    included: [
+      { icon: "palette", title: "À votre image", text: "Vos couleurs, votre logo, votre ambiance." },
+      { icon: "refresh", title: "Modifiable à tout moment", text: "Plat du jour, prix, rupture : changé en quelques secondes." },
+      { icon: "leaf", title: "Sans réimpression", text: "Moins de frais, moins de papier." },
+      { icon: "star", title: "QR code d'avis Google", text: "Vos clients laissent un avis en un geste." },
+      { icon: "card", title: "Carte de fidélité digitale", text: "Fini les cartes en carton perdues." },
+      { icon: "qr", title: "QR codes pour vos supports", text: "Tables, vitrine, comptoir, flyers et sacs." },
+      { icon: "phone", title: "Sans application", text: "Un scan suffit, sur iPhone comme sur Android." },
+    ],
+    highlight: { big: "QR", text: "À vos couleurs, avec votre logo." },
+    processEyebrow: "Comment ça marche",
+    processTitle: ["Du QR code", "à l'assiette."],
+    processLead: "Simple pour vos clients, simple pour vous.",
+    processMode: "grid",
+    process: [
+      { title: "Le QR code", text: "Sur la table, la vitrine ou le comptoir, à vos couleurs." },
+      { title: "Le scan", text: "Votre client ouvre la carte sur son téléphone, sans application." },
+      { title: "La carte", text: "Photos, descriptions, prix et menu du jour." },
+      { title: "La mise à jour", text: "Un plat change ? C'est en ligne tout de suite." },
+    ],
+  },
+  webapp: {
+    eyebrow: "Web app sur mesure",
+    title: ["Web app", "sur mesure."],
+    lead: "Un outil à vos couleurs, pensé pour votre commerce : vos devis, vos stocks, vos réservations et vos chiffres réunis au même endroit.",
+    includedEyebrow: "Pourquoi sur mesure",
+    includedTitle: ["Tous vos outils", "en un seul."],
+    feature: { title: "Votre outil, partout", text: "Au comptoir, en réserve ou chez vous : vos chiffres et vos tâches du jour, toujours à portée de main." },
+    included: [
+      { icon: "layers", title: "Tout au même endroit", text: "Un seul écran au lieu de dix fichiers et cinq onglets ouverts." },
+      { icon: "link", title: "Reliée à vos logiciels", text: "Agenda, tableurs, caisse ou banque : les données arrivent toutes seules." },
+      { icon: "phone", title: "Sur ordinateur et téléphone", text: "Au comptoir, en réserve ou chez vous, sans rien installer." },
+      { icon: "chart", title: "Vos chiffres en clair", text: "Tableaux de bord et alertes pour décider plus vite." },
+      { icon: "doc", title: "Devis et factures", text: "Créés depuis votre téléphone, envoyés en un clic." },
+      { icon: "box", title: "Stocks et commandes", text: "Alertes de stock bas et commandes fournisseurs prêtes." },
+      { icon: "calendar", title: "Réservations et commandes", text: "Centralisées et visibles d'un coup d'œil." },
+    ],
+    highlight: { big: "1", text: "seul outil, pensé pour votre façon de travailler." },
+    processEyebrow: "Comment ça marche",
+    processTitle: ["De votre quotidien", "à votre outil."],
+    processLead: "On part de votre façon de travailler, pas d'un logiciel tout fait.",
+    processMode: "grid",
+    process: [
+      { title: "On vous écoute", text: "Vos tâches, vos logiciels, ce qui vous fait perdre du temps." },
+      { title: "La maquette", text: "Vous voyez et validez les écrans avant le développement." },
+      { title: "On construit", text: "Votre outil, à vos couleurs, testé avec vos vraies données." },
+      { title: "Mise en service", text: "On vous forme, et l'outil évolue avec votre activité." },
+    ],
+  },
+  motion: {
+    eyebrow: "Vidéo en motion design",
+    title: ["Vidéo", "motion design."],
+    lead: "30 à 60 secondes pour expliquer ce que vous faites, retenir l'attention et donner envie de vous contacter. Pour votre site, Instagram et vos publicités.",
+    includedEyebrow: "Inclus",
+    includedTitle: ["Une vidéo", "clé en main."],
+    included: [
+      { icon: "film", title: "30 à 60 secondes", text: "Le bon format pour votre site et vos réseaux." },
+      { icon: "pen", title: "Script et storyboard", text: "Écrits pour vous, validés avant l'animation." },
+      { icon: "music", title: "Musique et sound design", text: "Une bande-son qui porte votre message." },
+      { icon: "screen", title: "Tous les formats", text: "16:9 pour le site, vertical pour Instagram." },
+    ],
+    processEyebrow: "Process motion design",
+    processTitle: ["De votre brief", "à la livraison."],
+    processLead: "Vous validez chaque étape : pas de surprise, pas de mauvaise direction.",
+    processMode: "scroll",
+    process: [
+      { icon: "palette", title: "Direction artistique", text: "Couleurs, typographies, style d'illustration : on définit l'univers de votre vidéo avant toute production." },
+      { icon: "pen", title: "Script", text: "On écrit ensemble le message, le ton et le déroulé. Chaque seconde a une raison d'être." },
+      { icon: "layers", title: "Storyboard", text: "Votre vidéo découpée image par image : vous validez le rythme et chaque plan avant l'animation." },
+      { icon: "film", title: "Animation", text: "Chaque seconde est animée à la main. Aucun template, aucun élément générique." },
+      { icon: "music", title: "Sound design", text: "Voix off, musique et effets sonores : le son fait la moitié de l'impact d'une vidéo." },
+      { icon: "send", title: "Livraison", text: "En HD ou 4K, déclinée en 16:9, vertical et carré selon vos usages." },
+    ],
+  },
+  brand: {
+    eyebrow: "Refonte graphique",
+    title: ["Refonte", "graphique."],
+    lead: "Logo, couleurs, typographies et supports : une identité cohérente partout, qui donne envie de pousser la porte.",
+    includedEyebrow: "Inclus",
+    includedTitle: ["Une identité", "complète."],
+    included: [
+      { icon: "pen", title: "Logo", text: "Version principale, icône et déclinaisons." },
+      { icon: "palette", title: "Charte graphique", text: "Couleurs, typographies et règles d'usage." },
+      { icon: "screen", title: "UI/UX", text: "Vos écrans et parcours, du site à l'application." },
+      { icon: "print", title: "Supports imprimés", text: "Cartes de visite, flyers, menus, enseigne." },
+    ],
+    processEyebrow: "Process branding",
+    processTitle: ["De votre histoire", "à votre identité."],
+    processLead: "Vous validez chaque étape, de la première piste aux fichiers finaux.",
+    processMode: "scroll",
+    process: [
+      { icon: "eye", title: "Brief et audit", text: "Votre histoire, vos clients, vos concurrents : on regarde ce qui marche et ce qui coince aujourd'hui." },
+      { icon: "layers", title: "Moodboard", text: "Ambiances, couleurs et références : on fixe ensemble la direction avant de dessiner." },
+      { icon: "pen", title: "Logo", text: "Plusieurs pistes, puis une seule affinée jusqu'au moindre détail, avec ses déclinaisons." },
+      { icon: "palette", title: "Charte graphique", text: "Couleurs, typographies et règles d'usage, pour rester cohérent partout." },
+      { icon: "print", title: "Déclinaisons", text: "Cartes de visite, flyers, menus, réseaux sociaux, enseigne : votre identité appliquée à vos supports." },
+      { icon: "send", title: "Livraison", text: "Tous les fichiers sources et un guide simple pour les utiliser, chez vous ou chez l'imprimeur." },
+    ],
+  },
+};
+
+// Maquette : téléphone avec une carte de café.
+function PhoneMenuMockup() {
+  const items = [
+    ["Brunch du week-end", "Œufs, avocat, pain au levain", "18,50 €"],
+    ["Tartine avocat", "Citron, graines, piment doux", "9,50 €"],
+    ["Granola maison", "Yaourt grec, fruits de saison", "7,00 €"],
+    ["Cookie du jour", "Chocolat noir, fleur de sel", "3,20 €"],
+  ];
+  return (
+    <div aria-hidden="true" className="relative mx-auto w-[260px] sm:w-[290px]">
+      <div className="absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(233,68,69,0.35),transparent)] blur-2xl" />
+      <div className="rounded-[44px] bg-[#0e0d10] p-2.5 shadow-[0_40px_90px_rgba(14,13,16,0.35)] ring-1 ring-black/10">
+        <div className="relative overflow-hidden rounded-[36px] bg-[#fbf8f4]">
+          <div className="absolute left-1/2 top-2 z-10 h-5 w-20 -translate-x-1/2 rounded-full bg-[#0e0d10]" />
+          <div className="bg-[#e94445] px-5 pb-5 pt-10 text-center text-white">
+            <p className="text-[19px] font-extrabold tracking-[-0.03em]">Le Comptoir Rose</p>
+            <p className="mt-1 text-[10px] font-semibold text-white/80">Café · brunch · Toulouse</p>
+            <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white px-2.5 py-1 text-[9px] font-bold text-[#1f7a43]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#22a35a]" /> Ouvert · 8 h – 16 h
+            </span>
+          </div>
+          <div className="flex gap-1.5 px-4 pt-3">
+            {["Brunch", "Boissons", "Desserts"].map((tab, i) => (
+              <span key={tab} className={`rounded-full px-2.5 py-1 text-[9px] font-bold ${i === 0 ? "bg-[#0e0d10] text-white" : "bg-[#0e0d10]/[0.06] text-[#0e0d10]/70"}`}>
+                {tab}
               </span>
-              {item}
-            </li>
-          ))}
-        </ul>
-        {offer.videos && (
-          <div className="modal-videos dark-island mt-7 grid grid-cols-2 gap-3">
-            {motionVideos.map((video) => (
-              <MotionVideoCard key={video.mediaId} {...video} />
             ))}
           </div>
-        )}
-        <div className="mt-8 flex flex-col items-start gap-3 border-t border-[#0e0d10]/[0.08] pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-[13px] font-semibold text-[#0e0d10]/60">Sur devis · devis gratuit sous 48 h</p>
+          <div className="px-4 pb-6 pt-2">
+            <div className="mt-2 flex items-center gap-2">
+              <span className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#e94445]">Plat du jour</span>
+              <span className="h-px flex-1 bg-[#e94445]/30" />
+            </div>
+            <div className="mt-2 overflow-hidden rounded-[14px]">
+              <img src={cafePhoto} alt="" className="h-[86px] w-full object-cover" />
+            </div>
+            {items.map(([name, desc, price]) => (
+              <div key={name} className="flex items-start justify-between gap-3 border-b border-dashed border-[#0e0d10]/10 py-2.5">
+                <div>
+                  <p className="text-[11px] font-bold text-[#0e0d10]">{name}</p>
+                  <p className="mt-0.5 text-[9px] text-[#0e0d10]/55">{desc}</p>
+                </div>
+                <p className="text-[11px] font-extrabold text-[#0e0d10]">{price}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="absolute -left-12 bottom-14 hidden rounded-[16px] bg-white p-2.5 shadow-[0_20px_50px_rgba(14,13,16,0.2)] sm:block">
+        <svg viewBox="0 0 21 21" className="h-16 w-16 text-[#0e0d10]" shapeRendering="crispEdges">
+          {[
+            "M0 0h7v7H0zM14 0h7v7h-7zM0 14h7v7H0z",
+          ].map((d) => <path key={d} d={d} fill="currentColor" />)}
+          <path d="M1 1h5v5H1zM15 1h5v5h-5zM1 15h5v5H1z" fill="#fff" />
+          <path d="M2 2h3v3H2zM16 2h3v3h-3zM2 16h3v3H2zM9 1h2v2H9zM8 4h2v2H8zM11 5h2v2h-2zM9 8h3v2H9zM14 9h2v2h-2zM17 8h3v2h-3zM8 12h2v2H8zM12 12h2v3h-2zM15 13h2v2h-2zM18 12h2v2h-2zM9 16h2v2H9zM12 17h3v2h-3zM16 16h2v2h-2zM18 18h2v2h-2zM1 9h2v2H1zM4 8h2v3H4z" fill="currentColor" />
+        </svg>
+        <p className="mt-1 text-center text-[9px] font-bold text-[#e94445]">Scannez-moi</p>
+      </div>
+    </div>
+  );
+}
+
+// Maquette : tableau de bord de web app, sombre avec accents rouges.
+function DashboardMockup() {
+  const kpis = [
+    ["CA du mois", "6 120 €", "+9 % vs octobre"],
+    ["Devis en attente", "4", "1 à relancer"],
+    ["Stock bas", "3 articles", "Commande prête"],
+    ["Réservations", "12", "Aujourd'hui"],
+  ];
+  return (
+    <div aria-hidden="true" className="relative">
+      <div className="absolute -inset-8 -z-10 rounded-[40px] bg-[radial-gradient(closest-side,rgba(233,68,69,0.3),transparent)] blur-2xl" />
+      <div className="overflow-hidden rounded-[22px] border border-white/10 bg-[#121113] shadow-[0_40px_90px_rgba(14,13,16,0.35)]">
+        <div className="flex">
+          <div className="hidden w-[150px] shrink-0 border-r border-white/[0.07] p-3 sm:block">
+            <div className="flex items-center gap-2">
+              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#e94445] text-[11px] font-extrabold text-white">C</span>
+              <div>
+                <p className="text-[10px] font-bold text-white">Comptoir Rose</p>
+                <p className="text-[8px] text-white/45">Espace gérant</p>
+              </div>
+            </div>
+            <div className="mt-4 rounded-lg bg-[#e94445] py-1.5 text-center text-[9px] font-bold text-white">+ Nouveau devis</div>
+            {["Accueil", "Devis & factures", "Stocks", "Réservations", "Clients"].map((item, i) => (
+              <p key={item} className={`mt-1.5 rounded-lg px-2 py-1.5 text-[9px] font-semibold ${i === 0 ? "bg-white/[0.08] text-white" : "text-white/55"}`}>
+                {item}
+              </p>
+            ))}
+          </div>
+          <div className="min-w-0 flex-1 p-4">
+            <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-white/40">Mardi 24 novembre</p>
+            <p className="text-[15px] font-extrabold text-white">Bonjour Julie</p>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              {kpis.map(([label, value, note], i) => (
+                <div key={label} className={`rounded-xl border p-2.5 ${i === 0 ? "border-[#e94445]/50 bg-[#e94445]/15" : "border-white/[0.07] bg-white/[0.03]"}`}>
+                  <p className="text-[8px] font-semibold text-white/55">{label}</p>
+                  <p className="mt-1 text-[15px] font-extrabold tracking-[-0.02em] text-white">{value}</p>
+                  <p className={`mt-0.5 text-[8px] font-semibold ${i === 0 ? "text-[#ff8a8b]" : "text-white/40"}`}>{note}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-2 rounded-xl border border-white/[0.07] bg-white/[0.03] p-2.5">
+              <div className="flex items-center justify-between">
+                <p className="text-[9px] font-bold text-white">Chiffre d'affaires</p>
+                <span className="rounded-full bg-[#e94445] px-2 py-0.5 text-[8px] font-bold text-white">12 mois</span>
+              </div>
+              <svg viewBox="0 0 300 80" className="mt-1 h-[70px] w-full" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="dash-fill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stopColor="#e94445" stopOpacity="0.45" />
+                    <stop offset="1" stopColor="#e94445" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <path d="M0 62 C30 55 45 40 70 44 S110 60 135 46 S175 22 200 30 S240 12 260 16 S290 8 300 6 V80 H0Z" fill="url(#dash-fill)" />
+                <path d="M0 62 C30 55 45 40 70 44 S110 60 135 46 S175 22 200 30 S240 12 260 16 S290 8 300 6" fill="none" stroke="#e94445" strokeWidth="2.2" />
+                <path d="M0 70 C40 66 80 64 120 62 S200 58 300 52" fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth="1.4" strokeDasharray="4 4" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OfferHeroVisual({ offer }: { offer: CustomOffer }) {
+  if (offer.id === "menu") return <PhoneMenuMockup />;
+  if (offer.id === "webapp") return <DashboardMockup />;
+  if (offer.id === "motion")
+    return (
+      <div className="dark-island relative rounded-[26px] bg-[radial-gradient(110%_80%_at_50%_0%,#3a0d0f_0%,#160809_60%,#0c0506_100%)] p-5 shadow-[0_40px_90px_rgba(14,13,16,0.35)] sm:p-7">
+        <div className="-mt-8">
+          <MotionEditorUI />
+        </div>
+      </div>
+    );
+  return (
+    <div className="relative overflow-hidden rounded-[26px] shadow-[0_40px_90px_rgba(14,13,16,0.3)]">
+      <img src={offer.image} alt="" className="aspect-[4/5] w-full object-cover sm:aspect-[5/4]" />
+    </div>
+  );
+}
+
+function OfferHeading({ eyebrow, title, lead, center = false }: { eyebrow: string; title: [string, string]; lead?: string; center?: boolean }) {
+  return (
+    <div className={center ? "flex flex-col items-center text-center" : ""}>
+      <p className="scroll-reveal flex items-center gap-3 font-mono text-[12px] font-semibold uppercase tracking-[0.22em] text-[#e94445]">
+        <span aria-hidden="true" className="h-px w-10 bg-[#e94445]" />
+        {eyebrow}
+      </p>
+      <h3 className="mt-4 text-[38px] font-extrabold leading-[0.98] tracking-[-0.055em] text-[#0e0d10] sm:text-[52px] lg:text-[60px]">
+        <span className="scroll-reveal reveal-mask block">
+          <span className="reveal-line block">{title[0]}</span>
+        </span>
+        <span className="scroll-reveal reveal-mask block">
+          <span className="reveal-line block text-[#e94445]" style={{ transitionDelay: "120ms" }}>{title[1]}</span>
+        </span>
+      </h3>
+      {lead && (
+        <p className="scroll-reveal mt-4 max-w-[560px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#0e0d10]/60 sm:text-[15px]">
+          {lead}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function OfferCTAs({ onClose, light = false }: { onClose: () => void; light?: boolean }) {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <a
+        href={whatsappLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex h-14 flex-col items-center justify-center rounded-[16px] bg-[#e94445] px-6 leading-none text-white shadow-[0_14px_34px_rgba(233,68,69,0.35)] transition hover:-translate-y-0.5 hover:bg-[#d93a3b]"
+      >
+        <span className="text-[12px] font-semibold text-[rgba(255,255,255,0.88)]">Nous contacter</span>
+        <span className="mt-1 text-[17px] font-extrabold tabular-nums">{whatsappDisplay}</span>
+      </a>
+      <a
+        href="#contact-form"
+        onClick={onClose}
+        className={`inline-flex h-14 items-center gap-2 rounded-[16px] px-6 text-[15px] font-semibold transition hover:-translate-y-0.5 ${
+          light ? "bg-white text-[#0e0d10]" : "bg-[#0e0d10] text-white"
+        }`}
+      >
+        Être rappelé <ArrowIcon />
+      </a>
+    </div>
+  );
+}
+
+// Déroulé horizontal piloté par le scroll vertical de la page d'offre.
+function ScrollProcess({
+  page,
+  scroller,
+  onClose,
+}: {
+  page: OfferPage;
+  scroller: { current: HTMLDivElement | null };
+  onClose: () => void;
+}) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [distance, setDistance] = useState(0);
+  const [active, setActive] = useState(0);
+  const steps = page.process;
+
+  useEffect(() => {
+    const root = scroller.current;
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!root || !section || !track) return;
+    let frame = 0;
+    const measure = () => {
+      const first = track.children[0] as HTMLElement | undefined;
+      const last = track.children[steps.length - 1] as HTMLElement | undefined;
+      if (!first || !last) return;
+      const span = last.offsetLeft + last.offsetWidth / 2 - (first.offsetLeft + first.offsetWidth / 2);
+      setDistance(span);
+      return span;
+    };
+    let span = measure() ?? 0;
+    const update = () => {
+      frame = 0;
+      const rect = section.getBoundingClientRect();
+      const total = section.offsetHeight - root.clientHeight;
+      const progress = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
+      track.style.transform = `translate3d(${(-progress * span).toFixed(1)}px,0,0)`;
+      setActive(Math.round(progress * (steps.length - 1)));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    const onResize = () => {
+      span = measure() ?? span;
+      onScroll();
+    };
+    update();
+    root.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+    return () => {
+      root.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(frame);
+    };
+  }, [scroller, steps.length]);
+
+  return (
+    <section ref={sectionRef} className="relative" style={{ height: `calc(100dvh + ${Math.round(distance * 1.15)}px)` }}>
+      <div className="sticky top-0 flex h-[100dvh] flex-col justify-center overflow-hidden py-20">
+        <div className="mx-auto w-full max-w-[1160px] px-5 sm:px-8">
+          <OfferHeading eyebrow={page.processEyebrow} title={page.processTitle} lead={page.processLead} center />
+        </div>
+        <div className="relative mt-10">
+          <div aria-hidden="true" className="pointer-events-none absolute -top-4 bottom-[-16px] left-1/2 z-20 w-px -translate-x-1/2 bg-[#0e0d10]">
+            <span className="absolute -top-1 left-1/2 h-0 w-0 -translate-x-1/2 border-x-[6px] border-t-[8px] border-x-transparent border-t-[#0e0d10]" />
+          </div>
+          <div
+            ref={trackRef}
+            className="flex w-max gap-4 will-change-transform sm:gap-5"
+            style={{ paddingLeft: "calc(50vw - min(150px, 39vw))", paddingRight: "calc(50vw - min(150px, 39vw))" }}
+          >
+            {steps.map((step, index) => {
+              const isActive = index === active;
+              return (
+                <article
+                  key={step.title}
+                  className={`flex min-h-[250px] w-[min(300px,78vw)] shrink-0 flex-col rounded-[24px] border p-6 transition-[background-color,border-color,box-shadow,transform] duration-500 sm:min-h-[270px] sm:p-7 ${
+                    isActive
+                      ? "scale-[1.02] border-[#e94445]/50 bg-[linear-gradient(160deg,#fff_0%,#ffe9e9_100%)] shadow-[0_24px_60px_rgba(233,68,69,0.28)]"
+                      : "border-[#0e0d10]/[0.08] bg-white shadow-[0_14px_40px_rgba(14,13,16,0.06)]"
+                  }`}
+                >
+                  <span className="font-mono text-[12px] font-semibold text-[#0e0d10]/40">({String(index + 1).padStart(2, "0")})</span>
+                  <div className={`mt-6 transition-transform duration-500 ${isActive ? "scale-110" : ""}`} style={{ transformOrigin: "left" }}>
+                    {step.icon && <OfferIconBadge name={step.icon} />}
+                  </div>
+                  <h4 className="mt-5 text-[22px] font-extrabold tracking-[-0.04em] text-[#0e0d10]">{step.title}</h4>
+                  <p className="mt-2 text-[14px] leading-[1.6] text-[#0e0d10]/65">{step.text}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+        <div className="mt-10 flex justify-center px-5">
           <a
             href="#contact-form"
             onClick={onClose}
-            className="inline-flex items-center gap-2 rounded-full bg-[#e94445] px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-full bg-[#e94445] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(233,68,69,0.35)] transition hover:-translate-y-0.5"
           >
             Être rappelé <ArrowIcon />
           </a>
         </div>
+        <div aria-hidden="true" className="mx-auto mt-6 flex gap-1.5">
+          {steps.map((step, index) => (
+            <span key={step.title} className={`h-1.5 rounded-full transition-all duration-500 ${index === active ? "w-6 bg-[#e94445]" : "w-1.5 bg-[#0e0d10]/15"}`} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: number; onClose: () => void }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const page = offerPages[offer.id];
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    const previous = document.body.style.overflow;
+    const opener = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    closeRef.current?.focus({ preventScroll: true });
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+      opener?.focus({ preventScroll: true });
+    };
+  }, [onClose]);
+
+  // Apparitions au scroll, à l'intérieur de la page d'offre.
+  useEffect(() => {
+    const root = scrollerRef.current;
+    if (!root) return;
+    const elements = Array.from(root.querySelectorAll<HTMLElement>(".scroll-reveal"));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      elements.forEach((element) => element.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }),
+      { root, threshold: 0, rootMargin: "0px 0px -6% 0px" },
+    );
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [offer.id]);
+
+  return createPortal(
+    <div
+      ref={scrollerRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`offer-${offer.id}`}
+      className="offer-page fixed inset-0 z-[110] overflow-y-auto overflow-x-hidden overscroll-contain bg-[#f6f5f2] font-ui text-[#0e0d10]"
+    >
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 bg-[radial-gradient(60%_50%_at_85%_0%,rgba(233,68,69,0.14),transparent_70%),radial-gradient(50%_40%_at_0%_60%,rgba(233,68,69,0.08),transparent_70%)]" />
+      <div aria-hidden="true" className="offer-grid pointer-events-none fixed inset-0" />
+
+      {/* Barre du haut */}
+      <div className="sticky top-0 z-30 px-3 pt-3 sm:px-5 sm:pt-4">
+        <div className="mx-auto flex h-[60px] max-w-[1200px] items-center justify-between gap-3 rounded-[20px] border border-[#0e0d10]/[0.06] bg-white/80 px-3 shadow-[0_12px_32px_rgba(14,13,16,0.08)] backdrop-blur-xl sm:h-[68px] sm:px-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="inline-flex items-center gap-2 rounded-[12px] px-3 py-2 text-[14px] font-semibold text-[#0e0d10] transition hover:bg-[#0e0d10]/[0.05]"
+          >
+            <ArrowIcon className="h-4 w-4 rotate-180" /> Retour
+          </button>
+          <img src={upscreenLogoDark} alt="UpScreen" className="hidden h-auto w-[120px] sm:block" />
+          <button
+            ref={closeRef}
+            type="button"
+            onClick={onClose}
+            aria-label="Fermer"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0e0d10] text-white transition hover:bg-[#2a282d]"
+          >
+            <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M4 4l8 8M12 4l-8 8" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div className="relative">
+        {/* Hero */}
+        <section className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-5 pb-20 pt-14 sm:px-8 md:pt-20 lg:grid-cols-[1.05fr_1fr] lg:pb-28">
+          <div>
+            <p className="scroll-reveal flex items-center gap-3 font-mono text-[12px] font-semibold uppercase tracking-[0.22em] text-[#e94445]">
+              <span aria-hidden="true" className="h-px w-10 bg-[#e94445]" />
+              {page.eyebrow}
+            </p>
+            <h2 id={`offer-${offer.id}`} className="mt-5 text-[44px] font-extrabold uppercase leading-[0.9] tracking-[-0.06em] sm:text-[72px] lg:text-[88px]">
+              <span className="scroll-reveal reveal-mask -mt-[0.16em] block pt-[0.16em]">
+                <span className="reveal-line block">{page.title[0]}</span>
+              </span>
+              <span className="scroll-reveal reveal-mask -mt-[0.16em] block pt-[0.16em]">
+                <span className="reveal-line block text-[#e94445]" style={{ transitionDelay: "120ms" }}>{page.title[1]}</span>
+              </span>
+            </h2>
+            <p className="scroll-reveal mt-6 max-w-[520px] text-[17px] leading-[1.6] text-[#0e0d10]/70 sm:text-[19px]" style={{ transitionDelay: "240ms" }}>
+              {page.lead}
+            </p>
+            <div className="scroll-reveal mt-8" style={{ transitionDelay: "320ms" }}>
+              <OfferCTAs onClose={onClose} />
+            </div>
+            <p className="scroll-reveal mt-5 font-mono text-[12px] font-semibold text-[#0e0d10]/45">Sur devis · devis gratuit sous 48 h</p>
+          </div>
+          <div className="scroll-reveal" style={{ transitionDelay: "200ms" }}>
+            <OfferHeroVisual offer={offer} />
+          </div>
+        </section>
+
+        {/* Déroulé horizontal (vidéo, branding) */}
+        {page.processMode === "scroll" && <ScrollProcess page={page} scroller={scrollerRef} onClose={onClose} />}
+
+        {/* Ce qui est inclus */}
+        <section className="mx-auto w-full max-w-[1160px] px-5 py-20 sm:px-8 lg:py-24">
+          <OfferHeading eyebrow={page.includedEyebrow} title={page.includedTitle} />
+          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {page.feature && (
+              <article className="scroll-reveal dark-island relative isolate flex min-h-[340px] flex-col justify-end overflow-hidden rounded-[26px] bg-[#0b0a0b] p-7 text-white sm:col-span-2 lg:row-span-2">
+                <img src={offer.image} alt="" loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover" />
+                <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(10,10,11,0)_30%,rgba(10,10,11,0.9)_100%)]" />
+                <h4 className="text-[28px] font-extrabold tracking-[-0.045em]">{page.feature.title}</h4>
+                <p className="mt-2 max-w-[420px] text-[15px] leading-[1.6] text-white/75">{page.feature.text}</p>
+              </article>
+            )}
+            {page.included.map((item) => (
+              <article
+                key={item.title}
+                className="scroll-reveal dark-island tint-drift relative isolate flex min-h-[170px] flex-col overflow-hidden rounded-[26px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(110%_80%_at_100%_0%,rgba(233,68,69,0.28),transparent_60%)] p-6 text-white shadow-[0_24px_60px_rgba(14,13,16,0.16)]"
+              >
+                <OfferIconBadge name={item.icon} />
+                <h4 className="mt-auto pt-8 text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]">{item.title}</h4>
+                <p className="mt-2 text-[14px] leading-[1.55] text-white/70">{item.text}</p>
+              </article>
+            ))}
+            {page.highlight && (
+              <article className="scroll-reveal relative isolate flex min-h-[170px] flex-col overflow-hidden rounded-[26px] bg-[linear-gradient(140deg,#f0595a_0%,#e94445_45%,#b52a2c_100%)] p-6 text-white shadow-[0_24px_60px_rgba(233,68,69,0.35)]">
+                <p className="text-[76px] font-extrabold leading-[0.85] tracking-[-0.06em]">{page.highlight.big}</p>
+                <p className="mt-auto pt-6 text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]">{page.highlight.text}</p>
+              </article>
+            )}
+          </div>
+        </section>
+
+        {/* Comment ça marche (menu, web app) */}
+        {page.processMode === "grid" && (
+          <section className="mx-auto w-full max-w-[1160px] px-5 py-20 sm:px-8 lg:py-24">
+            <OfferHeading eyebrow={page.processEyebrow} title={page.processTitle} lead={page.processLead} />
+            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {page.process.map((step, index) => (
+                <article key={step.title} className="scroll-reveal rounded-[26px] border border-[#0e0d10]/[0.08] bg-white p-7 shadow-[0_14px_40px_rgba(14,13,16,0.06)]">
+                  <p className="offer-outline-number text-[76px] font-extrabold leading-none tracking-[-0.04em]">{String(index + 1).padStart(2, "0")}</p>
+                  <h4 className="mt-6 text-[22px] font-extrabold tracking-[-0.04em]">{step.title}</h4>
+                  <p className="mt-2 text-[14px] leading-[1.6] text-[#0e0d10]/65">{step.text}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Réalisations vidéo */}
+        {offer.videos && (
+          <section className="mx-auto w-full max-w-[1160px] px-5 py-20 sm:px-8 lg:py-24">
+            <OfferHeading eyebrow="Réalisations" title={["Quelques vidéos", "qu'on a animées."]} />
+            <div className="modal-videos dark-island mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
+              {motionVideos.map((video) => (
+                <MotionVideoCard key={video.mediaId} {...video} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Appel à l'action final */}
+        <section className="mx-auto w-full max-w-[1160px] px-5 pb-16 pt-6 sm:px-8">
+          <div className="scroll-reveal dark-island relative isolate overflow-hidden rounded-[30px] bg-[#0b0a0b] px-7 py-12 text-white sm:px-12 sm:py-16">
+            <PremiumBlobs />
+            <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="font-mono text-[12px] font-semibold uppercase tracking-[0.22em] text-[#ff8a8b]">Devis gratuit sous 48 h</p>
+                <h3 className="mt-3 text-[34px] font-extrabold leading-[1] tracking-[-0.05em] sm:text-[48px]">
+                  Parlons de votre projet.
+                </h3>
+                <p className="mt-3 max-w-[460px] text-[15px] leading-[1.6] text-white/70">
+                  On étudie votre besoin et on vous envoie une proposition claire, sans engagement.
+                </p>
+              </div>
+              <OfferCTAs onClose={onClose} light />
+            </div>
+          </div>
+        </section>
       </div>
     </div>,
     document.body,
