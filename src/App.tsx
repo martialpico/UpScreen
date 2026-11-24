@@ -3165,10 +3165,12 @@ function PhoneMenuMockup() {
     ["salmon", "Pavé de saumon", "Purée maison, asperges", "14,50 €"],
     ["salad", "Salade du marché", "Feta, tomates, noix", "11,00 €", "Végé"],
     ["burger", "Burger du Comptoir", "Cheddar affiné, oignons confits", "16,00 €"],
+    ["pasta", "Linguine aux cèpes", "Parmesan 24 mois", "15,00 €"],
+    ["steak", "Bavette grillée", "Frites fraîches, échalote", "18,00 €"],
     ["cake", "Fondant chocolat", "Framboises fraîches", "7,50 €"],
   ];
   return (
-    <div aria-hidden="true" className="hero-phone relative mx-auto w-[300px]">
+    <div aria-hidden="true" className="hero-phone relative mx-auto w-[286px]">
       <div className="absolute -inset-12 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(233,68,69,0.32),transparent)] blur-2xl" />
       {/* cadre titane */}
       <div className="relative rounded-[50px] bg-[linear-gradient(135deg,#9a989d_0%,#3c3b3f_16%,#1d1c1f_50%,#47454a_84%,#a3a1a6_100%)] p-[5px] shadow-[0_50px_100px_rgba(14,13,16,0.38),0_12px_30px_rgba(14,13,16,0.22)]">
@@ -3176,9 +3178,9 @@ function PhoneMenuMockup() {
         <span className="absolute -left-[3px] top-[155px] h-[52px] w-[3px] rounded-l bg-[#4a484d]" />
         <span className="absolute -right-[3px] top-[140px] h-[76px] w-[3px] rounded-r bg-[#4a484d]" />
         <div className="rounded-[45px] bg-black p-[4px]">
-          <div className="relative overflow-hidden rounded-[41px] bg-[#f2f2f7]" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif' }}>
+          <div className="relative overflow-hidden rounded-[41px] bg-[#f2f2f7]" style={{ aspectRatio: "9 / 19.5", fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif' }}>
             {/* photo de couverture */}
-            <div className="relative h-[150px]">
+            <div className="relative h-[140px]">
               <img src={cafePhoto} alt="" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0)_45%,rgba(0,0,0,0.15)_100%)]" />
               <div className="absolute left-1/2 top-[10px] h-[24px] w-[84px] -translate-x-1/2 rounded-full bg-black" />
@@ -3213,14 +3215,14 @@ function PhoneMenuMockup() {
             {/* plats */}
             <div className="mx-4 mb-7 mt-3 overflow-hidden rounded-[18px] bg-white">
               {items.map(([img, name, desc, price, tag], i) => (
-                <div key={name} className={`flex items-center gap-3 px-3 py-2.5 ${i ? "border-t border-black/[0.06]" : ""}`}>
-                  <div className="h-[46px] w-[46px] shrink-0 rounded-[12px] bg-cover bg-center" style={{ backgroundImage: `url(/menu/${img}.webp)` }} />
+                <div key={name} className={`flex items-center gap-2.5 px-2.5 py-2.5 ${i ? "border-t border-black/[0.06]" : ""}`}>
+                  <div className="h-[40px] w-[40px] shrink-0 rounded-[11px] bg-cover bg-center" style={{ backgroundImage: `url(/menu/${img}.webp)` }} />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-[12px] font-semibold tracking-[-0.01em] text-[#111]">{name}</p>
+                    <p className="truncate text-[11px] font-semibold tracking-[-0.015em] text-[#111]">{name}</p>
                     <p className="mt-0.5 truncate text-[10px] text-[#8a8a8e]">{desc}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[12px] font-bold text-[#111]">{price}</p>
+                    <p className="whitespace-nowrap text-[11px] font-bold text-[#111]">{price}</p>
                     {tag && <span className="mt-1 inline-block rounded-full bg-[#e8f6ea] px-1.5 py-0.5 text-[8px] font-bold text-[#1f8a3b]">{tag}</span>}
                   </div>
                 </div>
