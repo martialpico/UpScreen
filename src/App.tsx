@@ -91,7 +91,6 @@ const siteOffers: SiteOffer[] = [
     href: "#sur-mesure",
     features: [
       "Menu digital & QR codes",
-      "Web app sur mesure",
       "Vidéo de présentation en motion design",
       "Refonte graphique complète : logo, charte, supports",
     ],
@@ -2797,13 +2796,12 @@ const customServices: { icon: BrandIconName; title: string; body: string; points
   {
     icon: "qr",
     title: "Outils pour votre commerce",
-    body: "Des applications simples qui vous font gagner du temps chaque jour.",
+    body: "Des outils simples pour attirer et fidéliser vos clients.",
     points: [
-      "Menu digital et QR codes (avis Google, réseaux)",
+      "Menu digital modifiable en un clic",
+      "QR codes pour vos tables, votre vitrine et vos flyers",
+      "QR code d'avis Google",
       "Carte de fidélité digitale",
-      "Devis et factures depuis votre téléphone",
-      "Gestion des stocks et commandes fournisseurs",
-      "Et tout outil sur mesure pour votre activité",
     ],
   },
 ];
@@ -2838,19 +2836,6 @@ const customOffers: CustomOffer[] = [
       "QR codes pour vos tables, votre vitrine et vos flyers",
       "QR code d'avis : vos clients laissent un avis Google en un geste",
       "Carte de fidélité digitale",
-    ],
-  },
-  {
-    id: "webapp",
-    tag: "Web app",
-    title: "Web app sur mesure",
-    body: "Des outils pensés pour votre commerce, qui vous font gagner du temps chaque jour.",
-    image: `${import.meta.env.BASE_URL}sur-mesure/webapp.webp`,
-    details: [
-      "Devis et factures depuis votre téléphone",
-      "Gestion des stocks et des commandes fournisseurs",
-      "Réservations et prises de commande",
-      "Et tout outil sur mesure pour votre activité",
     ],
   },
   {
@@ -3797,12 +3782,12 @@ function CustomServices() {
         muted="qu'un site ?"
         aside={
           <AsideLead>
-            Outils, vidéo ou identité visuelle pour votre commerce : on étudie votre projet et on vous envoie un devis gratuit sous 48 h.
+            Menu digital, vidéo ou identité visuelle pour votre commerce : on étudie votre projet et on vous envoie un devis gratuit sous 48 h.
           </AsideLead>
         }
       />
 
-      <div ref={gridRef} className="stagger-grid mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div ref={gridRef} className="stagger-grid mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {customOffers.map((offer, index) => (
           <CustomOfferCard key={offer.id} offer={offer} index={index} onOpen={() => setOpenIndex(index)} />
         ))}
