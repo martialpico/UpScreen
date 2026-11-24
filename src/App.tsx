@@ -1529,7 +1529,13 @@ function Services() {
         eyebrow="Tarifs"
         title="Des tarifs transparents."
         muted="Payés une seule fois."
-        lead="Pas de devis interminable : un prix fixe, tout compris. Votre site vous appartient."
+        lead={
+          <>
+            Pas de devis interminable&nbsp;: un prix fixe, tout compris.
+            <br />
+            Votre site vous appartient.
+          </>
+        }
       />
       <CheckChips items={["Maquette gratuite", "Transfert gratuit"]} />
       <div className="mx-auto mt-16 grid max-w-[480px] gap-6 lg:max-w-none lg:grid-cols-3 lg:items-stretch">
