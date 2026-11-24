@@ -243,7 +243,7 @@ const faqs = [
   {
     question: "Proposez-vous d'autres services ?",
     answer:
-      "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, et des outils pour votre commerce : menu digital et QR codes, carte de fidélité, devis et factures, gestion des stocks.",
+      "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, et des outils pour votre commerce : menu digital, QR codes et carte de fidélité.",
   },
   {
     question: "Où êtes-vous basés ?",
