@@ -2135,78 +2135,20 @@ function HighlightedText({
 }
 
 function Process() {
-  const [revealedSteps, setRevealedSteps] = useState(() =>
-    processSteps.map(() => false),
-  );
-  const [showFinalStep, setShowFinalStep] = useState(false);
+  // Les étapes apparaissent et disparaissent avec le même système que le
+  // reste du site (classe .scroll-reveal observée dans App), dans les deux
+  // sens de défilement. Ici on ne pilote que la ligne de progression.
   const [scrollProgress, setScrollProgress] = useState(0);
   const timelineRef = useRef<HTMLDivElement>(null);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (prefersReducedMotion) {
-      setRevealedSteps(processSteps.map(() => true));
-      setShowFinalStep(true);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setScrollProgress(1);
       return;
     }
 
-    let previousScrollY = window.scrollY;
-    let isScrollingUp = false;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const index = Number(
-            (entry.target as HTMLElement).dataset.stepIndex,
-          );
-
-          if (!entry.isIntersecting) {
-            const exitedBelow =
-              entry.boundingClientRect.top > window.innerHeight * 0.52;
-
-            if (isScrollingUp && exitedBelow) {
-              setRevealedSteps((current) =>
-                current.map((isRevealed, stepIndex) =>
-                  stepIndex === index ? false : isRevealed,
-                ),
-              );
-
-              if (index === processSteps.length - 1) {
-                setShowFinalStep(false);
-              }
-            }
-            return;
-          }
-
-          setRevealedSteps((current) =>
-            current.map((isRevealed, stepIndex) =>
-              stepIndex === index ? true : isRevealed,
-            ),
-          );
-
-          if (index === processSteps.length - 1) {
-            setShowFinalStep(true);
-          }
-        });
-      },
-      { threshold: 0.2, rootMargin: "0px 0px -42% 0px" },
-    );
-
-    stepRefs.current.forEach((step) => {
-      if (step) observer.observe(step);
-    });
-
     let animationFrame = 0;
     const updateProgress = () => {
-      const currentScrollY = window.scrollY;
-      isScrollingUp = currentScrollY < previousScrollY;
-      previousScrollY = currentScrollY;
-
       cancelAnimationFrame(animationFrame);
       animationFrame = requestAnimationFrame(() => {
         const timeline = timelineRef.current;
@@ -2227,7 +2169,6 @@ function Process() {
     window.addEventListener("resize", updateProgress);
 
     return () => {
-      observer.disconnect();
       cancelAnimationFrame(animationFrame);
       window.removeEventListener("scroll", updateProgress);
       window.removeEventListener("resize", updateProgress);
@@ -2253,15 +2194,12 @@ function Process() {
         <div className="space-y-10 sm:space-y-0">
           {processSteps.map((step, index) => {
             const isLeft = step.side === "left";
-            const isRevealed = revealedSteps[index];
             return (
               <div
                 key={step.title}
-                ref={(element) => {
-                  stepRefs.current[index] = element;
-                }}
                 data-step-index={index}
-                className={`relative grid min-h-[170px] grid-cols-[32px_1fr] gap-4 sm:grid-cols-[1fr_56px_1fr] sm:gap-3 ${
+                data-side={isLeft ? "left" : "right"}
+                className={`scroll-reveal step-row relative grid min-h-[170px] grid-cols-[32px_1fr] gap-4 sm:grid-cols-[1fr_56px_1fr] sm:gap-3 ${
                   index > 0 ? "sm:-mt-40" : ""
                 }`}
               >
@@ -2272,25 +2210,11 @@ function Process() {
                       : "sm:col-start-3 sm:text-left"
                   } relative col-start-2 row-start-1 text-left`}
                 >
-                  <div
-                    className={`transition-[opacity,transform] duration-700 ease-out ${
-                      isRevealed
-                        ? "translate-y-0 opacity-100 sm:translate-x-0"
-                        : isLeft
-                          ? "translate-y-6 opacity-0 sm:-translate-x-8"
-                          : "translate-y-6 opacity-0 sm:translate-x-8"
-                    }`}
-                  >
+                  <div className="step-anim">
                     <StepVisual title={step.title} isLeft={isLeft} />
                   </div>
                   <article
-                    className={`dark-island relative isolate z-10 -mt-8 overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] p-6 shadow-[0_30px_70px_rgba(233,68,69,0.18)] transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-8 ${
-                      isRevealed
-                        ? "translate-y-0 opacity-100 sm:translate-x-0"
-                        : isLeft
-                          ? "translate-y-8 opacity-0 sm:-translate-x-8"
-                          : "translate-y-8 opacity-0 sm:translate-x-8"
-                    }`}
+                    className="dark-island relative isolate z-10 -mt-8 overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] p-6 shadow-[0_30px_70px_rgba(233,68,69,0.18)] step-anim step-anim-late sm:mx-4 sm:p-8"
                   >
                     <PremiumBlobs />
                     <div aria-hidden="true" className="absolute inset-0 -z-[5] bg-[linear-gradient(180deg,rgba(11,10,11,0.35),rgba(11,10,11,0.75))]" />
@@ -2317,21 +2241,13 @@ function Process() {
                     </p>
                   </article>
                 </div>
-                <span
-                  className={`col-start-1 row-start-1 mt-7 h-5 w-5 justify-self-center rounded-full border-4 border-onyx transition-all duration-500 sm:col-start-2 sm:h-6 sm:w-6 ${
-                    isRevealed
-                      ? "scale-100 bg-brand shadow-[0_4px_14px_rgba(233,68,69,0.45)] ring-1 ring-brand"
-                      : "scale-75 bg-graphite ring-1 ring-white/15"
-                  }`}
-                />
+                <span className="step-dot col-start-1 row-start-1 mt-7 h-5 w-5 justify-self-center rounded-full border-4 border-onyx sm:col-start-2 sm:h-6 sm:w-6" />
               </div>
             );
           })}
         </div>
         <div
-          className={`relative isolate z-10 mx-auto mt-12 flex max-w-[720px] flex-col items-center overflow-hidden rounded-[28px] border border-white/10 dark-island bg-[#0b0a0b] px-6 py-10 text-center shadow-[0_40px_90px_rgba(233,68,69,0.22)] transition-[opacity,transform] duration-700 sm:px-12 ${
-            showFinalStep ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-          }`}
+          className={`scroll-reveal relative isolate z-10 mx-auto mt-12 flex max-w-[720px] flex-col items-center overflow-hidden rounded-[28px] border border-white/10 dark-island bg-[#0b0a0b] px-6 py-10 text-center shadow-[0_40px_90px_rgba(233,68,69,0.22)] sm:px-12`}
         >
           <PremiumBlobs />
           <div className="absolute inset-0 -z-[5] bg-[linear-gradient(180deg,rgba(11,10,11,0.3),rgba(11,10,11,0.7))]" />

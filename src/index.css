@@ -544,6 +544,51 @@
     transform: translateY(-105%);
   }
 
+  /* Méthode : la rangée sert de déclencheur, visuel puis carte glissent
+     depuis leur côté de la frise, et le point s'allume. */
+  .scroll-reveal.step-row,
+  .scroll-reveal.step-row[data-exit="top"]:not(.is-visible) {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  .step-row { --sx: 0px; }
+  @media (min-width: 640px) {
+    .step-row[data-side="left"] { --sx: -48px; }
+    .step-row[data-side="right"] { --sx: 48px; }
+  }
+  .step-row .step-anim {
+    opacity: 0;
+    transform: translate(var(--sx), 36px) scale(0.97);
+    filter: blur(8px);
+    transition:
+      opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .step-row .step-anim-late { transition-delay: 120ms; }
+  .step-row[data-exit="top"]:not(.is-visible) .step-anim {
+    transform: translate(var(--sx), -36px) scale(0.97);
+  }
+  .step-row.is-visible .step-anim {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .step-dot {
+    scale: 0.75;
+    background: var(--color-graphite);
+    box-shadow: 0 0 0 1px rgba(127, 127, 127, 0.25);
+    transition: scale 500ms cubic-bezier(0.34, 1.56, 0.64, 1), background-color 400ms ease, box-shadow 400ms ease;
+  }
+  .step-row.is-visible .step-dot {
+    scale: 1;
+    background: var(--color-brand);
+    box-shadow: 0 0 0 1px var(--color-brand), 0 4px 14px rgba(233, 68, 69, 0.45);
+    transition-delay: 150ms;
+  }
+
   /* Cascade : les éléments voisins apparaissent l'un après l'autre. */
   .scroll-reveal:nth-child(2) { transition-delay: 90ms; }
   .scroll-reveal:nth-child(3) { transition-delay: 180ms; }
@@ -587,6 +632,7 @@
   @media (prefers-reduced-motion: reduce) {
     .scroll-reveal,
     .reveal-mask .reveal-line,
+    .step-row .step-anim,
     .scroll-reveal.reveal-pop {
       opacity: 1;
       transform: none;
