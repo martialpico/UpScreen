@@ -1,6 +1,7 @@
 // Illustrations HTML/CSS des cartes « Menu digital ».
 // Unité : 1em = largeur de la carte / 32 (voir .mv-in dans index.css).
 import type { ComponentChildren } from "preact";
+import upscreenIcon from "./imports/upscreen-icon.svg";
 
 type S = Record<string, string | number>;
 const IMG = (k: string) => `url(/menu/${k}.webp)`;
@@ -541,32 +542,35 @@ export function OfferFeatureVisual({ id }: { id: string }) {
   );
 }
 
-/* QR code personnalisé : modules arrondis, couleur de marque, logo au centre */
+/* QR code personnalisé : modules arrondis, yeux à la couleur de marque, logo UpScreen au centre */
 export function BrandQR() {
-  const n = 25;
-  let x = 424242;
+  const n = 29;
+  let x = 98765;
   const rnd = () => ((x = (x * 16807) % 2147483647) / 2147483647);
   const finder = (r: number, c: number) => [[0, 0], [0, n - 7], [n - 7, 0]].some(([fr, fc]) => r >= fr - 1 && r < fr + 8 && c >= fc - 1 && c < fc + 8);
-  const center = (r: number, c: number) => r >= 9 && r <= 15 && c >= 9 && c <= 15;
+  const mid = (n - 1) / 2;
+  const center = (r: number, c: number) => Math.abs(r - mid) <= 4 && Math.abs(c - mid) <= 4;
+  const on = Array.from({ length: n }, (_, r) => Array.from({ length: n }, (_, c) => !finder(r, c) && !center(r, c) && rnd() > 0.52));
+  // lignes de synchronisation
+  for (let k = 8; k < n - 8; k++) { on[6][k] = k % 2 === 0; on[k][6] = k % 2 === 0; }
   const dots: preact.JSX.Element[] = [];
   for (let r = 0; r < n; r++)
-    for (let c = 0; c < n; c++) {
-      if (finder(r, c) || center(r, c)) continue;
-      if (rnd() > 0.5) dots.push(<circle key={`${r}-${c}`} cx={c + 0.5} cy={r + 0.5} r="0.42" />);
-    }
+    for (let c = 0; c < n; c++) if (on[r][c]) dots.push(<rect key={`${r}-${c}`} x={c + 0.08} y={r + 0.08} width="0.84" height="0.84" rx="0.32" />);
   const eye = (r: number, c: number) => (
     <g key={`e${r}${c}`}>
-      <rect x={c + 0.5} y={r + 0.5} width="6" height="6" rx="1.9" fill="none" stroke="currentColor" strokeWidth="1" />
-      <rect x={c + 2} y={r + 2} width="3" height="3" rx="0.9" />
+      <rect x={c + 0.5} y={r + 0.5} width="6" height="6" rx="2" fill="none" stroke="#e94445" strokeWidth="1" />
+      <rect x={c + 2} y={r + 2} width="3" height="3" rx="1" fill="#e94445" />
     </g>
   );
   return (
-    <div style={{ position: "relative", width: "100%", aspectRatio: "1", background: "#fff", borderRadius: "18%", padding: "9%", boxShadow: "0 18px 40px rgba(80,10,10,0.35)" }}>
-      <svg viewBox={`0 0 ${n} ${n}`} style={{ display: "block", width: "100%", height: "100%", color: "#b52a2c" }} fill="currentColor">
-        {dots}
+    <div style={{ position: "relative", width: "100%", aspectRatio: "1", background: "#fff", borderRadius: "16%", padding: "8%", boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 22px 44px rgba(90,10,12,0.38)" }}>
+      <svg viewBox={`0 0 ${n} ${n}`} style={{ display: "block", width: "100%", height: "100%" }} shapeRendering="geometricPrecision">
+        <g fill="#1d1517">{dots}</g>
         {eye(0, 0)}{eye(0, n - 7)}{eye(n - 7, 0)}
       </svg>
-      <div style={{ position: "absolute", left: "50%", top: "50%", width: "24%", height: "24%", transform: "translate(-50%,-50%)", borderRadius: "28%", background: "linear-gradient(145deg,#f26a5c,#e94445 55%,#b8302f)", boxShadow: "0 0 0 4px #fff", display: "grid", placeItems: "center", color: "#fff", fontFamily: "Georgia, serif", fontStyle: "italic", fontWeight: 700, fontSize: "clamp(14px, 3.2vw, 24px)" }}>C</div>
+      <div style={{ position: "absolute", left: "50%", top: "50%", width: "27%", height: "27%", transform: "translate(-50%,-50%)", borderRadius: "26%", background: "#fff", padding: "3.5%", boxShadow: "0 2px 8px rgba(0,0,0,0.12)" }}>
+        <img src={upscreenIcon} alt="" style={{ display: "block", width: "100%", height: "100%" }} />
+      </div>
     </div>
   );
 }

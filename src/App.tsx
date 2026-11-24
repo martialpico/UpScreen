@@ -3676,7 +3676,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
                 {page.highlight.qr ? (
                   <>
                     <div className="flex flex-1 items-center justify-center py-2">
-                      <div className="mv-float w-[62%] max-w-[180px]"><BrandQR /></div>
+                      <div className="mv-float w-[70%] max-w-[200px]"><BrandQR /></div>
                     </div>
                     <p className="pt-4 text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]">{page.highlight.text}</p>
                     <p className="mt-2 text-[14px] leading-[1.55] text-white/80">Avec votre logo au centre.</p>
