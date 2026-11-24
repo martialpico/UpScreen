@@ -124,269 +124,144 @@ function MenuApp({ list = ["salmon", "salad", "steak", "pasta"] as DishKey[], hl
   );
 }
 
-/* ---------- 0 — À votre image ---------- */
+/* Visuels minimalistes : un seul élément, grand et lisible. */
+const card: S = { position: "absolute", background: "#fff", borderRadius: "1.4em", boxShadow: "0 0.3em 0.8em rgba(0,0,0,0.25), 0 2em 4em rgba(0,0,0,0.55)" };
+const check = (c = "#fff") => (
+  <svg width="55%" height="55%" viewBox="0 0 12 12"><path d="M2.5 6.2 5 8.6l4.6-5" fill="none" stroke={c} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+);
+
+/* 0 — À votre image */
 function V0() {
-  const colors = ["#e94445", "#1f3a2e", "#c8873a", "#2b2b2e", "#4b5bd6"];
+  const colors = ["#e94445", "#1f3a2e", "#c8873a", "#2b2b2e"];
+  const fonts = [["Aa", "Georgia, serif"], ["Aa", "inherit"], ["Aa", "'Courier New', monospace"]];
   return (
-    <>
-      <Phone style={{ left: "15.6em", top: "2.4em", width: "14.4em", height: "30em" }}>
-        <MenuApp serif />
-      </Phone>
-      <div className="mv-sheet" style={{ left: "1.8em", top: "4.6em", width: "15.4em", padding: "0.95em 1em" }}>
-        <div className="mv-h" style={{ fontSize: "0.8em" }}>Votre identité</div>
-        <div className="mv-sub" style={{ fontSize: "0.5em", marginTop: "0.3em" }}>Couleur principale</div>
-        <div className="mv-row" style={{ gap: "0.5em", marginTop: "0.5em" }}>
-          {colors.map((c, i) => (
-            <span key={c} style={{ width: "1.55em", height: "1.55em", borderRadius: "50%", background: c, display: "grid", placeItems: "center", boxShadow: i === 0 ? `0 0 0 0.14em #fff, 0 0 0 0.27em ${c}` : "inset 0 0 0 0.06em rgba(0,0,0,0.1)" }}>
-              {i === 0 && <svg width="0.8em" height="0.8em" viewBox="0 0 12 12"><path d="M2.5 6.2 5 8.6l4.6-5" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
-            </span>
-          ))}
-        </div>
-        <div className="mv-sub" style={{ fontSize: "0.5em", marginTop: "0.9em" }}>Typographie</div>
-        <div className="mv-seg" style={{ marginTop: "0.45em", fontSize: "0.52em" }}>
-          <span>Moderne</span>
-          <span className="on" style={{ fontFamily: "Georgia, serif" }}>Bistrot</span>
-          <span style={{ fontFamily: "'Courier New', monospace" }}>Brut</span>
-        </div>
-        <div className="mv-row" style={{ marginTop: "0.85em", padding: "0.5em 0.6em", borderRadius: "0.7em", background: "#f2f2f7" }}>
-          <Logo size={1.5} radius={0.4} />
-          <div style={{ flex: 1 }}>
-            <div className="mv-h" style={{ fontSize: "0.52em" }}>logo-bellevue.png</div>
-            <div className="mv-sub" style={{ fontSize: "0.42em", marginTop: "0.2em" }}>Importé</div>
-          </div>
-          <span style={{ fontSize: "0.5em", color: RED, fontWeight: 600 }}>Changer</span>
-        </div>
+    <div style={{ ...card, left: "5em", top: "3em", width: "22em", padding: "1.6em 1.8em" }}>
+      <div className="mv-row" style={{ justifyContent: "space-between" }}>
+        {colors.map((c, i) => (
+          <span key={c} style={{ width: "3.4em", height: "3.4em", borderRadius: "50%", background: c, display: "grid", placeItems: "center", boxShadow: i === 0 ? `0 0 0 0.25em #fff, 0 0 0 0.5em ${c}` : undefined }}>{i === 0 && check()}</span>
+        ))}
       </div>
-    </>
+      <div className="mv-row" style={{ justifyContent: "space-between", marginTop: "1.4em" }}>
+        {fonts.map(([t, f], i) => (
+          <span key={f} style={{ flex: 1, margin: i === 1 ? "0 0.6em" : 0, padding: "0.45em 0", textAlign: "center", borderRadius: "0.7em", fontSize: "1.5em", fontWeight: 700, fontFamily: f, background: i === 0 ? "#111" : "#f2f2f7", color: i === 0 ? "#fff" : "#111" }}>{t}</span>
+        ))}
+      </div>
+    </div>
   );
 }
 
-/* ---------- 1 — Modifiable à tout moment ---------- */
+/* 1 — Modifiable à tout moment */
 function V1() {
   return (
-    <>
-      <Phone style={{ left: "19.4em", top: "3.4em", width: "14.4em", height: "30em" }}>
-        <MenuApp hl="salmon" priceOverride={{ salmon: "15,50 €" }} />
-      </Phone>
-      <div className="mv-sheet" style={{ left: "1.6em", top: "3em", width: "18.6em", padding: "0.9em 1em 1em", background: "#f2f2f7" }}>
-        <div className="mv-row" style={{ justifyContent: "space-between", fontSize: "0.55em" }}>
-          <span style={{ color: RED }}>Annuler</span>
-          <span className="mv-h" style={{ fontSize: "1.15em" }}>Modifier le plat</span>
-          <span style={{ color: RED, fontWeight: 700 }}>OK</span>
-        </div>
-        <div className="mv-row" style={{ marginTop: "0.8em", gap: "0.8em" }}>
-          <div className="mv-photo" style={{ width: "4.6em", height: "4.6em", borderRadius: "0.9em", backgroundImage: IMG("salmon"), boxShadow: "0 0.3em 0.8em rgba(0,0,0,0.18)" }} />
-          <div style={{ flex: 1 }}>
-            <div className="mv-h" style={{ fontSize: "0.78em" }}>Pavé de saumon</div>
-            <div className="mv-sub" style={{ fontSize: "0.5em", marginTop: "0.3em" }}>Purée maison, asperges vertes, beurre citronné</div>
-          </div>
-        </div>
-        <div className="mv-group" style={{ marginTop: "0.8em", fontSize: "0.58em" }}>
-          <div className="mv-row" style={{ justifyContent: "space-between", padding: "0.75em 0.9em" }}>
-            <span>Prix</span>
-            <span className="mv-row" style={{ gap: "0.4em" }}>
-              <span className="mv-sub" style={{ textDecoration: "line-through" }}>14,50 €</span>
-              <span style={{ fontWeight: 700, color: RED }}>15,50 €<span style={{ display: "inline-block", width: "0.09em", height: "1em", background: RED, marginLeft: "0.1em", verticalAlign: "-0.15em" }} /></span>
-            </span>
-          </div>
-          <div className="mv-sep" />
-          <div className="mv-row" style={{ justifyContent: "space-between", padding: "0.6em 0.9em" }}>
-            <span>Disponible aujourd'hui</span>
-            <span className="mv-toggle" />
-          </div>
-          <div className="mv-sep" />
-          <div className="mv-row" style={{ justifyContent: "space-between", padding: "0.75em 0.9em" }}>
-            <span>Catégorie</span>
-            <span className="mv-sub">Plats ›</span>
-          </div>
+    <div className="mv-row" style={{ ...card, left: "3.4em", top: "4.6em", width: "25.2em", padding: "1.1em", gap: "1em" }}>
+      <div className="mv-photo" style={{ width: "6em", height: "6em", borderRadius: "1em", backgroundImage: IMG("salmon") }} />
+      <div style={{ flex: 1 }}>
+        <div className="mv-h" style={{ fontSize: "1.05em" }}>Pavé de saumon</div>
+        <div className="mv-row" style={{ gap: "0.5em", marginTop: "0.5em" }}>
+          <span className="mv-sub" style={{ fontSize: "0.9em", textDecoration: "line-through" }}>14,50 €</span>
+          <span className="mv-h" style={{ fontSize: "1.25em", color: RED }}>15,50 €</span>
         </div>
       </div>
-      <div className="mv-a mv-row" style={{ left: "4.4em", top: "29.8em", padding: "0.55em 0.95em", borderRadius: "99em", background: "rgba(28,28,30,0.92)", color: "#fff", fontSize: "0.58em", fontWeight: 600, boxShadow: "0 0.8em 1.6em rgba(0,0,0,0.4)" }}>
-        <span style={{ width: "1.3em", height: "1.3em", borderRadius: "50%", background: "#34c759", display: "grid", placeItems: "center" }}>
-          <svg width="0.75em" height="0.75em" viewBox="0 0 12 12"><path d="M2.5 6.2 5 8.6l4.6-5" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </span>
-        En ligne sur votre carte
-      </div>
-    </>
+      <span className="mv-toggle" style={{ fontSize: "1.3em" }} />
+    </div>
   );
 }
 
-/* ---------- 2 — Sans réimpression ---------- */
+/* 2 — Sans réimpression */
 function V2() {
-  const lines: [string, string, string?][] = [["Pavé de saumon", "14,50"], ["Bavette grillée", "17,00", "18,00"], ["Linguine aux cèpes", "15,00"], ["Salade du marché", "11,00"], ["Fondant chocolat", "7,50"]];
+  const badge = (ok: boolean) => (
+    <span style={{ position: "absolute", right: "-0.8em", top: "-0.8em", width: "2.4em", height: "2.4em", borderRadius: "50%", background: ok ? "#34c759" : RED, display: "grid", placeItems: "center", boxShadow: "0 0.3em 0.8em rgba(0,0,0,0.35)" }}>
+      {ok ? check() : <svg width="45%" height="45%" viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" /></svg>}
+    </span>
+  );
   return (
     <>
-      <div className="mv-a mv-shadow" style={{ left: "1.6em", top: "4.2em", width: "14.4em", height: "19em", padding: "1.2em", background: "linear-gradient(170deg,#fbf7ef,#efe7d8)", borderRadius: "0.25em", transform: "rotate(-5deg)", fontFamily: "Georgia, 'Times New Roman', serif", color: "#3b2f25" }}>
-        <div style={{ textAlign: "center", fontSize: "0.9em", fontStyle: "italic", fontWeight: 700 }}>Bistrot Bellevue</div>
-        <div style={{ textAlign: "center", fontSize: "0.42em", letterSpacing: "0.3em", marginTop: "0.3em", color: "#8a7560" }}>— LA CARTE —</div>
-        {lines.map(([n, p, newp]) => (
-          <div key={n} className="mv-row" style={{ marginTop: "0.75em", fontSize: "0.55em", justifyContent: "space-between", gap: "0.3em" }}>
-            <span>{n}</span>
-            <span style={{ flex: 1, borderBottom: "0.1em dotted #b9a88f", transform: "translateY(-0.25em)" }} />
-            <span style={{ position: "relative" }}>
-              <span style={newp ? { textDecoration: "line-through", textDecorationColor: "#1d4ed8", textDecorationThickness: "0.12em" } : undefined}>{p}</span>
-              {newp && <span style={{ position: "absolute", right: "-0.4em", top: "-1.2em", fontFamily: "'Bradley Hand', 'Segoe Print', cursive", color: "#1d4ed8", fontSize: "1.1em", transform: "rotate(-8deg)" }}>{newp}</span>}
-            </span>
-          </div>
-        ))}
-        <div style={{ marginTop: "1.2em", width: "2.4em", height: "2.4em", borderRadius: "50%", border: "0.1em solid rgba(120,80,40,0.25)", opacity: 0.6 }} />
+      <div style={{ ...card, left: "4.4em", top: "4em", width: "8.6em", height: "11.4em", borderRadius: "0.5em", background: "#f3ede2", padding: "1.2em 1em", opacity: 0.9 }}>
+        {[70, 100, 85, 100, 60, 90].map((w, i) => <div key={i} style={{ height: "0.45em", width: `${w}%`, background: "#d6cbb8", borderRadius: "1em", marginTop: i ? "0.9em" : 0 }} />)}
+        {badge(false)}
       </div>
-      <Phone style={{ left: "16.6em", top: "2.6em", width: "14.4em", height: "30em" }}>
-        <MenuApp list={["salmon", "steak", "pasta", "salad"]} hl="steak" />
-      </Phone>
+      <svg className="mv-a" style={{ left: "14.2em", top: "8.6em", width: "3.4em", height: "2em" }} viewBox="0 0 34 20"><path d="M2 10h26M21 3l8 7-8 7" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <div style={{ position: "absolute", left: "19em", top: "2.6em", width: "8.4em", height: "14.4em", borderRadius: "1.5em", background: "#111", padding: "0.3em", boxShadow: "0 2em 4em rgba(0,0,0,0.55), inset 0 0 0 0.12em #555" }}>
+        <div style={{ height: "100%", borderRadius: "1.25em", background: "#fff", padding: "1.6em 0.8em 0" }}>
+          {["salmon", "steak", "salad"].map((k) => (
+            <div key={k} className="mv-row" style={{ marginBottom: "0.7em", gap: "0.45em" }}>
+              <div className="mv-photo" style={{ width: "2em", height: "2em", borderRadius: "0.5em", backgroundImage: IMG(k) }} />
+              <div style={{ flex: 1, height: "0.45em", background: "#e6e6ea", borderRadius: "1em" }} />
+            </div>
+          ))}
+        </div>
+        {badge(true)}
+      </div>
     </>
   );
 }
 
-/* ---------- 3 — QR code d'avis Google ---------- */
+/* 3 — QR code d'avis Google */
 function V3() {
   return (
-    <>
-      <Phone style={{ left: "1.8em", top: "2.4em", width: "14.4em", height: "30em" }} bg="#fff">
-        <div style={{ padding: "0.6em 1em 0", textAlign: "center" }}>
-          <div style={{ display: "flex", justifyContent: "center" }}><Logo size={2.6} radius={0.8} /></div>
-          <div className="mv-h" style={{ fontSize: "0.82em", marginTop: "0.6em" }}>Bistrot Bellevue</div>
-          <div className="mv-sub" style={{ fontSize: "0.5em", marginTop: "0.3em" }}>Comment s'est passé votre repas ?</div>
-          <div className="mv-star" style={{ fontSize: "1.55em", marginTop: "0.45em", letterSpacing: "0.05em" }}>★★★★★</div>
-          <div style={{ marginTop: "0.6em", minHeight: "4em", borderRadius: "0.75em", background: "#f2f2f7", textAlign: "left", padding: "0.7em 0.8em", fontSize: "0.5em", lineHeight: 1.45, color: "#333" }}>
-            Accueil adorable et le saumon était parfait. On reviendra !<span style={{ display: "inline-block", width: "0.1em", height: "1.1em", background: RED, verticalAlign: "-0.2em" }} />
-          </div>
-          <div className="mv-cta" style={{ marginTop: "0.7em", fontSize: "0.58em" }}>Publier sur Google</div>
+    <div className="mv-row" style={{ ...card, left: "3.6em", top: "4.2em", width: "24.8em", padding: "1.3em 1.4em", gap: "1.2em" }}>
+      <div style={{ flex: 1 }}>
+        <div className="mv-row" style={{ gap: "0.4em", alignItems: "baseline" }}>
+          <span className="mv-h" style={{ fontSize: "2.6em" }}>4,9</span>
+          <span className="mv-sub" style={{ fontSize: "0.85em" }}>/ 5</span>
         </div>
-      </Phone>
-      <div className="mv-sheet" style={{ left: "17.4em", top: "4.2em", width: "13em", padding: "0.85em 0.9em" }}>
-        <div className="mv-row" style={{ gap: "0.5em" }}>
-          <span style={{ width: "1.8em", height: "1.8em", borderRadius: "50%", background: "linear-gradient(135deg,#7c9cff,#4b5bd6)", color: "#fff", display: "grid", placeItems: "center", fontSize: "0.62em", fontWeight: 700 }}>CL</span>
-          <div>
-            <div className="mv-h" style={{ fontSize: "0.56em" }}>Camille L.</div>
-            <div className="mv-sub" style={{ fontSize: "0.44em", marginTop: "0.15em" }}>Local Guide · il y a 2 jours</div>
-          </div>
-        </div>
-        <div className="mv-star" style={{ fontSize: "0.7em", marginTop: "0.5em" }}>★★★★★</div>
-        <div style={{ fontSize: "0.5em", lineHeight: 1.45, marginTop: "0.35em", color: "#333" }}>Super adresse, la carte en ligne est très pratique.</div>
+        <div className="mv-star" style={{ fontSize: "1.5em", letterSpacing: "0.04em", marginTop: "0.1em" }}>★★★★★</div>
+        <div className="mv-sub" style={{ fontSize: "0.8em", marginTop: "0.3em" }}>128 avis Google</div>
       </div>
-      <div className="mv-a mv-shadow" style={{ left: "19.4em", top: "11.6em", width: "8.8em", padding: "0.7em", background: "#fff", borderRadius: "0.9em", textAlign: "center" }}>
-        <div style={{ width: "7.4em", height: "7.4em" }}><QR seed={3} /></div>
-        <div className="mv-h" style={{ fontSize: "0.5em", marginTop: "0.45em" }}>Laissez-nous un avis</div>
-        <div className="mv-star" style={{ fontSize: "0.5em", marginTop: "0.2em" }}>★★★★★</div>
-      </div>
-    </>
+      <div style={{ width: "7.4em", height: "7.4em" }}><QR seed={3} /></div>
+    </div>
   );
 }
 
-/* ---------- 4 — Carte de fidélité digitale ---------- */
+/* 4 — Carte de fidélité digitale */
 function V4() {
-  const label = { display: "block", fontSize: "0.38em", letterSpacing: "0.12em", opacity: 0.6 };
   return (
-    <>
-      <div className="mv-a mv-shadow" style={{ left: "5.2em", top: "5.4em", width: "21.6em", borderRadius: "1.1em", overflow: "hidden", background: "linear-gradient(160deg,#3a2a22,#1e1612)", color: "#fff" }}>
-        <div className="mv-row" style={{ justifyContent: "space-between", padding: "0.8em 0.95em 0" }}>
-          <span className="mv-row" style={{ gap: "0.45em" }}>
-            <Logo size={1.5} radius={0.45} />
-            <span className="mv-h" style={{ fontSize: "0.68em" }}>Café Bellevue</span>
-          </span>
-          <span style={{ textAlign: "right" }}>
-            <span style={label}>TAMPONS</span>
-            <span className="mv-h" style={{ fontSize: "0.85em" }}>7 / 10</span>
-          </span>
-        </div>
-        <div style={{ position: "relative", marginTop: "0.75em", height: "6.6em", backgroundImage: IMG("latte"), backgroundSize: "cover", backgroundPosition: "center 40%" }}>
-          <div className="mv-a" style={{ inset: 0, background: "linear-gradient(180deg,rgba(30,22,18,0.15),rgba(30,22,18,0.6))" }} />
-          <div className="mv-a" style={{ left: "0.95em", right: "0.95em", bottom: "0.75em", display: "grid", gridTemplateColumns: "repeat(10,1fr)", gap: "0.35em" }}>
-            {Array.from({ length: 10 }, (_, i) => (
-              <span key={i} style={{ aspectRatio: "1", borderRadius: "50%", background: i < 7 ? "#fff" : "rgba(255,255,255,0.12)", border: i < 7 ? "none" : "0.08em dashed rgba(255,255,255,0.7)", display: "grid", placeItems: "center", boxShadow: i < 7 ? "0 0.15em 0.35em rgba(0,0,0,0.3)" : undefined }}>
-                {i < 7 && <svg width="55%" height="55%" viewBox="0 0 16 16"><path d="M3 6h8v3.5A3.5 3.5 0 0 1 7.5 13h-1A3.5 3.5 0 0 1 3 9.5V6Zm8 1h1.2a1.8 1.8 0 0 1 0 3.6H11" fill="none" stroke={RED} strokeWidth="1.6" strokeLinejoin="round" /></svg>}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="mv-row" style={{ justifyContent: "space-between", padding: "0.75em 0.95em", alignItems: "flex-end" }}>
-          <span>
-            <span style={label}>RÉCOMPENSE</span>
-            <span className="mv-h" style={{ fontSize: "0.62em" }}>Café offert</span>
-          </span>
-          <span>
-            <span style={label}>MEMBRE</span>
-            <span className="mv-h" style={{ fontSize: "0.62em" }}>Julie M.</span>
-          </span>
-          <span style={{ width: "3em", height: "3em", borderRadius: "0.35em", overflow: "hidden" }}><QR seed={21} /></span>
-        </div>
+    <div style={{ ...card, left: "4em", top: "3.2em", width: "24em", padding: "1.3em 1.5em", background: `linear-gradient(140deg,#f0595a,${RED} 50%,#b52a2c)`, color: "#fff" }}>
+      <div className="mv-row" style={{ justifyContent: "space-between" }}>
+        <span className="mv-h" style={{ fontSize: "1.05em" }}>Carte fidélité</span>
+        <span className="mv-h" style={{ fontSize: "1.3em" }}>7/10</span>
       </div>
-      <div className="mv-banner mv-row" style={{ left: "6.6em", top: "1.6em", width: "18.8em", padding: "0.6em 0.75em", gap: "0.6em" }}>
-        <Logo size={1.7} radius={0.45} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div className="mv-row" style={{ justifyContent: "space-between", fontSize: "0.5em" }}>
-            <span className="mv-h">Café Bellevue</span>
-            <span className="mv-sub">maintenant</span>
-          </div>
-          <div style={{ fontSize: "0.48em", marginTop: "0.2em", color: "#333" }}>+1 tampon ! Plus que 3 avant votre café offert.</div>
-        </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.8em", marginTop: "1.1em" }}>
+        {Array.from({ length: 10 }, (_, i) => (
+          <span key={i} style={{ aspectRatio: "1", borderRadius: "50%", background: i < 7 ? "#fff" : "transparent", border: i < 7 ? "none" : "0.14em dashed rgba(255,255,255,0.75)", display: "grid", placeItems: "center" }}>
+            {i < 7 && check(RED)}
+          </span>
+        ))}
       </div>
-    </>
+    </div>
   );
 }
 
-/* ---------- 5 — QR codes pour vos supports ---------- */
+/* 5 — QR codes pour vos supports */
 function V5() {
   return (
     <>
-      <div className="mv-a" style={{ left: 0, right: 0, bottom: 0, height: "8em", background: "linear-gradient(180deg,#5a3b28,#3a2418)", boxShadow: "inset 0 0.2em 0.3em rgba(255,255,255,0.12)" }}>
-        <div className="mv-a" style={{ inset: 0, opacity: 0.35, background: "repeating-linear-gradient(178deg, transparent 0 0.6em, rgba(0,0,0,0.25) 0.6em 0.7em)" }} />
+      <div style={{ ...card, left: "10em", top: "2.4em", width: "12em", height: "15em", borderRadius: "0.6em", padding: "1.4em 1.5em", textAlign: "center" }}>
+        <div style={{ width: "9em", height: "9em" }}><QR seed={11} /></div>
+        <div className="mv-h" style={{ fontSize: "0.95em", marginTop: "0.9em" }}>Scannez la carte</div>
       </div>
-      <div className="mv-a mv-shadow" style={{ left: "2em", top: "2.4em", width: "7.6em", height: "7.6em", borderRadius: "50%", background: RED, display: "grid", placeItems: "center", textAlign: "center", color: "#fff" }}>
-        <div>
-          <div style={{ width: "4.2em", height: "4.2em", margin: "0 auto", borderRadius: "0.3em", overflow: "hidden" }}><QR seed={5} /></div>
-          <div className="mv-h" style={{ fontSize: "0.42em", marginTop: "0.45em", letterSpacing: "0.08em" }}>NOTRE CARTE</div>
-        </div>
-      </div>
-      <div className="mv-a" style={{ left: "10.4em", top: "3.4em", width: "11.4em", height: "17.4em" }}>
-        <div className="mv-a mv-shadow" style={{ inset: "0 0 1em 0", borderRadius: "0.35em", background: "#fff", padding: "1em", textAlign: "center" }}>
-          <div style={{ display: "flex", justifyContent: "center" }}><Logo size={1.7} radius={0.5} /></div>
-          <div className="mv-h" style={{ fontSize: "0.72em", marginTop: "0.5em", fontFamily: "Georgia, serif" }}>Bistrot Bellevue</div>
-          <div style={{ width: "7em", height: "7em", margin: "0.7em auto 0" }}><QR seed={11} /></div>
-          <div className="mv-h" style={{ fontSize: "0.55em", marginTop: "0.55em" }}>Scannez pour voir la carte</div>
-          <div className="mv-sub" style={{ fontSize: "0.42em", marginTop: "0.2em" }}>Sans application</div>
-        </div>
-        <div className="mv-a" style={{ inset: "-0.3em -0.3em 0.7em -0.3em", borderRadius: "0.5em", background: "linear-gradient(115deg, rgba(255,255,255,0.35), rgba(255,255,255,0.05) 35%, transparent 50%, rgba(255,255,255,0.12))", border: "0.08em solid rgba(255,255,255,0.45)" }} />
-        <div className="mv-a" style={{ left: "-0.8em", right: "-0.8em", bottom: 0, height: "1.3em", borderRadius: "0.3em", background: "linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.15))", boxShadow: "0 0.6em 1em rgba(0,0,0,0.45)" }} />
-      </div>
-      <div className="mv-a mv-shadow" style={{ left: "22.6em", top: "8.4em", width: "8em", height: "11.4em", background: "#1c1a1b", borderRadius: "0.3em", transform: "rotate(7deg)", padding: "0.8em", color: "#fff" }}>
-        <div className="mv-h" style={{ fontSize: "0.62em" }}>À emporter</div>
-        <div style={{ fontSize: "0.42em", opacity: 0.7, marginTop: "0.25em" }}>Commandez en 1 scan</div>
-        <div style={{ width: "5.4em", height: "5.4em", marginTop: "0.8em", borderRadius: "0.3em", overflow: "hidden" }}><QR seed={9} /></div>
-        <div style={{ height: "0.35em", width: "60%", background: RED, borderRadius: "1em", marginTop: "0.8em" }} />
-      </div>
+      <div className="mv-a" style={{ left: "8.6em", top: "17.2em", width: "14.8em", height: "1.2em", borderRadius: "0.4em", background: "linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.18))" }} />
     </>
   );
 }
 
-/* ---------- 6 — Sans application ---------- */
+/* 6 — Sans application */
 function V6() {
-  const tilt = "perspective(18em) rotateX(8deg) rotateY(-10deg)";
+  const corner = (s: S) => <span className="mv-a" style={{ width: "2.2em", height: "2.2em", borderColor: "#ffd60a", borderStyle: "solid", borderWidth: 0, ...s }} />;
+  const w = "0.32em";
   return (
-    <Phone dark style={{ left: "8.8em", top: "1.6em", width: "14.4em", height: "30em" }} bg="#000">
-      <div className="mv-a" style={{ left: 0, right: 0, top: "3.4em", height: "19.4em", overflow: "hidden", background: "radial-gradient(90% 70% at 50% 60%, #6a4c39, #2c1d15 70%, #160e0a)" }}>
-        <div className="mv-a" style={{ left: 0, right: 0, bottom: 0, height: "6em", background: "linear-gradient(180deg,#5a3b28,#3a2418)" }} />
-        <div className="mv-a" style={{ left: "3.2em", top: "4.2em", width: "7.4em", height: "10.4em", background: "#f4f2ee", borderRadius: "0.25em", transform: tilt, boxShadow: "0 1em 1.6em rgba(0,0,0,0.5)", padding: "0.6em", textAlign: "center" }}>
-          <div className="mv-h" style={{ fontSize: "0.45em", fontFamily: "Georgia, serif" }}>Bistrot Bellevue</div>
-          <div style={{ width: "5.4em", height: "5.4em", margin: "0.6em auto 0" }}><QR seed={11} /></div>
-          <div style={{ fontSize: "0.38em", marginTop: "0.5em", fontWeight: 600 }}>Scannez la carte</div>
-        </div>
-        <div className="mv-a" style={{ left: "3.75em", top: "5.6em", width: "6.2em", height: "6.2em", border: "0.12em solid #ffd60a", borderRadius: "0.5em", transform: tilt }} />
-        <div className="mv-a mv-row" style={{ left: "50%", top: "15.2em", transform: "translateX(-50%)", padding: "0.45em 0.85em", borderRadius: "99em", background: "#ffd60a", color: "#000", fontSize: "0.56em", fontWeight: 600, whiteSpace: "nowrap", gap: "0.4em" }}>
-          <svg width="1em" height="1em" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.6" fill="none" stroke="#000" strokeWidth="1.3" /><path d="m10.6 5.4-1.8 3.4-3.4 1.8 1.8-3.4z" fill="#000" /></svg>
-          bellevue.fr/carte
-        </div>
+    <>
+      <div className="mv-a" style={{ left: "10.5em", top: "1.8em", width: "11em", height: "11em" }}>
+        <div className="mv-a" style={{ inset: "1em", borderRadius: "0.5em", overflow: "hidden" }}><QR seed={13} /></div>
+        {corner({ left: 0, top: 0, borderLeftWidth: w, borderTopWidth: w, borderTopLeftRadius: "0.9em" })}
+        {corner({ right: 0, top: 0, borderRightWidth: w, borderTopWidth: w, borderTopRightRadius: "0.9em" })}
+        {corner({ left: 0, bottom: 0, borderLeftWidth: w, borderBottomWidth: w, borderBottomLeftRadius: "0.9em" })}
+        {corner({ right: 0, bottom: 0, borderRightWidth: w, borderBottomWidth: w, borderBottomRightRadius: "0.9em" })}
       </div>
-      <div className="mv-a" style={{ left: 0, right: 0, top: "23.4em", textAlign: "center" }}>
-        <div className="mv-row" style={{ justifyContent: "center", gap: "1.1em", fontSize: "0.46em", fontWeight: 600, letterSpacing: "0.06em", color: "rgba(255,255,255,0.65)" }}>
-          <span>VIDÉO</span><span style={{ color: "#ffd60a" }}>PHOTO</span><span>PORTRAIT</span>
-        </div>
-        <div style={{ width: "3em", height: "3em", margin: "0.7em auto 0", borderRadius: "50%", border: "0.2em solid #fff", padding: "0.18em" }}>
-          <div style={{ width: "100%", height: "100%", borderRadius: "50%", background: "#fff" }} />
-        </div>
+      <div className="mv-a mv-row" style={{ left: "50%", top: "14.2em", transform: "translateX(-50%)", padding: "0.6em 1.2em", borderRadius: "99em", background: "#ffd60a", color: "#000", fontWeight: 700, fontSize: "1em", whiteSpace: "nowrap", gap: "0.5em", boxShadow: "0 0.8em 1.8em rgba(0,0,0,0.45)" }}>
+        Ouvrir la carte <span style={{ fontSize: "1.1em" }}>›</span>
       </div>
-    </Phone>
+    </>
   );
 }
 
@@ -413,15 +288,6 @@ function V7() {
           <span className="mv-chip" style={{ fontSize: "0.46em", background: RED, color: "#fff" }}>Plat du jour</span>
         </div>
       </div>
-      <div className="mv-banner mv-row" style={{ left: "50%", marginLeft: "-17.2em", top: "7.6em", padding: "0.55em 0.8em", gap: "0.5em" }}>
-        <span style={{ width: "1.5em", height: "1.5em", borderRadius: "0.4em", background: "#e8f6ea", display: "grid", placeItems: "center" }}>
-          <svg width="0.9em" height="0.9em" viewBox="0 0 16 16"><path d="M13 3C7 3 3 6 3 11c0 1 .2 1.6.5 2 .6-3 2.6-5.3 6-6.5-2.5 1.6-4 3.6-4.6 6.3C11 13 13 9 13 3Z" fill="#1f8a3b" /></svg>
-        </span>
-        <span>
-          <span className="mv-h" style={{ display: "block", fontSize: "0.56em" }}>Végétarien</span>
-          <span className="mv-sub" style={{ fontSize: "0.44em" }}>3 plats signalés</span>
-        </span>
-      </div>
     </>
   );
 }
@@ -434,7 +300,9 @@ export function MenuVisual({ index }: { index: number }) {
   return (
     <div className="mv">
       <div className="mv-in">
-        <V />
+        <div className="mv-z">
+          <V />
+        </div>
       </div>
     </div>
   );
