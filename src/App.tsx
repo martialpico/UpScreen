@@ -1724,7 +1724,7 @@ function StepVisualPanel({
         </div>
         <div className="mt-2 grid h-[74%] grid-cols-[22%_1fr] overflow-hidden rounded-xl border border-onyx/8 bg-[#EEF0F4]">
           <div className="border-r border-onyx/8 bg-white/85 p-2">
-            <p className="text-[7px] font-semibold text-onyx/45">Calques</p>
+            <p className="font-mono text-[7px] font-semibold uppercase tracking-[0.1em] text-onyx/45">Calques</p>
             <div className="mt-1.5 space-y-0.5">
               {["En-tête", "Hero", "Photo", "Carte", "Horaires", "Réserver"].map((layer) => (
                 <p
@@ -1916,12 +1916,12 @@ function StepVisualPanel({
     <div className={panelClass}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[11px] font-semibold">Production en cours</p>
-          <p className="mt-1 text-[9px] font-semibold text-onyx/45">
+          <p className="text-[13px] font-extrabold tracking-[-0.03em]">Production en cours</p>
+          <p className="mt-1 font-mono text-[8px] font-semibold uppercase tracking-[0.12em] text-onyx/45">
             Espace projet UpScreen
           </p>
         </div>
-        <span className="font-display text-2xl italic text-brand">68 %</span>
+        <span className="text-[26px] font-extrabold leading-none tracking-[-0.05em] text-brand">68 %</span>
       </div>
       <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-onyx/8">
         <div className="h-full w-[68%] rounded-full bg-brand" />
@@ -1942,7 +1942,7 @@ function StepVisualPanel({
               }`}
             />
             <span className="text-[9px] font-bold text-onyx/65">{label}</span>
-            <span className="ml-auto text-[8px] font-bold text-onyx/40">
+            <span className="ml-auto font-mono text-[8px] font-semibold text-onyx/45">
               {progress}
             </span>
           </div>
@@ -2237,7 +2237,7 @@ function Process() {
                     <StepVisual title={step.title} isLeft={isLeft} />
                   </div>
                   <article
-                    className={`${darkCard} relative z-10 -mt-8 overflow-hidden p-5 transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-7 ${
+                    className={`relative z-10 -mt-8 overflow-hidden rounded-[28px] border border-white/[0.08] bg-[linear-gradient(180deg,#1b1a1c,#121113)] p-6 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-8 ${
                       isRevealed
                         ? "translate-y-0 opacity-100 sm:translate-x-0"
                         : isLeft
@@ -2245,19 +2245,19 @@ function Process() {
                           : "translate-y-8 opacity-0 sm:translate-x-8"
                     }`}
                   >
-                    <div className="flex items-center justify-start gap-3">
-                      <span className="text-xs font-semibold tracking-[0.12em] text-warm-gray/70">
-                        0{index + 1}
-                      </span>
-                      <h3
-                        className="inline-block whitespace-nowrap rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-lg font-semibold leading-none tracking-[-0.02em] text-off-white sm:px-5 sm:text-2xl"
-                      >
-                        {step.title}
-                      </h3>
-                      <BrandIcon name={processIcons[step.title]} className="h-10 w-10 sm:h-11 sm:w-11" />
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <span className="inline-flex rounded-full bg-white/[0.06] px-3 py-1.5 font-mono text-[11px] font-semibold uppercase leading-none tracking-[0.16em] text-brand">
+                          Étape 0{index + 1}
+                        </span>
+                        <h3 className="mt-4 text-[28px] font-extrabold leading-none tracking-[-0.05em] text-off-white sm:text-[34px]">
+                          {step.title}
+                        </h3>
+                      </div>
+                      <BrandIcon name={processIcons[step.title]} className="h-11 w-11 shrink-0 sm:h-12 sm:w-12" />
                     </div>
                     <p
-                      className={`mt-5 text-[17px] font-normal leading-[1.6] text-[#CFCCC7] ${
+                      className={`mt-5 font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#CFCCC7] ${
                         isLeft ? "sm:text-left" : ""
                       }`}
                     >
@@ -2280,20 +2280,20 @@ function Process() {
           })}
         </div>
         <div
-          className={`${darkCard} relative z-10 mx-auto mt-12 flex max-w-[700px] flex-col items-center px-6 py-7 text-center transition-[opacity,transform] duration-700 sm:px-10 ${
+          className={`relative isolate z-10 mx-auto mt-12 flex max-w-[720px] flex-col items-center overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] px-6 py-10 text-center shadow-[0_40px_90px_rgba(233,68,69,0.22)] transition-[opacity,transform] duration-700 sm:px-12 ${
             showFinalStep ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
-          <div className="flex items-center justify-center gap-3">
-            <span className="text-xs font-semibold tracking-[0.12em] text-warm-gray/70">
-              05
-            </span>
-            <span className="inline-block text-xl font-bold tracking-[-0.03em] text-off-white sm:text-3xl">
-              On vous accompagne ensuite
-            </span>
-            <BrandIcon name="growth" className="h-10 w-10 sm:h-11 sm:w-11" />
-          </div>
-          <p className="mt-3 text-[17px] font-normal leading-[1.6] text-[#CFCCC7]">
+          <PremiumBlobs />
+          <div className="absolute inset-0 -z-[5] bg-[linear-gradient(180deg,rgba(11,10,11,0.3),rgba(11,10,11,0.7))]" />
+          <BrandIcon name="growth" className="h-12 w-12" />
+          <span className="mt-5 inline-flex rounded-full bg-white/90 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase leading-none tracking-[0.16em] text-onyx">
+            Étape 05
+          </span>
+          <span className="mt-4 inline-block text-[30px] font-extrabold leading-none tracking-[-0.05em] text-off-white sm:text-[40px]">
+            On vous accompagne ensuite
+          </span>
+          <p className="mt-4 max-w-[520px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-white/80">
             Avec un abonnement, on gère chaque mois votre fiche Google, votre référencement et vos réseaux.
           </p>
         </div>
