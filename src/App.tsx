@@ -3028,7 +3028,7 @@ type OfferPage = {
   processTitle: [string, string];
   processLead: string;
   processMode: "grid" | "scroll";
-  process: { title: string; text: string; icon?: OfferIcon; image?: string }[];
+  process: { title: string; text: string; icon?: OfferIcon; image?: string; videoBadge?: boolean }[];
 };
 
 const offerPages: Record<string, OfferPage> = {
@@ -3110,7 +3110,7 @@ const offerPages: Record<string, OfferPage> = {
       { icon: "layers", image: `${import.meta.env.BASE_URL}process/m2.webp`, title: "Storyboard", text: "Votre vidéo découpée image par image : vous validez le rythme et chaque plan avant l'animation." },
       { icon: "film", image: `${import.meta.env.BASE_URL}process/m3.webp`, title: "Animation", text: "Chaque seconde est animée à la main. Aucun template, aucun élément générique." },
       { icon: "music", image: `${import.meta.env.BASE_URL}process/m4.webp`, title: "Sound design", text: "Voix off, musique et effets sonores : le son fait la moitié de l'impact d'une vidéo." },
-      { icon: "send", image: `${import.meta.env.BASE_URL}process/m5.webp`, title: "Livraison", text: "En HD ou 4K, déclinée en 16:9, vertical et carré selon vos usages." },
+      { icon: "send", image: `${import.meta.env.BASE_URL}process/m5.webp`, videoBadge: true, title: "Livraison", text: "En HD ou 4K, déclinée en 16:9, vertical et carré selon vos usages." },
     ],
   },
   brand: {
@@ -3419,7 +3419,15 @@ function ScrollProcess({
                 >
                   {step.image ? (
                     <>
-                      <div className="overflow-hidden rounded-[20px] bg-[#f4f2ef] ring-1 ring-[#0e0d10]/[0.06]">
+                      <div className="relative overflow-hidden rounded-[20px] bg-[#f4f2ef] ring-1 ring-[#0e0d10]/[0.06]">
+                        {step.videoBadge && (
+                          <span aria-hidden="true" className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#e94445] text-white shadow-[0_8px_20px_rgba(233,68,69,0.45)] ring-2 ring-white">
+                            <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <rect x="2.5" y="6" width="13" height="12" rx="2.5" />
+                              <path d="m15.5 10.5 6-3.5v10l-6-3.5" />
+                            </svg>
+                          </span>
+                        )}
                         <img
                           src={step.image}
                           alt=""
