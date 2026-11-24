@@ -774,7 +774,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="scroll-reveal relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-16 pt-36 sm:px-8 md:pt-44 lg:pb-20"
+      className="relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-16 pt-36 sm:px-8 md:pt-44 lg:pb-20"
     >
       <Eyebrow center>Agence web</Eyebrow>
       <h1 className="font-ui mx-auto text-center text-[40px] font-extrabold leading-[1.02] tracking-[-0.05em] text-off-white sm:text-[46px] md:text-[48px] lg:text-[64px]">
@@ -1519,7 +1519,7 @@ function SubscriptionCard({ plan }: { plan: (typeof subscriptions)[number] }) {
 
 function SubscriptionTable() {
   return (
-    <div className="scroll-reveal mt-24">
+    <div className="mt-24">
       <SectionHeader
         eyebrow="Abonnements"
         title="Les abonnements."
@@ -1539,7 +1539,7 @@ function Services() {
   return (
     <section
       id="pricing"
-      className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
+      className={`relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}
     >
       <SectionHeader
         eyebrow="Tarifs"
@@ -1587,14 +1587,14 @@ function Reviews() {
   return (
     <section
       id="reviews"
-      className={`scroll-reveal relative w-full scroll-mt-24 ${sectionY}`}
+      className={`relative w-full scroll-mt-24 ${sectionY}`}
     >
       <div className="px-5 sm:px-8">
         <div className="mx-auto max-w-[1096px]">
           <SectionHeader eyebrow="Avis" title="Ils nous ont fait confiance." muted="Ils en parlent mieux que nous." />
         </div>
       </div>
-      <div className="reviews-viewport relative mx-auto mt-12 max-w-[1200px] overflow-hidden">
+      <div className="scroll-reveal reviews-viewport relative mx-auto mt-12 max-w-[1200px] overflow-hidden">
         <div
           className="reviews-track flex w-max gap-5 px-5"
           style={{ animationDuration: `${set.length * 10}s` }}
@@ -2818,7 +2818,7 @@ function VitrineModal({ site, onClose }: { site: Vitrine; onClose: () => void })
 function WorkGallery() {
   const [openSite, setOpenSite] = useState<Vitrine | null>(null);
   return (
-    <section id="work" className={`scroll-reveal relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
+    <section id="work" className={`relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
       <SectionHeader
         title="Des sites sur-mesure"
         muted="conçus pour votre entreprise."
@@ -3166,7 +3166,7 @@ function CustomServices() {
 
 function FAQ() {
   return (
-    <section id="faq" className={`scroll-reveal relative mx-auto w-full max-w-[960px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
+    <section id="faq" className={`relative mx-auto w-full max-w-[960px] scroll-mt-24 px-5 sm:px-8 ${sectionY}`}>
       <SectionHeader eyebrow="FAQ" title="Vos questions." muted="Nos réponses." />
       <div className="mt-12 space-y-3">
         {faqs.map((faq, index) => (
@@ -3556,6 +3556,26 @@ function BackgroundLights() {
 
 export default function App() {
   useEffect(() => {
+    // Chaque bloc visible du site apparaît au défilement : on marque
+    // automatiquement titres, textes, cartes, images, boutons et formulaires.
+    // Le parcours suit l'ordre du document : un bloc marqué anime son contenu
+    // d'un seul tenant, sans double animation à l'intérieur.
+    const root = document.querySelector("main");
+    const skip =
+      "header, .scroll-reveal, .stagger-card, .reveal-mask, [data-step-index], .reviews-viewport, [role='dialog'], .bg-light, .premium-blobs";
+    root
+      ?.querySelectorAll<HTMLElement>(
+        "section h1, section h2, section h3, section p, section ul, section ol, section article, section figure, section details, section form, section img, section video, section iframe, section a, section button, section [class*='rounded-['], section [class*='rounded-full'], footer > * > *",
+      )
+      .forEach((element) => {
+        if (element.closest(skip)) return;
+        if (element.closest("[aria-hidden='true']") && element.tagName !== "IMG") return;
+        const style = getComputedStyle(element);
+        if (style.position === "absolute" || style.position === "fixed" || style.display === "inline") return;
+        if (element.getBoundingClientRect().height < 8) return;
+        element.classList.add("scroll-reveal");
+      });
+
     const elements = Array.from(
       document.querySelectorAll<HTMLElement>(".scroll-reveal"),
     );
