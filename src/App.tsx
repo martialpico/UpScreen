@@ -2856,7 +2856,7 @@ const customOffers: CustomOffer[] = [
     id: "menu",
     title: "Menu digital & QR codes",
     body: "Votre carte sur téléphone, des QR codes et des cartes NFC pour vos avis Google et vos réseaux.",
-    image: cafePhoto,
+    image: `${import.meta.env.BASE_URL}sur-mesure/menu.webp`,
     details: [
       "Menu digital, modifiable en un clic",
       "QR codes pour vos tables, votre vitrine et vos flyers",
@@ -2868,7 +2868,7 @@ const customOffers: CustomOffer[] = [
     id: "webapp",
     title: "Web app sur mesure",
     body: "Un outil pensé pour votre commerce, qui vous fait gagner du temps chaque jour.",
-    image: `${import.meta.env.BASE_URL}vitrines/samsthai-desktop.webp`,
+    image: `${import.meta.env.BASE_URL}sur-mesure/webapp.webp`,
     details: [
       "Devis et factures depuis votre téléphone",
       "Gestion des stocks et des commandes fournisseurs",
@@ -2880,7 +2880,7 @@ const customOffers: CustomOffer[] = [
     id: "motion",
     title: "Vidéo en motion design",
     body: "30 à 60 secondes pour expliquer ce que vous faites et retenir l'attention.",
-    image: motionAnyStylePoster,
+    image: `${import.meta.env.BASE_URL}sur-mesure/motion.webp`,
     details: motionFormats,
     videos: true,
   },
@@ -2888,7 +2888,7 @@ const customOffers: CustomOffer[] = [
     id: "brand",
     title: "Refonte graphique complète",
     body: "Logo, charte et supports : une identité qui donne envie de pousser la porte.",
-    image: `${import.meta.env.BASE_URL}vitrines/brasileiro-desktop.webp`,
+    image: `${import.meta.env.BASE_URL}sur-mesure/brand.webp`,
     details: [
       "Logo",
       "Charte graphique : couleurs, typographies",
@@ -2909,10 +2909,9 @@ function CustomOfferCard({ offer, index, onOpen }: { offer: CustomOffer; index: 
         alt=""
         loading="lazy"
         decoding="async"
-        className="absolute inset-0 -z-20 h-full w-full scale-110 object-cover opacity-90 blur-[2px] grayscale contrast-125 transition duration-700 group-hover:scale-100 group-hover:blur-0"
+        className="absolute inset-0 -z-20 h-full w-full object-cover transition duration-700 group-hover:scale-105"
       />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[#e94445] mix-blend-multiply" />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(233,68,69,0.15)_0%,rgba(120,18,20,0.35)_45%,rgba(40,6,7,0.85)_100%)]" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(20,4,5,0.25)_0%,rgba(20,4,5,0)_35%,rgba(20,4,5,0.55)_62%,rgba(12,3,4,0.92)_100%)]" />
       <span className="text-[88px] font-extrabold leading-[0.85] tracking-[-0.06em] text-white sm:text-[104px]">
         0{index + 1}
       </span>
