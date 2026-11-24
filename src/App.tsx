@@ -107,19 +107,35 @@ const subscriptions = [
 // Une ligne simple, ou [intitulé, détail] pour une ligne dépliable.
 const subscriptionRows: [string | [string, string], PlanCell, PlanCell][] = [
   [
-    ["Fiche Google active", "Publications régulières sur votre fiche Google et réponse à chaque avis client. Une fiche active remonte plus haut sur Google et Maps."],
+    ["Fiche Google active", "Posts réguliers et réponse à chaque avis : votre fiche remonte sur Google et Maps."],
     true,
     true,
   ],
   [
-    ["SEO renforcé et référencement", "Chaque mois, on améliore vos textes, vos mots-clés et la vitesse du site pour remonter sur Google et Maps quand on cherche votre activité près de chez vous. On optimise aussi votre présence sur les IA comme ChatGPT, Claude ou Gemini, de plus en plus utilisées pour trouver un commerce."],
+    ["SEO renforcé et référencement", "Textes, mots-clés et vitesse optimisés chaque mois, y compris pour les IA (ChatGPT, Claude, Gemini)."],
     true,
     true,
   ],
-  [["Petites modifications, mises à jour et sauvegardes", "Un nouveau plat, des horaires de fêtes, une photo à changer ? Envoyez-nous un message, c'est fait sous 48 h. Le site est mis à jour et sauvegardé régulièrement, pour rester rapide, sécurisé et toujours en ligne."], true, true],
-  [["Articles de blog", "Des articles écrits pour vous sur votre activité et votre quartier (conseils, nouveautés, coulisses). Chaque article est une nouvelle porte d'entrée sur Google : plus vous publiez, plus vous apparaissez dans les recherches, et plus vos clients vous voient comme une référence."], "1 par mois", "1 par semaine"],
-  ["Instagram", false, "2 carrousels par semaine, à partir de vos photos et vidéos"],
-  ["Légendes et programmation des posts", false, true],
+  [
+    ["Petites modifications, mises à jour et sauvegardes", "Un horaire, un plat, une photo à changer : c'est fait rapidement. Site sauvegardé et sécurisé."],
+    true,
+    true,
+  ],
+  [
+    ["Articles de blog", "Chaque article est une nouvelle porte d'entrée sur Google pour vous trouver."],
+    "1 par mois",
+    "1 par semaine",
+  ],
+  [
+    ["Instagram", "Des carrousels soignés créés à partir de vos photos, pour un compte actif qui donne envie de venir."],
+    false,
+    "2 carrousels par semaine, à partir de vos photos et vidéos",
+  ],
+  [
+    ["Légendes et programmation des posts", "On écrit les textes et on publie aux meilleurs horaires, vous n'avez rien à faire."],
+    false,
+    true,
+  ],
 ];
 
 const hostingRenewal = "49";
