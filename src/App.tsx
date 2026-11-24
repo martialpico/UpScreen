@@ -259,7 +259,7 @@ const faqs = [
 
 // Système visuel commun : cartes arrondies à 20 px, médias à 24 px, boutons en
 // pilule, mêmes marges verticales pour toutes les sections.
-const sectionY = "py-20 md:py-28";
+const sectionY = "py-12 md:py-16";
 const darkCard = "rounded-[20px] border border-white/[0.08] bg-graphite";
 const lightCard =
   "rounded-[20px] border border-onyx/[0.08] bg-white shadow-[0_14px_40px_rgba(10,10,11,0.06)]";
@@ -804,7 +804,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-16 pt-36 sm:px-8 md:pt-44 lg:pb-20"
+      className="relative mx-auto w-full max-w-[1040px] scroll-mt-24 px-5 pb-10 pt-32 sm:px-8 md:pt-40 lg:pb-12"
     >
       <Eyebrow center>Agence web</Eyebrow>
       <h1 className="font-ui mx-auto text-center text-[40px] font-extrabold leading-[1.02] tracking-[-0.05em] text-off-white sm:text-[46px] md:text-[48px] lg:text-[64px]">
@@ -1549,7 +1549,7 @@ function SubscriptionCard({ plan }: { plan: (typeof subscriptions)[number] }) {
 
 function SubscriptionTable() {
   return (
-    <div className="mt-24">
+    <div className="mt-16">
       <SectionHeader
         eyebrow="Abonnements"
         title="Les abonnements."
@@ -3520,7 +3520,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
 
       <div className="relative">
         {/* Hero */}
-        <section className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-5 pb-20 pt-14 sm:px-8 md:pt-20 lg:grid-cols-[1.05fr_1fr] lg:pb-28">
+        <section className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-5 pb-12 pt-12 sm:px-8 md:pt-16 lg:grid-cols-[1.05fr_1fr] lg:pb-16">
           <div>
             <p className="scroll-reveal flex items-center gap-3 font-mono text-[12px] font-semibold uppercase tracking-[0.22em] text-[#e94445]">
               <span aria-hidden="true" className="h-px w-10 bg-[#e94445]" />
@@ -3551,7 +3551,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
         {page.processMode === "scroll" && <ScrollProcess page={page} scroller={scrollerRef} onClose={onClose} />}
 
         {/* Ce qui est inclus */}
-        <section className="mx-auto w-full max-w-[1160px] px-5 py-20 sm:px-8 lg:py-24">
+        <section className="mx-auto w-full max-w-[1160px] px-5 py-12 sm:px-8 lg:py-16">
           <OfferHeading eyebrow={page.includedEyebrow} title={page.includedTitle} />
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {page.feature && (
@@ -3583,7 +3583,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
 
         {/* Comment ça marche (menu, web app) */}
         {page.processMode === "grid" && (
-          <section className="mx-auto w-full max-w-[1160px] px-5 py-20 sm:px-8 lg:py-24">
+          <section className="mx-auto w-full max-w-[1160px] px-5 py-12 sm:px-8 lg:py-16">
             <OfferHeading eyebrow={page.processEyebrow} title={page.processTitle} lead={page.processLead} />
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {page.process.map((step, index) => (
@@ -3599,7 +3599,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
 
         {/* Réalisations vidéo */}
         {offer.videos && (
-          <section className="mx-auto w-full max-w-[1160px] px-5 py-20 sm:px-8 lg:py-24">
+          <section className="mx-auto w-full max-w-[1160px] px-5 py-12 sm:px-8 lg:py-16">
             <OfferHeading eyebrow="Réalisations" title={["Quelques vidéos", "qu'on a réalisées."]} />
             <div className="modal-videos offer-videos dark-island mt-12 grid gap-5 md:grid-cols-2">
               {motionVideos.map((video) => (
@@ -3669,7 +3669,7 @@ function CustomServices() {
   return (
     <section
       id="sur-mesure"
-      className="relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 pb-20 pt-6 sm:px-8 md:pb-28 md:pt-10"
+      className="relative mx-auto w-full max-w-[1160px] scroll-mt-24 px-5 py-12 sm:px-8 md:py-16"
     >
       <SectionHeader
         eyebrow="Sur mesure"
