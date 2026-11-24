@@ -2871,48 +2871,45 @@ function MotionEditorUI() {
   return (
     <div aria-hidden="true" className="mo relative mt-8">
       <div className="overflow-hidden rounded-[14px] border border-white/12 bg-[#141214] p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-        {/* Aperçu */}
-        <div className="mo-stage relative aspect-[16/8] overflow-hidden rounded-[10px]">
-          <div className="mo-bg absolute inset-0" />
-          {/* Scène 1 : formes */}
-          <div className="mo-s1 absolute inset-0 flex items-center justify-center">
-            <span className="mo-ring absolute h-16 w-16 rounded-full border-2 border-white/70" />
-            <span className="mo-disc absolute h-11 w-11 rounded-full bg-[#e94445] shadow-[0_8px_24px_rgba(233,68,69,0.6)]" />
-            <span className="mo-pill absolute h-2.5 w-14 rounded-full bg-white" />
-            <span className="mo-dot mo-dot-a absolute h-2 w-2 rounded-full bg-white" />
-            <span className="mo-dot mo-dot-b absolute h-1.5 w-1.5 rounded-full bg-[#ff8a8b]" />
-            <span className="mo-dot mo-dot-c absolute h-2.5 w-2.5 rounded-[3px] bg-white/80" />
+        {/* Aperçu : construction du logo, puis titre et accroche */}
+        <div className="mo-stage relative aspect-[16/8] overflow-hidden rounded-[10px] bg-[#0d0a0b]">
+          <div className="mo-glow absolute inset-0" />
+          <div className="mo-comp absolute inset-0 flex flex-col items-center justify-center">
+            <div className="flex items-center">
+              <svg viewBox="0 0 256 256" className="mo-icon relative z-10 h-10 w-10 shrink-0 overflow-visible">
+                <path className="mo-sq" d="M0,60 A60,60 0 0 1 60,0 L196,0 A60,60 0 0 1 256,60 L256,196 A60,60 0 0 1 196,256 L60,256 A60,60 0 0 1 0,196 Z" fill="#E94445" />
+                <path className="mo-frame" d="M134.07,47.12 A3,3 0 0 0 131.95,42.00 L86.00,42.00 A44.0,44.0 0 0 0 42.00,86.00 L42.00,170.00 A44.0,44.0 0 0 0 86.00,214.00 L170.00,214.00 A44.0,44.0 0 0 0 214.00,170.00 L214.00,124.05 A3,3 0 0 0 208.88,121.93 L186.88,143.93 A3,3 0 0 0 186.00,146.05 L186.00,170.00 A16.0,16.0 0 0 1 170.00,186.00 L86.00,186.00 A16.0,16.0 0 0 1 70.00,170.00 L70.00,86.00 A16.0,16.0 0 0 1 86.00,70.00 L109.95,70.00 A3,3 0 0 0 112.07,69.12 Z" fill="#fff" />
+                <path className="mo-arrow" d="M191.77,56.40 A6,6 0 0 1 199.60,64.23 L168.23,140.77 A5,5 0 0 1 158.77,140.17 L149.70,106.31 L115.83,97.23 A5,5 0 0 1 115.23,87.77 Z" fill="#fff" />
+              </svg>
+              <span className="mo-word ml-2 flex overflow-hidden pb-1 text-[27px] font-extrabold leading-none tracking-[-0.05em] text-white">
+                {"upscreen".split("").map((ch, i) => (
+                  <span key={i} className="mo-ch inline-block" style={{ animationDelay: `${i * 0.06}s` }}>{ch}</span>
+                ))}
+              </span>
+            </div>
+            <div className="mt-2 flex gap-1.5 overflow-hidden text-[11px] font-semibold tracking-[-0.01em] text-white/80">
+              {["Votre", "activité", "en", "45 secondes"].map((w, i) => (
+                <span key={w} className={`mo-tag inline-block ${i === 3 ? "text-[#ff8a8b]" : ""}`} style={{ animationDelay: `${i * 0.09}s` }}>{w}</span>
+              ))}
+            </div>
           </div>
-          {/* Scène 2 : logo */}
-          <div className="mo-s2 absolute inset-0 flex items-center justify-center gap-2">
-            <img src={upscreenIcon} alt="" className="mo-icon h-9 w-9 drop-shadow-[0_8px_18px_rgba(233,68,69,0.55)]" />
-            <span className="mo-word text-[26px] font-extrabold leading-none tracking-[-0.05em] text-white">upscreen</span>
-            <span className="mo-under absolute bottom-[26%] left-1/2 h-[3px] w-[46%] -translate-x-1/2 rounded-full bg-[#e94445]" />
-          </div>
-          {/* Scène 3 : texte cinétique */}
-          <div className="mo-s3 absolute inset-0 flex flex-col items-center justify-center text-center leading-[1.05]">
-            <span className="block overflow-hidden"><span className="mo-l1 block text-[19px] font-extrabold tracking-[-0.04em] text-white">Votre activité,</span></span>
-            <span className="mt-0.5 block overflow-hidden"><span className="mo-l2 relative block text-[19px] font-extrabold tracking-[-0.04em] text-white"><span className="mo-hl absolute inset-y-[2px] -left-1 -right-1 -z-0 rounded-[4px] bg-[#e94445]" /><span className="relative">en 45 secondes.</span></span></span>
-          </div>
-          {/* Transitions (balayage rouge) */}
-          <span className="mo-wipe absolute -inset-y-4 -left-1/2 w-[60%] skew-x-[-18deg] bg-[linear-gradient(90deg,#b52a2c,#e94445)]" />
           {/* Habillage du lecteur */}
-          <span className="absolute left-2 top-1.5 font-mono text-[8px] font-semibold text-white/60">upscreen-presentation.mp4</span>
-          <span className="absolute right-2 top-1.5 flex items-center gap-1 font-mono text-[8px] font-bold text-white/80"><span className="mo-rec h-1.5 w-1.5 rounded-full bg-[#e94445]" />4K</span>
+          <span className="absolute left-2 top-1.5 font-mono text-[8px] font-semibold text-white/55">upscreen-presentation.mp4</span>
+          <span className="absolute right-2 top-1.5 flex items-center gap-1 font-mono text-[8px] font-bold text-white/75"><span className="mo-rec h-1.5 w-1.5 rounded-full bg-[#e94445]" />4K</span>
           <span className="absolute bottom-1.5 left-2 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
             <svg viewBox="0 0 16 16" className="h-2.5 w-2.5 text-brand" fill="currentColor"><path d="M5 3h2v10H5zM9 3h2v10H9z" /></svg>
           </span>
-          <span className="mo-tc absolute bottom-1.5 right-2 font-mono text-[8px] font-semibold text-white/85" />
+          <span className="mo-tc absolute bottom-1.5 right-2 font-mono text-[8px] font-semibold text-white/80" />
         </div>
         {/* Timeline */}
         <div className="relative mt-1.5 space-y-1 px-1 pb-0.5">
           <span className="relative block h-2.5 rounded-[3px] bg-white/[0.05]">
-            <span className="absolute inset-y-0 left-0 w-[32%] rounded-[3px] bg-[#e94445]/90" />
-            <span className="absolute inset-y-0 left-[33%] w-[33%] rounded-[3px] bg-white/80" />
-            <span className="absolute inset-y-0 left-[67%] w-[33%] rounded-[3px] bg-[#ff8a8b]/80" />
+            <span className="absolute inset-y-0 left-[3%] w-[27%] rounded-[3px] bg-[#e94445]/90" />
+            <span className="absolute inset-y-0 left-[31%] w-[22%] rounded-[3px] bg-white/80" />
+            <span className="absolute inset-y-0 left-[54%] w-[40%] rounded-[3px] bg-[#ff8a8b]/80" />
           </span>
           <span className="relative block h-2 rounded-[3px] bg-white/[0.05]">
-            {[12, 30, 48, 70, 88].map((l) => (
+            {[5, 14, 22, 32, 50, 56, 86].map((l) => (
               <span key={l} className="absolute top-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rotate-45 rounded-[1px] bg-[#ffcf5a]" style={{ left: `${l}%` }} />
             ))}
           </span>
