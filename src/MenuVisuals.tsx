@@ -124,8 +124,8 @@ function MenuApp({ list = ["salmon", "salad", "steak", "pasta"] as DishKey[], hl
   );
 }
 
-/* Visuels minimalistes : un seul élément, grand et lisible. */
-const card: S = { position: "absolute", background: "#fff", borderRadius: "1.4em", boxShadow: "0 0.3em 0.8em rgba(0,0,0,0.25), 0 2em 4em rgba(0,0,0,0.55)" };
+/* Visuels minimalistes : un seul élément, grand, centré dans la carte. */
+const card: S = { position: "relative", background: "#fff", borderRadius: "1.4em", boxShadow: "0 0.3em 0.8em rgba(0,0,0,0.25), 0 2em 4em rgba(0,0,0,0.55)" };
 const check = (c = "#fff") => (
   <svg width="55%" height="55%" viewBox="0 0 12 12"><path d="M2.5 6.2 5 8.6l4.6-5" fill="none" stroke={c} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
 );
@@ -133,17 +133,17 @@ const check = (c = "#fff") => (
 /* 0 — À votre image */
 function V0() {
   const colors = ["#e94445", "#1f3a2e", "#c8873a", "#2b2b2e"];
-  const fonts = [["Aa", "Georgia, serif"], ["Aa", "inherit"], ["Aa", "'Courier New', monospace"]];
+  const fonts = ["Georgia, serif", "inherit", "'Courier New', monospace"];
   return (
-    <div style={{ ...card, left: "5em", top: "3em", width: "22em", padding: "1.6em 1.8em" }}>
+    <div style={{ ...card, width: "25em", padding: "1.8em 2em" }}>
       <div className="mv-row" style={{ justifyContent: "space-between" }}>
         {colors.map((c, i) => (
-          <span key={c} style={{ width: "3.4em", height: "3.4em", borderRadius: "50%", background: c, display: "grid", placeItems: "center", boxShadow: i === 0 ? `0 0 0 0.25em #fff, 0 0 0 0.5em ${c}` : undefined }}>{i === 0 && check()}</span>
+          <span key={c} style={{ width: "3.8em", height: "3.8em", borderRadius: "50%", background: c, display: "grid", placeItems: "center", boxShadow: i === 0 ? `0 0 0 0.25em #fff, 0 0 0 0.5em ${c}` : undefined }}>{i === 0 && check()}</span>
         ))}
       </div>
-      <div className="mv-row" style={{ justifyContent: "space-between", marginTop: "1.4em" }}>
-        {fonts.map(([t, f], i) => (
-          <span key={f} style={{ flex: 1, margin: i === 1 ? "0 0.6em" : 0, padding: "0.45em 0", textAlign: "center", borderRadius: "0.7em", fontSize: "1.5em", fontWeight: 700, fontFamily: f, background: i === 0 ? "#111" : "#f2f2f7", color: i === 0 ? "#fff" : "#111" }}>{t}</span>
+      <div className="mv-row" style={{ gap: "0.7em", marginTop: "1.5em" }}>
+        {fonts.map((f, i) => (
+          <span key={f} style={{ flex: 1, padding: "0.4em 0", textAlign: "center", borderRadius: "0.6em", fontSize: "1.6em", fontWeight: 700, fontFamily: f, background: i === 0 ? "#111" : "#f2f2f7", color: i === 0 ? "#fff" : "#111" }}>Aa</span>
         ))}
       </div>
     </div>
@@ -153,16 +153,14 @@ function V0() {
 /* 1 — Modifiable à tout moment */
 function V1() {
   return (
-    <div className="mv-row" style={{ ...card, left: "3.4em", top: "4.6em", width: "25.2em", padding: "1.1em", gap: "1em" }}>
-      <div className="mv-photo" style={{ width: "6em", height: "6em", borderRadius: "1em", backgroundImage: IMG("salmon") }} />
+    <div className="mv-row" style={{ ...card, width: "27em", padding: "1.2em", gap: "1.1em" }}>
+      <div className="mv-photo" style={{ width: "6.6em", height: "6.6em", borderRadius: "1em", backgroundImage: IMG("salmon") }} />
       <div style={{ flex: 1 }}>
-        <div className="mv-h" style={{ fontSize: "1.05em" }}>Pavé de saumon</div>
-        <div className="mv-row" style={{ gap: "0.5em", marginTop: "0.5em" }}>
-          <span className="mv-sub" style={{ fontSize: "0.9em", textDecoration: "line-through" }}>14,50 €</span>
-          <span className="mv-h" style={{ fontSize: "1.25em", color: RED }}>15,50 €</span>
-        </div>
+        <div className="mv-h" style={{ fontSize: "1.15em" }}>Pavé de saumon</div>
+        <div className="mv-sub" style={{ fontSize: "0.95em", textDecoration: "line-through", marginTop: "0.5em" }}>14,50 €</div>
+        <div className="mv-h" style={{ fontSize: "1.5em", color: RED, marginTop: "0.1em" }}>15,50 €</div>
       </div>
-      <span className="mv-toggle" style={{ fontSize: "1.3em" }} />
+      <span className="mv-toggle" style={{ fontSize: "1.4em", alignSelf: "center" }} />
     </div>
   );
 }
@@ -170,45 +168,45 @@ function V1() {
 /* 2 — Sans réimpression */
 function V2() {
   const badge = (ok: boolean) => (
-    <span style={{ position: "absolute", right: "-0.8em", top: "-0.8em", width: "2.4em", height: "2.4em", borderRadius: "50%", background: ok ? "#34c759" : RED, display: "grid", placeItems: "center", boxShadow: "0 0.3em 0.8em rgba(0,0,0,0.35)" }}>
+    <span style={{ position: "absolute", right: "-0.9em", top: "-0.9em", width: "2.6em", height: "2.6em", borderRadius: "50%", background: ok ? "#34c759" : RED, display: "grid", placeItems: "center", boxShadow: "0 0.3em 0.8em rgba(0,0,0,0.35)" }}>
       {ok ? check() : <svg width="45%" height="45%" viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" /></svg>}
     </span>
   );
   return (
-    <>
-      <div style={{ ...card, left: "4.4em", top: "4em", width: "8.6em", height: "11.4em", borderRadius: "0.5em", background: "#f3ede2", padding: "1.2em 1em", opacity: 0.9 }}>
-        {[70, 100, 85, 100, 60, 90].map((w, i) => <div key={i} style={{ height: "0.45em", width: `${w}%`, background: "#d6cbb8", borderRadius: "1em", marginTop: i ? "0.9em" : 0 }} />)}
+    <div className="mv-row" style={{ gap: "2em" }}>
+      <div style={{ ...card, width: "9.6em", height: "13em", borderRadius: "0.5em", background: "#f3ede2", padding: "1.4em 1.1em" }}>
+        {[70, 100, 85, 100, 60, 90].map((w, i) => <div key={i} style={{ height: "0.5em", width: `${w}%`, background: "#d6cbb8", borderRadius: "1em", marginTop: i ? "1em" : 0 }} />)}
         {badge(false)}
       </div>
-      <svg className="mv-a" style={{ left: "14.2em", top: "8.6em", width: "3.4em", height: "2em" }} viewBox="0 0 34 20"><path d="M2 10h26M21 3l8 7-8 7" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-      <div style={{ position: "absolute", left: "19em", top: "2.6em", width: "8.4em", height: "14.4em", borderRadius: "1.5em", background: "#111", padding: "0.3em", boxShadow: "0 2em 4em rgba(0,0,0,0.55), inset 0 0 0 0.12em #555" }}>
-        <div style={{ height: "100%", borderRadius: "1.25em", background: "#fff", padding: "1.6em 0.8em 0" }}>
-          {["salmon", "steak", "salad"].map((k) => (
-            <div key={k} className="mv-row" style={{ marginBottom: "0.7em", gap: "0.45em" }}>
-              <div className="mv-photo" style={{ width: "2em", height: "2em", borderRadius: "0.5em", backgroundImage: IMG(k) }} />
+      <svg style={{ width: "3.2em", height: "2em", flex: "none" }} viewBox="0 0 34 20"><path d="M2 10h26M21 3l8 7-8 7" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <div style={{ position: "relative", width: "8.6em", height: "15.4em", borderRadius: "1.5em", background: "#111", padding: "0.3em", boxShadow: "0 2em 4em rgba(0,0,0,0.55), inset 0 0 0 0.12em #555" }}>
+        <div style={{ height: "100%", borderRadius: "1.25em", background: "#fff", padding: "1.7em 0.8em 0" }}>
+          {["salmon", "steak", "salad", "pasta"].map((k) => (
+            <div key={k} className="mv-row" style={{ marginBottom: "0.75em", gap: "0.45em" }}>
+              <div className="mv-photo" style={{ width: "2.1em", height: "2.1em", borderRadius: "0.5em", backgroundImage: IMG(k) }} />
               <div style={{ flex: 1, height: "0.45em", background: "#e6e6ea", borderRadius: "1em" }} />
             </div>
           ))}
         </div>
         {badge(true)}
       </div>
-    </>
+    </div>
   );
 }
 
 /* 3 — QR code d'avis Google */
 function V3() {
   return (
-    <div className="mv-row" style={{ ...card, left: "3.6em", top: "4.2em", width: "24.8em", padding: "1.3em 1.4em", gap: "1.2em" }}>
+    <div className="mv-row" style={{ ...card, width: "26em", padding: "1.5em 1.6em", gap: "1.4em" }}>
       <div style={{ flex: 1 }}>
-        <div className="mv-row" style={{ gap: "0.4em", alignItems: "baseline" }}>
-          <span className="mv-h" style={{ fontSize: "2.6em" }}>4,9</span>
-          <span className="mv-sub" style={{ fontSize: "0.85em" }}>/ 5</span>
+        <div className="mv-row" style={{ gap: "0.35em", alignItems: "baseline" }}>
+          <span className="mv-h" style={{ fontSize: "3em" }}>4,9</span>
+          <span className="mv-sub" style={{ fontSize: "0.9em" }}>/ 5</span>
         </div>
-        <div className="mv-star" style={{ fontSize: "1.5em", letterSpacing: "0.04em", marginTop: "0.1em" }}>★★★★★</div>
-        <div className="mv-sub" style={{ fontSize: "0.8em", marginTop: "0.3em" }}>128 avis Google</div>
+        <div className="mv-star" style={{ fontSize: "1.55em", letterSpacing: "0.04em", marginTop: "0.1em" }}>★★★★★</div>
+        <div className="mv-sub" style={{ fontSize: "0.85em", marginTop: "0.35em" }}>128 avis Google</div>
       </div>
-      <div style={{ width: "7.4em", height: "7.4em" }}><QR seed={3} /></div>
+      <div style={{ width: "8.4em", height: "8.4em", flex: "none" }}><QR seed={3} /></div>
     </div>
   );
 }
@@ -216,12 +214,12 @@ function V3() {
 /* 4 — Carte de fidélité digitale */
 function V4() {
   return (
-    <div style={{ ...card, left: "4em", top: "3.2em", width: "24em", padding: "1.3em 1.5em", background: `linear-gradient(140deg,#f0595a,${RED} 50%,#b52a2c)`, color: "#fff" }}>
+    <div style={{ ...card, width: "26em", padding: "1.5em 1.7em", background: `linear-gradient(140deg,#f0595a,${RED} 50%,#b52a2c)`, color: "#fff" }}>
       <div className="mv-row" style={{ justifyContent: "space-between" }}>
-        <span className="mv-h" style={{ fontSize: "1.05em" }}>Carte fidélité</span>
-        <span className="mv-h" style={{ fontSize: "1.3em" }}>7/10</span>
+        <span className="mv-h" style={{ fontSize: "1.15em" }}>Carte fidélité</span>
+        <span className="mv-h" style={{ fontSize: "1.4em" }}>7/10</span>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.8em", marginTop: "1.1em" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "0.9em", marginTop: "1.2em" }}>
         {Array.from({ length: 10 }, (_, i) => (
           <span key={i} style={{ aspectRatio: "1", borderRadius: "50%", background: i < 7 ? "#fff" : "transparent", border: i < 7 ? "none" : "0.14em dashed rgba(255,255,255,0.75)", display: "grid", placeItems: "center" }}>
             {i < 7 && check(RED)}
@@ -235,33 +233,33 @@ function V4() {
 /* 5 — QR codes pour vos supports */
 function V5() {
   return (
-    <>
-      <div style={{ ...card, left: "10em", top: "2.4em", width: "12em", height: "15em", borderRadius: "0.6em", padding: "1.4em 1.5em", textAlign: "center" }}>
-        <div style={{ width: "9em", height: "9em" }}><QR seed={11} /></div>
-        <div className="mv-h" style={{ fontSize: "0.95em", marginTop: "0.9em" }}>Scannez la carte</div>
+    <div style={{ position: "relative", paddingBottom: "1em" }}>
+      <div style={{ ...card, width: "13em", borderRadius: "0.6em", padding: "1.5em 1.6em 1.3em", textAlign: "center" }}>
+        <div style={{ width: "9.8em", height: "9.8em" }}><QR seed={11} /></div>
+        <div className="mv-h" style={{ fontSize: "1em", marginTop: "0.9em" }}>Scannez la carte</div>
       </div>
-      <div className="mv-a" style={{ left: "8.6em", top: "17.2em", width: "14.8em", height: "1.2em", borderRadius: "0.4em", background: "linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.18))" }} />
-    </>
+      <div style={{ position: "absolute", left: "-1.2em", right: "-1.2em", bottom: 0, height: "1.3em", borderRadius: "0.4em", background: "linear-gradient(180deg,rgba(255,255,255,0.6),rgba(255,255,255,0.18))" }} />
+    </div>
   );
 }
 
 /* 6 — Sans application */
 function V6() {
-  const corner = (s: S) => <span className="mv-a" style={{ width: "2.2em", height: "2.2em", borderColor: "#ffd60a", borderStyle: "solid", borderWidth: 0, ...s }} />;
-  const w = "0.32em";
+  const corner = (st: S) => <span className="mv-a" style={{ width: "2.4em", height: "2.4em", borderColor: "#ffd60a", borderStyle: "solid", borderWidth: 0, ...st }} />;
+  const w = "0.34em";
   return (
-    <>
-      <div className="mv-a" style={{ left: "10.5em", top: "1.8em", width: "11em", height: "11em" }}>
-        <div className="mv-a" style={{ inset: "1em", borderRadius: "0.5em", overflow: "hidden" }}><QR seed={13} /></div>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.3em" }}>
+      <div style={{ position: "relative", width: "12em", height: "12em" }}>
+        <div className="mv-a" style={{ inset: "1.1em", borderRadius: "0.5em", overflow: "hidden" }}><QR seed={13} /></div>
         {corner({ left: 0, top: 0, borderLeftWidth: w, borderTopWidth: w, borderTopLeftRadius: "0.9em" })}
         {corner({ right: 0, top: 0, borderRightWidth: w, borderTopWidth: w, borderTopRightRadius: "0.9em" })}
         {corner({ left: 0, bottom: 0, borderLeftWidth: w, borderBottomWidth: w, borderBottomLeftRadius: "0.9em" })}
         {corner({ right: 0, bottom: 0, borderRightWidth: w, borderBottomWidth: w, borderBottomRightRadius: "0.9em" })}
       </div>
-      <div className="mv-a mv-row" style={{ left: "50%", top: "14.2em", transform: "translateX(-50%)", padding: "0.6em 1.2em", borderRadius: "99em", background: "#ffd60a", color: "#000", fontWeight: 700, fontSize: "1em", whiteSpace: "nowrap", gap: "0.5em", boxShadow: "0 0.8em 1.8em rgba(0,0,0,0.45)" }}>
+      <div className="mv-row" style={{ padding: "0.6em 1.3em", borderRadius: "99em", background: "#ffd60a", color: "#000", fontWeight: 700, fontSize: "1.05em", whiteSpace: "nowrap", gap: "0.5em", boxShadow: "0 0.8em 1.8em rgba(0,0,0,0.45)" }}>
         Ouvrir la carte <span style={{ fontSize: "1.1em" }}>›</span>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -300,7 +298,7 @@ export function MenuVisual({ index }: { index: number }) {
   return (
     <div className="mv">
       <div className="mv-in">
-        <div className="mv-z">
+        <div className="mv-center">
           <V />
         </div>
       </div>

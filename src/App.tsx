@@ -3616,14 +3616,14 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
                 className="scroll-reveal dark-island tint-drift relative isolate flex min-h-[170px] flex-col overflow-hidden rounded-[26px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(110%_80%_at_100%_0%,rgba(233,68,69,0.28),transparent_60%)] p-6 text-white shadow-[0_24px_60px_rgba(14,13,16,0.16)]"
               >
                 {item.visual !== undefined ? (
-                  <div aria-hidden="true" className="relative -mx-6 -mt-6 mb-1">
+                  <div aria-hidden="true" className="relative -mx-6 -mt-6 mb-1 flex flex-1 flex-col justify-center">
                     <MenuVisual index={item.visual} />
-                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(11,10,11,0)_70%,#0b0a0b_100%)]" />
+                    <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(11,10,11,0)_88%,#0b0a0b_100%)]" />
                   </div>
                 ) : (
                   <OfferIconBadge name={item.icon} />
                 )}
-                <h4 className={`mt-auto ${item.visual !== undefined ? "pt-3" : "pt-8"} text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]`}>{item.title}</h4>
+                <h4 className={`mt-auto ${item.visual !== undefined ? "pt-1" : "pt-8"} text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]`}>{item.title}</h4>
                 <p className="mt-2 text-[14px] leading-[1.55] text-white/70">{item.text}</p>
               </article>
             ))}
