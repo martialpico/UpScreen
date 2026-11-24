@@ -522,8 +522,8 @@
   /* Apparition au défilement : montée, léger zoom et flou qui se dissipe. */
   .scroll-reveal {
     opacity: 0;
-    transform: translateY(42px) scale(0.97);
-    filter: blur(10px);
+    transform: translateY(32px) scale(0.98);
+    filter: blur(6px);
     transition:
       opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
       transform 1000ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -536,9 +536,17 @@
     filter: none;
   }
 
+  /* Sur mobile, pas de flou : l'effet coûte cher aux petits téléphones. */
+  @media (max-width: 767px) {
+    .scroll-reveal,
+    .step-row .step-anim {
+      filter: none !important;
+    }
+  }
+
   /* Sortie par le haut : l'élément redescend à son retour. */
   .scroll-reveal[data-exit="top"]:not(.is-visible):not(.reveal-mask):not(.reveal-pop) {
-    transform: translateY(-42px) scale(0.97);
+    transform: translateY(-32px) scale(0.98);
   }
   .reveal-mask[data-exit="top"]:not(.is-visible) .reveal-line {
     transform: translateY(-105%);

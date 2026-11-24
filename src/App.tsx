@@ -246,6 +246,11 @@ const faqs = [
       "Oui, sur devis : rebranding complet (logo, charte graphique, UI/UX), vidéo de présentation en motion design, et des outils pour votre commerce : menu digital et QR codes, carte de fidélité, devis et factures, gestion des stocks.",
   },
   {
+    question: "Où êtes-vous basés ?",
+    answer:
+      "À Toulouse. On travaille avec les commerces et artisans de Toulouse et des alentours. Tout peut aussi se faire à distance : un appel, quelques messages WhatsApp, et on s'occupe du reste.",
+  },
+  {
     question: "Comment vous contacter ?",
     answer:
       "Le plus simple : écrivez-nous sur WhatsApp au 06 21 32 65 40, en cliquant sur « Nous contacter » en haut du site. Vous pouvez aussi laisser vos coordonnées dans le formulaire en bas de page, ou écrire à upscreenweb@gmail.com : on vous rappelle pour un appel découverte gratuit de 20 minutes.",
@@ -812,10 +817,10 @@ function Hero() {
       </p>
       <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
         <a
-          href="#contact"
-          className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B]"
+          href="#contact-form"
+          className="inline-flex items-center gap-2 rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#d93a3b]"
         >
-          Prendre rendez-vous
+          Être rappelé
           <ArrowIcon />
         </a>
         <a
@@ -3023,7 +3028,7 @@ function CustomOfferModal({ offer, index, onClose }: { offer: CustomOffer; index
             onClick={onClose}
             className="inline-flex items-center gap-2 rounded-full bg-[#e94445] px-6 py-3.5 text-sm font-semibold text-white transition hover:-translate-y-0.5"
           >
-            Demander un devis <ArrowIcon />
+            Être rappelé <ArrowIcon />
           </a>
         </div>
       </div>
@@ -3089,8 +3094,12 @@ function CustomServices() {
 
       <p className="mt-10 text-center font-mono text-[13px] font-semibold text-warm-gray">
         Un autre projet ?{" "}
+        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="text-brand underline underline-offset-4 hover:text-brand-deep">
+          Nous contacter
+        </a>{" "}
+        ou{" "}
         <a href="#contact-form" className="text-brand underline underline-offset-4 hover:text-brand-deep">
-          Parlez-nous-en
+          être rappelé
         </a>
         , on vous dit ce qui est possible.
       </p>
@@ -3376,6 +3385,12 @@ function ContactSection() {
             >
               {status === "sending" ? "Envoi…" : "Être rappelé"}
             </button>
+            <p className="mt-3 text-center text-[12px] font-normal leading-[1.5] text-[#0e0d10]/55">
+              Vos informations servent uniquement à vous recontacter.{" "}
+              <button type="button" onClick={openLegal} className="underline underline-offset-2 hover:text-[#0e0d10]">
+                Mentions légales et données personnelles
+              </button>
+            </p>
             <div aria-live="polite">
               {status === "sent" && (
                 <p className="mt-3 text-sm font-normal text-[#0e0d10]">
@@ -3430,8 +3445,8 @@ function Footer() {
           />
         </a>
           <p className="mt-5 max-w-[440px] font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-warm-gray">
-            Sites web, visibilité locale et création de contenu pour les
-            commerces et artisans.
+            Agence web à Toulouse : sites web, visibilité locale et création
+            de contenu pour les commerces et artisans de Toulouse et alentours.
           </p>
           <p className="mt-6 text-sm font-semibold text-off-white">
             Être vu. Être choisi.
@@ -3469,9 +3484,19 @@ function Footer() {
               {contactEmail}
             </a>
           </div>
-          <p className="mt-6 text-xs font-normal text-off-white/35">
-            © UpScreen
-        </p>
+          <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-normal text-off-white/35 md:justify-end">
+            <span>© UpScreen · Martial Production</span>
+            <a
+              href="#mentions-legales"
+              onClick={(event) => {
+                event.preventDefault();
+                openLegal();
+              }}
+              className="underline underline-offset-2 transition-colors hover:text-off-white"
+            >
+              Mentions légales
+            </a>
+          </p>
         </div>
       </div>
     </footer>
@@ -3490,6 +3515,151 @@ function BackgroundLights() {
       <div className="bg-grid absolute inset-0" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,10,11,0.5)_80%)]" />
     </div>
+  );
+}
+
+// Mentions légales : ouvertes depuis le footer, le formulaire ou l'adresse
+// #mentions-legales. Éditeur : Martial Production (entreprise individuelle).
+const legalEvent = "upscreen:open-legal";
+function openLegal() {
+  window.dispatchEvent(new Event(legalEvent));
+}
+
+const legalSections: { title: string; body: ReactNode }[] = [
+  {
+    title: "Éditeur du site",
+    body: (
+      <>
+        <p>UpScreen est une marque exploitée par <strong>Martial Production</strong>, entreprise individuelle.</p>
+        <p>Adresse : 5 rue du Ramounat, 31230 L'Isle-en-Dodon, France</p>
+        <p>RCS : 920 083 094 R.C.S. Toulouse</p>
+        <p>TVA non applicable, art. 293 B du CGI.</p>
+        <p>Contact : {contactEmail} · {whatsappDisplay} · contact@martialproduction.fr</p>
+        <p>Directeur de la publication : Martial Pico, pour Martial Production.</p>
+      </>
+    ),
+  },
+  {
+    title: "Hébergement",
+    body: (
+      <p>
+        Vercel Inc., 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis. Téléphone : +1 559 288 7060. Site : vercel.com
+      </p>
+    ),
+  },
+  {
+    title: "Données personnelles",
+    body: (
+      <>
+        <p>
+          Les informations envoyées par le formulaire de contact (nom, entreprise, secteur, email, téléphone, message) servent
+          uniquement à vous recontacter et à préparer votre maquette ou votre devis. Elles ne sont ni vendues ni cédées.
+        </p>
+        <p>
+          Elles nous sont transmises par email via le service FormSubmit (formsubmit.co) et sont conservées au maximum 3 ans
+          après notre dernier échange.
+        </p>
+        <p>
+          Conformément au RGPD, vous pouvez y accéder, les faire rectifier ou supprimer, ou vous opposer à leur utilisation en
+          écrivant à {contactEmail}. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr).
+        </p>
+      </>
+    ),
+  },
+  {
+    title: "Cookies",
+    body: (
+      <p>
+        Le site n'utilise ni cookie publicitaire ni outil de mesure d'audience. Les vidéos sont diffusées par Wistia, qui peut
+        déposer des cookies techniques nécessaires à la lecture. Vous pouvez les refuser dans les réglages de votre navigateur.
+      </p>
+    ),
+  },
+  {
+    title: "Propriété intellectuelle",
+    body: (
+      <p>
+        Les textes, images, vidéos et le logo UpScreen sont protégés par le droit d'auteur et le droit des marques. Les sites
+        présentés dans la rubrique Réalisations restent la propriété de leurs clients respectifs. Toute reproduction sans
+        autorisation est interdite.
+      </p>
+    ),
+  },
+  {
+    title: "Responsabilité et liens externes",
+    body: (
+      <p>
+        Les informations du site sont données à titre indicatif et peuvent évoluer. Le site peut contenir des liens vers des
+        sites externes sur lesquels nous n'avons aucun contrôle et dont nous ne sommes pas responsables.
+      </p>
+    ),
+  },
+  {
+    title: "Droit applicable",
+    body: <p>Le site est soumis au droit français. En cas de litige, les tribunaux français sont seuls compétents.</p>,
+  },
+];
+
+function LegalModal() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const show = () => setOpen(true);
+    window.addEventListener(legalEvent, show);
+    if (window.location.hash === "#mentions-legales") setOpen(true);
+    return () => window.removeEventListener(legalEvent, show);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
+  if (!open) return null;
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="legal-title"
+      className="fixed inset-0 z-[200] flex items-end justify-center bg-[rgba(10,10,11,0.55)] p-3 backdrop-blur-sm sm:items-center sm:p-6"
+      onClick={() => setOpen(false)}
+    >
+      <div
+        className="relative max-h-[88vh] w-full max-w-[720px] overflow-y-auto rounded-[24px] bg-[#ffffff] p-6 text-[#0e0d10] shadow-[0_40px_100px_rgba(0,0,0,0.35)] sm:p-10"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          aria-label="Fermer"
+          className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f1ee] text-xl leading-none text-[#0e0d10] transition hover:bg-[#e6e4e0]"
+        >
+          ×
+        </button>
+        <h2 id="legal-title" className="pr-12 text-[30px] font-extrabold leading-none tracking-[-0.05em] sm:text-[38px]">
+          Mentions légales
+        </h2>
+        <p className="mt-3 font-mono text-[12px] font-semibold text-[#0e0d10]/50">Mises à jour le 24/11/2026</p>
+        <div className="mt-8 space-y-7">
+          {legalSections.map((section) => (
+            <section key={section.title}>
+              <h3 className="text-[17px] font-extrabold tracking-[-0.02em]">{section.title}</h3>
+              <div className="mt-2 space-y-1.5 text-[14px] leading-[1.65] text-[#0e0d10]/75">{section.body}</div>
+            </section>
+          ))}
+        </div>
+      </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -3527,6 +3697,11 @@ export default function App() {
       return;
     }
 
+    // Seuls les titres et les visuels se replient quand ils quittent l'écran ;
+    // le contenu à lire (textes, tarifs, FAQ, formulaire) reste en place.
+    const exitSelector =
+      ".reveal-mask, .reveal-pop, .title-frame, .step-row, figure, img, video, iframe, .reviews-viewport";
+
     const observer = new IntersectionObserver(
       (entries) => {
         // Apparition en descendant, disparition quand l'élément sort de
@@ -3539,6 +3714,10 @@ export default function App() {
             return;
           }
           if (!target.classList.contains("is-visible")) return;
+          if (!target.matches(exitSelector)) {
+            observer.unobserve(target);
+            return;
+          }
           const exitedTop = entry.boundingClientRect.top < (entry.rootBounds?.top ?? 0);
           target.dataset.exit = exitedTop ? "top" : "bottom";
           target.classList.remove("is-visible");
@@ -3564,6 +3743,7 @@ export default function App() {
       <FAQ />
       <ContactSection />
       <Footer />
+      <LegalModal />
     </main>
   );
 }

@@ -1,6 +1,6 @@
 {
-  "title": "UpScreen | Sites web et vidéos motion design pour les petites entreprises",
-  "description": "UpScreen crée des landing pages sur-mesure, des vidéos en motion design et du contenu Instagram pour aider les petites entreprises à être vues et choisies en ligne.",
+  "title": "UpScreen | Agence web à Toulouse : sites web, fiche Google et réseaux sociaux",
+  "description": "UpScreen, agence web à Toulouse : sites internet sur-mesure à prix fixe, référencement local, fiche Google et création de contenu pour les commerces et artisans de Toulouse et alentours. Maquette gratuite.",
   "language": "fr",
   "robots": {
     "index": true
@@ -13,6 +13,6 @@
     "icon": "favicon.svg"
   },
   "customScripts": {
-    "headEnd": "<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\" /><link rel=\"canonical\" href=\"https://upscren.agency/\" /><meta property=\"og:url\" content=\"https://upscren.agency/\" />"
+    "headEnd": "<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\" /><link rel=\"canonical\" href=\"https://www.upscreen.agency/\" /><meta property=\"og:url\" content=\"https://www.upscreen.agency/\" /><meta property=\"og:type\" content=\"website\" /><meta property=\"og:locale\" content=\"fr_FR\" /><meta name=\"geo.region\" content=\"FR-31\" /><meta name=\"geo.placename\" content=\"Toulouse\" /><script type=\"application/ld+json\">{\"@context\": \"https://schema.org\", \"@type\": \"ProfessionalService\", \"name\": \"UpScreen\", \"url\": \"https://www.upscreen.agency/\", \"logo\": \"https://www.upscreen.agency/apple-touch-icon.png\", \"telephone\": \"+33621326540\", \"email\": \"upscreenweb@gmail.com\", \"priceRange\": \"€€\", \"areaServed\": [{\"@type\": \"City\", \"name\": \"Toulouse\"}, {\"@type\": \"AdministrativeArea\", \"name\": \"Haute-Garonne\"}], \"address\": {\"@type\": \"PostalAddress\", \"addressLocality\": \"Toulouse\", \"addressRegion\": \"Occitanie\", \"addressCountry\": \"FR\"}, \"description\": \"Agence web à Toulouse : sites internet, référencement local, fiche Google et création de contenu pour les commerces et artisans.\"}</script>"
   }
 }
