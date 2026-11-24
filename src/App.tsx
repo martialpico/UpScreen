@@ -2849,6 +2849,7 @@ type CustomOffer = {
   image: string;
   details: string[];
   videos?: boolean;
+  ui?: "motion";
 };
 
 const customOffers: CustomOffer[] = [
@@ -2880,7 +2881,8 @@ const customOffers: CustomOffer[] = [
     id: "motion",
     title: "Vidéo en motion design",
     body: "30 à 60 secondes pour expliquer ce que vous faites et retenir l'attention.",
-    image: `${import.meta.env.BASE_URL}sur-mesure/motion.webp`,
+    image: "",
+    ui: "motion",
     details: motionFormats,
     videos: true,
   },
@@ -2898,24 +2900,68 @@ const customOffers: CustomOffer[] = [
   },
 ];
 
+// Visuel « interface » de la carte motion design : un petit éditeur vidéo
+// (aperçu, bouton lecture, pistes de montage et tête de lecture animée).
+function MotionEditorUI() {
+  const tracks = [
+    { color: "bg-white/85", left: "6%", width: "40%" },
+    { color: "bg-brand", left: "28%", width: "55%" },
+  ];
+  return (
+    <div aria-hidden="true" className="relative mt-5">
+      <div className="overflow-hidden rounded-[14px] border border-white/12 bg-[#141214] p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div className="relative flex aspect-[16/8] items-center justify-center overflow-hidden rounded-[10px] bg-[radial-gradient(120%_90%_at_30%_20%,#ff6b6c_0%,#e94445_38%,#7a1416_100%)]">
+          <span className="absolute left-2 top-1.5 font-mono text-[8px] font-semibold text-white/80">presentation.mp4</span>
+          <span className="motion-shape-a absolute left-[12%] top-[40%] h-4 w-4 rounded-full bg-white/80" />
+          <span className="motion-shape-b absolute bottom-[18%] right-[12%] h-2.5 w-8 rounded-full bg-[#0e0d10]/60" />
+          <span className="absolute right-[20%] top-[24%] h-3.5 w-3.5 rotate-12 rounded-[4px] border-2 border-white/70" />
+          <span className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+            <svg viewBox="0 0 16 16" className="ml-0.5 h-5 w-5 text-brand" fill="currentColor">
+              <path d="M4.5 2.8v10.4a.6.6 0 0 0 .9.5l8.2-5.2a.6.6 0 0 0 0-1L5.4 2.3a.6.6 0 0 0-.9.5Z" />
+            </svg>
+          </span>
+          <span className="absolute bottom-1.5 right-2 font-mono text-[8px] font-semibold text-white/85">00:12 / 00:45</span>
+        </div>
+        <div className="relative mt-1.5 space-y-1 px-1 pb-0.5">
+          {tracks.map((track, index) => (
+            <span key={index} className="relative block h-2 rounded-full bg-white/[0.06]">
+              <span className={`absolute inset-y-0 rounded-full ${track.color}`} style={{ left: track.left, width: track.width }} />
+            </span>
+          ))}
+          <span className="motion-playhead absolute -top-1 bottom-0 left-1 w-px bg-white">
+            <span className="absolute -left-[3px] -top-0.5 h-[7px] w-[7px] rotate-45 rounded-[1px] bg-white" />
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CustomOfferCard({ offer, index, onOpen }: { offer: CustomOffer; index: number; onOpen: () => void }) {
   return (
     <article
       className="stagger-card dark-island group relative isolate flex min-h-[440px] flex-col overflow-hidden rounded-[26px] border border-white/10 bg-[#b52a2c] p-6 text-white shadow-[0_30px_70px_rgba(233,68,69,0.25)] sm:min-h-[480px]"
       style={{ ["--i" as string]: index }}
     >
-      <img
-        src={offer.image}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 -z-20 h-full w-full object-cover transition duration-700 group-hover:scale-105"
-      />
+      {offer.ui === "motion" ? (
+        <>
+          <div aria-hidden="true" className="absolute inset-0 -z-20 bg-[radial-gradient(110%_70%_at_50%_10%,#3a0d0f_0%,#160809_55%,#0c0506_100%)]" />
+        </>
+      ) : (
+        <img
+          src={offer.image}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 -z-20 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+        />
+      )}
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(20,4,5,0.25)_0%,rgba(20,4,5,0)_35%,rgba(20,4,5,0.55)_62%,rgba(12,3,4,0.92)_100%)]" />
       <span className="text-[88px] font-extrabold leading-[0.85] tracking-[-0.06em] text-white sm:text-[104px]">
         0{index + 1}
       </span>
-      <div className="mt-auto">
+      {offer.ui === "motion" && <MotionEditorUI />}
+      <div className="mt-auto pt-6">
         <h3 className="text-[24px] font-extrabold leading-[1.05] tracking-[-0.045em]">{offer.title}</h3>
         <p className="mt-3 font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-white/85">{offer.body}</p>
         <button

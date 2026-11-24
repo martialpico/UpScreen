@@ -884,3 +884,13 @@
   opacity: 1;
   transform: none;
 }
+
+/* Mini éditeur vidéo de la carte motion design. */
+@keyframes motion-playhead { from { left: 4px; } to { left: calc(100% - 6px); } }
+.motion-playhead { animation: motion-playhead 5s linear infinite; }
+@keyframes motion-float { 50% { transform: translateY(-6px) rotate(8deg); } }
+.motion-shape-a { animation: motion-float 3s ease-in-out infinite; }
+.motion-shape-b { animation: motion-float 4s ease-in-out -1s infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .motion-playhead, .motion-shape-a, .motion-shape-b { animation: none; }
+}
