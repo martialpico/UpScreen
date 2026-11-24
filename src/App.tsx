@@ -525,9 +525,8 @@ function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Nous contacter sur WhatsApp au ${whatsappDisplay}`}
-            className="inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-[14px] bg-brand px-3 text-[13px] font-bold tabular-nums text-white md:hidden"
+            className="inline-flex h-11 items-center whitespace-nowrap rounded-[14px] bg-brand px-3.5 text-[15px] font-extrabold tabular-nums tracking-[-0.01em] text-white md:hidden"
           >
-            <WhatsAppIcon className="hidden h-4 w-4 shrink-0 min-[380px]:block" />
             {whatsappDisplay}
           </a>
           <a
@@ -535,13 +534,10 @@ function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Nous contacter sur WhatsApp au ${whatsappDisplay}`}
-            className="hidden h-12 items-center gap-2 whitespace-nowrap rounded-[14px] bg-brand px-5 text-[15px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#d93a3b] md:inline-flex"
+            className="hidden h-12 flex-col items-center justify-center whitespace-nowrap rounded-[14px] bg-brand px-5 leading-none text-white transition hover:-translate-y-0.5 hover:bg-[#d93a3b] md:inline-flex"
           >
-            <WhatsAppIcon className="h-[18px] w-[18px]" />
-            <span className="flex flex-col items-start leading-none">
-              <span>Nous contacter</span>
-              <span className="mt-1 font-mono text-[11px] font-semibold tracking-[0.02em] text-white/85">{whatsappDisplay}</span>
-            </span>
+            <span className="text-[12px] font-semibold text-[rgba(255,255,255,0.88)]">Nous contacter</span>
+            <span className="mt-1 text-[16px] font-extrabold tabular-nums tracking-[-0.01em]">{whatsappDisplay}</span>
           </a>
           <a
             href="#contact-form"
@@ -596,10 +592,9 @@ function Header() {
                 tabIndex={menuOpen ? 0 : -1}
                 className="flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white"
               >
-                <WhatsAppIcon className="h-4 w-4 shrink-0" />
-                <span className="flex flex-col items-start leading-none">
-                  <span>Nous contacter</span>
-                  <span className="mt-1 font-mono text-[11px] font-semibold text-white/85">{whatsappDisplay}</span>
+                <span className="flex flex-col items-center leading-none">
+                  <span className="text-[12px] font-semibold text-[rgba(255,255,255,0.88)]">Nous contacter</span>
+                  <span className="mt-1 text-[15px] font-extrabold tabular-nums">{whatsappDisplay}</span>
                 </span>
               </a>
               <a
