@@ -10,9 +10,9 @@ import upscreenLogo from "./imports/upscreen-logo-reversed.svg";
 import upscreenIcon from "./imports/upscreen-icon.svg";
 import upscreenLogoDark from "./imports/upscreen-logo-dark.svg";
 
-// Test du fond blanc : ajouter ?fond=blanc à l'adresse du site.
+// Fond blanc par défaut ; ?fond=noir affiche l'ancienne version sombre.
 const lightTheme =
-  typeof window !== "undefined" && new URLSearchParams(window.location.search).get("fond") === "blanc";
+  typeof window === "undefined" || new URLSearchParams(window.location.search).get("fond") !== "noir";
 const siteLogo = lightTheme ? upscreenLogoDark : upscreenLogo;
 import cafePhoto from "./imports/cafe-espresso.webp";
 import motionWise from "./imports/motion-wise.mp4";
@@ -501,8 +501,14 @@ function Header() {
             </a>
           )}
           <a
-            href="#contact"
-            className="hidden h-12 items-center gap-2 whitespace-nowrap rounded-[14px] bg-brand px-6 text-[15px] font-semibold text-onyx transition hover:-translate-y-0.5 hover:bg-[#FF7A7B] sm:inline-flex"
+            href={`mailto:${contactEmail}`}
+            className="hidden h-12 items-center whitespace-nowrap rounded-[14px] bg-brand px-5 text-[15px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#d93a3b] md:inline-flex"
+          >
+            Nous contacter
+          </a>
+          <a
+            href="#contact-form"
+            className="hidden h-12 items-center gap-2 whitespace-nowrap rounded-[14px] bg-[#0e0d10] px-5 text-[15px] font-semibold text-white shadow-[0_10px_24px_rgba(14,13,16,0.25)] transition hover:-translate-y-0.5 hover:bg-[#26242a] sm:inline-flex"
           >
             Être rappelé <ArrowIcon />
           </a>
@@ -545,14 +551,23 @@ function Header() {
                 <ArrowIcon className="h-4 w-4 text-brand" />
               </a>
             ))}
-            <a
-              href="#contact"
-              onClick={() => setMenuOpen(false)}
-              tabIndex={menuOpen ? 0 : -1}
-              className="mt-2 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-4 py-3.5 text-sm font-semibold text-onyx hover:bg-[#FF7A7B]"
-            >
-              Être rappelé <ArrowIcon />
-            </a>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              <a
+                href={`mailto:${contactEmail}`}
+                tabIndex={menuOpen ? 0 : -1}
+                className="flex items-center justify-center rounded-full bg-brand px-4 py-3.5 text-sm font-semibold text-white"
+              >
+                Nous contacter
+              </a>
+              <a
+                href="#contact-form"
+                onClick={() => setMenuOpen(false)}
+                tabIndex={menuOpen ? 0 : -1}
+                className="flex items-center justify-center gap-2 rounded-full bg-[#0e0d10] px-4 py-3.5 text-sm font-semibold text-white"
+              >
+                Être rappelé <ArrowIcon />
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -3241,7 +3256,7 @@ function Footer() {
   ];
 
   return (
-    <footer className="border-t border-[#2A2A2E] bg-onyx px-5 py-12 sm:px-8">
+    <footer className="dark-island border-t border-white/10 bg-[#0b0a0b] px-5 py-12 sm:px-8">
       <div className="mx-auto grid max-w-[1160px] gap-10 md:grid-cols-[1.2fr_1fr] md:items-end">
         <div>
         <a
@@ -3250,7 +3265,7 @@ function Footer() {
             className="block w-[180px]"
         >
           <img
-            src={siteLogo}
+            src={upscreenLogo}
             alt="UpScreen"
               className="block h-auto w-full"
           />
@@ -3304,8 +3319,6 @@ function BackgroundLights() {
       <span className="bg-light bg-light-b" />
       <span className="bg-light bg-light-c" />
       <span className="bg-light bg-light-d" />
-      <span className="bg-streak bg-streak-a" />
-      <span className="bg-streak bg-streak-b" />
       <div className="bg-grid absolute inset-0" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,10,11,0.5)_80%)]" />
     </div>

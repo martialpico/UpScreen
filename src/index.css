@@ -832,9 +832,16 @@
   background-image: linear-gradient(to right, rgba(14, 13, 16, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(14, 13, 16, 0.05) 1px, transparent 1px);
 }
-.theme-light .bg-lights .bg-light,
-.theme-light .bg-lights .bg-streak {
-  opacity: 0.35;
+/* Fond clair : dégradé doux et fixe à la place des lumières animées. */
+.theme-light .bg-lights {
+  background:
+    radial-gradient(70% 50% at 50% -8%, rgba(233, 68, 69, 0.16), rgba(233, 68, 69, 0.05) 45%, transparent 72%),
+    radial-gradient(45% 40% at -5% 55%, rgba(255, 170, 160, 0.2), transparent 70%),
+    radial-gradient(50% 45% at 105% 85%, rgba(233, 68, 69, 0.1), transparent 70%),
+    linear-gradient(180deg, #faf8f6 0%, #f4f2ef 100%);
+}
+.theme-light .bg-lights .bg-light {
+  display: none;
 }
 .theme-light .bg-lights > div:not(.bg-grid) {
   background: none;
