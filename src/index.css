@@ -519,17 +519,72 @@
   }
 
   /* Sections fade in gently as they scroll into view (no blur). */
+  /* Apparition au défilement : montée, léger zoom et flou qui se dissipe. */
   .scroll-reveal {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(42px) scale(0.97);
+    filter: blur(10px);
     transition:
-      opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+      opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 900ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .scroll-reveal.is-visible {
     opacity: 1;
     transform: none;
+    filter: none;
+  }
+
+  /* Cascade : les éléments voisins apparaissent l'un après l'autre. */
+  .scroll-reveal:nth-child(2) { transition-delay: 90ms; }
+  .scroll-reveal:nth-child(3) { transition-delay: 180ms; }
+  .scroll-reveal:nth-child(4) { transition-delay: 270ms; }
+  .scroll-reveal:nth-child(5) { transition-delay: 360ms; }
+  .scroll-reveal:nth-child(6) { transition-delay: 450ms; }
+  .scroll-reveal:nth-child(n + 7) { transition-delay: 500ms; }
+
+  /* Titres : chaque ligne monte depuis un masque. */
+  .reveal-mask {
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .scroll-reveal.reveal-mask {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  .reveal-mask .reveal-line {
+    transform: translateY(105%);
+    transition: transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-mask.is-visible .reveal-line {
+    transform: none;
+  }
+
+  /* Étiquettes : petit rebond. */
+  .scroll-reveal.reveal-pop {
+    transform: scale(0.6);
+    filter: none;
+    transition:
+      opacity 500ms ease,
+      transform 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .scroll-reveal.reveal-pop.is-visible {
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-reveal,
+    .reveal-mask .reveal-line,
+    .scroll-reveal.reveal-pop {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
   }
 
   @keyframes panel-float-left {

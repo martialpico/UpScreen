@@ -302,16 +302,24 @@ function SectionHeader({
 }) {
   return (
     <div className="mx-auto flex max-w-[900px] flex-col items-center text-center">
-      {eyebrow && <Eyebrow center>{eyebrow}</Eyebrow>}
+      {eyebrow && (
+        <div className="scroll-reveal reveal-pop">
+          <Eyebrow center>{eyebrow}</Eyebrow>
+        </div>
+      )}
       <h2
         className={`text-balance font-extrabold tracking-[-0.055em] ${
           small ? "text-[32px] leading-[1.02] md:text-[44px]" : "text-[40px] leading-[0.98] md:text-[56px] lg:text-[60px]"
         }`}
       >
-        <span className="block text-off-white">{title}</span>
-        {muted && <span className="block text-[#7d7b80]">{muted}</span>}
+        <span className="scroll-reveal reveal-mask block"><span className="reveal-line block text-off-white">{title}</span></span>
+        {muted && (
+          <span className="scroll-reveal reveal-mask block">
+            <span className="reveal-line block text-[#7d7b80]" style={{ transitionDelay: "120ms" }}>{muted}</span>
+          </span>
+        )}
       </h2>
-      {lead && <p className="mt-5 max-w-[640px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#CFCCC7] md:text-[15px]">{lead}</p>}
+      {lead && <p style={{ transitionDelay: "240ms" }} className="scroll-reveal mt-5 max-w-[640px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#CFCCC7] md:text-[15px]">{lead}</p>}
       {aside && <div className="mt-5 max-w-[640px]">{aside}</div>}
     </div>
   );
@@ -3130,7 +3138,7 @@ function CustomServices() {
         muted="qu'un site ?"
         aside={
           <AsideLead>
-            Outil, vidéo ou identité visuelle pour votre commerce : on étudie votre projet et on vous envoie un devis gratuit sous 48 h.
+            Outils, vidéo ou identité visuelle pour votre commerce : on étudie votre projet et on vous envoie un devis gratuit sous 48 h.
           </AsideLead>
         }
       />
