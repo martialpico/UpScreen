@@ -3256,10 +3256,11 @@ function ContactSection() {
             href={whatsappLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-7 inline-flex w-fit items-center gap-2.5 rounded-full bg-white px-5 py-3 text-[15px] font-semibold text-[#0e0d10] transition hover:-translate-y-0.5"
+            aria-label={`Nous contacter sur WhatsApp au ${whatsappDisplay}`}
+            className="mt-7 inline-flex h-14 w-fit flex-col items-center justify-center whitespace-nowrap rounded-[16px] bg-brand px-7 leading-none text-white shadow-[0_14px_34px_rgba(233,68,69,0.35)] transition hover:-translate-y-0.5 hover:bg-[#d93a3b]"
           >
-            <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
-            WhatsApp · {whatsappDisplay}
+            <span className="text-[12px] font-semibold text-[rgba(255,255,255,0.88)]">Nous contacter</span>
+            <span className="mt-1 text-[18px] font-extrabold tabular-nums tracking-[-0.01em]">{whatsappDisplay}</span>
           </a>
           <p className="mt-4 font-mono text-[12px] font-semibold text-white/60">
             Ou écrivez-nous :{" "}
@@ -3371,7 +3372,7 @@ function ContactSection() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full rounded-full bg-brand px-6 py-3.5 text-sm font-semibold text-onyx transition-colors hover:bg-[#FF7A7B] disabled:cursor-wait disabled:opacity-70"
+              className="w-full rounded-full bg-brand px-6 py-3.5 text-[15px] font-bold text-white transition-colors hover:bg-[#d93a3b] disabled:cursor-wait disabled:opacity-70"
             >
               {status === "sending" ? "Envoi…" : "Être rappelé"}
             </button>
