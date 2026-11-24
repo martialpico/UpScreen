@@ -1,6 +1,6 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { OfferFeatureVisual, OfferVisual } from "./MenuVisuals";
+import { BrandQR, OfferFeatureVisual, OfferVisual } from "./MenuVisuals";
 import {
   LiquidGlassButton,
   LiquidGlassToolbar,
@@ -3042,7 +3042,7 @@ type OfferPage = {
   includedTitle: [string, string];
   included: { icon: OfferIcon; title: string; text: string; visual?: string }[];
   feature?: { title: string; text: string; visual?: string };
-  highlight?: { big: string; text: string };
+  highlight?: { big: string; text: string; qr?: boolean };
   processEyebrow: string;
   processTitle: [string, string];
   processLead: string;
@@ -3067,7 +3067,7 @@ const offerPages: Record<string, OfferPage> = {
       { icon: "qr", title: "QR codes pour vos supports", text: "Tables, vitrine, comptoir, flyers et sacs.", visual: "menu-5" },
       { icon: "phone", title: "Sans application", text: "Un scan suffit, sur iPhone comme sur Android.", visual: "menu-6" },
     ],
-    highlight: { big: "QR", text: "À vos couleurs, avec votre logo." },
+    highlight: { big: "QR", text: "Votre QR code, à vos couleurs.", qr: true },
     processEyebrow: "Comment ça marche",
     processTitle: ["Du QR code", "à l'assiette."],
     processLead: "Simple pour vos clients, simple pour vous.",
@@ -3673,8 +3673,20 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
             ))}
             {page.highlight && (
               <article onPointerMove={tilt3d} onPointerLeave={untilt3d} className="tilt3d scroll-reveal relative isolate flex min-h-[170px] flex-col overflow-hidden rounded-[26px] bg-[linear-gradient(140deg,#f0595a_0%,#e94445_45%,#b52a2c_100%)] p-6 text-white shadow-[0_24px_60px_rgba(233,68,69,0.35)]">
-                <p className="text-[76px] font-extrabold leading-[0.85] tracking-[-0.06em]">{page.highlight.big}</p>
-                <p className="mt-auto pt-6 text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]">{page.highlight.text}</p>
+                {page.highlight.qr ? (
+                  <>
+                    <div className="flex flex-1 items-center justify-center py-2">
+                      <div className="mv-float w-[62%] max-w-[180px]"><BrandQR /></div>
+                    </div>
+                    <p className="pt-4 text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]">{page.highlight.text}</p>
+                    <p className="mt-2 text-[14px] leading-[1.55] text-white/80">Avec votre logo au centre.</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-[76px] font-extrabold leading-[0.85] tracking-[-0.06em]">{page.highlight.big}</p>
+                    <p className="mt-auto pt-6 text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]">{page.highlight.text}</p>
+                  </>
+                )}
               </article>
             )}
           </div>

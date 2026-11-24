@@ -540,3 +540,33 @@ export function OfferFeatureVisual({ id }: { id: string }) {
     </div>
   );
 }
+
+/* QR code personnalisé : modules arrondis, couleur de marque, logo au centre */
+export function BrandQR() {
+  const n = 25;
+  let x = 424242;
+  const rnd = () => ((x = (x * 16807) % 2147483647) / 2147483647);
+  const finder = (r: number, c: number) => [[0, 0], [0, n - 7], [n - 7, 0]].some(([fr, fc]) => r >= fr - 1 && r < fr + 8 && c >= fc - 1 && c < fc + 8);
+  const center = (r: number, c: number) => r >= 9 && r <= 15 && c >= 9 && c <= 15;
+  const dots: preact.JSX.Element[] = [];
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++) {
+      if (finder(r, c) || center(r, c)) continue;
+      if (rnd() > 0.5) dots.push(<circle key={`${r}-${c}`} cx={c + 0.5} cy={r + 0.5} r="0.42" />);
+    }
+  const eye = (r: number, c: number) => (
+    <g key={`e${r}${c}`}>
+      <rect x={c + 0.5} y={r + 0.5} width="6" height="6" rx="1.9" fill="none" stroke="currentColor" strokeWidth="1" />
+      <rect x={c + 2} y={r + 2} width="3" height="3" rx="0.9" />
+    </g>
+  );
+  return (
+    <div style={{ position: "relative", width: "100%", aspectRatio: "1", background: "#fff", borderRadius: "18%", padding: "9%", boxShadow: "0 18px 40px rgba(80,10,10,0.35)" }}>
+      <svg viewBox={`0 0 ${n} ${n}`} style={{ display: "block", width: "100%", height: "100%", color: "#b52a2c" }} fill="currentColor">
+        {dots}
+        {eye(0, 0)}{eye(0, n - 7)}{eye(n - 7, 0)}
+      </svg>
+      <div style={{ position: "absolute", left: "50%", top: "50%", width: "24%", height: "24%", transform: "translate(-50%,-50%)", borderRadius: "28%", background: "linear-gradient(145deg,#f26a5c,#e94445 55%,#b8302f)", boxShadow: "0 0 0 4px #fff", display: "grid", placeItems: "center", color: "#fff", fontFamily: "Georgia, serif", fontStyle: "italic", fontWeight: 700, fontSize: "clamp(14px, 3.2vw, 24px)" }}>C</div>
+    </div>
+  );
+}
