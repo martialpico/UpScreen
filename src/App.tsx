@@ -448,18 +448,32 @@ function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-[100] px-3 pt-3 sm:px-5 sm:pt-4">
-      <div className="relative mx-auto flex max-w-[1160px] items-center justify-between gap-3">
+      <div
+        className={`${liquidGlassClass("dark")} relative mx-auto flex h-[68px] max-w-[1200px] items-center justify-between gap-3 !rounded-[22px] px-3 sm:h-[78px] sm:px-5`}
+        onPointerMove={(event) => {
+          const el = event.currentTarget;
+          const rect = el.getBoundingClientRect();
+          el.style.setProperty("--lg-x", `${event.clientX - rect.left}px`);
+          el.style.setProperty("--lg-y", `${event.clientY - rect.top}px`);
+        }}
+      >
         <a
           href="#home"
           aria-label="Accueil UpScreen"
           onClick={() => setMenuOpen(false)}
-          className={`${liquidGlassClass("dark")} flex h-12 shrink-0 items-center rounded-full px-4 sm:px-5`}
+          className="relative z-[2] flex shrink-0 items-center px-2"
         >
-          <img src={upscreenLogo} alt="UpScreen" className="relative z-[2] block h-auto w-[118px] sm:w-[128px]" />
+          <img src={upscreenLogo} alt="UpScreen" className="block h-auto w-[132px] sm:w-[156px]" />
         </a>
 
-        <nav className="hidden lg:block" aria-label="Navigation principale">
-        <LiquidGlassToolbar tone="dark" value={active} onValueChange={goTo} aria-label="Sections du site">
+        <nav className="relative z-[2] hidden lg:block" aria-label="Navigation principale">
+        <LiquidGlassToolbar
+          tone="dark"
+          value={active}
+          onValueChange={goTo}
+          aria-label="Sections du site"
+          className="!bg-white/[0.04] !shadow-none [&>button]:h-11 [&>button]:px-5 [&>button]:text-[15px]"
+        >
           {links.map(([label, id]) => (
             <LiquidGlassToolbarItem key={id} value={id}>
               {label}
@@ -468,7 +482,7 @@ function Header() {
         </LiquidGlassToolbar>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="relative z-[2] flex items-center gap-2">
           {whatsappLink && (
             <a
               href={whatsappLink}
@@ -482,7 +496,7 @@ function Header() {
           )}
           <a
             href="#contact"
-            className="hidden h-12 items-center gap-2 whitespace-nowrap rounded-full bg-brand px-6 text-sm font-semibold text-onyx transition hover:-translate-y-0.5 hover:bg-[#FF7A7B] sm:inline-flex"
+            className="hidden h-12 items-center gap-2 whitespace-nowrap rounded-[14px] bg-brand px-6 text-[15px] font-semibold text-onyx transition hover:-translate-y-0.5 hover:bg-[#FF7A7B] sm:inline-flex"
           >
             Prendre rendez-vous <ArrowIcon />
           </a>
@@ -492,7 +506,7 @@ function Header() {
             aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((current) => !current)}
-            className="!h-12 !w-12 lg:hidden"
+            className="!h-11 !w-11 !rounded-[14px] lg:hidden"
           >
             <span className="relative block h-4 w-5" aria-hidden="true">
               <span className={`absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current transition-transform ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
@@ -503,7 +517,7 @@ function Header() {
         </div>
 
         <div
-          className={`${liquidGlassClass("dark")} absolute left-0 right-0 top-[60px] !rounded-[26px] p-2 transition-all duration-300 lg:hidden ${
+          className={`absolute left-0 right-0 top-[76px] rounded-[22px] border border-white/10 bg-[#141315] p-2 shadow-[0_30px_70px_rgba(0,0,0,0.6)] transition-all duration-300 lg:hidden ${
             menuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
           }`}
         >
