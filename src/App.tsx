@@ -1318,7 +1318,7 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
 
   return (
     <article
-      className={`scroll-reveal relative flex flex-col overflow-hidden rounded-[28px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${
+      className={`scroll-reveal relative isolate flex flex-col overflow-hidden rounded-[28px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${
         featured
           ? "isolate border-white/10 dark-island bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)]"
           : quote
@@ -1326,7 +1326,7 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
             : "border-white/[0.08] bg-graphite hover:border-white/20"
       }`}
     >
-      {featured && <PremiumBlobs />}
+      {featured ? <PremiumBlobs /> : <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(130%_70%_at_100%_0%,rgba(233,68,69,0.16),rgba(233,68,69,0.05)_45%,transparent_70%)]" />}
       <div className="flex min-h-[28px] items-start justify-between gap-3">
         <h3 className={`text-[26px] font-extrabold leading-none tracking-[-0.05em] ${quote ? "text-onyx" : "text-off-white"}`}>
           {offer.title}
@@ -1433,13 +1433,13 @@ function SubscriptionCard({ plan }: { plan: (typeof subscriptions)[number] }) {
 
   return (
     <article
-      className={`scroll-reveal relative flex flex-col overflow-hidden rounded-[28px] border p-7 sm:p-9 ${
+      className={`scroll-reveal relative isolate flex flex-col overflow-hidden rounded-[28px] border p-7 sm:p-9 ${
         featured
           ? "isolate border-white/10 dark-island bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)]"
           : "border-white/[0.08] bg-graphite"
       }`}
     >
-      {featured && <PremiumBlobs />}
+      {featured ? <PremiumBlobs /> : <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(130%_70%_at_100%_0%,rgba(233,68,69,0.16),rgba(233,68,69,0.05)_45%,transparent_70%)]" />}
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-[28px] font-extrabold leading-none tracking-[-0.05em] text-off-white">{plan.name}</h3>
         {featured && (
@@ -1540,12 +1540,13 @@ function Services() {
 
       <SubscriptionTable />
 
-      <div className="scroll-reveal mx-auto mt-6 max-w-[940px] keep-colors rounded-[28px] border border-white/80 bg-off-white p-7 text-center shadow-[0_30px_70px_rgba(0,0,0,0.45)] md:p-9">
+      <div className="scroll-reveal dark-island relative isolate mx-auto mt-6 max-w-[940px] overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] p-7 text-center shadow-[0_30px_70px_rgba(233,68,69,0.18)] md:p-9">
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(70%_120%_at_50%_0%,rgba(233,68,69,0.28),transparent_70%)]" />
         <p className="flex flex-wrap items-baseline justify-center gap-x-4 gap-y-1 text-[24px] font-extrabold tracking-[-0.045em]">
-          <span className="text-onyx">Hébergement et nom de domaine</span>
-          <span className="text-brand">Inclus la 1re année</span>
+          <span className="text-white">Hébergement et nom de domaine</span>
+          <span className="text-brand-light">Inclus la 1re année</span>
         </p>
-        <p className="mx-auto mt-3 max-w-[640px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-onyx/65">
+        <p className="mx-auto mt-3 max-w-[640px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-white/70">
           Puis {hostingRenewal} €/an, payés à la date anniversaire. Avec les offres Essentiel et Complet.
         </p>
       </div>
@@ -1571,7 +1572,7 @@ function Reviews() {
           <SectionHeader eyebrow="Avis" title="Ils nous ont fait confiance." muted="Ils en parlent mieux que nous." />
         </div>
       </div>
-      <div className="reviews-viewport relative mt-12 overflow-hidden">
+      <div className="reviews-viewport relative mx-auto mt-12 max-w-[1200px] overflow-hidden">
         <div
           className="reviews-track flex w-max gap-5 px-5"
           style={{ animationDuration: `${set.length * 10}s` }}
@@ -1580,7 +1581,7 @@ function Reviews() {
             <figure
               key={index}
               aria-hidden={index >= reviews.length}
-              className="keep-colors relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-white/80 bg-off-white p-6 shadow-[0_24px_60px_rgba(0,0,0,0.4)] sm:w-[360px] sm:p-7"
+              className="dark-island relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(120%_70%_at_100%_0%,rgba(233,68,69,0.22),transparent_60%)] p-6 shadow-[0_24px_60px_rgba(14,13,16,0.18)] sm:w-[360px] sm:p-7"
             >
               <div className="flex items-start justify-between gap-3">
                 <span
@@ -1591,12 +1592,12 @@ function Reviews() {
                 </span>
                 <span className="flex items-center gap-2">
                   {review.placeholder && (
-                    <span className="rounded-full border border-onyx/15 px-2.5 py-1 text-[10px] font-semibold text-onyx/55">
+                    <span className="rounded-full border border-white/15 px-2.5 py-1 text-[10px] font-semibold text-white/55">
                       Exemple
                     </span>
                   )}
                   {review.lang === "EN" && (
-                    <span className="rounded-full bg-onyx/[0.06] px-2.5 py-1 font-mono text-[10px] font-semibold text-onyx/55">
+                    <span className="rounded-full bg-white/[0.08] px-2.5 py-1 font-mono text-[10px] font-semibold text-white/60">
                       Traduit de l'anglais
                     </span>
                   )}
@@ -1604,14 +1605,14 @@ function Reviews() {
               </div>
               <blockquote
                 lang="fr"
-                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-onyx/80"
+                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-white/80"
               >
                 {review.quote}
               </blockquote>
-              <figcaption className="mt-6 border-t border-onyx/10 pt-4">
-                <p className="text-[15px] font-extrabold tracking-[-0.02em] text-onyx">{review.business}</p>
+              <figcaption className="mt-6 border-t border-white/10 pt-4">
+                <p className="text-[15px] font-extrabold tracking-[-0.02em] text-white">{review.business}</p>
                 {review.person && (
-                  <p className="mt-0.5 text-xs font-normal text-onyx/55">{review.person}</p>
+                  <p className="mt-0.5 text-xs font-normal text-white/55">{review.person}</p>
                 )}
               </figcaption>
             </figure>
@@ -2261,7 +2262,7 @@ function Process() {
                     <StepVisual title={step.title} isLeft={isLeft} />
                   </div>
                   <article
-                    className={`step-card relative z-10 -mt-8 overflow-hidden rounded-[28px] border border-white/[0.08] bg-[linear-gradient(180deg,#1b1a1c,#121113)] p-6 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-8 ${
+                    className={`dark-island relative isolate z-10 -mt-8 overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] p-6 shadow-[0_30px_70px_rgba(233,68,69,0.18)] transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-8 ${
                       isRevealed
                         ? "translate-y-0 opacity-100 sm:translate-x-0"
                         : isLeft
@@ -2269,9 +2270,11 @@ function Process() {
                           : "translate-y-8 opacity-0 sm:translate-x-8"
                     }`}
                   >
+                    <PremiumBlobs />
+                    <div aria-hidden="true" className="absolute inset-0 -z-[5] bg-[linear-gradient(180deg,rgba(11,10,11,0.35),rgba(11,10,11,0.75))]" />
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <span className="inline-flex rounded-full bg-white/[0.06] px-3 py-1.5 font-mono text-[11px] font-semibold uppercase leading-none tracking-[0.16em] text-brand">
+                        <span className="inline-flex rounded-full bg-white/90 px-3 py-1.5 font-mono text-[11px] font-semibold uppercase leading-none tracking-[0.16em] text-onyx">
                           Étape 0{index + 1}
                         </span>
                         <h3 className="mt-4 text-[28px] font-extrabold leading-none tracking-[-0.05em] text-off-white sm:text-[34px]">
@@ -2281,7 +2284,7 @@ function Process() {
                       <BrandIcon name={processIcons[step.title]} className="h-11 w-11 shrink-0 sm:h-12 sm:w-12" />
                     </div>
                     <p
-                      className={`mt-5 font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-[#CFCCC7] ${
+                      className={`mt-5 font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-white/80 ${
                         isLeft ? "sm:text-left" : ""
                       }`}
                     >
@@ -2646,7 +2649,7 @@ function VitrineCard({ site, large = false, onOpen }: { site: Vitrine; large?: b
         className="group block w-full cursor-pointer text-left"
       >
         <div className="relative">
-          <div className="overflow-hidden rounded-[22px] border border-white/10 bg-graphite p-1.5 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition duration-500 group-hover:-translate-y-1 group-hover:border-white/25">
+          <div className="dark-island overflow-hidden rounded-[22px] border border-white/10 bg-[#121113] p-1.5 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition duration-500 group-hover:-translate-y-1 group-hover:border-white/25">
             <div className="flex items-center gap-1.5 px-3 py-2">
               <span className="h-2 w-2 rounded-full bg-white/15" />
               <span className="h-2 w-2 rounded-full bg-white/15" />
@@ -2797,7 +2800,7 @@ function WorkGallery() {
       <SectionHeader
         title="Des sites sur-mesure"
         muted="conçus pour votre entreprise."
-        lead="Restaurants, cafés, clinique : chaque site est dessiné pour son activité, rapide et pensé pour le mobile. Cliquez sur un site pour le parcourir."
+        lead="Chaque site est dessiné pour son activité, rapide et pensé pour le mobile. Cliquez sur un site pour le parcourir."
       />
 
       <div className="mt-14 grid gap-x-6 gap-y-10 md:grid-cols-2">
@@ -3147,9 +3150,9 @@ function FAQ() {
         {faqs.map((faq, index) => (
           <details
             key={`${faq.question}-${index}`}
-            className="keep-colors scroll-reveal group overflow-hidden rounded-[20px] border border-white/80 bg-off-white shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition-colors"
+            className="dark-island scroll-reveal group overflow-hidden rounded-[20px] border border-white/10 bg-[#0b0a0b] shadow-[0_16px_40px_rgba(14,13,16,0.15)] transition-colors open:border-brand/40 hover:border-white/25"
           >
-            <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-bold tracking-[-0.02em] text-onyx sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-bold tracking-[-0.02em] text-white sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
               <span className="flex-1">{faq.question}</span>
               <span className="relative h-5 w-5 shrink-0 text-brand">
                 <span className="absolute left-1/2 top-1/2 h-0.5 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-current" />
@@ -3158,7 +3161,7 @@ function FAQ() {
             </summary>
             <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 group-open:grid-rows-[1fr]">
               <div className="overflow-hidden">
-                <p className="border-t border-onyx/10 px-5 pb-6 pt-4 text-[16px] font-normal leading-[1.65] text-onyx/70 sm:px-7">
+                <p className="border-t border-white/10 px-5 pb-6 pt-4 text-[16px] font-normal leading-[1.65] text-white/70 sm:px-7">
                   {faq.answer}
                 </p>
               </div>
@@ -3258,7 +3261,7 @@ function ContactSection() {
   };
 
   const fieldClass =
-    "mt-2 w-full rounded-xl border border-[#2A2A2E] bg-onyx/70 px-4 py-3 text-base font-normal text-off-white outline-none transition placeholder:text-warm-gray/55 focus:border-off-white/30";
+    "mt-2 w-full rounded-xl border border-[#0e0d10]/10 bg-[#f4f3f0] px-4 py-3 text-base font-normal text-[#0e0d10] outline-none transition placeholder:text-[#0e0d10]/40 focus:border-[#e94445]/60 focus:bg-white";
 
   return (
     <section
@@ -3301,18 +3304,18 @@ function ContactSection() {
           id="contact-form"
           onSubmit={handleSubmit}
           noValidate
-          className="grid scroll-mt-28 gap-4 rounded-[22px] border border-white/10 bg-[#121113]/90 p-5 shadow-[0_30px_70px_rgba(0,0,0,0.45)] sm:grid-cols-2 sm:p-7"
+          className="grid scroll-mt-28 gap-4 rounded-[22px] border border-white/80 bg-white p-5 text-[#0e0d10] shadow-[0_30px_70px_rgba(0,0,0,0.45)] sm:grid-cols-2 sm:p-7"
         >
-          <label className="text-sm font-semibold text-off-white">
+          <label className="text-sm font-semibold text-[#0e0d10]">
             Nom
             <input name="name" placeholder="Votre nom" className={fieldClass} />
             {errors.name && (
-              <span className="mt-1 block text-xs font-normal text-amber-400">
+              <span className="mt-1 block text-xs font-normal text-[#c62d30]">
                 {errors.name}
               </span>
             )}
           </label>
-          <label className="text-sm font-semibold text-off-white">
+          <label className="text-sm font-semibold text-[#0e0d10]">
             Entreprise
             <input
               name="business"
@@ -3320,12 +3323,12 @@ function ContactSection() {
               className={fieldClass}
             />
             {errors.business && (
-              <span className="mt-1 block text-xs font-normal text-amber-400">
+              <span className="mt-1 block text-xs font-normal text-[#c62d30]">
                 {errors.business}
               </span>
             )}
           </label>
-          <label className="text-sm font-semibold text-off-white">
+          <label className="text-sm font-semibold text-[#0e0d10]">
             Secteur
             <select name="industry" defaultValue="" className={fieldClass}>
               <option value="" disabled>
@@ -3340,12 +3343,12 @@ function ContactSection() {
               <option>Autre</option>
             </select>
             {errors.industry && (
-              <span className="mt-1 block text-xs font-normal text-amber-400">
+              <span className="mt-1 block text-xs font-normal text-[#c62d30]">
                 {errors.industry}
               </span>
             )}
           </label>
-          <label className="text-sm font-semibold text-off-white">
+          <label className="text-sm font-semibold text-[#0e0d10]">
             Email
             <input
               name="email"
@@ -3354,12 +3357,12 @@ function ContactSection() {
               className={fieldClass}
             />
             {errors.email && (
-              <span className="mt-1 block text-xs font-normal text-amber-400">
+              <span className="mt-1 block text-xs font-normal text-[#c62d30]">
                 {errors.email}
               </span>
             )}
           </label>
-          <label className="text-sm font-semibold text-off-white sm:col-span-2">
+          <label className="text-sm font-semibold text-[#0e0d10] sm:col-span-2">
             Téléphone
             <input
               name="phone"
@@ -3368,12 +3371,12 @@ function ContactSection() {
               className={fieldClass}
             />
             {errors.phone && (
-              <span className="mt-1 block text-xs font-normal text-amber-400">
+              <span className="mt-1 block text-xs font-normal text-[#c62d30]">
                 {errors.phone}
               </span>
             )}
           </label>
-          <label className="text-sm font-semibold text-off-white sm:col-span-2">
+          <label className="text-sm font-semibold text-[#0e0d10] sm:col-span-2">
             Message
             <textarea
               name="message"
@@ -3382,7 +3385,7 @@ function ContactSection() {
               className={fieldClass}
             />
             {errors.message && (
-              <span className="mt-1 block text-xs font-normal text-amber-400">
+              <span className="mt-1 block text-xs font-normal text-[#c62d30]">
                 {errors.message}
               </span>
             )}
@@ -3405,18 +3408,18 @@ function ContactSection() {
             </button>
             <div aria-live="polite">
               {status === "sent" && (
-                <p className="mt-3 text-sm font-normal text-off-white">
+                <p className="mt-3 text-sm font-normal text-[#0e0d10]">
                   Merci ! Votre message est bien parti. Nous revenons vers vous très vite.
                 </p>
               )}
               {status === "activate" && (
-                <p className="mt-3 text-sm font-normal text-amber-400">
+                <p className="mt-3 text-sm font-normal text-[#c62d30]">
                   Presque fini : ouvrez l'email « Activate Form » envoyé à {contactEmail}, cliquez
                   sur le lien, puis renvoyez le formulaire.
                 </p>
               )}
               {status === "error" && (
-                <p className="mt-3 text-sm font-normal text-amber-400">
+                <p className="mt-3 text-sm font-normal text-[#c62d30]">
                   Votre message n'est pas parti. Réessayez, ou écrivez-nous à{" "}
                   <a href={`mailto:${contactEmail}`} className="underline underline-offset-2">
                     {contactEmail}
