@@ -112,12 +112,12 @@ const subscriptionRows: [string | [string, string], PlanCell, PlanCell][] = [
     true,
   ],
   [
-    ["SEO renforcé et référencement", "Y compris le référencement sur les IA : ChatGPT, Claude, Gemini…"],
+    ["SEO renforcé et référencement", "Chaque mois, on améliore vos textes, vos mots-clés et la vitesse du site pour remonter sur Google et Maps quand on cherche votre activité près de chez vous. On optimise aussi votre présence sur les IA comme ChatGPT, Claude ou Gemini, de plus en plus utilisées pour trouver un commerce."],
     true,
     true,
   ],
-  ["Petites modifications, mises à jour et sauvegardes", true, true],
-  ["Articles de blog", "1 par mois", "1 par semaine"],
+  [["Petites modifications, mises à jour et sauvegardes", "Un nouveau plat, des horaires de fêtes, une photo à changer ? Envoyez-nous un message, c'est fait sous 48 h. Le site est mis à jour et sauvegardé régulièrement, pour rester rapide, sécurisé et toujours en ligne."], true, true],
+  [["Articles de blog", "Des articles écrits pour vous sur votre activité et votre quartier (conseils, nouveautés, coulisses). Chaque article est une nouvelle porte d'entrée sur Google : plus vous publiez, plus vous apparaissez dans les recherches, et plus vos clients vous voient comme une référence."], "1 par mois", "1 par semaine"],
   ["Instagram", false, "2 carrousels par semaine, à partir de vos photos et vidéos"],
   ["Légendes et programmation des posts", false, true],
 ];
