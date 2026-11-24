@@ -221,11 +221,6 @@ const faqs = [
       "Nous créons des sites pour les commerces et les artisans, reliés à votre prise de rendez-vous, à vos avis et à votre fiche Google. Ensuite, nos abonnements Visibilité et Premium font vivre votre présence en ligne chaque mois.",
   },
   {
-    question: "À qui s'adressent vos services ?",
-    answer:
-      "Aux commerces de Toulouse et des alentours qui veulent donner en ligne la même envie qu'en vrai : cafés, restaurants, salons de beauté, artisans, salles de sport et boutiques.",
-  },
-  {
     question: "Combien de temps faut-il ?",
     answer:
       "7 jours pour l'offre Essentiel et 14 jours pour l'offre Complet, à partir du moment où nous recevons votre logo, vos photos et vos informations clés.",
@@ -253,7 +248,7 @@ const faqs = [
   {
     question: "Comment vous contacter ?",
     answer:
-      "Laissez vos coordonnées dans le formulaire en bas de page, ou écrivez-nous à upscreenweb@gmail.com : on vous rappelle pour un appel découverte gratuit de 20 minutes.",
+      "Le plus simple : écrivez-nous sur WhatsApp au 06 21 32 65 40, en cliquant sur « Nous contacter » en haut du site. Vous pouvez aussi laisser vos coordonnées dans le formulaire en bas de page, ou écrire à upscreenweb@gmail.com : on vous rappelle pour un appel découverte gratuit de 20 minutes.",
   },
 ];
 
@@ -406,7 +401,8 @@ function Heading({
 // Numéro WhatsApp au format international, sans « + » ni espaces
 // (ex. 33612345678 pour le 06 12 34 56 78). Tant qu'il est vide, les boutons
 // WhatsApp n'apparaissent pas.
-const whatsappNumber = "";
+const whatsappNumber = "33621326540";
+const whatsappDisplay = "06 21 32 65 40";
 const whatsappLink = whatsappNumber
   ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
       "Bonjour UpScreen ! J'aimerais prendre rendez-vous pour un appel découverte.",
@@ -506,21 +502,14 @@ function Header() {
         </nav>
 
         <div className="relative z-[2] flex items-center gap-2">
-          {whatsappLink && (
-            <a
-              href={whatsappLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Écrire sur WhatsApp"
-              className={`${liquidGlassClass("dark")} lg-press grid h-12 w-12 place-items-center rounded-full text-[#25D366]`}
-            >
-              <WhatsAppIcon className="relative z-[2] h-5 w-5" />
-            </a>
-          )}
           <a
-            href={`mailto:${contactEmail}`}
-            className="hidden h-12 items-center whitespace-nowrap rounded-[14px] bg-brand px-5 text-[15px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#d93a3b] md:inline-flex"
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Nous contacter sur WhatsApp au ${whatsappDisplay}`}
+            className="hidden h-12 items-center gap-2 whitespace-nowrap rounded-[14px] bg-brand px-5 text-[15px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#d93a3b] md:inline-flex"
           >
+            <WhatsAppIcon className="h-[18px] w-[18px]" />
             Nous contacter
           </a>
           <a
@@ -570,10 +559,13 @@ function Header() {
             ))}
             <div className="mt-2 grid grid-cols-2 gap-2">
               <a
-                href={`mailto:${contactEmail}`}
+                href={whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
                 tabIndex={menuOpen ? 0 : -1}
-                className="flex items-center justify-center rounded-full bg-brand px-4 py-3.5 text-sm font-semibold text-white"
+                className="flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-3.5 text-sm font-semibold text-white"
               >
+                <WhatsAppIcon className="h-4 w-4" />
                 Nous contacter
               </a>
               <a
@@ -3314,7 +3306,16 @@ function ContactSection() {
               </li>
             ))}
           </ul>
-          <p className="mt-7 font-mono text-[12px] font-semibold text-white/60">
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-7 inline-flex w-fit items-center gap-2.5 rounded-full bg-white px-5 py-3 text-[15px] font-semibold text-[#0e0d10] transition hover:-translate-y-0.5"
+          >
+            <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
+            WhatsApp · {whatsappDisplay}
+          </a>
+          <p className="mt-4 font-mono text-[12px] font-semibold text-white/60">
             Ou écrivez-nous :{" "}
             <a href={`mailto:${contactEmail}`} className="text-off-white underline underline-offset-4 hover:text-brand-light">
               {contactEmail}
@@ -3505,6 +3506,15 @@ function Footer() {
           ))}
         </nav>
           <div className="mt-6 flex flex-wrap items-center gap-4 md:justify-end">
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-normal text-warm-gray transition-colors hover:text-off-white"
+            >
+              <WhatsAppIcon className="h-3.5 w-3.5 text-[#25D366]" />
+              {whatsappDisplay}
+            </a>
             <a
               href={`mailto:${contactEmail}`}
               className="text-xs font-normal text-warm-gray transition-colors hover:text-off-white"
