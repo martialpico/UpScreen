@@ -8,6 +8,12 @@ import {
 } from "@/components/goodui/liquid-glass-button";
 import upscreenLogo from "./imports/upscreen-logo-reversed.svg";
 import upscreenIcon from "./imports/upscreen-icon.svg";
+import upscreenLogoDark from "./imports/upscreen-logo-dark.svg";
+
+// Test du fond blanc : ajouter ?fond=blanc à l'adresse du site.
+const lightTheme =
+  typeof window !== "undefined" && new URLSearchParams(window.location.search).get("fond") === "blanc";
+const siteLogo = lightTheme ? upscreenLogoDark : upscreenLogo;
 import cafePhoto from "./imports/cafe-espresso.webp";
 import motionWise from "./imports/motion-wise.mp4";
 import motionAirbnb from "./imports/motion-airbnb.mp4";
@@ -463,7 +469,7 @@ function Header() {
           onClick={() => setMenuOpen(false)}
           className="relative z-[2] flex shrink-0 items-center px-2"
         >
-          <img src={upscreenLogo} alt="UpScreen" className="block h-auto w-[132px] sm:w-[156px]" />
+          <img src={siteLogo} alt="UpScreen" className="block h-auto w-[132px] sm:w-[156px]" />
         </a>
 
         <nav className="relative z-[2] hidden lg:block" aria-label="Navigation principale">
@@ -783,7 +789,7 @@ function Hero() {
         />
         <div
           aria-label="Vidéo de présentation"
-          className="group relative overflow-hidden rounded-[24px] bg-onyx shadow-[0_30px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10"
+          className="dark-island group relative overflow-hidden rounded-[24px] bg-onyx shadow-[0_30px_80px_rgba(0,0,0,0.55)] ring-1 ring-white/10"
         >
           <HeroVideo />
         </div>
@@ -1299,9 +1305,9 @@ function SiteOfferCard({ offer }: { offer: SiteOffer }) {
     <article
       className={`scroll-reveal relative flex flex-col overflow-hidden rounded-[28px] border p-7 transition duration-300 hover:-translate-y-1 sm:p-8 ${
         featured
-          ? "isolate border-white/10 bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)]"
+          ? "isolate border-white/10 dark-island bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)]"
           : quote
-            ? "border-white/80 bg-off-white shadow-[0_30px_70px_rgba(0,0,0,0.45)]"
+            ? "keep-colors border-white/80 bg-off-white shadow-[0_30px_70px_rgba(0,0,0,0.45)]"
             : "border-white/[0.08] bg-graphite hover:border-white/20"
       }`}
     >
@@ -1414,7 +1420,7 @@ function SubscriptionCard({ plan }: { plan: (typeof subscriptions)[number] }) {
     <article
       className={`scroll-reveal relative flex flex-col overflow-hidden rounded-[28px] border p-7 sm:p-9 ${
         featured
-          ? "isolate border-white/10 bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)]"
+          ? "isolate border-white/10 dark-island bg-[#0b0a0b] shadow-[0_40px_90px_rgba(233,68,69,0.22)]"
           : "border-white/[0.08] bg-graphite"
       }`}
     >
@@ -1519,7 +1525,7 @@ function Services() {
 
       <SubscriptionTable />
 
-      <div className="scroll-reveal mx-auto mt-6 max-w-[940px] rounded-[28px] border border-white/80 bg-off-white p-7 text-center shadow-[0_30px_70px_rgba(0,0,0,0.45)] md:p-9">
+      <div className="scroll-reveal mx-auto mt-6 max-w-[940px] keep-colors rounded-[28px] border border-white/80 bg-off-white p-7 text-center shadow-[0_30px_70px_rgba(0,0,0,0.45)] md:p-9">
         <p className="flex flex-wrap items-baseline justify-center gap-x-4 gap-y-1 text-[24px] font-extrabold tracking-[-0.045em]">
           <span className="text-onyx">Hébergement et nom de domaine</span>
           <span className="text-brand">Inclus la 1re année</span>
@@ -1559,7 +1565,7 @@ function Reviews() {
             <figure
               key={index}
               aria-hidden={index >= reviews.length}
-              className="relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-white/80 bg-off-white p-6 shadow-[0_24px_60px_rgba(0,0,0,0.4)] sm:w-[360px] sm:p-7"
+              className="keep-colors relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-white/80 bg-off-white p-6 shadow-[0_24px_60px_rgba(0,0,0,0.4)] sm:w-[360px] sm:p-7"
             >
               <div className="flex items-start justify-between gap-3">
                 <span
@@ -2240,7 +2246,7 @@ function Process() {
                     <StepVisual title={step.title} isLeft={isLeft} />
                   </div>
                   <article
-                    className={`relative z-10 -mt-8 overflow-hidden rounded-[28px] border border-white/[0.08] bg-[linear-gradient(180deg,#1b1a1c,#121113)] p-6 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-8 ${
+                    className={`step-card relative z-10 -mt-8 overflow-hidden rounded-[28px] border border-white/[0.08] bg-[linear-gradient(180deg,#1b1a1c,#121113)] p-6 shadow-[0_30px_70px_rgba(0,0,0,0.45)] transition-[opacity,transform] duration-700 ease-out sm:mx-4 sm:p-8 ${
                       isRevealed
                         ? "translate-y-0 opacity-100 sm:translate-x-0"
                         : isLeft
@@ -2283,7 +2289,7 @@ function Process() {
           })}
         </div>
         <div
-          className={`relative isolate z-10 mx-auto mt-12 flex max-w-[720px] flex-col items-center overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] px-6 py-10 text-center shadow-[0_40px_90px_rgba(233,68,69,0.22)] transition-[opacity,transform] duration-700 sm:px-12 ${
+          className={`relative isolate z-10 mx-auto mt-12 flex max-w-[720px] flex-col items-center overflow-hidden rounded-[28px] border border-white/10 dark-island bg-[#0b0a0b] px-6 py-10 text-center shadow-[0_40px_90px_rgba(233,68,69,0.22)] transition-[opacity,transform] duration-700 sm:px-12 ${
             showFinalStep ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
@@ -2655,7 +2661,7 @@ function VitrineCard({ site, large = false, onOpen }: { site: Vitrine; large?: b
             decoding="async"
             width={390}
             height={844}
-            className={`absolute bottom-[-6%] right-[-2%] aspect-[390/844] rounded-[18px] border-[5px] border-onyx object-cover object-top shadow-[0_24px_50px_rgba(0,0,0,0.6)] transition duration-500 group-hover:-translate-y-2 sm:rounded-[22px] ${
+            className={`dark-island absolute bottom-[-6%] right-[-2%] aspect-[390/844] rounded-[18px] border-[5px] border-onyx object-cover object-top shadow-[0_24px_50px_rgba(0,0,0,0.6)] transition duration-500 group-hover:-translate-y-2 sm:rounded-[22px] ${
               large ? "w-[17%]" : "w-[24%]"
             }`}
           />
@@ -2940,7 +2946,7 @@ function FAQ() {
         {faqs.map((faq, index) => (
           <details
             key={`${faq.question}-${index}`}
-            className="scroll-reveal group overflow-hidden rounded-[20px] border border-white/80 bg-off-white shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition-colors"
+            className="keep-colors scroll-reveal group overflow-hidden rounded-[20px] border border-white/80 bg-off-white shadow-[0_16px_40px_rgba(0,0,0,0.3)] transition-colors"
           >
             <summary className="flex cursor-pointer list-none items-center gap-3 px-5 py-5 text-base font-bold tracking-[-0.02em] text-onyx sm:px-7 sm:py-6 sm:text-lg [&::-webkit-details-marker]:hidden">
               <span className="flex-1">{faq.question}</span>
@@ -3059,7 +3065,7 @@ function ContactSection() {
       className={`relative mx-auto w-full max-w-[1160px] scroll-mt-24 overflow-hidden px-5 sm:px-8 ${sectionY}`}
     >
       <div className="absolute left-1/2 top-1/2 -z-0 h-[60%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/8 blur-[120px]" />
-      <div className="relative z-10 isolate grid gap-10 overflow-hidden rounded-[28px] border border-white/10 bg-[#0b0a0b] p-6 md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
+      <div className="relative z-10 isolate grid gap-10 overflow-hidden rounded-[28px] border border-white/10 dark-island bg-[#0b0a0b] p-6 md:grid-cols-[0.9fr_1.1fr] md:p-10 lg:p-14">
         <PremiumBlobs />
         <div className="absolute inset-0 -z-[5] bg-[linear-gradient(180deg,rgba(11,10,11,0.3),rgba(11,10,11,0.7))]" />
         <div className="flex flex-col justify-center">
@@ -3244,7 +3250,7 @@ function Footer() {
             className="block w-[180px]"
         >
           <img
-            src={upscreenLogo}
+            src={siteLogo}
             alt="UpScreen"
               className="block h-auto w-full"
           />
@@ -3336,7 +3342,7 @@ export default function App() {
   }, []);
 
   return (
-    <main className="relative isolate min-h-screen overflow-hidden bg-onyx font-ui">
+    <main className={`relative isolate min-h-screen overflow-hidden bg-onyx font-ui ${lightTheme ? "theme-light" : ""}`}>
       <BackgroundLights />
       <Header />
       <Hero />

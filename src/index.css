@@ -767,3 +767,93 @@
     }
   }
 }
+
+/* ---------- Test : fond blanc (?fond=blanc) ----------
+   Les couleurs de base sont inversées ; les « îlots » sombres (cartes premium,
+   contact, vidéo) et les éléments clairs volontaires (maquettes, FAQ, avis,
+   Sur mesure, hébergement) gardent leurs couleurs d'origine. */
+.theme-light {
+  --color-onyx: #f4f3f0;
+  --color-off-white: #0e0d10;
+  --color-graphite: #ffffff;
+  --color-warm-gray: #6e6c71;
+  --color-card-border: #e4e1dc;
+  color: #0e0d10;
+}
+.theme-light .dark-island,
+.theme-light .step-panel,
+.theme-light .keep-colors {
+  --color-onyx: #0a0a0b;
+  --color-off-white: #f7f5f2;
+  --color-graphite: #17171a;
+  --color-warm-gray: #8c8a87;
+  --color-card-border: #2a2a2e;
+}
+.theme-light .dark-island {
+  color: #f7f5f2;
+}
+/* Bordures, fonds et textes blancs translucides : en sombre hors îlots. */
+.theme-light [class*="border-white/"]:not(.dark-island):not(.dark-island *):not(.keep-colors):not(.step-panel *) {
+  border-color: rgba(14, 13, 16, 0.1);
+}
+.theme-light [class*="bg-white/["]:not(.dark-island *):not(.step-panel *):not(.keep-colors *) {
+  background-color: rgba(14, 13, 16, 0.05);
+}
+.theme-light [class*="text-white/"]:not(.dark-island *):not(.step-panel *) {
+  color: rgba(14, 13, 16, 0.7);
+}
+.theme-light .text-\[\#CFCCC7\]:not(.dark-island *):not(.step-panel *) {
+  color: #4a484d;
+}
+.theme-light .text-\[\#E4E1DC\]:not(.dark-island *):not(.step-panel *) {
+  color: #2b292d;
+}
+.theme-light .step-card {
+  background: #ffffff;
+  box-shadow: 0 24px 60px rgba(14, 13, 16, 0.08);
+}
+.theme-light .bg-\[\#141315\] {
+  background: #ffffff;
+}
+.theme-light .border-\[\#2A2A2E\] {
+  border-color: rgba(14, 13, 16, 0.1);
+}
+.theme-light [class*="shadow-[0_30px_70px_rgba(0,0,0,0.45)]"]:not(.dark-island),
+.theme-light [class*="shadow-[0_24px_60px_rgba(0,0,0,0.4)]"],
+.theme-light [class*="shadow-[0_16px_40px_rgba(0,0,0,0.3)]"] {
+  box-shadow: 0 20px 50px rgba(14, 13, 16, 0.08);
+}
+.theme-light .keep-colors {
+  background-color: #ffffff;
+  border-color: rgba(14, 13, 16, 0.08);
+}
+/* Fond : quadrillage sombre, lumières rouges plus discrètes. */
+.theme-light .bg-grid {
+  background-image: linear-gradient(to right, rgba(14, 13, 16, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 13, 16, 0.05) 1px, transparent 1px);
+}
+.theme-light .bg-lights .bg-light,
+.theme-light .bg-lights .bg-streak {
+  opacity: 0.35;
+}
+.theme-light .bg-lights > div:not(.bg-grid) {
+  background: none;
+}
+/* En-tête en verre clair. */
+.theme-light .lg-dark {
+  color: #0e0d10;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 14px 40px rgba(14, 13, 16, 0.1);
+}
+.theme-light .lg-dark::after {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.9), rgba(14, 13, 16, 0.06) 45%, rgba(233, 68, 69, 0.25));
+}
+.theme-light .lg-lens-dark {
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(14, 13, 16, 0.12), inset 0 0 0 1px rgba(14, 13, 16, 0.06);
+}
+.theme-light .glow-text {
+  text-shadow: none;
+}
