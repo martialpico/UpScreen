@@ -3021,8 +3021,8 @@ type OfferPage = {
   lead: string;
   includedEyebrow: string;
   includedTitle: [string, string];
-  included: { icon: OfferIcon; title: string; text: string }[];
-  feature?: { title: string; text: string };
+  included: { icon: OfferIcon; title: string; text: string; image?: string }[];
+  feature?: { title: string; text: string; image?: string };
   highlight?: { big: string; text: string };
   processEyebrow: string;
   processTitle: [string, string];
@@ -3038,15 +3038,15 @@ const offerPages: Record<string, OfferPage> = {
     lead: "Vos clients scannent un QR code et lisent votre carte sur leur téléphone. Un plat change ? Vous le modifiez en un clic, c'est en ligne tout de suite.",
     includedEyebrow: "Le menu digital",
     includedTitle: ["Ce qui est", "inclus."],
-    feature: { title: "Votre carte en ligne", text: "Photos, descriptions, prix et allergènes, lisibles sur tous les téléphones." },
+    feature: { title: "Votre carte en ligne", text: "Photos, descriptions, prix et allergènes, lisibles sur tous les téléphones.", image: "/offer/menu-7.webp" },
     included: [
-      { icon: "palette", title: "À votre image", text: "Vos couleurs, votre logo, votre ambiance." },
-      { icon: "refresh", title: "Modifiable à tout moment", text: "Plat du jour, prix, rupture : changé en quelques secondes." },
-      { icon: "leaf", title: "Sans réimpression", text: "Moins de frais, moins de papier." },
-      { icon: "star", title: "QR code d'avis Google", text: "Vos clients laissent un avis en un geste." },
-      { icon: "card", title: "Carte de fidélité digitale", text: "Fini les cartes en carton perdues." },
-      { icon: "qr", title: "QR codes pour vos supports", text: "Tables, vitrine, comptoir, flyers et sacs." },
-      { icon: "phone", title: "Sans application", text: "Un scan suffit, sur iPhone comme sur Android." },
+      { icon: "palette", title: "À votre image", text: "Vos couleurs, votre logo, votre ambiance.", image: "/offer/menu-0.webp" },
+      { icon: "refresh", title: "Modifiable à tout moment", text: "Plat du jour, prix, rupture : changé en quelques secondes.", image: "/offer/menu-1.webp" },
+      { icon: "leaf", title: "Sans réimpression", text: "Moins de frais, moins de papier.", image: "/offer/menu-2.webp" },
+      { icon: "star", title: "QR code d'avis Google", text: "Vos clients laissent un avis en un geste.", image: "/offer/menu-3.webp" },
+      { icon: "card", title: "Carte de fidélité digitale", text: "Fini les cartes en carton perdues.", image: "/offer/menu-4.webp" },
+      { icon: "qr", title: "QR codes pour vos supports", text: "Tables, vitrine, comptoir, flyers et sacs.", image: "/offer/menu-5.webp" },
+      { icon: "phone", title: "Sans application", text: "Un scan suffit, sur iPhone comme sur Android.", image: "/offer/menu-6.webp" },
     ],
     highlight: { big: "QR", text: "À vos couleurs, avec votre logo." },
     processEyebrow: "Comment ça marche",
@@ -3599,7 +3599,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {page.feature && (
               <article className="scroll-reveal dark-island relative isolate flex min-h-[340px] flex-col justify-end overflow-hidden rounded-[26px] bg-[#0b0a0b] p-7 text-white sm:col-span-2 lg:row-span-2">
-                <img src={offer.image} alt="" loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover" />
+                <img src={page.feature.image ?? offer.image} alt="" loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
                 <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(10,10,11,0)_30%,rgba(10,10,11,0.9)_100%)]" />
                 <h4 className="text-[28px] font-extrabold tracking-[-0.045em]">{page.feature.title}</h4>
                 <p className="mt-2 max-w-[420px] text-[15px] leading-[1.6] text-white/75">{page.feature.text}</p>
@@ -3610,8 +3610,15 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
                 key={item.title}
                 className="scroll-reveal dark-island tint-drift relative isolate flex min-h-[170px] flex-col overflow-hidden rounded-[26px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(110%_80%_at_100%_0%,rgba(233,68,69,0.28),transparent_60%)] p-6 text-white shadow-[0_24px_60px_rgba(14,13,16,0.16)]"
               >
-                <OfferIconBadge name={item.icon} />
-                <h4 className="mt-auto pt-8 text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]">{item.title}</h4>
+                {item.image ? (
+                  <div className="relative -mx-6 -mt-6 mb-1 aspect-[4/3] overflow-hidden">
+                    <img src={item.image} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(180deg,rgba(11,10,11,0)_55%,#0b0a0b_100%)]" />
+                  </div>
+                ) : (
+                  <OfferIconBadge name={item.icon} />
+                )}
+                <h4 className={`mt-auto ${item.image ? "pt-3" : "pt-8"} text-[21px] font-extrabold leading-[1.1] tracking-[-0.04em]`}>{item.title}</h4>
                 <p className="mt-2 text-[14px] leading-[1.55] text-white/70">{item.text}</p>
               </article>
             ))}
