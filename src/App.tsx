@@ -3491,8 +3491,8 @@ function Footer() {
           />
         </a>
           <p className="mt-5 max-w-[440px] font-mono text-[13px] font-semibold leading-[1.65] tracking-[-0.01em] text-warm-gray">
-            Site web, fiche Google et réseaux sociaux pour les commerces et
-            artisans de Toulouse.
+            Sites web, visibilité locale et création de contenu pour les
+            commerces et artisans.
           </p>
           <p className="mt-6 text-sm font-semibold text-off-white">
             Être vu. Être choisi.
@@ -3590,13 +3590,22 @@ export default function App() {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // Apparition en descendant, disparition quand l'élément sort de
+        // l'écran : il repart vers le bas en remontant la page, vers le haut
+        // en la descendant, et rejoue son animation à son retour.
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
+          const target = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            target.classList.add("is-visible");
+            return;
+          }
+          if (!target.classList.contains("is-visible")) return;
+          const exitedTop = entry.boundingClientRect.top < (entry.rootBounds?.top ?? 0);
+          target.dataset.exit = exitedTop ? "top" : "bottom";
+          target.classList.remove("is-visible");
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+      { threshold: 0, rootMargin: "0px 0px -6% 0px" },
     );
 
     elements.forEach((element) => observer.observe(element));
