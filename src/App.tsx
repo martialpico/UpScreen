@@ -488,12 +488,12 @@ function Header() {
           href="#home"
           aria-label="Accueil UpScreen"
           onClick={() => setMenuOpen(false)}
-          className="relative z-[2] flex shrink-0 items-center px-2"
+          className="relative z-[2] flex shrink-0 items-center px-1 sm:px-2"
         >
-          <img src={siteLogo} alt="UpScreen" className="block h-auto w-[132px] sm:w-[156px]" />
+          <img src={siteLogo} alt="UpScreen" className="block h-auto w-[112px] min-[400px]:w-[132px] sm:w-[156px]" />
         </a>
 
-        <nav className="relative z-[2] hidden lg:block" aria-label="Navigation principale">
+        <nav className="relative z-[2] hidden xl:block" aria-label="Navigation principale">
         <LiquidGlassToolbar
           tone="dark"
           value={active}
@@ -515,10 +515,23 @@ function Header() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Nous contacter sur WhatsApp au ${whatsappDisplay}`}
+            className="inline-flex h-11 items-center gap-1.5 whitespace-nowrap rounded-[14px] bg-brand px-3 text-[13px] font-bold tabular-nums text-white md:hidden"
+          >
+            <WhatsAppIcon className="hidden h-4 w-4 shrink-0 min-[380px]:block" />
+            {whatsappDisplay}
+          </a>
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Nous contacter sur WhatsApp au ${whatsappDisplay}`}
             className="hidden h-12 items-center gap-2 whitespace-nowrap rounded-[14px] bg-brand px-5 text-[15px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#d93a3b] md:inline-flex"
           >
             <WhatsAppIcon className="h-[18px] w-[18px]" />
-            Nous contacter
+            <span className="flex flex-col items-start leading-none">
+              <span>Nous contacter</span>
+              <span className="mt-1 font-mono text-[11px] font-semibold tracking-[0.02em] text-white/85">{whatsappDisplay}</span>
+            </span>
           </a>
           <a
             href="#contact-form"
@@ -532,7 +545,7 @@ function Header() {
             aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((current) => !current)}
-            className="!h-11 !w-11 !rounded-[14px] lg:hidden"
+            className="!h-11 !w-11 !rounded-[14px] xl:hidden"
           >
             <span className="relative block h-4 w-5" aria-hidden="true">
               <span className={`absolute left-0 top-0 h-0.5 w-5 rounded-full bg-current transition-transform ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
@@ -543,7 +556,7 @@ function Header() {
         </div>
 
         <div
-          className={`absolute left-0 right-0 top-[76px] rounded-[22px] border border-white/10 bg-[#141315] p-2 shadow-[0_30px_70px_rgba(0,0,0,0.6)] transition-all duration-300 lg:hidden ${
+          className={`absolute left-0 right-0 top-[76px] rounded-[22px] border border-white/10 bg-[#141315] p-2 shadow-[0_30px_70px_rgba(0,0,0,0.6)] transition-all duration-300 xl:hidden ${
             menuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-2 opacity-0"
           }`}
         >
@@ -571,10 +584,13 @@ function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 tabIndex={menuOpen ? 0 : -1}
-                className="flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-3.5 text-sm font-semibold text-white"
+                className="flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-2.5 text-sm font-semibold text-white"
               >
-                <WhatsAppIcon className="h-4 w-4" />
-                Nous contacter
+                <WhatsAppIcon className="h-4 w-4 shrink-0" />
+                <span className="flex flex-col items-start leading-none">
+                  <span>Nous contacter</span>
+                  <span className="mt-1 font-mono text-[11px] font-semibold text-white/85">{whatsappDisplay}</span>
+                </span>
               </a>
               <a
                 href="#contact-form"
