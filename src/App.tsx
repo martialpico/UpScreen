@@ -2869,7 +2869,7 @@ const customOffers: CustomOffer[] = [
 function MotionEditorUI() {
   const wave = [3, 6, 9, 5, 8, 11, 7, 4, 9, 12, 8, 5, 10, 6, 9, 13, 7, 4, 8, 11, 6, 9, 5, 7, 10, 6, 8, 4, 9, 7];
   return (
-    <div aria-hidden="true" className="mo relative mt-8">
+    <div aria-hidden="true" className="mo mo-still relative mt-8">
       <div className="overflow-hidden rounded-[14px] border border-white/12 bg-[#141214] p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         {/* Aperçu : construction du logo, puis titre et accroche */}
         <div className="mo-stage relative aspect-[16/8] overflow-hidden rounded-[10px] bg-[#0d0a0b]">
@@ -2897,7 +2897,7 @@ function MotionEditorUI() {
           <span className="absolute left-2 top-1.5 font-mono text-[8px] font-semibold text-white/55">upscreen-presentation.mp4</span>
           <span className="absolute right-2 top-1.5 flex items-center gap-1 font-mono text-[8px] font-bold text-white/75"><span className="mo-rec h-1.5 w-1.5 rounded-full bg-[#e94445]" />4K</span>
           <span className="absolute bottom-1.5 left-2 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
-            <svg viewBox="0 0 16 16" className="h-2.5 w-2.5 text-brand" fill="currentColor"><path d="M5 3h2v10H5zM9 3h2v10H9z" /></svg>
+            <svg viewBox="0 0 16 16" className="ml-px h-2.5 w-2.5 text-brand" fill="currentColor"><path d="M4.5 2.8v10.4a.6.6 0 0 0 .9.5l8.2-5.2a.6.6 0 0 0 0-1L5.4 2.3a.6.6 0 0 0-.9.5Z" /></svg>
           </span>
           <span className="mo-tc absolute bottom-1.5 right-2 font-mono text-[8px] font-semibold text-white/80" />
         </div>

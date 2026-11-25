@@ -1298,3 +1298,11 @@
 @media (prefers-reduced-motion: reduce) {
   .mo *, .mo-tc { animation: none !important; }
 }
+
+/* Aperçu motion : image fixe (dernière image du film, titre centré) */
+.mo-still *, .mo-still .mo-tc { animation: none !important; }
+.mo-still .mo-icon, .mo-still .mo-ch, .mo-still .mo-tag, .mo-still .mo-sq, .mo-still .mo-frame, .mo-still .mo-arrow { transform: none; opacity: 1; }
+.mo-still .mo-comp { transform: none; opacity: 1; filter: none; }
+.mo-still .mo-glow { opacity: 1; }
+.mo-still .mo-tc { counter-reset: s 28; }
+.mo-still .mo-playhead { left: 62%; }
