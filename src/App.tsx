@@ -1,6 +1,6 @@
 import { type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { BrandQR, OfferFeatureVisual, OfferVisual } from "./MenuVisuals";
+import { BrandQR, BrandStepVisual, OfferFeatureVisual, OfferVisual } from "./MenuVisuals";
 import {
   LiquidGlassButton,
   LiquidGlassToolbar,
@@ -3057,7 +3057,7 @@ type OfferPage = {
   processTitle: [string, string];
   processLead: string;
   processMode: "grid" | "scroll";
-  process: { title: string; text: string; icon?: OfferIcon; image?: string; videoBadge?: boolean }[];
+  process: { title: string; text: string; icon?: OfferIcon; image?: string; videoBadge?: boolean; brandVisual?: number }[];
 };
 
 const offerPages: Record<string, OfferPage> = {
@@ -3144,7 +3144,7 @@ const offerPages: Record<string, OfferPage> = {
   },
   brand: {
     eyebrow: "Refonte graphique",
-    title: ["Refonte", "graphique."],
+    title: ["Refonte", "graphique"],
     lead: "Logo, couleurs, typographies et supports : une identité cohérente partout, qui donne envie de pousser la porte.",
     includedEyebrow: "Inclus",
     includedTitle: ["Une identité", "complète."],
@@ -3159,12 +3159,12 @@ const offerPages: Record<string, OfferPage> = {
     processLead: "Vous validez chaque étape, de la première piste aux fichiers finaux.",
     processMode: "scroll",
     process: [
-      { icon: "eye", title: "Brief et audit", text: "Votre histoire, vos clients, vos concurrents : on regarde ce qui marche et ce qui coince aujourd'hui." },
-      { icon: "layers", title: "Moodboard", text: "Ambiances, couleurs et références : on fixe ensemble la direction avant de dessiner." },
-      { icon: "pen", title: "Logo", text: "Plusieurs pistes, puis une seule affinée jusqu'au moindre détail, avec ses déclinaisons." },
-      { icon: "palette", title: "Charte graphique", text: "Couleurs, typographies et règles d'usage, pour rester cohérent partout." },
-      { icon: "print", title: "Déclinaisons", text: "Cartes de visite, flyers, menus, réseaux sociaux, enseigne : votre identité appliquée à vos supports." },
-      { icon: "send", title: "Livraison", text: "Tous les fichiers sources et un guide simple pour les utiliser, chez vous ou chez l'imprimeur." },
+      { icon: "eye", title: "Brief et audit", text: "Votre histoire, vos clients, vos concurrents : on regarde ce qui marche et ce qui coince aujourd'hui.", brandVisual: 0 },
+      { icon: "layers", title: "Moodboard", text: "Ambiances, couleurs et références : on fixe ensemble la direction avant de dessiner.", brandVisual: 1 },
+      { icon: "pen", title: "Logo", text: "Plusieurs pistes, puis une seule affinée jusqu'au moindre détail, avec ses déclinaisons.", brandVisual: 2 },
+      { icon: "palette", title: "Charte graphique", text: "Couleurs, typographies et règles d'usage, pour rester cohérent partout.", brandVisual: 3 },
+      { icon: "print", title: "Déclinaisons", text: "Cartes de visite, flyers, menus, réseaux sociaux, enseigne : votre identité appliquée à vos supports.", brandVisual: 4 },
+      { icon: "send", title: "Livraison", text: "Tous les fichiers sources et un guide simple pour les utiliser, chez vous ou chez l'imprimeur.", brandVisual: 5 },
     ],
   },
 };
@@ -3331,8 +3331,8 @@ function OfferHeroVisual({ offer }: { offer: CustomOffer }) {
       </div>
     );
   return (
-    <div className="relative overflow-hidden rounded-[26px] shadow-[0_40px_90px_rgba(14,13,16,0.3)]">
-      <img src={offer.image} alt="" className="aspect-[4/5] w-full object-cover sm:aspect-[5/4]" />
+    <div className="relative mx-auto w-full max-w-[440px] overflow-hidden rounded-[26px] shadow-[0_40px_90px_rgba(14,13,16,0.3)]">
+      <img src={offer.image} alt="" className="aspect-[4/5] w-full object-cover object-[50%_40%]" />
     </div>
   );
 }
@@ -3479,7 +3479,7 @@ function ScrollProcess({
                       : "border-[#0e0d10]/[0.08] bg-white shadow-[0_14px_40px_rgba(14,13,16,0.06)]"
                   }`}
                 >
-                  {step.image ? (
+                  {step.image || step.brandVisual !== undefined ? (
                     <>
                       <div className="relative overflow-hidden rounded-[20px] bg-[#f4f2ef] ring-1 ring-[#0e0d10]/[0.06]">
                         {step.videoBadge && (
@@ -3490,13 +3490,19 @@ function ScrollProcess({
                             </svg>
                           </span>
                         )}
-                        <img
-                          src={step.image}
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          className={`aspect-[16/9] max-h-[30dvh] w-full object-cover transition-transform duration-700 ${isActive ? "scale-[1.04]" : ""}`}
-                        />
+                        {step.brandVisual !== undefined ? (
+                          <div aria-hidden="true" className={`transition-transform duration-700 ${isActive ? "scale-[1.04]" : ""}`}>
+                            <BrandStepVisual index={step.brandVisual} />
+                          </div>
+                        ) : (
+                          <img
+                            src={step.image}
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            className={`aspect-[16/9] max-h-[30dvh] w-full object-cover transition-transform duration-700 ${isActive ? "scale-[1.04]" : ""}`}
+                          />
+                        )}
                       </div>
                       <div className="px-2 pb-2 pt-5 sm:px-3">
                         <div className="flex items-end justify-between gap-4">
