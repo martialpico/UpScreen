@@ -3893,7 +3893,7 @@ function ContactSection() {
     const value = (field: string) => String(data.get(field) || "").trim();
     const nextErrors: Record<string, string> = {};
 
-    ["name", "business", "industry", "email", "phone", "message"].forEach(
+    ["name", "business", "phone"].forEach(
       (field) => {
         if (!String(data.get(field) || "").trim()) {
           nextErrors[field] = "Ce champ est obligatoire.";
@@ -3914,8 +3914,6 @@ function ContactSection() {
 
     const clearForm = () => {
       form.reset();
-      const industry = form.elements.namedItem("industry") as HTMLSelectElement | null;
-      if (industry) industry.value = "";
     };
 
     // Hidden field only bots fill in: pretend it worked, send nothing.
@@ -3933,12 +3931,9 @@ function ContactSection() {
         body: JSON.stringify({
           _subject: `Nouvelle demande de ${value("business")}`,
           _template: "table",
-          _replyto: value("email"),
           _captcha: "false",
           Nom: value("name"),
           Entreprise: value("business"),
-          Secteur: value("industry"),
-          Email: value("email"),
           Téléphone: value("phone"),
           Message: value("message"),
         }),
@@ -3976,16 +3971,11 @@ function ContactSection() {
         <div className="flex flex-col justify-center">
           <Eyebrow>Contact</Eyebrow>
           <h2 className="mt-5 text-[40px] font-extrabold leading-[0.98] tracking-[-0.055em] text-off-white md:text-[56px] lg:text-[60px]">
-            <span className="block">Votre maquette est gratuite.</span>
-            <span className="block text-white/55">Parlons de votre commerce.</span>
+            Votre maquette est gratuite.
           </h2>
-          <p className="mt-6 max-w-[460px] font-mono text-[14px] font-semibold leading-[1.7] tracking-[-0.01em] text-white/80">
-            Laissez vos coordonnées, on vous rappelle. En 20 minutes, on fait le point sur votre commerce,
-            puis on vous envoie la maquette de votre futur site.
-          </p>
-          <ul className="mt-6 space-y-2.5">
-            {["Appel gratuit de 20 minutes", "Maquette gratuite", "Vous ne payez que si elle vous plaît"].map((item) => (
-              <li key={item} className="flex items-center gap-2.5 text-[15px] font-medium text-off-white">
+          <ul className="mt-8 space-y-3">
+            {["Appel de 20 minutes", "Maquette offerte", "Vous ne payez que si elle vous plaît"].map((item) => (
+              <li key={item} className="flex items-center gap-2.5 text-[16px] font-medium text-off-white">
                 <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-off-white text-brand">
                   <CheckIcon className="h-3 w-3" />
                 </span>
@@ -3993,20 +3983,10 @@ function ContactSection() {
               </li>
             ))}
           </ul>
-          <a
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Nous contacter sur WhatsApp au ${whatsappDisplay}`}
-            className="mt-7 inline-flex h-14 w-fit flex-col items-center justify-center whitespace-nowrap rounded-[16px] bg-brand px-7 leading-none text-white shadow-[0_14px_34px_rgba(233,68,69,0.35)] transition hover:-translate-y-0.5 hover:bg-[#d93a3b]"
-          >
-            <span className="text-[12px] font-semibold text-[rgba(255,255,255,0.88)]">Nous contacter</span>
-            <span className="mt-1 text-[18px] font-extrabold tabular-nums tracking-[-0.01em]">{whatsappDisplay}</span>
-          </a>
-          <p className="mt-4 font-mono text-[12px] font-semibold text-white/60">
-            Ou écrivez-nous :{" "}
-            <a href={`mailto:${contactEmail}`} className="text-off-white underline underline-offset-4 hover:text-brand-light">
-              {contactEmail}
+          <p className="mt-8 font-mono text-[13px] font-semibold leading-[1.8] text-white/60">
+            Ou appelez-nous au{" "}
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="text-off-white underline underline-offset-4 hover:text-brand-light">
+              {whatsappDisplay}
             </a>
           </p>
         </div>
@@ -4027,49 +4007,15 @@ function ContactSection() {
             )}
           </label>
           <label className="text-sm font-semibold text-[#0e0d10]">
-            Entreprise
+            Commerce
             <input
               name="business"
-              placeholder="Nom de votre entreprise"
+              placeholder="Nom de votre commerce"
               className={fieldClass}
             />
             {errors.business && (
               <span className="mt-1 block text-xs font-normal text-[#c62d30]">
                 {errors.business}
-              </span>
-            )}
-          </label>
-          <label className="text-sm font-semibold text-[#0e0d10]">
-            Secteur
-            <select name="industry" defaultValue="" className={fieldClass}>
-              <option value="" disabled>
-                Votre secteur
-              </option>
-              <option>Restaurant / Café</option>
-              <option>Coiffure / Beauté</option>
-              <option>Sport / Fitness</option>
-              <option>Artisan / BTP</option>
-              <option>Santé / Cabinet</option>
-              <option>Commerce</option>
-              <option>Autre</option>
-            </select>
-            {errors.industry && (
-              <span className="mt-1 block text-xs font-normal text-[#c62d30]">
-                {errors.industry}
-              </span>
-            )}
-          </label>
-          <label className="text-sm font-semibold text-[#0e0d10]">
-            Email
-            <input
-              name="email"
-              type="email"
-              placeholder="vous@entreprise.fr"
-              className={fieldClass}
-            />
-            {errors.email && (
-              <span className="mt-1 block text-xs font-normal text-[#c62d30]">
-                {errors.email}
               </span>
             )}
           </label>
@@ -4088,10 +4034,10 @@ function ContactSection() {
             )}
           </label>
           <label className="text-sm font-semibold text-[#0e0d10] sm:col-span-2">
-            Message
+            Message <span className="font-normal text-[#0e0d10]/45">(facultatif)</span>
             <textarea
               name="message"
-              rows={4}
+              rows={3}
               placeholder="Votre commerce, ce dont vous avez besoin…"
               className={fieldClass}
             />
