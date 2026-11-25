@@ -585,13 +585,20 @@ const SERIF = "Georgia, 'Times New Roman', serif";
 const shadow = "0 0.2em 0.5em rgba(0,0,0,0.25), 0 1.4em 3em rgba(0,0,0,0.45)";
 const tick = (c = "#fff") => <svg width="60%" height="60%" viewBox="0 0 12 12"><path d="M2.5 6.2 5 8.6l4.6-5" fill="none" stroke={c} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 
-/* Monogramme de la marque */
-function BvMark({ size = 3, bg = BR, fg = "#fff" }: { size?: number; bg?: string; fg?: string }) {
+/* Logo de la marque : une baguette dans un médaillon rouge */
+function BvMark({ size = 3, bg = BR, fg = CREAM }: { size?: number; bg?: string; fg?: string }) {
   return (
-    <div style={{ position: "relative", width: `${size}em`, height: `${size}em`, borderRadius: "50%", background: bg, display: "grid", placeItems: "center", flex: "none" }}>
-      <div style={{ position: "absolute", inset: "8%", borderRadius: "50%", border: `${size * 0.025}em solid ${fg}`, opacity: 0.55 }} />
-      <span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, color: fg, fontSize: `${size * 0.5}em`, lineHeight: 1, transform: "translateY(-0.04em)" }}>B</span>
-    </div>
+    <svg width={`${size}em`} height={`${size}em`} viewBox="0 0 100 100" style={{ flex: "none", display: "block" }}>
+      <circle cx="50" cy="50" r="50" fill={bg} />
+      <circle cx="50" cy="50" r="43" fill="none" stroke={fg} strokeWidth="1.6" opacity="0.6" />
+      <g transform="rotate(-38 50 50)">
+        <rect x="14" y="40" width="72" height="20" rx="10" fill={fg} />
+        <rect x="14" y="40" width="72" height="20" rx="10" fill="none" stroke="#c98a4b" strokeWidth="2" opacity="0.55" />
+        {[30, 44, 58, 72].map((x) => (
+          <path key={x} d={`M${x - 5} 55 Q${x} 49 ${x + 6} 45`} fill="none" stroke={bg} strokeWidth="3.4" strokeLinecap="round" />
+        ))}
+      </g>
+    </svg>
   );
 }
 /* Logotype */
@@ -661,8 +668,8 @@ function B2() {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "1.4em" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.8em" }}>
-        {sketch("Piste A", <span style={{ fontFamily: SERIF, fontSize: "1.8em", color: "#fff", fontWeight: 700 }}>B</span>)}
-        {sketch("Piste B", <span style={{ width: "2em", height: "2em", border: "0.22em solid #fff", borderRadius: "0.4em", transform: "rotate(45deg)" }} />)}
+        {sketch("Piste A", <span style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "1.8em", color: "#fff", fontWeight: 700 }}>B</span>)}
+        {sketch("Piste B", <svg width="2.4em" height="2.4em" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.6" strokeLinecap="round"><path d="M12 22V6" /><path d="M12 9c-3-1-4-3-4-5 3 0 4 2 4 5zm0 0c3-1 4-3 4-5-3 0-4 2-4 5zm0 5c-3-1-4-3-4-5 3 0 4 2 4 5zm0 0c3-1 4-3 4-5-3 0-4 2-4 5z" /></svg>)}
       </div>
       <div style={{ position: "relative", width: "13em", height: "13em", borderRadius: "1.2em", background: CREAM, boxShadow: shadow, display: "grid", placeItems: "center", overflow: "hidden" }}>
         <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} viewBox="0 0 100 100">
@@ -710,35 +717,42 @@ function B3() {
   );
 }
 
-/* 5 — Déclinaisons : flyer, carte de visite, gobelet, post */
+/* 5 — Déclinaisons : sac à pain, flyer, gobelet, carte de visite */
 function B4() {
   return (
-    <div style={{ position: "relative", width: "28em", height: "15.4em", transform: "scale(0.9)" }}>
+    <div style={{ position: "relative", width: "28em", height: "15em" }}>
       {/* flyer A5 */}
-      <div style={{ position: "absolute", left: "0.4em", top: "0.6em", width: "9.4em", height: "12.6em", background: CREAM, borderRadius: "0.25em", overflow: "hidden", boxShadow: shadow, transform: "rotate(-4deg)", color: COCOA }}>
-        <div style={{ height: "5em", backgroundImage: "url(/menu/cake.webp)", backgroundSize: "cover", backgroundPosition: "center" }} />
-        <div style={{ padding: "0.7em 0.75em" }}>
-          <div style={{ fontFamily: "ui-monospace, Menlo, monospace", fontSize: "0.45em", fontWeight: 700, letterSpacing: "0.16em", color: BR }}>NOUVEAU</div>
-          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "1.05em", lineHeight: 1.05, marginTop: "0.3em" }}>La carte d'automne</div>
-          <div style={{ fontSize: "0.5em", marginTop: "0.5em", opacity: 0.7 }}>Tartes, brioches et chocolat chaud.</div>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.4em", marginTop: "0.6em" }}><BvMark size={1.4} /><span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "0.7em" }}>Bellevue</span></div>
+      <div style={{ position: "absolute", left: "0.6em", top: "1em", width: "8.6em", height: "11.8em", background: CREAM, borderRadius: "0.25em", overflow: "hidden", boxShadow: shadow, transform: "rotate(-6deg)", color: COCOA }}>
+        <div style={{ height: "4.8em", backgroundImage: "url(/menu/cake.webp)", backgroundSize: "cover", backgroundPosition: "center" }} />
+        <div style={{ padding: "0.65em 0.7em" }}>
+          <div style={{ fontFamily: "ui-monospace, Menlo, monospace", fontSize: "0.42em", fontWeight: 700, letterSpacing: "0.16em", color: BR }}>NOUVEAU</div>
+          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "0.98em", lineHeight: 1.05, marginTop: "0.25em" }}>La carte d'automne</div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.35em", marginTop: "0.7em" }}><BvMark size={1.4} /><span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "0.66em" }}>Bellevue</span></div>
         </div>
       </div>
-      {/* post Instagram */}
-      <div style={{ position: "absolute", left: "9.6em", top: "0.6em", width: "8.4em", background: "#fff", borderRadius: "0.6em", padding: "0.35em", boxShadow: shadow, transform: "rotate(2deg)", zIndex: 2 }}>
-        <div style={{ position: "relative", height: "8.4em", borderRadius: "0.4em", backgroundImage: "url(/menu/latte.webp)", backgroundSize: "cover", backgroundPosition: "center" }}>
-          <div style={{ position: "absolute", left: "0.4em", bottom: "0.4em" }}><BvMark size={1.8} /></div>
+      {/* sac à pain kraft */}
+      <div style={{ position: "absolute", left: "8.6em", top: "0.4em", width: "8.8em", height: "13em", zIndex: 3, filter: "drop-shadow(0 1.2em 1.6em rgba(0,0,0,0.55))" }}>
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(170deg,#d9b48a,#c39668 70%,#b5885b)", borderRadius: "0.3em 0.3em 0.4em 0.4em", clipPath: "polygon(0 6%,6% 0,12% 6%,18% 0,24% 6%,30% 0,36% 6%,42% 0,48% 6%,54% 0,60% 6%,66% 0,72% 6%,78% 0,84% 6%,90% 0,96% 6%,100% 0,100% 100%,0 100%)" }} />
+        <div style={{ position: "absolute", left: "12%", right: "12%", top: "1.2em", height: "0.08em", background: "rgba(90,60,30,0.25)" }} />
+        <div style={{ position: "absolute", left: 0, right: 0, top: "2.8em", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.7em" }}>
+          <BvMark size={4} />
+          <BvWord size={0.62} color={COCOA} />
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.5em", padding: "0.5em 0.3em 0.2em", color: "#333", fontWeight: 700 }}><span style={{ color: BR }}>♥ 248</span><span>@maisonbellevue</span></div>
+        <div style={{ position: "absolute", left: "50%", bottom: "0.8em", transform: "translateX(-50%)", fontSize: "0.42em", fontWeight: 700, letterSpacing: "0.22em", color: "rgba(42,29,24,0.6)", whiteSpace: "nowrap" }}>PAIN AU LEVAIN · DEPUIS 1987</div>
       </div>
       {/* gobelet */}
-      <svg style={{ position: "absolute", right: "4.6em", top: "6.2em", width: "4.6em", height: "6.6em", zIndex: 3, filter: "drop-shadow(0 0.8em 1.2em rgba(0,0,0,0.5))" }} viewBox="0 0 46 66">
-        <path d="M5 8h36l-4 56H9z" fill={BR} /><rect x="2" y="3" width="42" height="7" rx="2.5" fill="#f7f1e8" />
-        <circle cx="23" cy="34" r="9.5" fill="#fff" /><text x="23" y="38.5" textAnchor="middle" fontFamily="Georgia, serif" fontStyle="italic" fontWeight="700" fontSize="12" fill={BR}>B</text>
+      <svg style={{ position: "absolute", left: "18.4em", top: "5.4em", width: "4.8em", height: "7em", zIndex: 2, filter: "drop-shadow(0 0.8em 1.2em rgba(0,0,0,0.5))" }} viewBox="0 0 48 70">
+        <path d="M5 9h38l-4.5 59h-29z" fill={CREAM} /><rect x="2" y="3" width="44" height="7.5" rx="2.8" fill={COCOA} />
+        <path d="M7.2 30h33.6l-1.5 20H8.7z" fill={BR} />
       </svg>
+      <div style={{ position: "absolute", left: "19.55em", top: "8.2em", zIndex: 3 }}><BvMark size={2.5} /></div>
       {/* carte de visite */}
-      <div style={{ position: "absolute", right: "0.2em", top: "0.8em", width: "9em", height: "5.4em", background: COCOA, borderRadius: "0.4em", boxShadow: shadow, transform: "rotate(-3deg)", display: "grid", placeItems: "center", zIndex: 1 }}>
-        <BvWord size={0.62} color={CREAM} />
+      <div style={{ position: "absolute", right: "0.2em", top: "0.6em", width: "8.6em", height: "5.2em", background: COCOA, borderRadius: "0.4em", boxShadow: shadow, transform: "rotate(6deg)", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5em", zIndex: 1 }}>
+        <BvMark size={2} />
+        <div style={{ color: CREAM, lineHeight: 1.1 }}>
+          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "0.85em" }}>Bellevue</div>
+          <div style={{ fontSize: "0.42em", opacity: 0.7, marginTop: "0.3em" }}>12 rue des Lilas</div>
+        </div>
       </div>
     </div>
   );
