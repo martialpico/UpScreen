@@ -1188,6 +1188,9 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.06em;
+  display: inline-block;
+  padding: 0.12em 0.08em 0.1em 0.04em;
+  margin: -0.12em -0.08em -0.1em -0.04em;
 }
 .offer-page .modal-videos .scroll-reveal { opacity: 1; transform: none; filter: none; }
 .offer-videos > article > div { border-radius: 26px; box-shadow: 0 30px 70px rgba(14, 13, 16, 0.18); }

@@ -3119,7 +3119,7 @@ const offerPages: Record<string, OfferPage> = {
   },
   motion: {
     eyebrow: "Vidéo en motion design",
-    title: ["Vidéo", "motion design."],
+    title: ["Vidéo", "motion design"],
     lead: "30 à 60 secondes pour expliquer ce que vous faites, retenir l'attention et donner envie de vous contacter. Pour votre site, Instagram et vos publicités.",
     includedEyebrow: "Inclus",
     includedTitle: ["Une vidéo", "clé en main."],
