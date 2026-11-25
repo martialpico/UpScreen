@@ -3361,22 +3361,22 @@ function OfferHeading({ eyebrow, title, lead, center = false }: { eyebrow: strin
   );
 }
 
-function OfferCTAs({ onClose, light = false }: { onClose: () => void; light?: boolean }) {
+function OfferCTAs({ onClose, light = false, large = false }: { onClose: () => void; light?: boolean; large?: boolean }) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className={`flex flex-wrap items-center ${large ? "gap-4" : "gap-3"}`}>
       <a
         href={whatsappLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex h-14 flex-col items-center justify-center rounded-[16px] bg-[#e94445] px-6 leading-none text-white shadow-[0_14px_34px_rgba(233,68,69,0.35)] transition hover:-translate-y-0.5 hover:bg-[#d93a3b]"
+        className={`inline-flex flex-col items-center justify-center bg-[#e94445] leading-none text-white shadow-[0_14px_34px_rgba(233,68,69,0.35)] transition hover:-translate-y-0.5 hover:bg-[#d93a3b] ${large ? "h-[72px] rounded-[20px] px-9" : "h-14 rounded-[16px] px-6"}`}
       >
-        <span className="text-[12px] font-semibold text-[rgba(255,255,255,0.88)]">Nous contacter</span>
-        <span className="mt-1 text-[17px] font-extrabold tabular-nums">{whatsappDisplay}</span>
+        <span className={`font-semibold text-[rgba(255,255,255,0.88)] ${large ? "text-[14px]" : "text-[12px]"}`}>Nous contacter</span>
+        <span className={`font-extrabold tabular-nums ${large ? "mt-1.5 text-[23px]" : "mt-1 text-[17px]"}`}>{whatsappDisplay}</span>
       </a>
       <a
         href="#contact-form"
         onClick={onClose}
-        className={`inline-flex h-14 items-center gap-2 rounded-[16px] px-6 text-[15px] font-semibold transition hover:-translate-y-0.5 ${
+        className={`inline-flex items-center gap-2 font-semibold transition hover:-translate-y-0.5 ${large ? "h-[72px] rounded-[20px] px-9 text-[19px]" : "h-14 rounded-[16px] px-6 text-[15px]"} ${
           light ? "bg-white text-[#0e0d10]" : "bg-[#0e0d10] text-white"
         }`}
       >
@@ -3453,7 +3453,7 @@ function ScrollProcess({
       className="relative"
       style={{ height: panelHeight ? `${Math.round(panelHeight + distance * 1.1)}px` : `calc(100dvh + ${Math.round(distance * 1.1)}px)` }}
     >
-      <div ref={panelRef} className="sticky top-0 flex max-h-[100dvh] flex-col justify-start overflow-hidden pb-6 pt-[92px] sm:pt-[100px]">
+      <div ref={panelRef} className="sticky top-0 flex max-h-[100dvh] flex-col justify-start overflow-hidden pb-14 pt-[92px] sm:pt-[100px]">
         <div className="offer-process-head mx-auto w-full max-w-[1160px] px-5 sm:px-8">
           <OfferHeading eyebrow={page.processEyebrow} title={page.processTitle} lead={page.processLead} center />
         </div>
@@ -3475,7 +3475,7 @@ function ScrollProcess({
                     step.image ? "p-4 sm:p-5" : "h-[min(420px,52dvh)] min-h-[330px] p-7 sm:p-10"
                   } ${
                     isActive
-                      ? "scale-[1.02] border-[#e94445]/50 bg-[linear-gradient(160deg,#fff_0%,#ffe9e9_100%)] shadow-[0_24px_60px_rgba(233,68,69,0.28)]"
+                      ? "scale-[1.02] border-[#e94445]/50 bg-[linear-gradient(160deg,#fff_0%,#ffe9e9_100%)] shadow-[0_16px_40px_rgba(233,68,69,0.24)]"
                       : "border-[#0e0d10]/[0.08] bg-white shadow-[0_14px_40px_rgba(14,13,16,0.06)]"
                   }`}
                 >
@@ -3753,7 +3753,7 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
                   ))}
                 </ul>
               </div>
-              <div className="shrink-0"><OfferCTAs onClose={onClose} light /></div>
+              <div className="shrink-0"><OfferCTAs onClose={onClose} light large /></div>
             </div>
           </div>
         </section>
