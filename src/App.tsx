@@ -3629,13 +3629,15 @@ function CustomOfferModal({ offer, onClose }: { offer: CustomOffer; index: numbe
         {/* Hero */}
         <section className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-5 pb-6 pt-12 sm:px-8 md:pt-16 lg:grid-cols-[1.05fr_1fr] lg:pb-8">
           <div>
-            <p className="scroll-reveal flex">
-              <span className="inline-flex items-center gap-2 rounded-full bg-[#e94445] px-4 py-2 font-mono text-[12px] font-semibold uppercase leading-none tracking-[0.18em] text-white shadow-[0_10px_24px_rgba(233,68,69,0.3)]">
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-white" />
-                {page.eyebrow}
-              </span>
-            </p>
-            <h2 id={`offer-${offer.id}`} className="mt-5 text-[44px] font-extrabold uppercase leading-[0.9] tracking-[-0.06em] sm:text-[72px] lg:text-[88px]">
+            {offer.id === "menu" && (
+              <p className="scroll-reveal mb-5 flex">
+                <span className="inline-flex items-center gap-2 rounded-full bg-[#e94445] px-4 py-2 font-mono text-[12px] font-semibold uppercase leading-none tracking-[0.18em] text-white shadow-[0_10px_24px_rgba(233,68,69,0.3)]">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-white" />
+                  {page.eyebrow}
+                </span>
+              </p>
+            )}
+            <h2 id={`offer-${offer.id}`} className=" text-[44px] font-extrabold uppercase leading-[0.9] tracking-[-0.06em] sm:text-[72px] lg:text-[88px]">
               <span className="scroll-reveal reveal-mask -mt-[0.16em] block pt-[0.16em]">
                 <span className="reveal-line block">{page.title[0]}</span>
               </span>
