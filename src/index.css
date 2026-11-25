@@ -1182,8 +1182,12 @@
   mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
 }
 .offer-outline-number {
-  color: transparent;
-  -webkit-text-stroke: 1.6px #e94445;
+  color: #e94445;
+  background: linear-gradient(160deg, #f26a5c 0%, #e94445 45%, #b8302f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.06em;
 }
 .offer-page .modal-videos .scroll-reveal { opacity: 1; transform: none; filter: none; }
 .offer-videos > article > div { border-radius: 26px; box-shadow: 0 30px 70px rgba(14, 13, 16, 0.18); }
