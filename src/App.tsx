@@ -3476,7 +3476,7 @@ function ScrollProcess({
                   className={`flex w-[min(480px,84vw)] shrink-0 flex-col rounded-[30px] border transition-[background-color,border-color,box-shadow,transform] duration-500 ${
                     step.image ? "p-4 sm:p-5" : "h-[min(420px,52dvh)] min-h-[330px] p-7 sm:p-10"
                   } ${
-                    step.image
+                    step.image || step.brandVisual !== undefined
                       ? isActive
                         ? "dark-island scale-[1.02] border-[#e94445]/60 bg-[#0b0a0b] bg-[radial-gradient(120%_70%_at_50%_0%,rgba(233,68,69,0.38),transparent_65%)] shadow-[0_18px_44px_rgba(233,68,69,0.3)]"
                         : "dark-island border-white/10 bg-[#0b0a0b] bg-[radial-gradient(110%_60%_at_100%_0%,rgba(233,68,69,0.16),transparent_60%)] shadow-[0_14px_40px_rgba(14,13,16,0.18)]"
@@ -3487,7 +3487,7 @@ function ScrollProcess({
                 >
                   {step.image || step.brandVisual !== undefined ? (
                     <>
-                      <div className={`relative overflow-hidden rounded-[20px] ${step.image ? "bg-[#141214] ring-1 ring-white/10" : "bg-[#f4f2ef] ring-1 ring-[#0e0d10]/[0.06]"}`}>
+                      <div className={`relative overflow-hidden rounded-[20px] ${step.image || step.brandVisual !== undefined ? "bg-[#141214] ring-1 ring-white/10" : "bg-[#f4f2ef] ring-1 ring-[#0e0d10]/[0.06]"}`}>
                         {step.videoBadge && (
                           <span aria-hidden="true" className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#e94445] text-white shadow-[0_8px_20px_rgba(233,68,69,0.45)] ring-2 ring-[#0b0a0b]">
                             <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -3512,10 +3512,10 @@ function ScrollProcess({
                       </div>
                       <div className="px-2 pb-2 pt-5 sm:px-3">
                         <div className="flex items-end justify-between gap-4">
-                          <h4 className={`text-[26px] font-extrabold leading-[1.02] tracking-[-0.045em] sm:text-[32px] ${step.image ? "text-white" : "text-[#0e0d10]"}`}>{step.title}</h4>
+                          <h4 className={`text-[26px] font-extrabold leading-[1.02] tracking-[-0.045em] sm:text-[32px] ${step.image || step.brandVisual !== undefined ? "text-white" : "text-[#0e0d10]"}`}>{step.title}</h4>
                           <span className="offer-outline-number shrink-0 text-[44px] font-extrabold leading-[0.8] tracking-[-0.04em] sm:text-[52px]">{String(index + 1).padStart(2, "0")}</span>
                         </div>
-                        <p className={`mt-3 text-[15px] leading-[1.6] sm:text-[16px] ${step.image ? "text-white/65" : "text-[#0e0d10]/65"}`}>{step.text}</p>
+                        <p className={`mt-3 text-[15px] leading-[1.6] sm:text-[16px] ${step.image || step.brandVisual !== undefined ? "text-white/65" : "text-[#0e0d10]/65"}`}>{step.text}</p>
                       </div>
                     </>
                   ) : (

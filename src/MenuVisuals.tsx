@@ -575,136 +575,193 @@ export function BrandQR() {
   );
 }
 
-/* =================== REFONTE GRAPHIQUE : visuels du process =================== */
+/* =================== REFONTE GRAPHIQUE : visuels du process ===================
+   Une seule marque fictive du début à la fin : « Maison Bellevue », boulangerie-café.
+   Avant (audit) → moodboard → logo → charte → supports → nouvelle façade. */
 const BR = "#e94445";
-const wcard: S = { background: "#fff", borderRadius: "1.1em", boxShadow: "0 0.15em 0.4em rgba(14,13,16,0.06), 0 1.2em 2.6em rgba(14,13,16,0.12)" };
-const Mark = ({ size = 3, r = 0.8 }: { size?: number; r?: number }) => (
-  <div style={{ width: `${size}em`, height: `${size}em`, borderRadius: `${r}em`, background: `linear-gradient(145deg,#f26a5c,${BR} 55%,#b8302f)`, display: "grid", placeItems: "center", color: "#fff", fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic", fontWeight: 700, flex: "none", boxShadow: "0 0.3em 0.8em rgba(233,68,69,0.35)" }}>
-    <span style={{ fontSize: `${size * 0.58}em` }}>B</span>
-  </div>
-);
+const CREAM = "#f4ecdf";
+const COCOA = "#2a1d18";
+const SERIF = "Georgia, 'Times New Roman', serif";
+const shadow = "0 0.2em 0.5em rgba(0,0,0,0.25), 0 1.4em 3em rgba(0,0,0,0.45)";
 const tick = (c = "#fff") => <svg width="60%" height="60%" viewBox="0 0 12 12"><path d="M2.5 6.2 5 8.6l4.6-5" fill="none" stroke={c} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 
-/* 0 — Brief et audit */
+/* Monogramme de la marque */
+function BvMark({ size = 3, bg = BR, fg = "#fff" }: { size?: number; bg?: string; fg?: string }) {
+  return (
+    <div style={{ position: "relative", width: `${size}em`, height: `${size}em`, borderRadius: "50%", background: bg, display: "grid", placeItems: "center", flex: "none" }}>
+      <div style={{ position: "absolute", inset: "8%", borderRadius: "50%", border: `${size * 0.025}em solid ${fg}`, opacity: 0.55 }} />
+      <span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, color: fg, fontSize: `${size * 0.5}em`, lineHeight: 1, transform: "translateY(-0.04em)" }}>B</span>
+    </div>
+  );
+}
+/* Logotype */
+function BvWord({ size = 1, color = COCOA }: { size?: number; color?: string }) {
+  return (
+    <div style={{ textAlign: "center", color, lineHeight: 1 }}>
+      <div style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: `${size * 1.6}em`, letterSpacing: "-0.02em" }}>Bellevue</div>
+      <div style={{ fontSize: `${size * 0.42}em`, fontWeight: 700, letterSpacing: "0.32em", marginTop: "0.5em", opacity: 0.75 }}>MAISON · BOULANGERIE</div>
+    </div>
+  );
+}
+const Tag = ({ children, red = false }: { children: ComponentChildren; red?: boolean }) => (
+  <span style={{ position: "absolute", left: "0.9em", top: "0.8em", zIndex: 5, fontFamily: "ui-monospace, Menlo, monospace", fontSize: "0.62em", fontWeight: 700, letterSpacing: "0.18em", padding: "0.45em 0.8em", borderRadius: "99em", background: red ? BR : "rgba(255,255,255,0.92)", color: red ? "#fff" : "#111" }}>{children}</span>
+);
+
+/* 1 — Brief et audit : l'ancienne enseigne, annotée */
 function B0() {
-  const rows: [string, boolean][] = [["Votre histoire", true], ["Vos clients", true], ["Vos concurrents", false]];
+  const note = (t: string, st: S) => (
+    <span style={{ position: "absolute", fontFamily: "'Bradley Hand', 'Segoe Print', 'Comic Sans MS', cursive", color: "#ffb4b4", fontSize: "0.85em", fontWeight: 700, whiteSpace: "nowrap", ...st }}>{t}</span>
+  );
   return (
-    <div style={{ position: "relative" }}>
-      <div style={{ ...wcard, width: "17em", padding: "1.2em 1.3em" }}>
-        <div className="mv-h" style={{ fontSize: "0.95em" }}>Brief</div>
-        {rows.map(([t, ok]) => (
-          <div key={t} className="mv-row" style={{ marginTop: "0.8em", gap: "0.6em" }}>
-            <span style={{ width: "1.35em", height: "1.35em", borderRadius: "0.4em", background: ok ? BR : "transparent", border: ok ? "none" : "0.12em solid #d9d5d2", display: "grid", placeItems: "center", flex: "none" }}>{ok && tick()}</span>
-            <span style={{ fontSize: "0.78em", fontWeight: 600, color: ok ? "#111" : "#8a8a8e" }}>{t}</span>
-          </div>
-        ))}
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <Tag>AVANT</Tag>
+      <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-46%) rotate(-2deg)", width: "17em", padding: "1em 1.1em", borderRadius: "0.3em", background: "linear-gradient(180deg,#f7e48a,#efd25d)", boxShadow: shadow, textAlign: "center" }}>
+        <div style={{ fontFamily: "Impact, 'Arial Black', sans-serif", fontSize: "1.9em", color: "#2f7a36", letterSpacing: "0.02em", lineHeight: 1 }}>BOULANGERIE</div>
+        <div style={{ fontFamily: "'Comic Sans MS', 'Chalkboard SE', cursive", fontSize: "1.35em", color: "#7a3fa0", marginTop: "0.15em" }}>Chez Bellevue</div>
+        <div style={{ fontFamily: "'Courier New', monospace", fontSize: "0.62em", color: "#b0322a", marginTop: "0.4em", fontWeight: 700 }}>PAIN * GATEAUX * CAFE * SNACK</div>
       </div>
-      <svg style={{ position: "absolute", right: "-2.4em", bottom: "-0.8em", width: "5.2em", height: "5.2em", filter: "drop-shadow(0 0.6em 1em rgba(14,13,16,0.2))" }} viewBox="0 0 60 60">
-        <circle cx="24" cy="24" r="15" fill="rgba(255,255,255,0.75)" stroke="#111" strokeWidth="5" />
-        <path d="M35 35 L52 52" stroke={BR} strokeWidth="7" strokeLinecap="round" />
-      </svg>
+      <span style={{ position: "absolute", left: "27%", top: "28%", width: "8.8em", height: "3.4em", border: `0.14em solid ${BR}`, borderRadius: "50%", transform: "rotate(-6deg)" }} />
+      {note("3 polices", { left: "4%", top: "64%" })}
+      {note("illisible", { right: "6%", top: "26%" })}
+      {note("pas de logo", { right: "8%", bottom: "12%" })}
     </div>
   );
 }
 
-/* 1 — Moodboard */
+/* 2 — Moodboard */
 function B1() {
-  const t = (st: S) => <div style={{ borderRadius: "0.8em", boxShadow: "0 0.6em 1.4em rgba(14,13,16,0.12)", ...st }} />;
-  return (
-    <div style={{ display: "grid", gridTemplateColumns: "6.4em 4.6em 6.4em", gridTemplateRows: "5em 5em", gap: "0.6em" }}>
-      {t({ gridRow: "span 2", background: `linear-gradient(160deg,#f26a5c,${BR} 50%,#8f1f21)` })}
-      {t({ background: "#1d1517" })}
-      {t({ backgroundImage: "url(/menu/latte.webp)", backgroundSize: "cover", backgroundPosition: "center" })}
-      {t({ background: "#efe7da" })}
-      <div style={{ background: "#fff", borderRadius: "0.8em", boxShadow: "0 0.6em 1.4em rgba(14,13,16,0.12)", display: "grid", placeItems: "center", fontFamily: "Georgia, serif", fontSize: "2.2em", fontWeight: 700 }}>Aa</div>
-    </div>
-  );
-}
-
-/* 2 — Logo : plusieurs pistes, une retenue */
-function B2() {
-  const box = (child: ComponentChildren, sel: boolean) => (
-    <div style={{ ...wcard, position: "relative", width: "6.6em", height: "6.6em", display: "grid", placeItems: "center", boxShadow: sel ? `0 0 0 0.18em ${BR}, 0 1.2em 2.6em rgba(233,68,69,0.25)` : (wcard.boxShadow as string), transform: sel ? "translateY(-0.4em)" : undefined }}>
-      {child}
-      {sel && <span style={{ position: "absolute", top: "-0.7em", right: "-0.7em", width: "1.7em", height: "1.7em", borderRadius: "50%", background: BR, display: "grid", placeItems: "center", boxShadow: "0 0.3em 0.7em rgba(233,68,69,0.45)" }}>{tick()}</span>}
+  const pol = (st: S, img?: string, bg?: string, child?: ComponentChildren) => (
+    <div style={{ position: "absolute", background: "#fff", padding: "0.35em 0.35em 1em", borderRadius: "0.2em", boxShadow: shadow, ...st }}>
+      <div style={{ width: "100%", height: "100%", borderRadius: "0.1em", background: bg, backgroundImage: img ? `url(/menu/${img}.webp)` : undefined, backgroundSize: "cover", backgroundPosition: "center", display: "grid", placeItems: "center" }}>{child}</div>
     </div>
   );
   return (
-    <div className="mv-row" style={{ gap: "1em" }}>
-      {box(<div style={{ width: "3.2em", height: "3.2em", borderRadius: "50%", border: "0.35em solid #1d1517", display: "grid", placeItems: "center", fontWeight: 800, fontSize: "1em" }}>B</div>, false)}
-      {box(<Mark size={3.4} r={0.95} />, true)}
-      {box(<svg width="3.6em" height="3.6em" viewBox="0 0 40 40"><path d="M4 26c6-10 10-10 16 0s10 10 16 0" fill="none" stroke="#1d1517" strokeWidth="4.5" strokeLinecap="round" /><path d="M4 16c6-10 10-10 16 0s10 10 16 0" fill="none" stroke="#c9c4c0" strokeWidth="4.5" strokeLinecap="round" /></svg>, false)}
-    </div>
-  );
-}
-
-/* 3 — Charte graphique */
-function B3() {
-  const sw: [string, string, string][] = [[BR, "#E94445", "#fff"], ["#1d1517", "#1D1517", "#fff"], ["#efe7da", "#EFE7DA", "#6b5f55"]];
-  return (
-    <div style={{ ...wcard, width: "24em", padding: "1.2em 1.3em" }}>
-      <div className="mv-row" style={{ gap: "0.6em" }}>
-        {sw.map(([bg, hex, fg]) => (
-          <div key={hex} style={{ flex: 1, height: "4.6em", borderRadius: "0.75em", background: bg, padding: "0.5em 0.6em", display: "flex", alignItems: "flex-end", color: fg, fontSize: "0.62em", fontWeight: 700, fontFamily: "ui-monospace, Menlo, monospace", boxShadow: bg === "#efe7da" ? "inset 0 0 0 0.1em rgba(0,0,0,0.06)" : undefined }}>{hex}</div>
-        ))}
+    <div style={{ position: "relative", width: "28em", height: "15em" }}>
+      {pol({ left: "0.5em", top: "1.2em", width: "8em", height: "9.4em", transform: "rotate(-5deg)" }, "latte")}
+      {pol({ left: "8em", top: "0.2em", width: "7.4em", height: "7em", transform: "rotate(3deg)" }, "cake")}
+      {pol({ left: "15.6em", top: "1em", width: "6.4em", height: "6.4em", transform: "rotate(-3deg)" }, undefined, CREAM, <span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "2.6em", color: COCOA }}>Aa</span>)}
+      <div style={{ position: "absolute", left: "8.6em", top: "8.2em", display: "flex", gap: "0.4em" }}>
+        {[BR, CREAM, COCOA, "#c9a27a"].map((c) => <span key={c} style={{ width: "2.3em", height: "2.3em", borderRadius: "50%", background: c, boxShadow: "0 0.4em 0.9em rgba(0,0,0,0.4), inset 0 0 0 0.08em rgba(255,255,255,0.25)" }} />)}
       </div>
-      <div className="mv-row" style={{ marginTop: "1em", gap: "0.9em", alignItems: "flex-end" }}>
-        <span style={{ fontSize: "3em", fontWeight: 800, lineHeight: 0.85, letterSpacing: "-0.04em" }}>Aa</span>
-        <div style={{ flex: 1 }}>
-          <div className="mv-h" style={{ fontSize: "0.8em" }}>Titre — Extra Bold</div>
-          <div className="mv-sub" style={{ fontSize: "0.7em", marginTop: "0.25em" }}>Texte — Regular 16 px</div>
+      <div style={{ position: "absolute", right: "0.2em", top: "8.4em", display: "flex", flexDirection: "column", gap: "0.35em", alignItems: "flex-end" }}>
+        {["Chaleureux", "Artisanal", "Moderne"].map((k) => <span key={k} style={{ fontSize: "0.62em", fontWeight: 700, padding: "0.4em 0.85em", borderRadius: "99em", background: "rgba(255,255,255,0.12)", color: "#fff", border: "0.08em solid rgba(255,255,255,0.25)" }}>{k}</span>)}
+      </div>
+    </div>
+  );
+}
+
+/* 3 — Logo : grille de construction + pistes */
+function B2() {
+  const sketch = (label: string, child: ComponentChildren) => (
+    <div style={{ textAlign: "center", opacity: 0.55 }}>
+      <div style={{ width: "4.2em", height: "4.2em", borderRadius: "0.8em", background: "rgba(255,255,255,0.08)", border: "0.08em dashed rgba(255,255,255,0.35)", display: "grid", placeItems: "center" }}>{child}</div>
+      <div style={{ fontSize: "0.55em", color: "#fff", marginTop: "0.6em", fontWeight: 600 }}>{label}</div>
+    </div>
+  );
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "1.4em" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.8em" }}>
+        {sketch("Piste A", <span style={{ fontFamily: SERIF, fontSize: "1.8em", color: "#fff", fontWeight: 700 }}>B</span>)}
+        {sketch("Piste B", <span style={{ width: "2em", height: "2em", border: "0.22em solid #fff", borderRadius: "0.4em", transform: "rotate(45deg)" }} />)}
+      </div>
+      <div style={{ position: "relative", width: "13em", height: "13em", borderRadius: "1.2em", background: CREAM, boxShadow: shadow, display: "grid", placeItems: "center", overflow: "hidden" }}>
+        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} viewBox="0 0 100 100">
+          <g stroke={BR} strokeWidth="0.35" fill="none" opacity="0.55">
+            <line x1="0" y1="50" x2="100" y2="50" /><line x1="50" y1="0" x2="50" y2="100" />
+            <line x1="0" y1="0" x2="100" y2="100" /><line x1="100" y1="0" x2="0" y2="100" />
+            <circle cx="50" cy="50" r="27" strokeDasharray="1.5 1.5" /><circle cx="50" cy="50" r="36" />
+            <rect x="14" y="14" width="72" height="72" strokeDasharray="1 2" />
+          </g>
+        </svg>
+        <BvMark size={5.4} />
+        <span style={{ position: "absolute", right: "0.6em", top: "0.6em", width: "1.8em", height: "1.8em", borderRadius: "50%", background: "#34c759", display: "grid", placeItems: "center" }}>{tick()}</span>
+        <span style={{ position: "absolute", left: "0.8em", bottom: "0.6em", fontFamily: "ui-monospace, Menlo, monospace", fontSize: "0.55em", fontWeight: 700, color: BR, letterSpacing: "0.1em" }}>PISTE C · RETENUE</span>
+      </div>
+    </div>
+  );
+}
+
+/* 4 — Charte graphique : une page du guide */
+function B3() {
+  const sw: [string, string, string, string][] = [[BR, "Rouge Bellevue", "#E94445", "#fff"], [COCOA, "Cacao", "#2A1D18", "#fff"], [CREAM, "Crème", "#F4ECDF", COCOA], ["#c9a27a", "Croûte", "#C9A27A", COCOA]];
+  return (
+    <div style={{ width: "27em", borderRadius: "0.8em", background: "#fbf8f3", boxShadow: shadow, padding: "1.1em 1.2em", display: "flex", gap: "1.1em", color: COCOA }}>
+      <div style={{ flex: 1.15 }}>
+        <div style={{ fontFamily: "ui-monospace, Menlo, monospace", fontSize: "0.52em", fontWeight: 700, letterSpacing: "0.16em", color: BR }}>02 — COULEURS</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.4em", marginTop: "0.6em" }}>
+          {sw.map(([bg, name, hex, fg]) => (
+            <div key={name} style={{ height: "3.6em", borderRadius: "0.5em", background: bg, color: fg, padding: "0.45em 0.55em", display: "flex", flexDirection: "column", justifyContent: "flex-end", boxShadow: bg === CREAM ? "inset 0 0 0 0.08em rgba(0,0,0,0.08)" : undefined }}>
+              <span style={{ fontSize: "0.55em", fontWeight: 700 }}>{name}</span>
+              <span style={{ fontSize: "0.46em", fontFamily: "ui-monospace, Menlo, monospace", opacity: 0.8 }}>{hex}</span>
+            </div>
+          ))}
         </div>
       </div>
+      <div style={{ flex: 1, borderLeft: "0.06em solid rgba(42,29,24,0.12)", paddingLeft: "1em" }}>
+        <div style={{ fontFamily: "ui-monospace, Menlo, monospace", fontSize: "0.52em", fontWeight: 700, letterSpacing: "0.16em", color: BR }}>03 — TYPOGRAPHIES</div>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "0.4em", marginTop: "0.4em" }}>
+          <span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "2.8em", lineHeight: 1 }}>Aa</span>
+          <span style={{ fontSize: "2.2em", fontWeight: 800, lineHeight: 1, letterSpacing: "-0.04em" }}>Aa</span>
+        </div>
+        <div style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "0.85em", marginTop: "0.5em" }}>Titres en serif italique</div>
+        <div style={{ fontSize: "0.6em", marginTop: "0.3em", opacity: 0.7, lineHeight: 1.4 }}>Textes en linéale, simples et lisibles sur tous les supports.</div>
+      </div>
     </div>
   );
 }
 
-/* 4 — Déclinaisons */
+/* 5 — Déclinaisons : flyer, carte de visite, gobelet, post */
 function B4() {
   return (
-    <div style={{ position: "relative", width: "26em", height: "13em" }}>
-      {/* flyer */}
-      <div style={{ ...wcard, position: "absolute", left: "0.5em", top: "0.4em", width: "8.6em", height: "12em", borderRadius: "0.5em", overflow: "hidden", transform: "rotate(-6deg)" }}>
-        <div style={{ height: "55%", background: `linear-gradient(160deg,#f26a5c,${BR} 50%,#8f1f21)`, display: "grid", placeItems: "center" }}><span style={{ color: "#fff", fontFamily: "Georgia, serif", fontStyle: "italic", fontWeight: 700, fontSize: "1.4em" }}>Bellevue</span></div>
-        <div style={{ padding: "0.7em" }}>
-          <div style={{ height: "0.45em", width: "80%", background: "#e6e2df", borderRadius: "1em" }} />
-          <div style={{ height: "0.45em", width: "60%", background: "#e6e2df", borderRadius: "1em", marginTop: "0.5em" }} />
+    <div style={{ position: "relative", width: "28em", height: "15.4em", transform: "scale(0.9)" }}>
+      {/* flyer A5 */}
+      <div style={{ position: "absolute", left: "0.4em", top: "0.6em", width: "9.4em", height: "12.6em", background: CREAM, borderRadius: "0.25em", overflow: "hidden", boxShadow: shadow, transform: "rotate(-4deg)", color: COCOA }}>
+        <div style={{ height: "5em", backgroundImage: "url(/menu/cake.webp)", backgroundSize: "cover", backgroundPosition: "center" }} />
+        <div style={{ padding: "0.7em 0.75em" }}>
+          <div style={{ fontFamily: "ui-monospace, Menlo, monospace", fontSize: "0.45em", fontWeight: 700, letterSpacing: "0.16em", color: BR }}>NOUVEAU</div>
+          <div style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "1.05em", lineHeight: 1.05, marginTop: "0.3em" }}>La carte d'automne</div>
+          <div style={{ fontSize: "0.5em", marginTop: "0.5em", opacity: 0.7 }}>Tartes, brioches et chocolat chaud.</div>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.4em", marginTop: "0.6em" }}><BvMark size={1.4} /><span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, fontSize: "0.7em" }}>Bellevue</span></div>
         </div>
       </div>
+      {/* post Instagram */}
+      <div style={{ position: "absolute", left: "9.6em", top: "0.6em", width: "8.4em", background: "#fff", borderRadius: "0.6em", padding: "0.35em", boxShadow: shadow, transform: "rotate(2deg)", zIndex: 2 }}>
+        <div style={{ position: "relative", height: "8.4em", borderRadius: "0.4em", backgroundImage: "url(/menu/latte.webp)", backgroundSize: "cover", backgroundPosition: "center" }}>
+          <div style={{ position: "absolute", left: "0.4em", bottom: "0.4em" }}><BvMark size={1.8} /></div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.5em", padding: "0.5em 0.3em 0.2em", color: "#333", fontWeight: 700 }}><span style={{ color: BR }}>♥ 248</span><span>@maisonbellevue</span></div>
+      </div>
+      {/* gobelet */}
+      <svg style={{ position: "absolute", right: "4.6em", top: "6.2em", width: "4.6em", height: "6.6em", zIndex: 3, filter: "drop-shadow(0 0.8em 1.2em rgba(0,0,0,0.5))" }} viewBox="0 0 46 66">
+        <path d="M5 8h36l-4 56H9z" fill={BR} /><rect x="2" y="3" width="42" height="7" rx="2.5" fill="#f7f1e8" />
+        <circle cx="23" cy="34" r="9.5" fill="#fff" /><text x="23" y="38.5" textAnchor="middle" fontFamily="Georgia, serif" fontStyle="italic" fontWeight="700" fontSize="12" fill={BR}>B</text>
+      </svg>
       {/* carte de visite */}
-      <div style={{ ...wcard, position: "absolute", left: "8.4em", top: "4.8em", width: "11em", height: "6.4em", borderRadius: "0.6em", padding: "0.9em", display: "flex", flexDirection: "column", justifyContent: "space-between", zIndex: 2 }}>
-        <Mark size={1.9} r={0.5} />
-        <div>
-          <div className="mv-h" style={{ fontSize: "0.72em" }}>Camille Martin</div>
-          <div className="mv-sub" style={{ fontSize: "0.56em", marginTop: "0.2em" }}>bellevue.fr</div>
-        </div>
-      </div>
-      {/* post réseaux */}
-      <div style={{ ...wcard, position: "absolute", right: "0.2em", top: "0.2em", width: "8.4em", borderRadius: "0.9em", padding: "0.45em", transform: "rotate(5deg)" }}>
-        <div style={{ height: "7.4em", borderRadius: "0.6em", background: "#1d1517", display: "grid", placeItems: "center" }}><Mark size={2.8} r={0.75} /></div>
-        <div className="mv-row" style={{ gap: "0.3em", marginTop: "0.45em", fontSize: "0.6em", color: BR }}>♥ <span style={{ color: "#555", fontWeight: 600 }}>248</span></div>
+      <div style={{ position: "absolute", right: "0.2em", top: "0.8em", width: "9em", height: "5.4em", background: COCOA, borderRadius: "0.4em", boxShadow: shadow, transform: "rotate(-3deg)", display: "grid", placeItems: "center", zIndex: 1 }}>
+        <BvWord size={0.62} color={CREAM} />
       </div>
     </div>
   );
 }
 
-/* 5 — Livraison */
+/* 6 — Livraison : la nouvelle façade + le guide */
 function B5() {
-  const files: [string, string][] = [["logo.svg", "#e94445"], ["charte.pdf", "#1d1517"], ["polices.zip", "#8a8a8e"]];
   return (
-    <div style={{ ...wcard, width: "22em", padding: "1.1em 1.2em" }}>
-      <div className="mv-row" style={{ gap: "0.7em" }}>
-        <svg width="2.6em" height="2.2em" viewBox="0 0 26 22"><path d="M1 4a3 3 0 0 1 3-3h6l3 3h9a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3z" fill={BR} /><path d="M1 8h24v10a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3z" fill="#f26a5c" /></svg>
-        <div style={{ flex: 1 }}>
-          <div className="mv-h" style={{ fontSize: "0.85em" }}>Identité_Bellevue</div>
-          <div className="mv-sub" style={{ fontSize: "0.65em", marginTop: "0.2em" }}>24 fichiers · prêt à imprimer</div>
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <Tag red>APRÈS</Tag>
+      <div style={{ position: "absolute", left: "50%", top: "54%", transform: "translate(-50%,-50%)", width: "20em", borderRadius: "0.4em", overflow: "hidden", boxShadow: shadow, background: "#e9e2d6" }}>
+        <div style={{ height: "2.3em", background: COCOA, display: "grid", placeItems: "center" }}>
+          <span style={{ fontFamily: SERIF, fontStyle: "italic", fontWeight: 700, color: CREAM, fontSize: "1.25em" }}>Maison Bellevue</span>
         </div>
-        <span style={{ width: "1.7em", height: "1.7em", borderRadius: "50%", background: "#34c759", display: "grid", placeItems: "center" }}>{tick()}</span>
+        <div style={{ height: "1.6em", background: `repeating-linear-gradient(90deg, ${BR} 0 1.6em, ${CREAM} 1.6em 3.2em)`, clipPath: "polygon(0 0,100% 0,100% 70%,96.5% 100%,93% 70%,89.5% 100%,86% 70%,82.5% 100%,79% 70%,75.5% 100%,72% 70%,68.5% 100%,65% 70%,61.5% 100%,58% 70%,54.5% 100%,51% 70%,47.5% 100%,44% 70%,40.5% 100%,37% 70%,33.5% 100%,30% 70%,26.5% 100%,23% 70%,19.5% 100%,16% 70%,12.5% 100%,9% 70%,5.5% 100%,2% 70%,0 100%)" }} />
+        <div style={{ display: "flex", gap: "0.6em", padding: "0.7em 0.9em 0.9em" }}>
+          <div style={{ flex: 1, height: "5em", borderRadius: "0.2em", background: "linear-gradient(160deg,#3b302b,#1d1614)", display: "grid", placeItems: "center" }}><BvMark size={2.6} /></div>
+          <div style={{ width: "3.6em", height: "5.6em", marginTop: "-0.6em", borderRadius: "0.2em 0.2em 0 0", background: "#4a3a33", border: `0.12em solid ${COCOA}` }} />
+        </div>
       </div>
-      <div className="mv-row" style={{ gap: "0.45em", marginTop: "0.9em", flexWrap: "wrap" }}>
-        {files.map(([f, c]) => (
-          <span key={f} className="mv-chip" style={{ fontSize: "0.66em", background: "#f2f2f7", color: "#333" }}><span style={{ width: "0.6em", height: "0.6em", borderRadius: "0.15em", background: c }} />{f}</span>
-        ))}
+      <div style={{ position: "absolute", right: "4%", top: "8%", display: "flex", alignItems: "center", gap: "0.45em", padding: "0.45em 0.7em", borderRadius: "0.6em", background: "#fff", boxShadow: shadow, fontSize: "0.62em", fontWeight: 700, color: "#111" }}>
+        <span style={{ width: "1.3em", height: "1.7em", borderRadius: "0.2em", background: BR, display: "grid", placeItems: "center", color: "#fff", fontSize: "0.7em" }}>PDF</span>
+        Guide de marque
       </div>
     </div>
   );
