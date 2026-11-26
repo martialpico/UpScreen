@@ -1336,3 +1336,8 @@
 }
 .theme-light .bg-lights .bg-light, .theme-light .bg-lights .bg-streak { display: none !important; }
 .theme-light .bg-lights .bg-grid { -webkit-mask-image: none; mask-image: none; }
+
+/* Témoignages sur téléphone : fondu des bords plus court pour lire les cartes. */
+@media (max-width: 639px) {
+  .reviews-viewport { -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent); mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent); }
+}

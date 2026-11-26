@@ -1631,19 +1631,19 @@ function Reviews() {
       </div>
       <div className="scroll-reveal reviews-viewport relative mx-auto mt-12 max-w-[1200px] overflow-hidden">
         <div
-          className="reviews-track flex w-max gap-5 px-5"
+          className="reviews-track flex w-max gap-3 px-3 sm:gap-5 sm:px-5"
           style={{ animationDuration: `${set.length * 10}s` }}
         >
           {loop.map((review, index) => (
             <figure
               key={index}
               aria-hidden={index >= reviews.length}
-              className="tint-drift dark-island relative flex w-[300px] shrink-0 flex-col rounded-[24px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(120%_70%_at_100%_0%,rgba(233,68,69,0.22),transparent_60%)] p-6 shadow-[0_24px_60px_rgba(14,13,16,0.18)] sm:w-[360px] sm:p-7"
+              className="tint-drift dark-island relative flex w-[232px] shrink-0 flex-col rounded-[20px] border border-white/10 bg-[#0b0a0b] bg-[radial-gradient(120%_70%_at_100%_0%,rgba(233,68,69,0.22),transparent_60%)] p-5 sm:rounded-[24px] shadow-[0_24px_60px_rgba(14,13,16,0.18)] sm:w-[360px] sm:p-7"
             >
               <div className="flex items-start justify-between gap-3">
                 <span
                   aria-hidden="true"
-                  className="-mt-1 text-[44px] font-extrabold leading-none text-brand"
+                  className="-mt-1 text-[34px] font-extrabold leading-none text-brand sm:text-[44px]"
                 >
                   &ldquo;
                 </span>
@@ -1662,12 +1662,12 @@ function Reviews() {
               </div>
               <blockquote
                 lang="fr"
-                className="mt-2 flex-1 text-[15px] font-normal leading-[1.65] text-white/80"
+                className="mt-2 flex-1 text-[13px] font-normal leading-[1.6] text-white/80 sm:text-[15px] sm:leading-[1.65]"
               >
                 {review.quote}
               </blockquote>
-              <figcaption className="mt-6 border-t border-white/10 pt-4">
-                <p className="text-[15px] font-extrabold tracking-[-0.02em] text-white">{review.business}</p>
+              <figcaption className="mt-4 border-t border-white/10 pt-3 sm:mt-6 sm:pt-4">
+                <p className="text-[13px] font-extrabold tracking-[-0.02em] text-white sm:text-[15px]">{review.business}</p>
                 {review.person && (
                   <p className="mt-0.5 text-xs font-normal text-white/55">{review.person}</p>
                 )}
