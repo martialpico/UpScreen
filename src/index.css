@@ -1319,16 +1319,11 @@
 
 .bsv-c { position: absolute; inset: 0; container-type: size; }
 
-/* Performance du défilement : animations confiées au GPU, pas de repeinte. */
-.bg-light, .bg-streak { will-change: transform, opacity; }
 .premium-blobs { contain: paint; }
 
 
-/* Fluidité : les décors (lumières du fond, formes des cartes, panneaux de la
-   Méthode) restent fixes. Animés, ils forçaient le navigateur à découper
-   toute la page en calques géants, d'où les à-coups au défilement. */
-.bg-light, .bg-streak, .premium-blobs .blob, .step-panel-float-left, .step-panel-float-right { animation: none !important; will-change: auto !important; }
-.step-panel::before { animation: none !important; opacity: 0 !important; }
+/* Allègement : les lumières du fond restent fixes (calque géant animé). */
+.bg-light, .bg-streak { animation: none !important; will-change: auto !important; }
 
 /* Fond de page peint une seule fois (plus de calque fixe derrière tout le contenu,
    qui obligeait le navigateur à découper la page en calques au défilement). */
@@ -1341,38 +1336,3 @@
 }
 .theme-light .bg-lights .bg-light, .theme-light .bg-lights .bg-streak { display: none !important; }
 .theme-light .bg-lights .bg-grid { -webkit-mask-image: none; mask-image: none; }
-
-/* Fluidité : plus aucune apparition liée au défilement. Le contenu est
-   affiché tel quel ; rien ne s'anime ni ne crée de calque pendant le scroll. */
-main .scroll-reveal,
-main .scroll-reveal.reveal-pop,
-main .step-row .step-anim,
-main .reveal-mask .reveal-line,
-main .stagger-grid .stagger-card {
-  opacity: 1 !important;
-  transform: none !important;
-  filter: none !important;
-  transition: none !important;
-  transition-delay: 0s !important;
-}
-/* Pastilles et cadres : rendu fixe, sans flou d'arrière-plan ni pointillés
-   animés (ils forçaient le navigateur à recomposer de grandes zones). */
-main [class*="backdrop-blur"]:not(.lg-glass) { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-main .frame-line, main .frame-line::before { animation: none !important; will-change: auto !important; }
-/* En-tête : plus de flou d'arrière-plan (recalculé à chaque image du scroll).
-   Fond presque opaque, même rendu visuel. */
-header .lg-glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-.theme-light header .lg-dark { background: rgba(255, 255, 255, 0.94) !important; }
-.theme-light header .lg-dark .lg-dark { background: rgba(244, 242, 239, 0.9) !important; }
-
-/* ===== Banc de test A/B de fluidité (?ab=...) ===== */
-.ab-nohdr header { display: none !important; }
-.ab-nobg .bg-lights { display: none !important; }
-.ab-noshadow main *, .ab-noshadow main *::before, .ab-noshadow main *::after,
-.ab-noshadow header * { box-shadow: none !important; text-shadow: none !important; filter: none !important; }
-.ab-noimg main img, .ab-noimg main video, .ab-noimg main iframe, .ab-noimg main svg image { visibility: hidden !important; }
-.ab-noanim *, .ab-noanim *::before, .ab-noanim *::after { animation: none !important; transition: none !important; }
-.ab-nosmooth, .ab-nosmooth html { scroll-behavior: auto !important; }
-.ab-nograd main *, .ab-nograd main *::before, .ab-nograd main *::after { background-image: none !important; -webkit-mask-image: none !important; mask-image: none !important; }
-.ab-nooverflow main { overflow: visible !important; overflow-x: clip !important; isolation: auto !important; }
-.ab-nobigtext main h1, .ab-nobigtext main h2 { letter-spacing: normal !important; }
