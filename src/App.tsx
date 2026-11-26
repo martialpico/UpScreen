@@ -4427,35 +4427,6 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  // Défilement fluide : pendant que l'on fait défiler, on allège les effets coûteux.
-  useEffect(() => {
-    const root = document.documentElement;
-    let timer = 0;
-    let lastY = window.scrollY;
-    let lastT = performance.now();
-    const onScroll = () => {
-      // Défilement très rapide : les éléments apparaissent sans animation,
-      // pour ne pas voir des blocs vides qui arrivent en retard.
-      const now = performance.now();
-      const speed = Math.abs(window.scrollY - lastY) / Math.max(1, now - lastT);
-      lastY = window.scrollY;
-      lastT = now;
-      if (speed > 3) root.classList.add("fast-scroll");
-      if (!timer) root.classList.add("is-scrolling");
-      else clearTimeout(timer);
-      timer = window.setTimeout(() => {
-        root.classList.remove("is-scrolling", "fast-scroll");
-        timer = 0;
-      }, 180);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    document.addEventListener("scroll", onScroll, { passive: true, capture: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      document.removeEventListener("scroll", onScroll, { capture: true });
-      clearTimeout(timer);
-    };
-  }, []);
 
   return (
     <main className={`relative isolate min-h-screen overflow-hidden bg-onyx font-ui ${lightTheme ? "theme-light" : ""}`}>

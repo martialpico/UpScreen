@@ -646,17 +646,36 @@
     position: absolute;
     pointer-events: none;
     transition: transform 1100ms cubic-bezier(0.65, 0, 0.2, 1);
-    animation: frame-march 1.2s linear infinite;
+    overflow: hidden;
   }
+  /* Les tirets défilent via un calque déplacé en transform (composité). */
+  .frame-line::before {
+    content: "";
+    position: absolute;
+    background: var(--dash);
+    -webkit-mask-image: none;
+    mask-image: none;
+    will-change: transform;
+  }
+  .frame-top::before, .frame-bottom::before { top: 0; bottom: 0; left: -18px; right: -18px; }
+  .frame-left::before, .frame-right::before { left: 0; right: 0; top: -18px; bottom: -18px; }
+  .frame-top::before { animation: dash-x 1.2s linear infinite; }
+  .frame-bottom::before { animation: dash-x 1.2s linear infinite reverse; }
+  .frame-right::before { animation: dash-y 1.2s linear infinite; }
+  .frame-left::before { animation: dash-y 1.2s linear infinite reverse; }
+  @keyframes dash-x { from { transform: translateX(-18px); } to { transform: translateX(0); } }
+  @keyframes dash-y { from { transform: translateY(-18px); } to { transform: translateY(0); } }
   .frame-top,
   .frame-bottom {
-    background: repeating-linear-gradient(90deg, var(--color-brand) 0 10px, transparent 10px 18px);
+    background: transparent;
+    --dash: repeating-linear-gradient(90deg, var(--color-brand) 0 10px, transparent 10px 18px);
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
   }
   .frame-left,
   .frame-right {
-    background: repeating-linear-gradient(180deg, var(--color-brand) 0 10px, transparent 10px 18px);
+    background: transparent;
+    --dash: repeating-linear-gradient(180deg, var(--color-brand) 0 10px, transparent 10px 18px);
     -webkit-mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
     mask-image: linear-gradient(180deg, transparent, #000 22%, #000 78%, transparent);
   }
@@ -665,10 +684,6 @@
   .frame-right { --march: 0 18px; }
   .frame-bottom { --march: -18px 0; }
   .frame-left { --march: 0 -18px; }
-  @keyframes frame-march {
-    from { background-position: 0 0; }
-    to { background-position: var(--march); }
-  }
   .frame-top,
   .frame-bottom {
     left: calc(-1 * var(--fx) - var(--ext));
@@ -803,24 +818,13 @@
     }
   }
 
+  /* Reflet : déplacé en transform (composité, pas de repeinte). */
   @keyframes panel-sheen {
-    0%,
-    22% {
-      left: -75%;
-      opacity: 0;
-    }
-    35% {
-      opacity: 0.7;
-    }
-    58% {
-      left: 140%;
-      opacity: 0;
-    }
-    100% {
-      left: 140%;
-      opacity: 0;
-    }
+    0%, 22% { transform: translateX(0) skewX(-18deg); opacity: 0; }
+    35% { opacity: 0.7; }
+    58%, 100% { transform: translateX(597%) skewX(-18deg); opacity: 0; }
   }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -865,31 +869,33 @@
 
 /* Formes floues des offres premium (carte Complet, colonne Premium). */
 @layer components {
+  /* Bords doux dessinés par un dégradé radial (pas de filtre flou, très coûteux au scroll). */
   .premium-blobs .blob {
     position: absolute;
-    border-radius: 45%;
-    filter: blur(42px);
+    border-radius: 50%;
     opacity: 0.85;
     will-change: transform;
+    background: radial-gradient(closest-side, var(--blob) 0%, color-mix(in srgb, var(--blob) 55%, transparent) 45%, transparent 100%) !important;
+    scale: 1.45;
   }
   .premium-blobs .blob-a {
     width: 70%; height: 45%; right: -20%; top: -12%;
-    background: #ff4d4f;
+    --blob: #ff4d4f;
     animation: blob-drift-a 14s ease-in-out infinite alternate;
   }
   .premium-blobs .blob-b {
     width: 38%; height: 55%; right: 18%; top: 18%;
-    background: #ff9a9b; opacity: 0.55; transform: rotate(35deg);
+    --blob: #ff9a9b; opacity: 0.55; transform: rotate(35deg);
     animation: blob-drift-b 17s ease-in-out infinite alternate;
   }
   .premium-blobs .blob-c {
     width: 55%; height: 40%; right: -10%; bottom: 10%;
-    background: #c62d30;
+    --blob: #c62d30;
     animation: blob-drift-c 19s ease-in-out infinite alternate;
   }
   .premium-blobs .blob-d {
     width: 30%; height: 30%; left: 30%; top: 2%;
-    background: #ffd2d2; opacity: 0.35;
+    --blob: #ffd2d2; opacity: 0.35;
     animation: blob-drift-b 21s ease-in-out infinite alternate-reverse;
   }
   @keyframes blob-drift-a { to { transform: translate(-14%, 12%) rotate(25deg) scale(1.1); } }
@@ -1322,21 +1328,3 @@
 .bg-light, .bg-streak { will-change: transform, opacity; }
 .premium-blobs { contain: paint; }
 
-/* Pendant un défilement rapide : on coupe les effets les plus coûteux
-   (flou d'arrière-plan du menu, lumières animées du fond), puis on les rend. */
-html.is-scrolling .lg-glass { -webkit-backdrop-filter: none; backdrop-filter: none; }
-html.is-scrolling .lg-dark { background: rgba(23, 22, 25, 0.95); }
-html.is-scrolling .theme-light .lg-dark { background: rgba(255, 255, 255, 0.95); }
-html.is-scrolling .lg-light { background: rgba(247, 245, 242, 0.95); }
-html.is-scrolling .bg-light,
-html.is-scrolling .bg-streak,
-html.is-scrolling .premium-blobs .blob,
-html.is-scrolling .mv-float,
-html.is-scrolling .hero-phone,
-html.is-scrolling .hero-qr { animation-play-state: paused; }
-
-/* Défilement très rapide : apparition immédiate, sans transition. */
-html.fast-scroll .scroll-reveal,
-html.fast-scroll .scroll-reveal *,
-html.fast-scroll .reveal-line,
-html.fast-scroll .step-anim { transition-duration: 0s !important; transition-delay: 0s !important; }
