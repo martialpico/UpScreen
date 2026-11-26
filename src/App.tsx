@@ -4372,7 +4372,7 @@ export default function App() {
       "header, .scroll-reveal, .stagger-card, .reveal-mask, [data-step-index], .reviews-viewport, [role='dialog'], .bg-light, .premium-blobs";
     root
       ?.querySelectorAll<HTMLElement>(
-        "section h1, section h2, section h3, section p, section ul, section ol, section article, section figure, section details, section form, section img, section video, section iframe, section a, section button, section [class*='rounded-['], section [class*='rounded-full'], footer > * > *",
+        "section h1, section h2, section h3, section article, section figure, section details, section form, section video, section iframe",
       )
       .forEach((element) => {
         if (element.closest(skip)) return;
@@ -4397,8 +4397,7 @@ export default function App() {
 
     // Seuls les titres et les visuels se replient quand ils quittent l'écran ;
     // le contenu à lire (textes, tarifs, FAQ, formulaire) reste en place.
-    const exitSelector =
-      ".reveal-mask, .reveal-pop, .title-frame, .step-row, figure, img, video, iframe, .reviews-viewport";
+    const exitSelector = ".reveal-mask, .title-frame";
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -4421,7 +4420,7 @@ export default function App() {
           target.classList.remove("is-visible");
         });
       },
-      { threshold: 0, rootMargin: "0px 0px -6% 0px" },
+      { threshold: 0, rootMargin: "0px 0px 4% 0px" },
     );
 
     elements.forEach((element) => observer.observe(element));
@@ -4432,11 +4431,20 @@ export default function App() {
   useEffect(() => {
     const root = document.documentElement;
     let timer = 0;
+    let lastY = window.scrollY;
+    let lastT = performance.now();
     const onScroll = () => {
+      // Défilement très rapide : les éléments apparaissent sans animation,
+      // pour ne pas voir des blocs vides qui arrivent en retard.
+      const now = performance.now();
+      const speed = Math.abs(window.scrollY - lastY) / Math.max(1, now - lastT);
+      lastY = window.scrollY;
+      lastT = now;
+      if (speed > 3) root.classList.add("fast-scroll");
       if (!timer) root.classList.add("is-scrolling");
       else clearTimeout(timer);
       timer = window.setTimeout(() => {
-        root.classList.remove("is-scrolling");
+        root.classList.remove("is-scrolling", "fast-scroll");
         timer = 0;
       }, 180);
     };
