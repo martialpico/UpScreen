@@ -1341,3 +1341,21 @@
 }
 .theme-light .bg-lights .bg-light, .theme-light .bg-lights .bg-streak { display: none !important; }
 .theme-light .bg-lights .bg-grid { -webkit-mask-image: none; mask-image: none; }
+
+/* Fluidité : plus aucune apparition liée au défilement. Le contenu est
+   affiché tel quel ; rien ne s'anime ni ne crée de calque pendant le scroll. */
+main .scroll-reveal,
+main .scroll-reveal.reveal-pop,
+main .step-row .step-anim,
+main .reveal-mask .reveal-line,
+main .stagger-grid .stagger-card {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+  transition-delay: 0s !important;
+}
+/* Pastilles et cadres : rendu fixe, sans flou d'arrière-plan ni pointillés
+   animés (ils forçaient le navigateur à recomposer de grandes zones). */
+main [class*="backdrop-blur"]:not(.lg-glass) { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+main .frame-line, main .frame-line::before { animation: none !important; will-change: auto !important; }
