@@ -1323,3 +1323,21 @@
 .bg-light, .bg-streak { will-change: transform, opacity; }
 .premium-blobs { contain: paint; }
 
+
+/* Fluidité : les décors (lumières du fond, formes des cartes, panneaux de la
+   Méthode) restent fixes. Animés, ils forçaient le navigateur à découper
+   toute la page en calques géants, d'où les à-coups au défilement. */
+.bg-light, .bg-streak, .premium-blobs .blob, .step-panel-float-left, .step-panel-float-right { animation: none !important; will-change: auto !important; }
+.step-panel::before { animation: none !important; opacity: 0 !important; }
+
+/* Fond de page peint une seule fois (plus de calque fixe derrière tout le contenu,
+   qui obligeait le navigateur à découper la page en calques au défilement). */
+.theme-light .bg-lights {
+  background:
+    radial-gradient(70% 700px at 50% -80px, rgba(233, 68, 69, 0.16), rgba(233, 68, 69, 0.05) 45%, transparent 72%) no-repeat,
+    radial-gradient(38% 520px at 8% 420px, rgba(255, 160, 150, 0.22), transparent 70%) 0 0 / 100% 1700px repeat-y,
+    radial-gradient(40% 560px at 94% 1200px, rgba(233, 68, 69, 0.11), transparent 70%) 0 0 / 100% 1700px repeat-y,
+    linear-gradient(180deg, #faf8f6 0%, #f4f2ef 100%) !important;
+}
+.theme-light .bg-lights .bg-light, .theme-light .bg-lights .bg-streak { display: none !important; }
+.theme-light .bg-lights .bg-grid { -webkit-mask-image: none; mask-image: none; }

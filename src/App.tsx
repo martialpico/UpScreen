@@ -308,7 +308,7 @@ function SectionHeader({
   framed?: boolean;
 }) {
   return (
-    <div className="mx-auto flex max-w-[900px] flex-col items-center text-center">
+    <div className="section-head mx-auto flex max-w-[900px] flex-col items-center text-center">
       {eyebrow && (
         <div className="scroll-reveal reveal-pop">
           <Eyebrow center>{eyebrow}</Eyebrow>
@@ -2227,7 +2227,7 @@ function Process() {
           <div
             aria-hidden="true"
             ref={progressRef}
-            className="absolute inset-0 origin-top bg-gradient-to-b from-brand-light via-brand to-brand-deep will-change-transform"
+            className="absolute inset-0 origin-top bg-gradient-to-b from-brand-light via-brand to-brand-deep"
             style={{ transform: "scaleY(0)", transition: "transform 450ms cubic-bezier(0.22, 1, 0.36, 1)" }}
           />
         </div>
@@ -4193,7 +4193,7 @@ function Footer() {
 // Replaces the former video loop: no media download, GPU-friendly transforms only.
 function BackgroundLights() {
   return (
-    <div aria-hidden="true" className="bg-lights pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-onyx">
+    <div aria-hidden="true" className="bg-lights pointer-events-none absolute inset-0 -z-10 overflow-hidden bg-onyx">
       <span className="bg-light bg-light-a" />
       <span className="bg-light bg-light-b" />
       <span className="bg-light bg-light-c" />
@@ -4390,15 +4390,27 @@ export default function App() {
         // Apparition à l'arrivée à l'écran, une seule fois.
         entries.forEach((entry) => {
           const target = entry.target as HTMLElement;
-          if (entry.isIntersecting) {
-            target.classList.add("is-visible");
-            observer.unobserve(target);
-          }
-          // Une fois apparu, l'élément reste en place : l'animation ne dépend
-          // plus du sens ni de la vitesse du défilement.
+          if (!entry.isIntersecting || target.classList.contains("is-visible")) return;
+          // Tout le groupe apparaît d'un coup (titre + sous-titre + texte, ou
+          // toutes les cartes d'une rangée / questions de la FAQ), en cascade
+          // dans le temps : l'animation se joue seule, sans dépendre du scroll.
+          const group =
+            target.closest(".section-head") ??
+            target.parentElement;
+          const members = group
+            ? Array.from(group.querySelectorAll<HTMLElement>(":scope > .scroll-reveal, :scope .scroll-reveal")).filter(
+                (el) => !el.classList.contains("is-visible") && (el.parentElement === target.parentElement || group.classList.contains("section-head")),
+              )
+            : [target];
+          if (!members.includes(target)) members.unshift(target);
+          members.forEach((el, i) => {
+            if (i > 0 && !el.style.transitionDelay) el.style.transitionDelay = `${Math.min(i, 6) * 70}ms`;
+            el.classList.add("is-visible");
+            observer.unobserve(el);
+          });
         });
       },
-      { threshold: 0, rootMargin: "0px 0px 4% 0px" },
+      { threshold: 0, rootMargin: "0px 0px 8% 0px" },
     );
 
     elements.forEach((element) => observer.observe(element));
