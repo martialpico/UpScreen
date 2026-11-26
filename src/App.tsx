@@ -2228,7 +2228,7 @@ function Process() {
             aria-hidden="true"
             ref={progressRef}
             className="absolute inset-0 origin-top bg-gradient-to-b from-brand-light via-brand to-brand-deep will-change-transform"
-            style={{ transform: "scaleY(0)" }}
+            style={{ transform: "scaleY(0)", transition: "transform 450ms cubic-bezier(0.22, 1, 0.36, 1)" }}
           />
         </div>
         <div className="space-y-10 sm:space-y-0">
@@ -3793,33 +3793,21 @@ function CustomServices() {
   const gridRef = useRef<HTMLDivElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  // Progression du défilement (0 → 1) : les cartes montent une à une.
+  // Les cartes montent une à une quand la grille arrive à l'écran.
   useEffect(() => {
     const grid = gridRef.current;
     if (!grid) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      grid.style.setProperty("--p", "1");
-      return;
-    }
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const rect = grid.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh * 0.75 + rect.height * 0.35)));
-      grid.style.setProperty("--p", progress.toFixed(3));
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(frame);
-    };
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          grid.classList.add("is-in");
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px" },
+    );
+    io.observe(grid);
+    return () => io.disconnect();
   }, []);
 
   return (
@@ -4397,27 +4385,17 @@ export default function App() {
 
     // Seuls les titres et les visuels se replient quand ils quittent l'écran ;
     // le contenu à lire (textes, tarifs, FAQ, formulaire) reste en place.
-    const exitSelector = ".reveal-mask, .title-frame";
-
     const observer = new IntersectionObserver(
       (entries) => {
-        // Apparition en descendant, disparition quand l'élément sort de
-        // l'écran : il repart vers le bas en remontant la page, vers le haut
-        // en la descendant, et rejoue son animation à son retour.
+        // Apparition à l'arrivée à l'écran, une seule fois.
         entries.forEach((entry) => {
           const target = entry.target as HTMLElement;
           if (entry.isIntersecting) {
             target.classList.add("is-visible");
-            return;
-          }
-          if (!target.classList.contains("is-visible")) return;
-          if (!target.matches(exitSelector)) {
             observer.unobserve(target);
-            return;
           }
-          const exitedTop = entry.boundingClientRect.top < (entry.rootBounds?.top ?? 0);
-          target.dataset.exit = exitedTop ? "top" : "bottom";
-          target.classList.remove("is-visible");
+          // Une fois apparu, l'élément reste en place : l'animation ne dépend
+          // plus du sens ni de la vitesse du défilement.
         });
       },
       { threshold: 0, rootMargin: "0px 0px 4% 0px" },

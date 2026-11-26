@@ -1118,21 +1118,16 @@
   text-shadow: none;
 }
 
-/* Cartes Sur mesure : elles montent une à une avec le défilement (--p de 0 à 1). */
-@media (min-width: 1024px) {
-  .stagger-grid .stagger-card {
-    --t: clamp(0, calc((var(--p, 1) - var(--i) * 0.12) / 0.42), 1);
-    transform: translateY(calc((1 - var(--t)) * 260px)) rotate(calc((1 - var(--t)) * 4deg));
-    opacity: calc(0.25 + var(--t) * 0.75);
-    will-change: transform;
-  }
+/* Cartes Sur mesure : quand la grille arrive à l'écran, elles montent une à une
+   (animation indépendante du défilement, qui se joue entièrement). */
+.stagger-grid .stagger-card {
+  opacity: 0;
+  transform: translateY(70px) rotate(2deg);
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i) * 120ms);
 }
-@media (max-width: 1023px) {
-  .stagger-grid .stagger-card {
-    --t: clamp(0, calc((var(--p, 1) - var(--i) * 0.06) / 0.5), 1);
-    transform: translateY(calc((1 - var(--t)) * 60px));
-  }
-}
+.stagger-grid.is-in .stagger-card { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .stagger-grid .stagger-card { opacity: 1; transform: none; transition: none; } }
 .modal-videos .scroll-reveal {
   opacity: 1;
   transform: none;
