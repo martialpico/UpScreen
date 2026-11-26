@@ -787,8 +787,10 @@ export function BrandStepVisual({ index }: { index: number }) {
   if (!V) return null;
   return (
     <div className="bsv">
-      <div className="bsv-in">
-        <V />
+      <div className="bsv-c">
+        <div className="bsv-in">
+          <V />
+        </div>
       </div>
     </div>
   );

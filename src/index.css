@@ -1315,7 +1315,9 @@
 .mo-still .mo-playhead { left: 62%; }
 
 /* Visuels HTML du process branding */
-.bsv { position: relative; aspect-ratio: 16 / 9; max-height: 30dvh; width: 100%; container-type: size; overflow: hidden;
+.bsv { position: relative; aspect-ratio: 16 / 9; max-height: 30dvh; width: 100%; overflow: hidden;
   background: radial-gradient(70% 80% at 50% 45%, rgba(233,68,69,0.32), rgba(233,68,69,0.06) 55%, transparent 75%), linear-gradient(180deg, #1a1415, #0e0b0c); }
 .bsv-in { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff;
   font-size: min(calc(100cqw / 31), calc(100cqh / 18.5)); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif; letter-spacing: -0.01em; }
+
+.bsv-c { position: absolute; inset: 0; container-type: size; }

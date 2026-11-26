@@ -3487,7 +3487,7 @@ function ScrollProcess({
                 >
                   {step.image || step.brandVisual !== undefined ? (
                     <>
-                      <div className={`relative overflow-hidden rounded-[20px] ${step.image || step.brandVisual !== undefined ? "bg-[#141214] ring-1 ring-white/10" : "bg-[#f4f2ef] ring-1 ring-[#0e0d10]/[0.06]"}`}>
+                      <div className={`relative shrink-0 overflow-hidden rounded-[20px] ${step.image || step.brandVisual !== undefined ? "bg-[#141214] ring-1 ring-white/10" : "bg-[#f4f2ef] ring-1 ring-[#0e0d10]/[0.06]"}`}>
                         {step.videoBadge && (
                           <span aria-hidden="true" className="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-[#e94445] text-white shadow-[0_8px_20px_rgba(233,68,69,0.45)] ring-2 ring-[#0b0a0b]">
                             <svg viewBox="0 0 24 24" className="h-[18px] w-[18px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -3511,7 +3511,7 @@ function ScrollProcess({
                         )}
                       </div>
                       <div className="px-2 pb-2 pt-5 sm:px-3">
-                        <div className="flex items-end justify-between gap-4">
+                        <div className="flex items-baseline justify-between gap-4">
                           <h4 className={`text-[26px] font-extrabold leading-[1.02] tracking-[-0.045em] sm:text-[32px] ${step.image || step.brandVisual !== undefined ? "text-white" : "text-[#0e0d10]"}`}>{step.title}</h4>
                           <span className="offer-outline-number shrink-0 text-[44px] font-extrabold leading-[0.8] tracking-[-0.04em] sm:text-[52px]">{String(index + 1).padStart(2, "0")}</span>
                         </div>
