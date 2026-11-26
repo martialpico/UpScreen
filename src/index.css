@@ -1359,3 +1359,8 @@ main .stagger-grid .stagger-card {
    animés (ils forçaient le navigateur à recomposer de grandes zones). */
 main [class*="backdrop-blur"]:not(.lg-glass) { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 main .frame-line, main .frame-line::before { animation: none !important; will-change: auto !important; }
+/* En-tête : plus de flou d'arrière-plan (recalculé à chaque image du scroll).
+   Fond presque opaque, même rendu visuel. */
+header .lg-glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.theme-light header .lg-dark { background: rgba(255, 255, 255, 0.94) !important; }
+.theme-light header .lg-dark .lg-dark { background: rgba(244, 242, 239, 0.9) !important; }
