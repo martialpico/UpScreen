@@ -1364,3 +1364,15 @@ main .frame-line, main .frame-line::before { animation: none !important; will-ch
 header .lg-glass { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 .theme-light header .lg-dark { background: rgba(255, 255, 255, 0.94) !important; }
 .theme-light header .lg-dark .lg-dark { background: rgba(244, 242, 239, 0.9) !important; }
+
+/* ===== Banc de test A/B de fluidité (?ab=...) ===== */
+.ab-nohdr header { display: none !important; }
+.ab-nobg .bg-lights { display: none !important; }
+.ab-noshadow main *, .ab-noshadow main *::before, .ab-noshadow main *::after,
+.ab-noshadow header * { box-shadow: none !important; text-shadow: none !important; filter: none !important; }
+.ab-noimg main img, .ab-noimg main video, .ab-noimg main iframe, .ab-noimg main svg image { visibility: hidden !important; }
+.ab-noanim *, .ab-noanim *::before, .ab-noanim *::after { animation: none !important; transition: none !important; }
+.ab-nosmooth, .ab-nosmooth html { scroll-behavior: auto !important; }
+.ab-nograd main *, .ab-nograd main *::before, .ab-nograd main *::after { background-image: none !important; -webkit-mask-image: none !important; mask-image: none !important; }
+.ab-nooverflow main { overflow: visible !important; overflow-x: clip !important; isolation: auto !important; }
+.ab-nobigtext main h1, .ab-nobigtext main h2 { letter-spacing: normal !important; }
