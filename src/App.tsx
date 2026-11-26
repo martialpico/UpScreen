@@ -478,7 +478,12 @@ function Header() {
       { rootMargin: "-45% 0px -50% 0px" },
     );
     sections.forEach((el) => observer.observe(el));
-    const onTop = () => window.scrollY < 300 && setActive("");
+    let atTop = false;
+    const onTop = () => {
+      const top = window.scrollY < 300;
+      if (top && !atTop) setActive("");
+      atTop = top;
+    };
     window.addEventListener("scroll", onTop, { passive: true });
     return () => {
       observer.disconnect();
@@ -2168,8 +2173,12 @@ function Process() {
   // Les étapes apparaissent et disparaissent avec le même système que le
   // reste du site (classe .scroll-reveal observée dans App), dans les deux
   // sens de défilement. Ici on ne pilote que la ligne de progression.
-  const [scrollProgress, setScrollProgress] = useState(0);
   const timelineRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  // La ligne est pilotée directement (sans re-rendu React) pour un scroll fluide.
+  const setScrollProgress = (v: number) => {
+    if (progressRef.current) progressRef.current.style.transform = `scaleY(${v})`;
+  };
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -2217,8 +2226,9 @@ function Process() {
         <div className="absolute bottom-8 left-4 top-8 w-px bg-white/10 sm:left-1/2 sm:-translate-x-1/2">
           <div
             aria-hidden="true"
+            ref={progressRef}
             className="absolute inset-0 origin-top bg-gradient-to-b from-brand-light via-brand to-brand-deep will-change-transform"
-            style={{ transform: `scaleY(${scrollProgress})` }}
+            style={{ transform: "scaleY(0)" }}
           />
         </div>
         <div className="space-y-10 sm:space-y-0">
@@ -4416,6 +4426,27 @@ export default function App() {
 
     elements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
+  }, []);
+
+  // Défilement fluide : pendant que l'on fait défiler, on allège les effets coûteux.
+  useEffect(() => {
+    const root = document.documentElement;
+    let timer = 0;
+    const onScroll = () => {
+      if (!timer) root.classList.add("is-scrolling");
+      else clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        root.classList.remove("is-scrolling");
+        timer = 0;
+      }, 180);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("scroll", onScroll, { capture: true });
+      clearTimeout(timer);
+    };
   }, []);
 
   return (

@@ -523,11 +523,9 @@
   .scroll-reveal {
     opacity: 0;
     transform: translateY(32px) scale(0.98);
-    filter: blur(6px);
     transition:
       opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 1000ms cubic-bezier(0.22, 1, 0.36, 1),
-      filter 900ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .scroll-reveal.is-visible {
@@ -569,11 +567,9 @@
   .step-row .step-anim {
     opacity: 0;
     transform: translate(var(--sx), 36px) scale(0.97);
-    filter: blur(8px);
     transition:
       opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
-      transform 1000ms cubic-bezier(0.22, 1, 0.36, 1),
-      filter 800ms cubic-bezier(0.22, 1, 0.36, 1);
+      transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .step-row .step-anim-late { transition-delay: 120ms; }
   .step-row[data-exit="top"]:not(.is-visible) .step-anim {
@@ -907,12 +903,12 @@
 /* Liquid glass (src/components/goodui/liquid-glass-button.tsx) */
 @layer components {
   .lg-glass {
-    --lg-blur: 14px;
+    --lg-blur: 12px;
     position: relative;
     isolation: isolate;
     border-radius: 9999px;
-    -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(1.7);
-    backdrop-filter: blur(var(--lg-blur)) saturate(1.7);
+    -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(1.4);
+    backdrop-filter: blur(var(--lg-blur)) saturate(1.4);
     transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s, box-shadow 0.3s;
   }
   .lg-light {
@@ -1157,7 +1153,7 @@
 }
 .tint-drift {
   background-size: 170% 170%;
-  animation: tint-drift 14s ease-in-out infinite alternate;
+  background-position: 80% 20%;
 }
 
 /* Fond clair : lumières rouges très légères qui bougent. */
@@ -1321,3 +1317,20 @@
   font-size: min(calc(100cqw / 31), calc(100cqh / 18.5)); font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, sans-serif; letter-spacing: -0.01em; }
 
 .bsv-c { position: absolute; inset: 0; container-type: size; }
+
+/* Performance du défilement : animations confiées au GPU, pas de repeinte. */
+.bg-light, .bg-streak { will-change: transform, opacity; }
+.premium-blobs { contain: paint; }
+
+/* Pendant un défilement rapide : on coupe les effets les plus coûteux
+   (flou d'arrière-plan du menu, lumières animées du fond), puis on les rend. */
+html.is-scrolling .lg-glass { -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.is-scrolling .lg-dark { background: rgba(23, 22, 25, 0.95); }
+html.is-scrolling .theme-light .lg-dark { background: rgba(255, 255, 255, 0.95); }
+html.is-scrolling .lg-light { background: rgba(247, 245, 242, 0.95); }
+html.is-scrolling .bg-light,
+html.is-scrolling .bg-streak,
+html.is-scrolling .premium-blobs .blob,
+html.is-scrolling .mv-float,
+html.is-scrolling .hero-phone,
+html.is-scrolling .hero-qr { animation-play-state: paused; }
